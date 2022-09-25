@@ -22,4 +22,4 @@
 
 ### Тестовый ответ API:
 
-`GET /api/v1/test-api/`
+`GET /api/v1/test-response/`
