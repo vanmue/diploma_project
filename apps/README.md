@@ -1,5 +1,15 @@
 # Dev-среда сервера api
-## Dev-серве
+
+## Сборка бандлда фронтенда, копирование в каталог public сервера api:
+
+`npm run web:build`
+
+## Старт dev-сервера api:
+
 - старт на http://localhost:3000:
 
-`npm run strat:dev`
+`npm run api:dev`
+
+## Сборка бандла фронтенда, копирование в каталог public сервера api, старт dev-сервера api:
+
+`npm run start:dev`

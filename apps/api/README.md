@@ -1,3 +1,9 @@
+## Dev-среда
+
+### Старт dev-сервера (http://localhost:3000):
+
+`npm run strat:dev`
+
 ## Маршруты
 
 ### Страница SPA:

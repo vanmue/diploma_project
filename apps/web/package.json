@@ -18,7 +18,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:api": "export BUILD_PATH='../api/public' react-scripts build"
+    "build:api": "export BUILD_PATH='../api/public' && react-scripts build"
   },
   "eslintConfig": {
     "extends": [
