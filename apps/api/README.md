@@ -4,16 +4,6 @@
 
 `npm run strat:dev`
 
-## Маршруты
-
-### Страница SPA:
-
-`GET /`
-
-### Тестовый ответ API:
-
-`GET /api/v1/test-api/`
-
 ## Installation
 
 ```bash
