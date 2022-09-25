@@ -1,0 +1,20 @@
+{
+  "name": "diploma_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "cd apps/api && npm run start dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vanmue/diploma_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vanmue/diploma_project/issues"
+  },
+  "homepage": "https://github.com/vanmue/diploma_project#readme"
+}
