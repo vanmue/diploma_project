@@ -1,0 +1,18 @@
+.contacts {
+    margin: 80px;
+    text-align: center;
+    font-family: 'Garamond';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 120%;
+}
+
+.contacts-item {
+    margin: 25px;
+    font-family: 'Cormorant Garamond';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 130%;
+}
