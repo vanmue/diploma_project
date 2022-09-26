@@ -1,0 +1,20 @@
+.recording-to-master__info {
+  display: flex;
+}
+
+.recording-to-master__master-info {
+  max-width: 636px;
+  margin-right: 134px;
+}
+
+.recording-to-master__master-name {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 130%;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.recording-to-master__master-photo {}

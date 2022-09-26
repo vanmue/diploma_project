@@ -1,0 +1,41 @@
+.price-list {
+  margin-top: 50px;
+}
+
+.price-list__item {
+  width: 526px;
+  color: white;
+  border-bottom: 1px solid #FFFFFF;
+  list-style-type: none;
+}
+
+.price-list__service {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+
+.price-list__service-name {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 130%;
+  text-align: right;
+  color: #FFFFFF;
+}
+
+.price-list__service-price {
+  margin-top: 10px;
+}
+
+.price-list__service-desc {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 130%;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
