@@ -17,4 +17,11 @@
   text-align: center;
 }
 
-.recording-to-master__master-photo {}
+.recording-to-master__calendar {
+  display: flex;
+  justify-content: center;
+}
+
+.recording-to-master__img {
+  width: 100%;
+}
