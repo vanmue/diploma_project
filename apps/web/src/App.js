@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css';
 import NavBar from './Components/NavBar/NavBar';
 import Main from './pages/Main';
-// import Main from './Components/Main';
 import Error from './Components/Error';
 import Contacts from './Components/Contacts/Contacts';
 import RecordingToMaster from './pages/recording-to-master';

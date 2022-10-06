@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux'
 import ListOfMasters from '../../Components/ListOfMasters';
+import Select from '../../Components/Select';
 import './style.css';
 
 function Main() {
@@ -36,12 +38,25 @@ function Main() {
     },
   ]);
 
+  const cities = useSelector(store => store.citiesReducer)
+
+  const [salons, setSalons] = useState(
+    [
+      'Москва',
+      'Питер',
+      'Екатеренбург',
+      'Самара',
+      'Воронеж'
+    ]
+  );
+
   return (
     <div className='main'>
-      <section className='main__welcom'>
-        <p className='main__welcom-text'>
-          Салон красоты «Delote-Beauty» на Крестовском
-        </p>
+      <h1 className='main__h1'>Запишись в любой салон красоты</h1>
+      <section className='main__search'>
+        <div className='main__search-wrapp-select'>
+          <Select cities={cities.cities} />
+        </div>
       </section>
       <section className='main__wrapp-list-of-masters'>
         <ListOfMasters masters={masters} />
