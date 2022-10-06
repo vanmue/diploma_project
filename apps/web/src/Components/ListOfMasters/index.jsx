@@ -6,24 +6,26 @@ import './style.css';
 function ListOfMasters({ masters }) {
   return (
     <ul className='list-of-masters'>
-      {masters.map(item =>
-        <li>
+      {masters.map((item, index) =>
+        <li
+          className='list-of-masters__item'
+          key={index}
+        >
           <Link to="/recording">
             <img
-              className='list-of-masters__photo'
+              className='list-of-masters__photo-of-master'
               src={item.photoOfMaster}
               alt="Фото мастера"
             />
           </Link>
-          <div className='list-of-masters__name'>
+          <div className='list-of-masters__name-of-master'>
             {item.masterName}
           </div>
-          <div className='list-of-masters__specialization'>
+          <div className='list-of-masters__specialization-of-master'>
             {item.specializationOfMaster}
           </div>
         </li>
       )}
-
     </ul>
   )
 }
