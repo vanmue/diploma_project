@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux'
 import ListOfMasters from '../../Components/ListOfMasters';
 import Select from '../../Components/Select';
-import './style.css';
+import './main.scss';
 
 function Main() {
   const [masters, setMasters] = useState([

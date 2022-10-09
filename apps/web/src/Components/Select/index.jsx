@@ -1,6 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import './style.css';
+import './select.scss';
 
 function Select({ cities, salons }) {
   return (
