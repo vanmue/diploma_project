@@ -1,0 +1,37 @@
+.header {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  background: rgba(65, 9, 53, 0.7);
+  box-sizing: border-box;
+  z-index: 1;
+
+  &>.container {
+    margin: 0 auto;
+    flex: 1 1 1360px;
+  }
+}
+
+.header__flex {
+  display: flex;
+  align-items: center;
+  padding-left: 9px;
+}
+
+.label {
+  text-transform: uppercase;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 56px;
+  margin-right: 354px;
+  line-height: 67px;
+
+  &>span:nth-child(1) {
+    color: #F5BFAB;
+  }
+}
+
+.header__wrapp-navigation {
+  margin-right: 37px;
+}

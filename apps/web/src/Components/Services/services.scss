@@ -1,0 +1,129 @@
+.services {
+  padding-top: 80px;
+  background: #410935;
+}
+
+.services__body {}
+
+.services__desc {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #FFFFFF;
+  padding-left: 8px;
+  margin-bottom: 40px;
+
+  &>p:first-child {
+    margin-bottom: 16px;
+  }
+}
+
+.services__h3 {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  text-transform: uppercase;
+  color: #F5BFAB;
+  margin-left: 9px;
+  margin-bottom: 20px;
+}
+
+.services__wrapp-select {
+  margin-bottom: 60px;
+}
+
+.services__h2 {
+  position: relative;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 58px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin-left: 9px;
+  margin-bottom: 45px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 5px;
+    background: #F5BFAB;
+    border-radius: 5px;
+    bottom: -5px;
+    left: -1px;
+  }
+}
+
+.services__list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.services__list-item {
+  display: flex;
+  align-items: flex-end;
+  flex: 0 1 441px;
+  height: 350px;
+  margin-bottom: 40px;
+
+  &:nth-child(1) {
+    background-image: url('./img/hairdresser.jpg');
+  }
+
+  &:nth-child(2) {
+    background-image: url('./img/manicure.jpg');
+  }
+
+  &:nth-child(3) {
+    background-image: url('./img/pedicure.jpg');
+  }
+
+  &:nth-child(4) {
+    background-image: url('./img/eyebrows-eyelashes.jpg');
+  }
+
+  &:nth-child(5) {
+    background-image: url('./img/cosmetology.jpg');
+  }
+
+  &:nth-child(6) {
+    background-image: url('./img/spa.jpg');
+  }
+
+  &:nth-child(7) {
+    background-image: url('./img/makeup.jpg');
+    margin-bottom: 0px;
+  }
+
+  &:nth-child(8) {
+    background-image: url('./img/hair-removal.jpg');
+    margin-bottom: 0px;
+  }
+
+  &:nth-child(9) {
+    background-image: url('./img/services-for-men.jpg');
+    margin-bottom: 0px;
+  }
+}
+
+.services__list-item-subtitle {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  flex: 1 1 auto;
+  height: 100px;
+  background: rgba(65, 9, 53, 0.5);
+  padding-top: 36px;
+}

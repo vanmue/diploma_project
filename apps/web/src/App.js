@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.scss';
-import NavBar from './Components/NavBar/NavBar';
+import Header from './Components/Header/Header';
 import Main from './pages/Main';
 import Error from './Components/Error';
 import Contacts from './Components/Contacts/Contacts';
@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <NavBar />
+        <Header />
         <hr />
         <Routes>
           <Route exact path="/" element={<Main />} />

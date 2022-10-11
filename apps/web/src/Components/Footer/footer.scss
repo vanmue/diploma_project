@@ -1,0 +1,95 @@
+.footer {
+  background: #000000;
+}
+
+.fooret__flex {
+  position: relative;
+  display: flex;
+  height: 300px;
+  padding-top: 80px;
+}
+
+.footer__contacts {
+  font-family: 'Inter';
+  font-style: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+  margin-right: 97px;
+
+  &-title {
+    font-weight: 700;
+    padding-left: 9px;
+    margin-bottom: 20px;
+  }
+
+  &-tel {
+    font-weight: 400;
+    padding-left: 9px;
+    margin-bottom: 15px;
+  }
+
+  &-email {
+    font-weight: 400;
+    padding-left: 9px;
+  }
+}
+
+.footer__support {
+  font-family: 'Inter';
+  font-style: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+
+  &-title {
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  &-text {
+    font-weight: 400;
+    margin-bottom: 15px;
+  }
+}
+
+.input {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  &-email {
+    width: 230px;
+    height: 40px;
+    background: #FFFFFF;
+    border-radius: 15px 0px 0px 15px;
+
+    &::placeholder {
+      font-style: italic;
+      color: #F5BFAB;
+    }
+  }
+
+  &__button {
+    font-style: normal;
+    color: #FFFFFF;
+    width: 95px;
+    height: 40px;
+    background: #A40123;
+    border-radius: 0px 15px 15px 0px;
+  }
+}
+
+.footer__copyright {
+  position: absolute;
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  bottom: 30px;
+  left: 637px;
+}
