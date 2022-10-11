@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux'
+import Services from '../../Components/Services';
 import ListOfMasters from '../../Components/ListOfMasters';
-import Select from '../../Components/Select';
+import Footer from '../../Components/Footer';
+import yandeMap from './img/yandex-map.jpg'
 import './main.scss';
 
 function Main() {
@@ -52,15 +54,28 @@ function Main() {
 
   return (
     <div className='main'>
-      <h1 className='main__h1'>Запишись в любой салон красоты</h1>
-      <section className='main__search'>
-        <div className='main__search-wrapp-select'>
-          <Select cities={cities.cities} />
+      <div className="main__insert">
+        <div className="main__insert-title">
+          <p>Онлайн запись</p>
+          <p>В салон красоты на любую услугу к лучшим матерам</p>
+        </div>
+      </div>
+      <section className="main__wrapp-services">
+        <Services />
+      </section>
+      <div className="container">
+        <h3 className="main__h3">
+          Найди ближайший салон
+        </h3>
+      </div>
+      <section className='main__yandex-map'>
+        <div className="container">
+          <div className="main__yandex-map-body">
+            <img className='main__yandex-map-img' src={yandeMap} alt="" />
+          </div>
         </div>
       </section>
-      <section className='main__wrapp-list-of-masters'>
-        <ListOfMasters masters={masters} />
-      </section>
+      <Footer />
     </div>
   )
 }

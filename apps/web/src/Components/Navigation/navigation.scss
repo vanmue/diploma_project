@@ -1,0 +1,22 @@
+.navigation {
+  display: flex;
+
+  &__item {
+    margin-right: 30px;
+    list-style-type: none;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+
+  &__item-link {
+    text-decoration: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+  }
+}
