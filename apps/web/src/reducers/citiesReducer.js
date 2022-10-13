@@ -2,7 +2,6 @@ import { GET_ALL_CITIES_SUCCESS } from '../actions/citiesActions';
 
 const initialStore = {
   cities: [
-    'Выберите город',
     'Москва',
     'Питер',
     'Екатеренбург',

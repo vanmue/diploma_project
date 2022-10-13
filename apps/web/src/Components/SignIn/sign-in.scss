@@ -1,8 +1,9 @@
+@import '../../assets/styles/mixins.scss';
+
 .sign-in {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
+  @include inter(400, normal);
   font-size: 14px;
+  line-height: 17px;
   color: #FFFFFF;
   width: 226px;
   height: 40px;
@@ -11,4 +12,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 2px;
 }
