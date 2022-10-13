@@ -21,53 +21,54 @@ function Services() {
           <h3 className="services__h3">Найди своего мастера</h3>
           <div className="services__wrapp-select">
             <Select
+              titleSelect={"Выберите город"}
               cities={cities.cities}
             />
           </div>
           <h2 className="services__h2">Услуги</h2>
           <div className="services__list">
             <Link className="services__list-item">
-              <div className="services__list-item-subtitle">
+              <div className="services__list-item-title">
                 Парикмахерские услуги
               </div>
             </Link>
             <Link className="services__list-item">
-              <div className="services__list-item-subtitle">
+              <div className="services__list-item-title">
                 Маникюр
               </div>
             </Link>
             <Link className="services__list-item">
-              <div className="services__list-item-subtitle">
+              <div className="services__list-item-title">
                 Педикюр
               </div>
             </Link>
             <Link className="services__list-item">
-              <div className="services__list-item-subtitle">
+              <div className="services__list-item-title">
                 Брови и Ресницы
               </div>
             </Link>
             <Link className="services__list-item">
-              <div className="services__list-item-subtitle">
+              <div className="services__list-item-title">
                 Косметология
               </div>
             </Link>
             <Link className="services__list-item">
-              <div className="services__list-item-subtitle">
+              <div className="services__list-item-title">
                 SPA
               </div>
             </Link>
             <Link className="services__list-item">
-              <div className="services__list-item-subtitle">
+              <div className="services__list-item-title">
                 Макияж
               </div>
             </Link>
             <Link className="services__list-item">
-              <div className="services__list-item-subtitle">
+              <div className="services__list-item-title">
                 Эпиляция
               </div>
             </Link>
             <Link className="services__list-item">
-              <div className="services__list-item-subtitle">
+              <div className="services__list-item-title">
                 Услуги для мужчин
               </div>
             </Link>

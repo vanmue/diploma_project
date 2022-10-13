@@ -1,22 +1,16 @@
-.select-wrapp {
-  position: relative;
-  padding-left: 9px;
-}
+@import '../../assets/styles/mixins.scss';
 
-.select {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  background: #410935;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 29px;
-  color: #F0EFEF;
-  appearance: none;
-  cursor: pointer;
-  margin-right: 9px;
-}
+.dropdown {
+  &__btn {
+    background: #410935;
 
-.select__arrow-down {}
+    &>p {
+      display: inline-block;
+      @include inter(400, normal);
+      font-size: 24px;
+      line-height: 31px;
+      color: #F0EFEF;
+      margin-right: 11px;
+    }
+  }
+}

@@ -1,95 +1,92 @@
+@import '../../assets/styles/mixins.scss';
+
 .footer {
-  background: #000000;
-}
-
-.fooret__flex {
-  position: relative;
-  display: flex;
+  @include inter(400, normal);
   height: 300px;
-  padding-top: 80px;
-}
+  background: #000000;
 
-.footer__contacts {
-  font-family: 'Inter';
-  font-style: normal;
-  font-size: 14px;
-  line-height: 17px;
-  color: #FFFFFF;
-  margin-right: 97px;
-
-  &-title {
-    font-weight: 700;
-    padding-left: 9px;
-    margin-bottom: 20px;
+  &__flex {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    height: 300px;
+    padding-top: 80px;
   }
 
-  &-tel {
-    font-weight: 400;
-    padding-left: 9px;
-    margin-bottom: 15px;
-  }
+  &__contacts {
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    margin-right: 97px;
 
-  &-email {
-    font-weight: 400;
-    padding-left: 9px;
-  }
-}
+    &-title {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
 
-.footer__support {
-  font-family: 'Inter';
-  font-style: normal;
-  font-size: 14px;
-  line-height: 17px;
-  color: #FFFFFF;
+    &-tel {
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
 
-  &-title {
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
-
-  &-text {
-    font-weight: 400;
-    margin-bottom: 15px;
-  }
-}
-
-.input {
-  font-family: 'Inter';
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-
-  &-email {
-    width: 230px;
-    height: 40px;
-    background: #FFFFFF;
-    border-radius: 15px 0px 0px 15px;
-
-    &::placeholder {
-      font-style: italic;
-      color: #F5BFAB;
+    &-email {
+      font-weight: 400;
     }
   }
 
-  &__button {
-    font-style: normal;
+  &__support {
+    font-size: 14px;
+    line-height: 17px;
     color: #FFFFFF;
-    width: 95px;
-    height: 40px;
-    background: #A40123;
-    border-radius: 0px 15px 15px 0px;
-  }
-}
 
-.footer__copyright {
-  position: absolute;
-  font-family: 'Inter';
-  font-style: italic;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 17px;
-  text-align: center;
-  color: #FFFFFF;
-  bottom: 30px;
-  left: 637px;
+    flex: 1 1 76%;
+
+    &-title {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    &-text {
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
+  }
+
+  &__input {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+
+    &-email {
+      width: 230px;
+      height: 40px;
+      background: #FFFFFF;
+      border-radius: 15px 0px 0px 15px;
+      padding-left: 16px;
+
+      &::placeholder {
+        font-style: italic;
+        color: #F5BFAB;
+      }
+    }
+
+    &-button {
+      font-style: normal;
+      color: #FFFFFF;
+      width: 95px;
+      height: 40px;
+      background: #A40123;
+      border-radius: 0px 15px 15px 0px;
+    }
+  }
+
+  &__copyright {
+    flex: 1 1 auto;
+    text-align: center;
+    font-style: italic;
+    font-size: 12px;
+    line-height: 17px;
+    color: #FFFFFF;
+    margin-top: 33px;
+  }
 }

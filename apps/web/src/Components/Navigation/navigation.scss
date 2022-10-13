@@ -1,3 +1,5 @@
+@import '../../assets/styles/mixins.scss';
+
 .navigation {
   display: flex;
 
@@ -11,12 +13,14 @@
   }
 
   &__item-link {
+    @include inter(400, normal);
     text-decoration: none;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
     font-size: 14px;
     line-height: 17px;
     color: #FFFFFF;
+
+    // &--active {
+    //   font-weight: 700;
+    // }
   }
 }
