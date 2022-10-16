@@ -1,0 +1,15 @@
+name: deploy-on-merge-pr-to-master
+run-name: ${{ github.actor}} is deploying to production
+on: 
+  pull_request:
+    types: 
+      - closed
+    branches:
+      - master
+jobs:
+  on_merge:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - run: 
+    
