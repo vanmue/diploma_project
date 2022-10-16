@@ -9,7 +9,7 @@ on:
 jobs:
   on_merge:
     if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "deploy-on-merge-pr-to-master workflow"
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo "deploy-on-merge-pr-to-master workflow"
     
