@@ -1,0 +1,94 @@
+.main-page {
+  background: #410935;
+
+  &__insert {
+    position: relative;
+    height: 800px;
+    background-image: url('./img/woman.jpg');
+    margin-top: -100px;
+  }
+
+  &__h1 {
+    position: relative;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 67px;
+    text-transform: uppercase;
+    color: #A40123;
+    margin-bottom: 49px;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 200px;
+      height: 5px;
+      background: #410935;
+      border-radius: 5px;
+      bottom: -4px;
+      left: 1px;
+    }
+  }
+
+  &__insert-title {
+    position: absolute;
+    width: 508px;
+    height: 189px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 67px;
+    text-transform: uppercase;
+    color: #A40123;
+    top: 352px;
+    right: 286px;
+
+    &>p {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 30px;
+      line-height: 36px;
+      text-transform: uppercase;
+      color: #410935;
+    }
+  }
+
+  &__wrapp-services {
+    margin-bottom: 60px;
+  }
+
+  &__h3 {
+    position: relative;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 58px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin-bottom: 45px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 5px;
+      background: #F5BFAB;
+      border-radius: 5px;
+      bottom: -5px;
+    }
+  }
+
+  &__yandex-map {
+    padding-bottom: 132px;
+  }
+
+  &__yandex-map-img {
+    width: 100%;
+    height: 100%;
+  }
+}

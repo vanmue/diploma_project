@@ -1,6 +1,6 @@
 import React from 'react';
-import PriceList from '../../Components/PriceList';
-import './style.css';
+import PriceList from '../../components/PriceList';
+import './recording-to-master.scss';
 
 function RecordingToMaster() {
   const services = [

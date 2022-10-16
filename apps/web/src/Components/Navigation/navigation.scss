@@ -1,0 +1,26 @@
+@import '../../assets/styles/mixins.scss';
+
+.navigation {
+  display: flex;
+
+  &__item {
+    margin-right: 30px;
+    list-style-type: none;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+
+  &__item-link {
+    @include inter(400, normal);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+
+    // &--active {
+    //   font-weight: 700;
+    // }
+  }
+}
