@@ -1,22 +1,29 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-
+@import url(./assets/zeroing.scss);
 
 body {
-  background-color: #111111;
   color: #FFFFFF;
+  height: 100%
 }
 
 .App {
-  margin: 0 auto;
-  max-width: 1296px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &>.con {
+    flex: 1 1 auto;
+  }
 }
 
-hr {
-  opacity: 0.5;
-  color: #FFFFFF;
+.container {
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+header {
+  flex: 0 0 auto;
+}
+
+footer {
+  flex: 0 0 auto;
 }

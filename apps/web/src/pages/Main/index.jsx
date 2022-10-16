@@ -1,68 +1,34 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux'
-import ListOfMasters from '../../Components/ListOfMasters';
-import Select from '../../Components/Select';
-import './main.scss';
+import React from 'react';
+import Services from '../../components/Services';
+import yandexMap from './img/yandex-map.jpg'
+import './main-page.scss';
 
-function Main() {
-  const [masters, setMasters] = useState([
-    {
-      photoOfMaster: 'https://placehold.co/150x180',
-      masterName: 'Анна',
-      specializationOfMaster: 'Визажист'
-    },
-    {
-      photoOfMaster: 'https://placehold.co/150x180',
-      masterName: 'Алина',
-      specializationOfMaster: 'Визажист'
-    },
-    {
-      photoOfMaster: 'https://placehold.co/150x180',
-      masterName: 'Нина',
-      specializationOfMaster: 'Визажист'
-    },
-    {
-      photoOfMaster: 'https://placehold.co/150x180',
-      masterName: 'Малина',
-      specializationOfMaster: 'Визажист'
-    },
-    {
-      photoOfMaster: 'https://placehold.co/150x180',
-      masterName: 'Вика',
-      specializationOfMaster: 'Визажист'
-    },
-    {
-      photoOfMaster: 'https://placehold.co/150x180',
-      masterName: 'Дина',
-      specializationOfMaster: 'Визажист'
-    },
-  ]);
-
-  const cities = useSelector(store => store.citiesReducer)
-
-  const [salons, setSalons] = useState(
-    [
-      'Москва',
-      'Питер',
-      'Екатеренбург',
-      'Самара',
-      'Воронеж'
-    ]
-  );
-
+function MainPage() {
   return (
-    <div className='main'>
-      <h1 className='main__h1'>Запишись в любой салон красоты</h1>
-      <section className='main__search'>
-        <div className='main__search-wrapp-select'>
-          <Select cities={cities.cities} />
+    <div className='main-page'>
+      <div className="main-page__insert">
+        <div className="main-page__insert-title">
+          <h1 className='main-page__h1'>Онлайн запись</h1>
+          <p>В салон красоты на любую услугу к лучшим матерам</p>
         </div>
+      </div>
+      <section className="main-page__wrapp-services">
+        <Services />
       </section>
-      <section className='main__wrapp-list-of-masters'>
-        <ListOfMasters masters={masters} />
+      <div className="container">
+        <h3 className="main-page__h3">
+          Найди ближайший салон
+        </h3>
+      </div>
+      <section className='main-page__yandex-map'>
+        <div className="container">
+          <div className="main-page__yandex-map-body">
+            <img className='main-page__yandex-map-img' src={yandexMap} alt="Карта яндекс" />
+          </div>
+        </div>
       </section>
     </div>
   )
 }
 
-export default React.memo(Main);
+export default React.memo(MainPage);

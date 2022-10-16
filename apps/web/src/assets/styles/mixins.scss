@@ -1,0 +1,5 @@
+@mixin inter($fontWeight, $fontStyle) {
+  font-family: 'Inter';
+  font-weight: $fontWeight;
+  font-style: $fontStyle;
+}
