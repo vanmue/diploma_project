@@ -23,8 +23,9 @@ ENV NODE_ENV=production
 WORKDIR /opt/$APPLICATION_NAME
 
 COPY --from=build-stage /opt/$APPLICATION_NAME/node_modules /opt/$APPLICATION_NAME/node_modules
+COPY --from=build-stage /opt/$APPLICATION_NAME/dist/ /opt/$APPLICATION_NAME/
 
 EXPOSE 3001
 
 # Run with --restart=on-failure
-CMD ["node", "apps/api/main.js"]
+CMD ["node", "main.js"]
