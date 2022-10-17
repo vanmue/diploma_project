@@ -25,7 +25,7 @@ WORKDIR /opt/$APPLICATION_NAME
 COPY --from=build-stage /opt/$APPLICATION_NAME/node_modules /opt/$APPLICATION_NAME/node_modules
 COPY --from=build-stage /opt/$APPLICATION_NAME/dist/ /opt/$APPLICATION_NAME/
 
-EXPOSE 3001
+EXPOSE 3000
 
 # Run with --restart=on-failure
 CMD ["node", "main.js"]
