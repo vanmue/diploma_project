@@ -8,7 +8,7 @@
     "api:dev": "cd apps/api && npm run start:dev",
     "start:dev": "npm run web:build && npm run api:dev",
     "docker:build": "docker build -t diploma-project-api apps/api/",
-    "docker:run": "docker run -d -p 80:3000 diploma-project-api"
+    "docker:run": "docker run -d -p 3000:3000 diploma-project-api"
   },
   "repository": {
     "type": "git",
