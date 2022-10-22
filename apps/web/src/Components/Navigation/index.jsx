@@ -1,22 +1,52 @@
-import React from "react";
-import { NavLink } from 'react-router-dom'
+import React, { useEffect } from "react";
+import { NavLink } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import './navigation.scss'
 
 function Navigation() {
+  const color = useSelector((store) => store.stylesReducer.navigation.color);
+  useEffect(() => {
+  }, [color]);
+
   return (
     <ul className="navigation">
       <li className="navigation__item">
         <NavLink
-          className="navigation__item-link" to="/">Главная </NavLink>
+          className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
+          style={{ color: `${color}` }}
+          end
+          to="/"
+        >
+          Главная
+        </NavLink>
       </li>
       <li className="navigation__item">
-        <NavLink className="navigation__item-link" to="/">Салоны</NavLink>
+        <NavLink
+          className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
+          style={{ color: `${color}` }}
+          to="/salons-page"
+        >
+          Салоны
+        </NavLink>
       </li>
       <li className="navigation__item">
-        <NavLink className="navigation__item-link" to="/">Мастера</NavLink>
+        <NavLink
+          className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
+          style={{ color: `${color}` }}
+          end
+          to="/"
+        >
+          Мастера
+        </NavLink>
       </li>
       <li className="navigation__item">
-        <NavLink className="navigation__item-link" to="/contacts">Стать партнёром</NavLink>
+        <NavLink
+          className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
+          style={{ color: `${color}` }}
+          to="/contacts"
+        >
+          Стать партнёром
+        </NavLink>
       </li>
     </ul>
   )

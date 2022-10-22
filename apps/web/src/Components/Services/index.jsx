@@ -5,7 +5,7 @@ import Select from "../Select";
 import './services.scss'
 
 function Services() {
-  const cities = useSelector(store => store.citiesReducer)
+  const cities = useSelector(store => store.citiesReducer);
   return (
     <div className="services">
       <div className="container">

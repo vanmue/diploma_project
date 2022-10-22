@@ -3,7 +3,6 @@ import propTypes from 'prop-types';
 import './select.scss';
 
 function Select({ titleSelect, cities, salons }) {
-  console.log(titleSelect)
   return (
     <div className='dropdown'>
       <button className='dropdown__btn'>
