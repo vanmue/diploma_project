@@ -1,0 +1,138 @@
+@import '../../assets/styles/mixins.scss';
+
+.salon-card {
+  display: flex;
+  justify-content: space-between;
+
+  &__img {
+    width: 440px;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  &__info {
+    width: 900px;
+    background: #F5BFAB;
+    border-radius: 10px;
+    padding: 25px 0 0 26px;
+  }
+
+  &__title {
+    flex: 1 1 100%;
+    @include inter(700, normal);
+    font-size: 24px;
+    line-height: 29px;
+    text-transform: uppercase;
+    color: #000000;
+    margin-bottom: 10px;
+  }
+
+  &__info-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__service-information {
+    width: 388px;
+  }
+
+  &__address {
+    @include inter(400, normal);
+    font-size: 14px;
+    line-height: 17px;
+    color: #410935;
+    margin-bottom: 20px;
+  }
+
+  &__working-hours {
+    @include inter(400, normal);
+    font-size: 14px;
+    line-height: 17px;
+    color: #410935;
+    margin-bottom: 5px;
+  }
+
+  &__parking {
+    @include inter(400, normal);
+    font-size: 14px;
+    line-height: 17px;
+    color: #410935;
+    margin-bottom: 20px;
+  }
+
+  &__telephone {
+    @include inter(400, normal);
+    font-size: 14px;
+    line-height: 17px;
+    color: #410935;
+    margin-bottom: 20px;
+  }
+
+  &__salon-page-link {
+    @include inter(400, normal);
+    font-size: 14px;
+    line-height: 17px;
+    color: #410935;
+    margin-bottom: 20px;
+
+    &>a {
+      text-decoration: none;
+      border-bottom: 1px solid #410935;
+
+      &:link {
+        color: #410935;
+      }
+
+      &:visited {
+        color: #410935;
+      }
+
+      &:active {
+        color: #410935;
+      }
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+
+    &>button:nth-child(1) {
+      background: #410935;
+    }
+
+    &>button:nth-child(2) {
+      background: #A40123;
+    }
+  }
+
+  &__btn {
+    width: 184px;
+    height: 40px;
+    @include inter(700, normal);
+    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 17px;
+    color: #F5BFAB;
+
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  &__services {
+    flex: 0 1 414px;
+    padding-top: 3px
+  }
+
+  &__services-title {
+    @include inter(700, normal);
+    font-size: 14px;
+    line-height: 17px;
+    text-transform: uppercase;
+    color: #410935;
+    margin-bottom: 9px;
+  }
+
+  &__wrapp-services-list {}
+}

@@ -1,0 +1,56 @@
+@import '../../assets/styles/mixins.scss';
+
+.salons-page {
+  background: #410935;
+  padding-bottom: 35px;
+
+  &__flex {
+    padding-top: 40px;
+  }
+
+  &__search {}
+
+  &__h1 {
+    padding-bottom: 40px;
+    @include inter(400, normal);
+    font-size: 24px;
+    line-height: 29px;
+    text-transform: uppercase;
+    color: #F5BFAB;
+  }
+
+  &__search-dropdowns {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 150px;
+  }
+
+  &__wrapp-drodown-select {
+    width: 440px;
+  }
+
+  &__salons-list {
+    width: 100%;
+    padding-bottom: 80px;
+
+    &>li {
+      margin-bottom: 50px;
+    }
+
+    &>li:last-child {
+      margin-bottom: 0px;
+    }
+  }
+
+  &__wrapp-salon-card {
+    width: 100%;
+  }
+
+  &__wrapp-pagination {
+    // display: flex;
+    // justify-content: center;
+    width: 105px;
+    margin: 0 auto;
+  }
+
+}

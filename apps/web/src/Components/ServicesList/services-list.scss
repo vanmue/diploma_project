@@ -1,0 +1,28 @@
+@import '../../assets/styles/mixins.scss';
+
+.services-list {
+  &__item {
+    position: relative;
+    display: flex;
+    @include inter(400, normal);
+    font-size: 14px;
+    line-height: 17px;
+    color: #410935;
+    margin-bottom: 10px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 2px;
+      background: #410935;
+      top: 8px;
+      left: 8px;
+    }
+
+    &>p {
+      margin-left: 21px;
+    }
+  }
+}

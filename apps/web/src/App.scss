@@ -1,4 +1,4 @@
-@import url(./assets/zeroing.scss);
+@import url(./assets/styles/zeroing.scss);
 
 body {
   color: #FFFFFF;
@@ -10,7 +10,7 @@ body {
   flex-direction: column;
   height: 100%;
 
-  &>.con {
+  &>.main {
     flex: 1 1 auto;
   }
 }

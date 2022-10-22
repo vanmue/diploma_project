@@ -1,0 +1,3 @@
+export const MAIN_PAGE_HEADER_BACKGROUND = "rgba(65, 9, 53, 0.7)";
+export const MAIN_PAGE_NAVIGATION_COLOR = '#FFFFFF';
+export const SALONS_PAGE_NAVIGATION_COLOR = '#410935';
