@@ -13,14 +13,14 @@ CREATE TABLE "public"."deliverable_groups" (
 ) WITH (oids = false);
 
 INSERT INTO "deliverable_groups" ("id", "index", "name", "image") VALUES
-(1,	10,	'парикмахерские услуги',	'/uploads/groups/parikmaherskiye_uslugi.png'),
-(2,	20,	'маникюр',	'/uploads/groups/manikyur.png'),
-(3,	30,	'педикюр',	'/uploads/groups/pedikyur.png'),
-(4,	40,	'брови и ресницы',	'/uploads/groups/brovi_i_resnitcy.png'),
-(5,	50,	'косметология',	'/uploads/groups/kosmetologiya.png'),
-(6,	70,	'spa',	'/uploads/groups/spa.png'),
-(7,	80,	'макияж',	'/uploads/groups/makiyazh.png'),
-(8,	90,	'эпиляция',	'/uploads/groups/epilyatsiya.png'),
-(9,	100,	'услуги для мужчин',	'/uploads/groups/uslugi_dlya_muzhchin.png');
+(1,	10,	'парикмахерские услуги',	'/uploads/deliverable-groups/parikmaherskiye_uslugi.png'),
+(2,	20,	'маникюр',	'/uploads/deliverable-groups/manikyur.png'),
+(3,	30,	'педикюр',	'/uploads/deliverable-groups/pedikyur.png'),
+(4,	40,	'брови и ресницы',	'/uploads/deliverable-groups/brovi_i_resnitcy.png'),
+(5,	50,	'косметология',	'/uploads/deliverable-groups/kosmetologiya.png'),
+(6,	70,	'spa',	'/uploads/deliverable-groups/spa.png'),
+(7,	80,	'макияж',	'/uploads/deliverable-groups/makiyazh.png'),
+(8,	90,	'эпиляция',	'/uploads/deliverable-groups/epilyatsiya.png'),
+(9,	100,	'услуги для мужчин',	'/uploads/deliverable-groups/uslugi_dlya_muzhchin.png');
 
--- 2022-10-22 22:25:42.137258+00
+-- 2022-10-22 22:42:28.489272+00
