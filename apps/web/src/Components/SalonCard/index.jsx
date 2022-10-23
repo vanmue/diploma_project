@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
-import { changeNavigationColorAction } from '../../actions/stylesActions';
 import ServicesList from '../ServicesList';
 import './salon-card.scss';
 
@@ -70,12 +69,14 @@ SalonCard.propTypes = {
   workinghours: propTypes.string,
   telephone: propTypes.string,
   pathImg: propTypes.string,
-  // items: propTypes.array,
 }
 
-// SalonCard.defaultProps = {
-//   pathImg: '',
-//   // items: [],
-// }
+SalonCard.defaultProps = {
+  salonTitle: '-',
+  address: '-',
+  workinghours: '-',
+  telephone: '-',
+  pathImg: propTypes.string,
+}
 
 export default React.memo(SalonCard);
