@@ -14,6 +14,6 @@ docker build -t $api_image -f ./.docker/prod/Dockerfile .
 docker run --env-file ./.docker/prod/.env \
     --name $api_container \
     --network $network \
-    -d \
     --restart=on-failure \
+    -d \
     $api_image

@@ -10,6 +10,7 @@ docker rm $postgres
 docker run --env-file ./.docker/prod/.env \
     --name $postgres \
     --network $network \
+    --restart=on-failure \
     -v /var/lib/postgresql/data/$PREFIX:/var/lib/postgresql/data \
     -d \
     postgres
