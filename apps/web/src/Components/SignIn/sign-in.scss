@@ -1,16 +1,15 @@
 @import '../../assets/styles/mixins.scss';
 
 .sign-in {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 226px;
+  height: 40px;
   @include inter(400, normal);
   font-size: 14px;
   line-height: 17px;
   color: #FFFFFF;
-  width: 226px;
-  height: 40px;
   background: #410935;
   border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 2px;
 }
