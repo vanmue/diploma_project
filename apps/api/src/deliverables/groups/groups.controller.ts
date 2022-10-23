@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { JsonObject } from 'src/libs/src/models/JsonObject';
 import { GroupEntity } from './group.entity';
 import { GroupsService } from './groups.service';
 
@@ -6,11 +7,15 @@ import { GroupsService } from './groups.service';
 export class GroupsController {
   constructor(private groupsService: GroupsService) {}
   @Get()
-  async getGroups() {
-    return await this.groupsService.findAll();
+  async getGroups(): Promise<JsonObject<GroupEntity[]>> {
+    const data = await this.groupsService.findAll();
+    return { data };
   }
   @Post()
-  async create(@Body() groupDto: GroupEntity) {
-    return await this.groupsService.create(groupDto);
+  async create(
+    @Body() groupDto: GroupEntity,
+  ): Promise<JsonObject<GroupEntity>> {
+    const data = await this.groupsService.create(groupDto);
+    return { data };
   }
 }
