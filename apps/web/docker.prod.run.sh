@@ -15,7 +15,7 @@ docker build -t $web_image -f ./docker/prod/Dockerfile .
 docker run -p $WEB_EXTERNAL_PORT:80 \
     --name $web_container \
     --network $network \
-    -v $(pwd)/public/uploads:/app/uploads \
+    -v $(pwd)/../../storage/app/public/uploads:/app/uploads \
     --restart=on-failure \
     -d \
     $web_image

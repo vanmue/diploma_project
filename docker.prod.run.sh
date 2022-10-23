@@ -1,7 +1,5 @@
 #!/bin/sh
 
-#!/bin/sh
-
 WEB_EXTERNAL_PORT=$1 # порт веб-сервера
 PREFIX=diploma-project # префикс имени образа и контейнера
 
