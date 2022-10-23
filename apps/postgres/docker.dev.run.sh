@@ -2,11 +2,11 @@
 
 PREFIX=$1
 
-postgres=$PREFIX-postgres
+postgres=$PREFIX-postgres-dev
 
 docker stop $postgres
 docker rm $postgres
-docker run --env-file ./docker/dev/.env \
+docker run --env-file ./.docker/dev/.env \
     --name $postgres \
     -d \
     -p 5432:5432 \
