@@ -1,5 +1,8 @@
-import { CHANGE_ACTIVE_PAGE_FOR_PAGINATION } from "../actions/salonsAction";
-import { CHANGE_ARRAY_PAGINATION } from "../actions/salonsAction";
+import {
+  CHANGE_ACTIVE_PAGE_FOR_PAGINATION,
+  INCREMENT_ACTIVE_PAGE_PAGINATION,
+  DECREMENT_ACTIVE_PAGE_PAGINATION,
+} from "../actions/salonsAction";
 
 const initialStore = {
   activePage: 9,
@@ -14,14 +17,18 @@ export default function salonsReducer(store = initialStore, action) {
         activePage: action.payload
       }
     }
-    // case CHANGE_ARRAY_PAGINATION: {
-    //   let arr = store.arrPagination;
-    //   arr.push(action.payload);
-    //   return {
-    //     ...store,
-    //     arrPagination: arr
-    //   }
-    // }
+    case INCREMENT_ACTIVE_PAGE_PAGINATION: {
+      return {
+        ...store,
+        activePage: ++action.payload
+      }
+    }
+    case DECREMENT_ACTIVE_PAGE_PAGINATION: {
+      return {
+        ...store,
+        activePage: --action.payload
+      }
+    }
     default:
       return store;
   }
