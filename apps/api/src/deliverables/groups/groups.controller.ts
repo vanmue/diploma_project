@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { GroupEntity } from './group.entity';
 import { GroupsService } from './groups.service';
 
-@Controller('groups')
+@Controller('deliverable-groups')
 export class GroupsController {
   constructor(private groupsService: GroupsService) {}
   @Get()
