@@ -6,7 +6,7 @@ postgres=$PREFIX-postgres
 
 docker stop $postgres
 docker rm $postgres
-docker run --env-file .env \
+docker run --env-file ./docker/dev/.env \
     --name $postgres \
     -d \
     -p 5432:5432 \

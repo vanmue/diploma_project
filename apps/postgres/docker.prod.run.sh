@@ -7,7 +7,7 @@ network=$PREFIX-network
 
 docker stop $postgres
 docker rm $postgres
-docker run --env-file .env \
+docker run --env-file ./.docker/prod/.env \
     --name $postgres \
     --network $network \
     -v /var/lib/postgresql/data/$PREFIX:/var/lib/postgresql/data \
