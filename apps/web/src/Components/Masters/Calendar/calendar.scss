@@ -1,0 +1,16 @@
+@import '../../../assets/styles/mixins.scss';
+
+.calendar__master-name {
+    @include inter(400, normal);
+    font-size: 24px;
+    line-height: 29px;
+    color: #F5BFAB;
+    text-transform: uppercase;
+}
+
+.calendar__text {
+    @include inter(700, normal);
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #F5BFAB;
+}

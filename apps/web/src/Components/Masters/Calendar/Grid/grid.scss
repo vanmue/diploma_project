@@ -1,0 +1,26 @@
+.grid_wrapper {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 5px;
+    margin-bottom: 80px;
+
+}
+
+.cell_wrapper {
+    //width: 190px;
+    height: 100px;
+    //color: aliceblue;
+    padding: 15px 10px;
+    background: #F5BFAB;
+    text-align: end;
+}
+
+.date {
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    padding: 5px;
+}
