@@ -12,8 +12,8 @@
 
 .modal {
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: 31%;
+    top: 16%;
     margin-left: -100px;
     margin-top: -75px;
 }
@@ -62,5 +62,36 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+
+}
+
+.modal__form {
+    @include inter(400, normal);
+    font-size: 24px;
+}
+
+.modal__form div {
+    margin: 25px;
+    border-bottom: 1px solid #410935;
+    padding-bottom: 15px;
+}
+
+.modal__form input {
+    @include inter(400, normal);
+    font-size: 24px;
+}
+
+.modal__btn-wrap {
+    text-align: center;
+    margin-top: 60px
+}
+
+.modal__btn {
+    @include inter(700, normal);
+    font-size: 24px;
+    padding: 11px 65px;
+    color: #F5BFAB;
+    background-color: #A40123;
+    border-radius: 10px;
 
 }

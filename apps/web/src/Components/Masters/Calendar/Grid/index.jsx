@@ -1,7 +1,7 @@
 import React from 'react'
 import './grid.scss'
 
-const CalendarGrid = ({ startDay, today }) => {
+const CalendarGrid = ({ startDay, today, cellClick }) => {
 
     //const totalDays = 42
     const day = startDay.clone().subtract(1, 'day')
@@ -20,13 +20,8 @@ const CalendarGrid = ({ startDay, today }) => {
 
     return <div className='grid_wrapper' >
         {daysArray.map((dayItem) =>
-            <div key={dayItem.format('YYYYMMMMDD')} className='cell_wrapper'>
-                <span className='date'
-                    style={color1(dayItem)
-                        //color: dayItem.format('DDMMMMYYYY') === today.format('DDMMMMYYYY') ? '#410931' : false,
-                        /* color: dayItem.format('MMMM') === today.format('MMMM') ? '#102102102' : false */
-                    }
-                    key={dayItem.format('DDMM')}>
+            <div key={dayItem.format('YYYYMMMMDD')} className='cell_wrapper' onClick={cellClick}>
+                <span className='date' style={color1(dayItem)} key={dayItem.format('DDMM')}>
                     {dayItem.format('D')}
                 </span>
             </div>)
