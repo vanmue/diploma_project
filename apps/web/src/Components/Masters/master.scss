@@ -1,0 +1,48 @@
+.master__item-img {
+    min-width: 210px;
+    height: 259px;
+    margin-right: 20px;
+    background-color: aliceblue;
+    border-radius: 11px;
+}
+
+.master__item-block {
+    padding-top: 40px;
+    padding-bottom: 50px;
+    display: flex;
+    color: #F5BFAB;
+}
+
+.master__name {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    margin-bottom: 10px;
+}
+
+.rate_background {
+    width: 160px;
+    height: 32px;
+}
+
+.rate_bar {
+    display: inline;
+    margin: 10px;
+}
+
+.master__work {
+    font-family: 'Inter';
+    font-style: Bold;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.master__info {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+}

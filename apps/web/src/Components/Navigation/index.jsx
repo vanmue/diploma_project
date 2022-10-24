@@ -13,7 +13,7 @@ function Navigation() {
         <NavLink className="navigation__item-link" to="/">Салоны</NavLink>
       </li>
       <li className="navigation__item">
-        <NavLink className="navigation__item-link" to="/">Мастера</NavLink>
+        <NavLink className="navigation__item-link" to="/master">Мастера</NavLink>
       </li>
       <li className="navigation__item">
         <NavLink className="navigation__item-link" to="/contacts">Стать партнёром</NavLink>
