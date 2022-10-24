@@ -1,0 +1,14 @@
+@import '../../../../assets/styles/mixins.scss';
+
+.calendar-month {
+    @include inter(700, normal);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #F5BFAB;
+}
+
+.calendar__arrow {
+    cursor: pointer;
+}
