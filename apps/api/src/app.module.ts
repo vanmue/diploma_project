@@ -6,6 +6,8 @@ import { join } from 'path';
 import { GroupEntity } from './deliverables/groups/group.entity';
 import { GroupsModule } from './deliverables/groups/groups.module';
 import { TestResponseModule } from './test-response/test-response.module';
+import { JsonService } from './json/json.service';
+import { ShopsModule } from './shops/shops.module';
 
 const synchronize = process.env.NODE_ENV !== 'production';
 
@@ -34,8 +36,9 @@ const synchronize = process.env.NODE_ENV !== 'production';
 
     TestResponseModule,
     GroupsModule,
+    ShopsModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [JsonService],
 })
 export class AppModule {}
