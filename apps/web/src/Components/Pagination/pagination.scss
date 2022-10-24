@@ -1,0 +1,32 @@
+ @import '../../assets/styles/mixins.scss';
+
+ .pagination {
+   display: flex;
+   width: 100%;
+   margin: 0 auto;
+
+   &__list {
+     display: flex;
+   }
+
+   &__arrow-prev {
+     padding-top: 2px;
+     margin-right: 8px;
+     cursor: pointer;
+   }
+
+   &__list-item {
+     display: flex;
+     @include inter(400, normal);
+     font-size: 14px;
+     line-height: 17px;
+     color: #F5BFAB;
+     cursor: pointer;
+   }
+
+   &__arrow-next {
+     padding-top: 2px;
+     margin-left: 8px;
+     cursor: pointer;
+   }
+ }

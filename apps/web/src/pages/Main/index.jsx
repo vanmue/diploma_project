@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Services from '../../components/Services';
-import yandexMap from './img/yandex-map.jpg'
+import YandexMap from '../../components/YandexMap';
+import {
+  changeNavigationColorAction,
+  changingLabelInHeaderAction,
+  changeHeaderBackgroundAction
+} from '../../actions/stylesActions';
+import { useDispatch } from 'react-redux';
 import './main-page.scss';
 
 function MainPage() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(changingLabelInHeaderAction(true));
+    dispatch(changeHeaderBackgroundAction('rgba(65, 9, 53, 0.7)'));
+    dispatch(changeNavigationColorAction('#FFFFFF'));
+  }, []);
+
   return (
     <div className='main-page'>
       <div className="main-page__insert">
@@ -21,11 +35,8 @@ function MainPage() {
         </h3>
       </div>
       <section className='main-page__yandex-map'>
-        <div className="container">
-          <div className="main-page__yandex-map-body">
-            <img className='main-page__yandex-map-img' src={yandexMap} alt="Карта яндекс" />
-          </div>
-        </div>
+        <h4>Яндекс карта</h4>
+        <YandexMap />
       </section>
     </div>
   )
