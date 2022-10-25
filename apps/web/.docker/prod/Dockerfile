@@ -10,6 +10,7 @@ RUN npm run build
 FROM nginx:1.23.1-alpine as production-stage
 
 COPY ./.docker/prod/nginx.conf /etc/nginx/nginx.conf
+COPY ./.docker/prod/.htpasswd /etc/nginx/.htpasswd
 
 ENV NODE_ENV=production
 
