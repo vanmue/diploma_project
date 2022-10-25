@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  api:
+    container_name: diploma-project-api
+    build:
+      context: apps/api
+      dockerfile: .docker/prod/Dockerfile
+    env_file:
+      - apps/api/.docker/prod/.env
+    restart: always
+    depends_on:
+      - postgres
+  postgres:
+    container_name: diploma-project-postgres
+    image: postgres:15
+    env_file:
+      - apps/postgres/.docker/prod/.env
+    volumes:
+      - ./storage/postgresql/data:/var/lib/postgresql/data
+    restart: always
+networks:
+  diploma-project-network:
