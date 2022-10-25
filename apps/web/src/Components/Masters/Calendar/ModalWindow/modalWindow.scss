@@ -1,0 +1,97 @@
+@import '../../../../assets/styles/mixins.scss';
+
+.fixed-overlay {
+    position: fixed;
+    overflow: auto;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+    position: absolute;
+    left: 31%;
+    top: 16%;
+    margin-left: -100px;
+    margin-top: -75px;
+}
+
+.modal_container {
+    background-color: #fff;
+    color: #410935;
+    padding: 50px;
+}
+
+.modal__master-block {
+    display: flex;
+    align-items: center;
+}
+
+.modal__master-foto {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 50px;
+
+
+}
+
+.modal__master-foto img {
+    margin: -14px -165px -36px -44px;
+}
+
+.modal__master-text {}
+
+.modal__master-name {
+    @include inter(700, normal);
+    font-size: 24px;
+}
+
+.modal__master-specialization {
+    @include inter(400, normal);
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.modal__select {}
+
+.modal__select-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.modal__form {
+    @include inter(400, normal);
+    font-size: 24px;
+}
+
+.modal__form div {
+    margin: 25px;
+    border-bottom: 1px solid #410935;
+    padding-bottom: 15px;
+}
+
+.modal__form input {
+    @include inter(400, normal);
+    font-size: 24px;
+}
+
+.modal__btn-wrap {
+    text-align: center;
+    margin-top: 60px
+}
+
+.modal__btn {
+    @include inter(700, normal);
+    font-size: 24px;
+    padding: 11px 65px;
+    color: #F5BFAB;
+    background-color: #A40123;
+    border-radius: 10px;
+
+}

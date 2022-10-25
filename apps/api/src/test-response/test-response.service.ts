@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { IJsonObject } from 'src/interfaces/IJsonObject';
+import { JsonObject } from '../libs/src/models/JsonObject';
 
 @Injectable()
 export class TestResponseService {
-  getResponse(): IJsonObject<Record<string, string>> {
+  getResponse(): JsonObject<Record<string, string>> {
     return {
       data: { 'test response': 'hello world' },
     };
