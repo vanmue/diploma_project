@@ -76,7 +76,7 @@ SalonCard.defaultProps = {
   address: '-',
   workinghours: '-',
   telephone: '-',
-  pathImg: propTypes.string,
+  pathImg: '',
 }
 
 export default React.memo(SalonCard);
