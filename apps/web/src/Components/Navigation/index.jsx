@@ -24,7 +24,7 @@ function Navigation() {
         <NavLink
           className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
           style={{ color: `${color}` }}
-          to="/salons-page"
+          to="/salons"
         >
           Салоны
         </NavLink>
