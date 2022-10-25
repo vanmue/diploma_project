@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import Services from '../../components/Services';
-import YandexMap from '../../components/YandexMap';
+import Services from '../../Components/Services';
+import YandexMap from '../../Components/YandexMap';
 import {
   changeNavigationColorAction,
   changingLabelInHeaderAction,
