@@ -1,5 +1,5 @@
 import React from 'react';
-import PriceList from '../../components/PriceList';
+import PriceList from '../../Components/PriceList';
 import './recording-to-master.scss';
 
 function RecordingToMaster() {
