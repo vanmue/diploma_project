@@ -1,0 +1,35 @@
+@import '../../../assets/styles/mixins.scss';
+
+
+.revievs__block {
+    margin-top: 60px;
+    padding-bottom: 60px;
+}
+
+.reviev__card {
+    display: flex;
+    margin-top: 30px;
+    color: #FFFFFF;
+
+}
+
+.reviev__name {
+    @include inter(700, normal);
+    font-size: 14px;
+    display: flex;
+    margin-right: 15px;
+}
+
+.reviev__card-img {
+    margin-right: 16px;
+}
+
+.reviev__text {
+    @include inter(400, normal);
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.reviev__name-rating {
+    display: flex;
+}

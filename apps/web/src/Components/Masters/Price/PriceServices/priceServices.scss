@@ -1,0 +1,14 @@
+@import '../../../../assets/styles/mixins.scss';
+
+.price__link {
+    @include inter(400, normal);
+    font-size: 14px;
+    color: #FFFFFF;
+    ;
+    max-width: 500px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 100px;
+    margin-top: 20px;
+
+}

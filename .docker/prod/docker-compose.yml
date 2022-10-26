@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  api:
+    container_name: diploma-project-api
+    build:
+      context: apps/api
+      dockerfile: .docker/prod/Dockerfile
+    env_file:
+      - apps/api/.docker/prod/.env
+    restart: always
+  postgres:
+    container_name: diploma-project-postgres
+    image: postgres:15
+    env_file:
+      - apps/postgres/.docker/prod/.env
+    volumes:
+      - ./storage/postgresql/data:/var/lib/postgresql/data
+    restart: always
+  adminer:
+    container_name: diploma-project-adminer
+    image: adminer:4.8.1
+    restart: always
+  web:
+    container_name: diploma-project-web
+    build:
+      context: apps/web
+      dockerfile: .docker/prod/Dockerfile
+    volumes:
+      - ./storage/app/public/uploads:/app/uploads
+      - /home/user/conf/web/vanmue.ru/ssl:/home/user/conf/web/vanmue.ru/ssl
+    restart: always
+    ports:
+      - 8001:443
+    depends_on:
+      - api
+      - adminer
+networks:
+  diploma-project-network:
