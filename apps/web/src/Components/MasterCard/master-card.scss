@@ -1,0 +1,76 @@
+@import '../../assets/styles/mixins.scss';
+
+.master-card {
+  border-radius: 10px;
+  display: flex;
+  padding: 10px 35px 10px 10px;
+  background: #F5BFAB;
+
+  &__foto {
+    border-radius: 10px;
+    min-width: 200px;
+    height: 247px;
+    overflow: hidden;
+    margin-right: 20px;
+
+    &-foto {}
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+
+  &__title {
+    display: flex;
+    @include inter(700, normal);
+    font-size: 24px;
+    line-height: 29px;
+    color: #410935;
+    margin-bottom: 10px;
+  }
+
+  &__name {}
+
+  &__specialization {}
+
+  &__info-detail {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  &__wrapp-master-rating {
+    width: 153px;
+    height: 17px;
+    margin-bottom: 8px;
+  }
+
+  &__place-work {
+    display: flex;
+    @include inter(700, normal);
+    font-size: 14px;
+    line-height: 17px;
+    color: #410935;
+    margin-bottom: 20px;
+
+    &-text {}
+
+    &-salon {}
+  }
+
+  &__info-desk {
+    flex: 1 0 auto;
+    @include inter(400, normal);
+    font-size: 14px;
+    line-height: 18px;
+    color: #410935;
+
+    &>p:nth-child(1) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__wrapp-button {}
+}
