@@ -27,9 +27,10 @@ services:
       dockerfile: .docker/prod/Dockerfile
     volumes:
       - ./storage/app/public/uploads:/app/uploads
+      - /home/user/conf/web/vanmue.ru/ssl:/home/user/conf/web/vanmue.ru/ssl
     restart: always
     ports:
-      - 8001:80
+      - 8001:443
     depends_on:
       - api
       - adminer
