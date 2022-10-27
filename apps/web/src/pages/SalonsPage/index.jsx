@@ -7,12 +7,12 @@ import {
   changingLabelInHeaderAction,
   changeHeaderBackgroundAction
 } from '../../actions/stylesActions';
-import DropdownSelect from '../../components/DropdownSelect';
-import SalonCard from '../../components/SalonCard';
-import Pagination from '../../components/Pagination';
-import img1 from '../../components/SalonCard/img/1.jpg';
-import img2 from '../../components/SalonCard/img/2.jpg';
-import img3 from '../../components/SalonCard/img/3.jpg';
+import DropdownSelect from '../../Components/DropdownSelect';
+import SalonCard from '../../Components/SalonCard';
+import Pagination from '../../Components/Pagination';
+import img1 from '../../Components/SalonCard/img/1.jpg';
+import img2 from '../../Components/SalonCard/img/2.jpg';
+import img3 from '../../Components/SalonCard/img/3.jpg';
 import './salons-page.scss';
 
 function SalonsPage() {

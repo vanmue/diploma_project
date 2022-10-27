@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom'
 import App from '../App';
 import SalonsPage from '../pages/SalonsPage';
-import MainPage from '../pages/main';
+import MainPage from '../pages/Main';
 import Error from './Error';
 import Master from './Masters';
 
