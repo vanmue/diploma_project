@@ -56,7 +56,7 @@ function SalonCard({
                 <Button
                   background='#A40123'
                 >
-                  Позвонить
+                  Записаться
                 </Button>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
 import './button.scss';
 
@@ -12,7 +13,12 @@ function Button({
       className='button'
       style={{ background: `${background}` }}
     >
-      {children}
+      <Link
+        end
+        to="/master"
+      >
+        {children}
+      </Link>
     </button>
   )
 }

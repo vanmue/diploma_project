@@ -1,5 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import Rating from '../Rating';
 import Button from '../Button';
 import './master-card.scss';
 
@@ -27,8 +28,8 @@ function MasterCard({
         </div>
 
         <div className="master-card__info-detail">
-          <div className="master-card__wrapp-master-rating">
-
+          <div className="master-card__wrapp-rating">
+            <Rating />
           </div>
 
           <div className="master-card__place-work">
@@ -42,7 +43,7 @@ function MasterCard({
           </div>
           <div className="master-card__wrapp-button">
             <Button
-              background='#410935'
+              background='#A40123'
             >
               Записаться
             </Button>
