@@ -1,6 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import ServicesList from '../ServicesList';
+import Button from '../Button';
 import './salon-card.scss';
 
 function SalonCard({
@@ -42,10 +43,24 @@ function SalonCard({
               <a href="#">Подробная информация о салоне</a>
               {/* {detailedInformation} */}
             </div>
+
             <div className="salon-card__buttons">
-              <button className="salon-card__btn">Позвонить</button>
-              <button className="salon-card__btn">Записаться</button>
+              <div className="salon-card__wrapp-button">
+                <Button
+                  background='#410935'
+                >
+                  Позвонить
+                </Button>
+              </div>
+              <div className="salon-card__wrapp-button">
+                <Button
+                  background='#A40123'
+                >
+                  Записаться
+                </Button>
+              </div>
             </div>
+
           </div>
           <div className="salon-card__services">
             <p className="salon-card__services-title">

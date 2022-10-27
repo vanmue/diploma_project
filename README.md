@@ -29,14 +29,13 @@
 --- | --- |    }
 
 
-
 ## Развертывание в production
 
 ### Конфигурирование
 
 1. Хранение базы данных на хостовой машине - директория:
 
-`/var/lib/postgresql/data/diploma_project/`
+`/storage/postgresql/data/`
 
 2. Имя пользователя и пароль к базе данных - в файле:
 
@@ -52,4 +51,20 @@
 
 - старт Nginx на порту `8001`:
 
-`./docker.prod.run.sh 8001`
+`./docker.prod.up.sh`
+
+## Сборка контейнеров production локально
+
+- старт Nginx на порту `8001`:
+
+`./docker.prod.up.local.sh`
+
+Отличия от конфигурации production:
+
+- nginx.conf:
+	- отключены сертификаты SSL
+	- отключена Basic authorization для входа в Adminer
+- Dockerfile проекта web:
+	- не копируется файл паролей для Basic authorization
+- docker-compose.yml:
+	- не монтируется каталог сертификатов SSL
