@@ -1,0 +1,17 @@
+@import '../../assets/styles/mixins.scss';
+
+.button {
+  width: 184px;
+  height: 40px;
+  @include inter(700, normal);
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 17px;
+
+  border-radius: 10px;
+  cursor: pointer;
+
+  &>a {
+    color: #F5BFAB;
+  }
+}

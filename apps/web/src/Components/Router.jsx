@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
 import App from '../App';
+import MastersPage from '../pages/masters'
 import SalonsPage from '../pages/SalonsPage';
 import MainPage from '../pages/Main';
 import Error from './Error';
@@ -11,7 +12,8 @@ function Router() {
     <Routes>
       <Route path="/" element={<App />}>
         <Route index element={<MainPage />} />
-        <Route path="salons-page" element={<SalonsPage />} />
+        <Route path="salons" element={<SalonsPage />} />
+        <Route path="masters" element={<MastersPage />} />
         <Route path="master" element={<Master />} />
         <Route path="*" element={< Error />} />
       </Route>

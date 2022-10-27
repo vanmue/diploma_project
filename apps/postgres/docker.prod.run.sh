@@ -13,4 +13,4 @@ docker run --env-file ./.docker/prod/.env \
     --restart=on-failure \
     -v /var/lib/postgresql/data/$PREFIX:/var/lib/postgresql/data \
     -d \
-    postgres
+    postgres:15
