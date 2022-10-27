@@ -7,8 +7,11 @@
   text-transform: uppercase;
   font-size: 14px;
   line-height: 17px;
-  color: #F5BFAB;
 
   border-radius: 10px;
   cursor: pointer;
+
+  &>a {
+    color: #F5BFAB;
+  }
 }
