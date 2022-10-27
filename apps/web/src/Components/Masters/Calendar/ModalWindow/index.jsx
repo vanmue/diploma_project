@@ -2,11 +2,11 @@ import React from "react";
 import { useState } from 'react';
 import DropdownModal from './dropdownModal'
 import './modalWindow.scss'
-import moment from 'moment'
+import image from '../../img/fotoMasters.png'
 
 function ModalWindow({ modalActive, choiceDay }) {
     const cell = ['10-00', '11-00', '12-00', '13-00', '14-00', '15-00', '16-00', '17-00', '18-00']
-    const image = require('../../img/fotoMasters.png')
+    //const image = require('../../img/fotoMasters.png')
 
     const servise = ['Стрижка на короткие волосы', 'Стрижка на длинные волосы', 'Окрашивание', 'Укладка волос']
     return <>

@@ -2,14 +2,11 @@ import React from "react";
 import Calendar from './Calendar'
 import Price from './Price'
 import Reviews from "./Reviews";
-
+import image from './img/fotoMasters.png'
 import "./master.scss"
-import ModalWindow from "./Calendar/ModalWindow";
 
 
 function Master() {
-    const image = require('./img/fotoMasters.png')
-
     return <>
         <div className='main-page'>
             <div className="container">
