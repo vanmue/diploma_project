@@ -4,8 +4,6 @@ import image from '../img/Ellipse.png'
 import imgStar from '../img/Star2.png'
 
 function Reviews() {
-    //const image = require('../img/Ellipse.png')
-    //const star = require('../img/Star2.png')
     const revievs = [{
         img: image,
         name: 'Елена',
