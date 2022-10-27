@@ -3,7 +3,7 @@ services:
   adminer:
     container_name: diploma-project-adminer
     image: adminer:4.8.1
-    restart: always
+    restart: unless-stopped
   postgres:
     container_name: diploma-project-postgres
     image: postgres:15
@@ -11,7 +11,7 @@ services:
       - apps/postgres/.docker/prod/.env
     volumes:
       - ./storage/postgresql/data:/var/lib/postgresql/data
-    restart: always
+    restart: unless-stopped
   api:
     container_name: diploma-project-api
     build:
@@ -19,7 +19,7 @@ services:
       dockerfile: .docker/prod/Dockerfile
     env_file:
       - apps/api/.docker/prod/.env
-    restart: always
+    restart: unless-stopped
     depends_on:
       - postgres
   web:
@@ -29,7 +29,7 @@ services:
       dockerfile: .docker/prod_local/Dockerfile
     volumes:
       - ./storage/app/public/uploads:/app/uploads
-    restart: always
+    restart: unless-stopped
     ports:
       - 8001:80
     depends_on:
