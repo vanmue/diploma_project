@@ -4,7 +4,7 @@ import DropdownModal from './dropdownModal'
 import './modalWindow.scss'
 import moment from 'moment'
 
-function ModalWindow({ modalActive }) {
+function ModalWindow({ modalActive, choiceDay }) {
     const cell = ['10-00', '11-00', '12-00', '13-00', '14-00', '15-00', '16-00', '17-00', '18-00']
     const image = require('../../img/fotoMasters.png')
 
@@ -31,7 +31,7 @@ function ModalWindow({ modalActive }) {
                         />
                         <div className="modal__master-time">
                             <h2>Время доступное для записи</h2>
-                            <p>{moment().format('DDMMMM')}</p>
+                            <p>{choiceDay}</p>
                             <div className="modal__master-drid">
                                 {cell.map((time) =>
                                     <span key={time} className="modal__master-cell">{time}</span>
