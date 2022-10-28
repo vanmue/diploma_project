@@ -29,7 +29,9 @@ function MasterCard({
 
         <div className="master-card__info-detail">
           <div className="master-card__wrapp-rating">
-            <Rating />
+            <Rating
+              isAcive={true}
+            />
           </div>
 
           <div className="master-card__place-work">

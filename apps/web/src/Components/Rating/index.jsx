@@ -1,33 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
+import propTypes from 'prop-types';
 import './rating.scss'
 
-function Rating() {
+function Rating({
+  isAcive
+}) {
+  const [ratingActiveWidth, setRatingActiveWidth] = useState(70);
+  const grade = 3.5;
 
-  const renderPicStar = () => {
-    return <svg className="rating__pic-star" width="15" height="15" viewBox="0 0 15 15" fill="none">
-      <path d="M7.5 0L9.18386 5.18237H14.6329L10.2245 8.38525L11.9084 13.5676L7.5 10.3647L3.09161 13.5676L4.77547 8.38525L0.367076 5.18237H5.81614L7.5 0Z" fill="white" />
-    </svg>
+  const handleFocusStar = (e) => {
+    if (!isAcive) {
+      return;
+    }
+    if (e.currentTarget.value === '1') {
+      setRatingActiveWidth(20);
+    }
+    if (e.currentTarget.value === '2') {
+      setRatingActiveWidth(40);
+    }
+    if (e.currentTarget.value === '3') {
+      setRatingActiveWidth(60);
+    }
+    if (e.currentTarget.value === '4') {
+      setRatingActiveWidth(80);
+    }
+    if (e.currentTarget.value === '5') {
+      setRatingActiveWidth(100);
+    }
+  }
+
+  const handleRatingItemsMouseLeave = () => {
+    setRatingActiveWidth(grade / 0.05);
   }
 
   return (
     <div className="rating">
       <div className="rating__body">
-        {renderPicStar()}
-        {renderPicStar()}
-        {renderPicStar()}
-        {renderPicStar()}
-        {renderPicStar()}
-        <div className="rating__active"></div>
-        <div className="rating__items">
-          <input className="rating__item" type="radio" name="rating" value={1} />
-          <input className="rating__item" type="radio" name="rating" value={2} />
-          <input className="rating__item" type="radio" name="rating" value={3} />
-          <input className="rating__item" type="radio" name="rating" value={4} />
-          <input className="rating__item" type="radio" name="rating" value={5} />
+        <div
+          className="rating__active"
+          style={{ width: `${ratingActiveWidth}%` }}
+        ></div>
+        <div
+          className="rating__items"
+          onMouseLeave={handleRatingItemsMouseLeave}
+        >
+          <input
+            className="rating__item"
+            type="radio"
+            name="rating"
+            value={1}
+            data-rating-item="1"
+            onMouseEnter={handleFocusStar}
+          />
+          <input
+            className="rating__item"
+            type="radio"
+            name="rating"
+            value={2}
+            onMouseEnter={handleFocusStar}
+          />
+          <input
+            className="rating__item"
+            type="radio"
+            name="rating"
+            value={3}
+            onMouseEnter={handleFocusStar}
+          />
+          <input
+            className="rating__item"
+            type="radio"
+            name="rating"
+            value={4}
+            onMouseEnter={handleFocusStar}
+          />
+          <input
+            className="rating__item"
+            type="radio"
+            name="rating"
+            value={5}
+            onMouseEnter={handleFocusStar}
+          />
         </div>
       </div>
     </div>
   )
+}
+
+Rating.propTypes = {
+  isAcive: propTypes.bool
 }
 
 export default React.memo(Rating);
