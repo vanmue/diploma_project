@@ -1,31 +1,39 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import yandexMap from './img/yandex-map.jpg'
+import { useEffect } from 'react';
+import propTypes from 'prop-types';
 import './yandex-map.scss';
 
-function YandexMap() {
-  const [triger, setTriger] = useState([55.77413254937618, 37.78757273947948]);
-  // console.log(document.querySelector('.yandex-map__body').childNodes == null)
+function YandexMap({
+  center,
+  zoom,
+  items
+}) {
+
   useEffect(() => {
-    // console.log("1")
-    window.ymaps.ready(function () {
-      return new window.ymaps.Map('map', {
-        center: triger,
-        zoom: 13
-      });
+
+    // myMap.destroy();
+    window.ymaps.ready(function init() {
+
+      let myMap;
+
+      if (document.querySelector('.yandex-map__body').children.length === 0) {
+        myMap = new window.ymaps.Map('map', {
+          center: center,
+          zoom: zoom
+        });
+      } else if (document.querySelector('.yandex-map__body').children.length === 1) {
+        document.querySelector('.yandex-map__body').children[0].remove();
+        myMap = new window.ymaps.Map('map', {
+          center: center,
+          zoom: zoom
+        });
+      }
+
+      items.forEach((item) => {
+        myMap.geoObjects.add(new window.ymaps.Placemark(item), {}, {});
+      })
     });
-    if (document.querySelector('.yandex-map__body').childNodes.length > 1) {
-      // console.log("if")
-      document.querySelector('.yandex-map__body').childNodes[0].remove();
-    }
-    // return () => {
-    //   console.log("return:")
-    // }
-  }, []);
-
-  useEffect(() => {
-
-  }, [triger]);
+  }, [center, zoom, items]);
 
   return (
     <div className="yandex-map">
@@ -39,6 +47,12 @@ function YandexMap() {
       </div>
     </div>
   )
+}
+
+YandexMap.propTypes = {
+  center: propTypes.array,
+  zoom: propTypes.number,
+  items: propTypes.arrayOf(propTypes.array)
 }
 
 export default React.memo(YandexMap);

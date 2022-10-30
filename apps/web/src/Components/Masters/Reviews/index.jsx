@@ -1,9 +1,9 @@
 import React from "react";
 import './revievs.scss'
+import image from '../img/Ellipse.png'
+import imgStar from '../img/Star2.png'
 
 function Reviews() {
-    const image = require('../img/Ellipse.png')
-    const star = require('../img/Star2.png')
     const revievs = [{
         img: image,
         name: 'Елена',
@@ -34,7 +34,7 @@ function Reviews() {
                         <h3 className="reviev__name">{item.name}</h3>
                         <div className="reviev__rating">
                             {[...Array(item.rating)].map((e, index) =>
-                                <img key={index + item.name} src={star} alt='star' />)}
+                                <img key={index + item.name} src={imgStar} alt='star' />)}
                         </div>
                     </div>
                     <p className="reviev__text">{item.reviev}</p>
