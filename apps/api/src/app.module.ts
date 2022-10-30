@@ -4,10 +4,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { CitiesModule } from './cities/cities.module';
-import { CityEntity } from './cities/city.entity';
-import { GroupEntity } from './deliverables/groups/group.entity';
-import { GroupsModule } from './deliverables/groups/groups.module';
+import { DeliverableGroupsModule } from './deliverables/groups/deliverable-groups.module';
 import { JsonService } from './services/json/json.service';
+import { ShopAdvantagesModule } from './shops/shop-advantages/shop-advantages.module';
 import { ShopsModule } from './shops/shops.module';
 import { TestResponseModule } from './test-response/test-response.module';
 
@@ -31,15 +30,16 @@ const synchronize = process.env.NODE_ENV !== 'production';
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_DATABASE'),
         synchronize,
-        entities: [GroupEntity, CityEntity],
+        autoLoadEntities: true,
       }),
       inject: [ConfigService],
     }),
 
     TestResponseModule,
-    GroupsModule,
+    DeliverableGroupsModule,
     ShopsModule,
     CitiesModule,
+    ShopAdvantagesModule,
   ],
   controllers: [],
   providers: [JsonService],

@@ -1,16 +1,22 @@
 import { IsNotEmpty } from 'class-validator';
-import { ShopEntity } from 'src/shops/shop.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
+import { ShopEntity } from '../shop.entity';
 
-@Entity('cities')
-export class CityEntity {
+const UNIQUE_SHOP_ADVANTAGE_NAME_CONSTRAINT =
+  'unique_shop_advantage_name_constrtaint';
+
+@Entity('shop_advantages')
+@Unique(UNIQUE_SHOP_ADVANTAGE_NAME_CONSTRAINT, ['name'])
+export class ShopAdvantageEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,7 +24,8 @@ export class CityEntity {
   @Column('text')
   name: string;
 
-  @OneToMany(() => ShopEntity, (shop) => shop.city)
+  @ManyToMany(() => ShopEntity, (shop) => shop.advantages)
+  @JoinTable()
   shops: ShopEntity[];
 
   @CreateDateColumn({ type: 'timestamp' })

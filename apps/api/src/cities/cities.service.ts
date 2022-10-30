@@ -12,4 +12,7 @@ export class CitiesService {
   async create(dto: CityEntity) {
     return await this.cityRepository.save(dto);
   }
+  async findAll() {
+    return await this.cityRepository.find({ order: { name: 'ASC' } });
+  }
 }
