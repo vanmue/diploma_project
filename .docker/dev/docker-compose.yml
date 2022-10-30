@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  adminer:
+    container_name: diploma-project-adminer-dev
+    image: adminer:4.8.1
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+  postgres:
+    container_name: diploma-project-postgres-dev
+    image: postgres:15
+    env_file:
+      - apps/postgres/.docker/prod/.env
+    volumes:
+      - ./storage/postgresql/data:/var/lib/postgresql/data
+    restart: unless-stopped
+  api:
+    container_name: diploma-project-api-dev
+    image: node:16
+    working_dir: /app
+    volumes:
+      - ./apps/api:/app
+    env_file:
+      - ./apps/api/.docker/dev/.env
+    environment:  
+      NODE_ENV: development
+    ports:
+      - 3000:3000  
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    command: "npm run start:dev"
+  web:
+    container_name: diploma-project-web-dev
+    image: node:16
+    working_dir: /app
+    volumes:
+      - ./apps/web:/app
+    environment:  
+      NODE_ENV: development
+    ports:
+      - 5173:5173
+    depends_on:
+      - api
+      - adminer
+    restart: unless-stopped
+    command: "npm run start"
+

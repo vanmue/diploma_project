@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JsonService } from 'src/json/json.service';
+import { JsonService } from 'src/services/json/json.service';
 import { GroupEntity } from './group.entity';
 import { GroupsController } from './groups.controller';
 import { GroupsService } from './groups.service';

@@ -3,11 +3,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { CitiesModule } from './cities/cities.module';
+import { CityEntity } from './cities/city.entity';
 import { GroupEntity } from './deliverables/groups/group.entity';
 import { GroupsModule } from './deliverables/groups/groups.module';
-import { TestResponseModule } from './test-response/test-response.module';
-import { JsonService } from './json/json.service';
+import { JsonService } from './services/json/json.service';
 import { ShopsModule } from './shops/shops.module';
+import { TestResponseModule } from './test-response/test-response.module';
 
 const synchronize = process.env.NODE_ENV !== 'production';
 
@@ -29,7 +31,7 @@ const synchronize = process.env.NODE_ENV !== 'production';
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_DATABASE'),
         synchronize,
-        entities: [GroupEntity],
+        entities: [GroupEntity, CityEntity],
       }),
       inject: [ConfigService],
     }),
@@ -37,6 +39,7 @@ const synchronize = process.env.NODE_ENV !== 'production';
     TestResponseModule,
     GroupsModule,
     ShopsModule,
+    CitiesModule,
   ],
   controllers: [],
   providers: [JsonService],

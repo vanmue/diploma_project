@@ -1,18 +1,4 @@
-# Dev-среда сервера api
-
-## Сборка бандла фронтенда, копирование в каталог public сервера api:
-
-`npm run web:build`
-
-## Старт dev-сервера api:
-
-- старт на http://localhost:3000:
-
-`npm run api:dev`
-
-## Сборка бандла фронтенда, копирование в каталог public сервера api, старт dev-сервера api:
-
-`npm run start:dev`
+# diploma_project
 
 ## Каталог маршрутов
 
@@ -28,6 +14,18 @@
 --- | --- |        image: "/uploads/groups/parikmaherskiye_uslugi.png"
 --- | --- |    }
 
+## Dev-среда
+
+### docker compose
+
+`./docker.dev.up.sh`
+
+### вход в Adminer
+
+- url: `http://localhost:8080`
+- сервер базы данных: `diploma-project-postgres-dev`
+- имя пользователя: `postgres`
+- пароль: `postgres`
 
 ## Развертывание в production
 

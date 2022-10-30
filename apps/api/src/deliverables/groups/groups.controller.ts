@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { JsonService } from 'src/json/json.service';
 import { JsonObject } from 'src/libs/src/models/JsonObject';
+import { JsonService } from 'src/services/json/json.service';
 import { GroupEntity } from './group.entity';
 import { GroupsService } from './groups.service';
 
