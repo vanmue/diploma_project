@@ -1,6 +1,6 @@
-import type { JsonError } from './JsonError';
+import { JsonErrors } from './JsonErrors';
 
 export class JsonObject<T> {
   data?: T;
-  errors?: JsonError[];
+  errors?: JsonErrors;
 }
