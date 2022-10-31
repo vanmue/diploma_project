@@ -13,6 +13,8 @@
 --- | --- |        name: "парикмахерские услуги",
 --- | --- |        image: "/uploads/groups/parikmaherskiye_uslugi.png"
 --- | --- |    }
+города - список | `GET /api/v1/cities/` |
+салоны - преимущества ("бесплатная парковка" и т.п.) | `GET /api/v1/shop-advantages/` |
 
 ## Dev-среда
 
