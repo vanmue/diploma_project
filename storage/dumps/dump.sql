@@ -73,6 +73,8 @@ CREATE TABLE "public"."shop_advantages" (
     CONSTRAINT "unique_shop_advantage_name_constrtaint" UNIQUE ("name")
 ) WITH (oids = false);
 
+INSERT INTO "shop_advantages" ("id", "name", "created_at", "updated_at") VALUES
+(1,	'бесплатная гостевая парковка',	'2022-10-31 07:37:39.114',	'2022-10-31 07:37:39.114');
 
 DROP TABLE IF EXISTS "shop_advantages_shops_shops";
 CREATE TABLE "public"."shop_advantages_shops_shops" (
@@ -109,4 +111,4 @@ ALTER TABLE ONLY "public"."shop_advantages_shops_shops" ADD CONSTRAINT "FK_fb0a1
 
 ALTER TABLE ONLY "public"."shops" ADD CONSTRAINT "FK_5b9da5f0bdc5fcd104fa4430f5c" FOREIGN KEY ("cityId") REFERENCES cities(id) NOT DEFERRABLE;
 
--- 2022-10-30 22:13:48.212892+00
+-- 2022-10-31 07:38:30.84332+00
