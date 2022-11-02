@@ -12,9 +12,9 @@ function Navigation() {
     <ul className="navigation">
       <li className="navigation__item">
         <NavLink
+          end
           className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
           style={{ color: `${color}` }}
-          end
           to="/"
         >
           Главная
@@ -33,9 +33,8 @@ function Navigation() {
         <NavLink
           className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
           style={{ color: `${color}` }}
-          end
+          // end
           to="/masters"
-        // to="/master"
         >
           Мастера
         </NavLink>

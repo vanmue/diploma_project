@@ -26,7 +26,7 @@ function Pagination() {
   useEffect(() => {
     let items = [];
     let currentPage = activePage;
-    console.log(currentPage)
+    // console.log(currentPage)
 
     // Количество страниц
     const length = Math.ceil(count / Math.max(limit, 1));

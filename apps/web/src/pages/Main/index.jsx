@@ -23,7 +23,7 @@ function MainPage() {
       <div className="main-page__insert">
         <div className="main-page__insert-title">
           <h1 className='main-page__h1'>Онлайн запись</h1>
-          <p>В салон красоты на любую услугу к лучшим матерам</p>
+          <p>В салон красоты на любую услугу к лучшим мастерам</p>
         </div>
       </div>
       <section className="main-page__wrapp-services">
