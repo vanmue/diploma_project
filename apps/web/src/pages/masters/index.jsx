@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import DropdownSelect from '../../Components/DropdownSelect';
 import MasterCard from '../../Components/MasterCard';
 import Pagination from '../../Components/Pagination';
