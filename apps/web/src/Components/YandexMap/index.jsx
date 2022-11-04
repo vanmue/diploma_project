@@ -9,24 +9,16 @@ function YandexMap({
   items
 }) {
 
-  useEffect(() => {
+  let myMap;
 
-    // myMap.destroy();
+  useEffect(() => {
     window.ymaps.ready(function init() {
 
-      let myMap;
-
       if (document.querySelector('.yandex-map__body').children.length === 0) {
-        myMap = new window.ymaps.Map('map', {
-          center: center,
-          zoom: zoom
-        });
+        newYmaps(center, zoom);
       } else if (document.querySelector('.yandex-map__body').children.length === 1) {
         document.querySelector('.yandex-map__body').children[0].remove();
-        myMap = new window.ymaps.Map('map', {
-          center: center,
-          zoom: zoom
-        });
+        newYmaps(center, zoom);
       }
 
       items.forEach((item) => {
@@ -34,6 +26,18 @@ function YandexMap({
       })
     });
   }, [center, zoom, items]);
+
+  /**
+   * Создание новой карты
+   * @param {array} c центр карты
+   * @param {number} z приближение карты(масштаб, zoom)
+  */
+  function newYmaps(c, z) {
+    myMap = new window.ymaps.Map('map', {
+      center: c,
+      zoom: z
+    });
+  }
 
   return (
     <div className="yandex-map">
@@ -53,6 +57,12 @@ YandexMap.propTypes = {
   center: propTypes.array,
   zoom: propTypes.number,
   items: propTypes.arrayOf(propTypes.array)
+}
+
+YandexMap.defaultProps = {
+  center: [],
+  zoom: 12,
+  items: []
 }
 
 export default React.memo(YandexMap);
