@@ -2,10 +2,11 @@ import React from "react";
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Select from "../Select";
-import './services.scss'
+import './services.scss';
 
 function Services() {
   const cities = useSelector(store => store.citiesReducer);
+
   return (
     <div className="services">
       <div className="container">
