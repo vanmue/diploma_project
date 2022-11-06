@@ -16,7 +16,7 @@ function MasterCard({
       <div className="master-card__foto">
         <img className="master-card__foto-foto" src={pathImg} alt="Фото мастера" />
       </div>
-      <dis className="master-card__info">
+      <div className="master-card__info">
         <div className="master-card__title">
           <p className="master-card__name">
             {name}
@@ -29,7 +29,9 @@ function MasterCard({
 
         <div className="master-card__info-detail">
           <div className="master-card__wrapp-rating">
-            <Rating />
+            <Rating
+              isAcive={true}
+            />
           </div>
 
           <div className="master-card__place-work">
@@ -50,7 +52,7 @@ function MasterCard({
           </div>
         </div>
 
-      </dis>
+      </div>
     </div>
   )
 }

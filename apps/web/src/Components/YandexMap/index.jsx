@@ -1,31 +1,43 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import yandexMap from './img/yandex-map.jpg'
+import { useEffect } from 'react';
+import propTypes from 'prop-types';
 import './yandex-map.scss';
 
-function YandexMap() {
-  const [triger, setTriger] = useState([55.77413254937618, 37.78757273947948]);
-  // console.log(document.querySelector('.yandex-map__body').childNodes == null)
+function YandexMap({
+  center,
+  zoom,
+  items
+}) {
+
+  let myMap;
+
   useEffect(() => {
-    // console.log("1")
-    window.ymaps.ready(function () {
-      return new window.ymaps.Map('map', {
-        center: triger,
-        zoom: 13
-      });
+    window.ymaps.ready(function init() {
+
+      if (document.querySelector('.yandex-map__body').children.length === 0) {
+        newYmaps(center, zoom);
+      } else if (document.querySelector('.yandex-map__body').children.length === 1) {
+        document.querySelector('.yandex-map__body').children[0].remove();
+        newYmaps(center, zoom);
+      }
+
+      items.forEach((item) => {
+        myMap.geoObjects.add(new window.ymaps.Placemark(item), {}, {});
+      })
     });
-    if (document.querySelector('.yandex-map__body').childNodes.length > 1) {
-      // console.log("if")
-      document.querySelector('.yandex-map__body').childNodes[0].remove();
-    }
-    // return () => {
-    //   console.log("return:")
-    // }
-  }, []);
+  }, [center, zoom, items]);
 
-  useEffect(() => {
-
-  }, [triger]);
+  /**
+   * Создание новой карты
+   * @param {array} c центр карты
+   * @param {number} z приближение карты(масштаб, zoom)
+  */
+  function newYmaps(c, z) {
+    myMap = new window.ymaps.Map('map', {
+      center: c,
+      zoom: z
+    });
+  }
 
   return (
     <div className="yandex-map">
@@ -39,6 +51,18 @@ function YandexMap() {
       </div>
     </div>
   )
+}
+
+YandexMap.propTypes = {
+  center: propTypes.array,
+  zoom: propTypes.number,
+  items: propTypes.arrayOf(propTypes.array)
+}
+
+YandexMap.defaultProps = {
+  center: [],
+  zoom: 12,
+  items: []
 }
 
 export default React.memo(YandexMap);

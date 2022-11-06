@@ -36,7 +36,7 @@ function SalonsPage() {
               <div className="salons-page__wrapp-drodown-select">
                 <DropdownSelect
                   dropdownTitle={'Выберите город'}
-                  items={['Москва', 'Санкт-Петербург', 'Нижний Новгород', 'Новосибирск', 'Новосибирск']}
+                  items={['Москва', 'Б', 'Санкт-Петербург', 'Самара', 'А', 'Нижний Новгород', 'Новосибирск', 'Новосибирск']}
                 />
               </div>
               <div className="salons-page__wrapp-drodown-select">
