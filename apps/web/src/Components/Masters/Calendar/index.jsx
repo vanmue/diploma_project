@@ -3,10 +3,28 @@ import moment from 'moment'
 import { CalendarGrid } from './Grid'
 import { CalendarMonth } from './CalendarMonth'
 import './calendar.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ModalWindow from "./ModalWindow/index.jsx";
 
+
+
+
 function Calendar() {
+
+    // let proxyUrl = 'https://cors-anywhere.herokuapp.com',
+    //     targetUrl = '/api/v1/shop-advantages/'
+
+    // useEffect(() => {
+    //     fetch(proxyUrl + targetUrl)
+    //         .then(res => {
+    //             console.log('res=', res)
+    //             res.json()
+    //         })
+    // .then(res => {
+    //     console.log(res)
+    // })
+    // }, [])
+
     moment.updateLocale('es', { week: { dow: 1 } })
     moment.updateLocale('es', {
         months: [

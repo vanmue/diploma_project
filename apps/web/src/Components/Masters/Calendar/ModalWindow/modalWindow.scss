@@ -12,10 +12,10 @@
 
 .modal {
     position: absolute;
-    left: 31%;
-    top: 16%;
-    margin-left: -100px;
-    margin-top: -75px;
+    left: 50%;
+    top: 54%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
 }
 
 .modal_container {
@@ -93,5 +93,20 @@
     color: #F5BFAB;
     background-color: #A40123;
     border-radius: 10px;
+}
 
+@media (max-width: 900px) {
+    .dropdown__modal-select {
+        width: 265px;
+    }
+
+    .modal__master-cell {
+        width: 76px;
+        padding: 5px 3px;
+        font-size: 20px;
+    }
+
+    .modal__master-time h2 p {
+        font-size: 20px;
+    }
 }

@@ -4,6 +4,7 @@ import Price from './Price'
 import Reviews from "./Reviews";
 import image from './img/fotoMasters.png'
 import "./master.scss"
+import Rating from '../Rating'
 
 
 function Master() {
@@ -16,13 +17,10 @@ function Master() {
                     </div>
                     <div className="master__info-block">
                         <h2 className="master__name">Светлана Иванова - мастер парикмахер</h2>
-                        <div className="rate_background" style={{}}>
-                            <div className="rate_bar" >&#9734;</div>
-                            <div className="rate_bar" >&#9734;</div>
-                            <div className="rate_bar" >&#9734;</div>
-                            <div className="rate_bar" >&#9734;</div>
-                            <div className="rate_bar">&#9734;</div>
+                        <div className="master-card__wrapp-rating">
+                            <Rating />
                         </div>
+
                         <p className="master__work">Работает в салоне: Салон красоты «Версаль»</p>
                         <div className="master__info">
                             <p>
