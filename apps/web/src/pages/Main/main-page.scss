@@ -51,7 +51,74 @@
     }
   }
 
-  &__wrapp-services {
+  &__services {
+    padding-top: 81px;
+    background: #410935;
+
+    &-body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-desc {
+      @include inter(400, normal);
+      font-size: 14px;
+      line-height: 18px;
+      color: #FFFFFF;
+      margin-bottom: 40px;
+
+      &>p:first-child {
+        margin-bottom: 15px;
+      }
+    }
+
+    &-h3 {
+      @include inter(400, normal);
+      font-size: 24px;
+      line-height: 29px;
+      text-transform: uppercase;
+      color: #F5BFAB;
+      margin-bottom: 19px;
+    }
+
+    &-h2 {
+      position: relative;
+      @include inter(700, normal);
+      font-size: 48px;
+      line-height: 58px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 44px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 200px;
+        height: 5px;
+        background: #F5BFAB;
+        border-radius: 5px;
+        bottom: -4px;
+        left: 0px;
+      }
+    }
+
+    &-list {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 19px;
+    }
+  }
+
+  &__wrapp-services-card {
+    flex: 0 1 441px;
+    height: 350px;
+    margin-bottom: 40px;
+  }
+
+
+
+  &__wrapp-select {
     margin-bottom: 60px;
   }
 

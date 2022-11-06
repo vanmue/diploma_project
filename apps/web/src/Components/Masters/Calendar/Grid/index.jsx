@@ -23,9 +23,9 @@ const CalendarGrid = ({ startDay, today, cellClick }) => {
     return <div className='grid_wrapper' >
         {daysArray.map((dayItem) =>
             <div key={dayItem.format('YYYYMMMMDD')} className='cell_wrapper' value={dayItem.format('YYYY-MM-DD')} onClick={(e) => cellClick(e)}>
-                < span className='date' style={colorDay(dayItem)} key={dayItem.format('YYYYDDMM')}>
+                < div className='date' style={colorDay(dayItem)} key={dayItem.format('YYYYDDMM')}>
                     {dayItem.format('D')}
-                </span>
+                </div>
             </div>)
         }
     </div >

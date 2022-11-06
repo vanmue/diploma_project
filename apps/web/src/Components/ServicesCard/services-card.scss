@@ -1,0 +1,21 @@
+@import '../../assets/styles/mixins.scss';
+
+.services-card {
+  display: flex;
+  align-items: flex-end;
+  width: 441px;
+  height: 100%;
+
+  &__title {
+    @include inter(700, normal);
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    flex: 1 1 auto;
+    height: 100px;
+    background: rgba(65, 9, 53, 0.5);
+    padding-top: 36px;
+  }
+}

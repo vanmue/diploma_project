@@ -61,7 +61,7 @@
     }
 }
 
-.modal__master-drid {
+.modal__master-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 32px;
@@ -96,4 +96,36 @@
     padding: 7px 10px;
     border: 1px solid #410935;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 900px) {
+    .dropdown__modal-select {
+        &__btn {
+            &>p {
+                font-size: 20px;
+            }
+        }
+    }
+
+    .modal__master-grid {
+        gap: 6px
+    }
+}
+
+@media (max-width: 520px) {
+    .modal__master-choice {
+        display: block;
+    }
+
+    .dropdown__modal-select {
+
+        margin: 0 auto
+    }
+
+    .modal__master-time h2 {
+        font-size: 20px
+    }
 }

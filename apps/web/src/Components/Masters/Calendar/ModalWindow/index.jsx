@@ -6,7 +6,6 @@ import image from '../../img/fotoMasters.png'
 
 function ModalWindow({ modalActive, choiceDay }) {
     const cell = ['10-00', '11-00', '12-00', '13-00', '14-00', '15-00', '16-00', '17-00', '18-00']
-    //const image = require('../../img/fotoMasters.png')
 
     const servise = ['Стрижка на короткие волосы', 'Стрижка на длинные волосы', 'Окрашивание', 'Укладка волос']
     return <>
@@ -32,7 +31,7 @@ function ModalWindow({ modalActive, choiceDay }) {
                         <div className="modal__master-time">
                             <h2>Время доступное для записи</h2>
                             <p>{choiceDay}</p>
-                            <div className="modal__master-drid">
+                            <div className="modal__master-grid">
                                 {cell.map((time) =>
                                     <span key={time} className="modal__master-cell">{time}</span>
                                 )}
