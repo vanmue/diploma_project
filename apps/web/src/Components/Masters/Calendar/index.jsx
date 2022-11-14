@@ -10,21 +10,27 @@ import ModalWindow from "./ModalWindow/index.jsx";
 
 
 function Calendar() {
+    const [data, setData] = useState([]);
 
-    // let proxyUrl = 'https://cors-anywhere.herokuapp.com',
-    //     targetUrl = '/api/v1/shop-advantages/'
 
-    // useEffect(() => {
-    //     fetch(proxyUrl + targetUrl)
-    //         .then(res => {
-    //             console.log('res=', res)
-    //             res.json()
-    //         })
-    // .then(res => {
-    //     console.log(res)
-    // })
-    // }, [])
+    let proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+        targetUrl = 'https://vanmue.ru:8001/api/v1/deliverable-groups/'
 
+    useEffect(() => {
+        fetch(proxyUrl + targetUrl)
+            .then((res) => res.json())
+            .then((res) => {
+                const result = {};
+                for (let item of res.data) {
+                    result[item.id] = item.name;
+                }
+
+                setData(result)
+
+            })
+
+    }, [])
+    //console.log(data);
     moment.updateLocale('es', { week: { dow: 1 } })
     moment.updateLocale('es', {
         months: [
@@ -63,7 +69,7 @@ function Calendar() {
             <h2 className='calendar__text'>Выбрать дату и время для записи:</h2>
             <CalendarMonth itemday={itemday} monthSubtract={monthSubtract} monthAdd={monthAdd} />
             <CalendarGrid startDay={startDay} today={today} cellClick={cellClick} />
-            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} />
+            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} data={data} />
         </div>
     );
 }

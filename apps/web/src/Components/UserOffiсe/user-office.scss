@@ -1,0 +1,39 @@
+@import '../../assets/styles/mixins.scss';
+
+.user-page {
+    color: #F5BFAB;
+    min-height: 60vh;
+}
+
+.user-page h2 {
+    @include inter(700, normal);
+    font-size: 24px;
+}
+
+.user-info {
+    display: flex;
+    padding-top: 50px;
+    margin-bottom: 45px;
+}
+
+.user-info img {
+    margin-right: 15px;
+    height: 100px;
+}
+
+
+
+.user-info P {
+    @include inter(400, normal);
+    font-size: 14px;
+    margin-top: 15PX;
+}
+
+.user-record__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-top: 20px;
+    border-bottom: 5px solid #FFFFFF;
+    grid-auto-rows: 45px;
+    gap: 35px;
+}
