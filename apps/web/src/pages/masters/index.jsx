@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import DropdownSelect from '../../Components/DropdownSelect';
 import MasterCard from '../../Components/MasterCard';
 import Pagination from '../../Components/Pagination';
+import {
+  changeNavigationColorAction,
+  changingLabelInHeaderAction,
+  changeHeaderBackgroundAction
+} from '../../actions/stylesActions';
 import master1 from './img/master-1.jpg';
 import master2 from './img/master-2.jpg';
 import master3 from './img/master-3.jpg';
 import './masters.scss';
 
 function MastersPage() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(changingLabelInHeaderAction(false));
+    dispatch(changeHeaderBackgroundAction('#F5BFAB'));
+    dispatch(changeNavigationColorAction('#410935'));
+  }, []);
 
   return (
     <div className='masters-page'>

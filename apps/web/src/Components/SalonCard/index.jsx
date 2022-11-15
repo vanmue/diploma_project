@@ -1,30 +1,53 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
 import ServicesList from '../ServicesList';
 import Button from '../Button';
 import './salon-card.scss';
 
 function SalonCard({
+  colorTitle,
+  bkgInfo,
   salonTitle,
   address,
   workinghours,
   telephone,
   parking,
-  detailedInformation,
-  pathImg
+  textLink,
+  bckCallBtn,
+  colorTextCallBtn,
+  bkgRecordBtn,
+  colorTextRecordBtn,
+  img,
+  map
 }) {
+
+  // useEffect(() => {
+  //   console.log(img)
+  //   console.log(img == undefined)
+  // });
 
   return (
     <div className="salon-card">
       <div className="salon-card__img">
-        <img src={pathImg} alt="Фото салона" />
+        {img ? <img src={img} alt="Фото салона" /> : map}
       </div>
-      <div className="salon-card__info">
-        <p className="salon-card__title">
+      <div
+        className="salon-card__info"
+        style={{ background: bkgInfo }}
+      >
+        <p
+          className="salon-card__title"
+          style={{ color: colorTitle }}
+        >
           {salonTitle}
         </p>
-        <div className="salon-card__info-flex">
-          <div className="salon-card__service-information">
+        <div
+          className="salon-card__info-flex"
+          style={{ color: colorTitle }}
+        >
+          <div
+            className="salon-card__service-information">
             <div className="salon-card__address">
               {address}
             </div>
@@ -35,26 +58,30 @@ function SalonCard({
             <div className="salon-card__parking">
               {parking}
             </div>
-            <div className="salon-card__telephone">
+            <div className="salon-card__telephone"
+              style={{ 'margin-bottom': textLink ? "20px" : "57px" }}
+            >
               <div>Телефон: <span>(495) 123-45-67</span></div>
               {/* {telephone} */}
             </div>
-            <div className="salon-card__salon-page-link">
-              <a href="#">Подробная информация о салоне</a>
-              {/* {detailedInformation} */}
-            </div>
+            {textLink ? (<div className="salon-card__salon-page-link" style={{ 'margin-bottom': "20px" }}>
+              <Link to="/salon">{textLink}</Link>
+            </div>) : ''}
+
 
             <div className="salon-card__buttons">
               <div className="salon-card__wrapp-button">
                 <Button
-                  background='#410935'
+                  background={bckCallBtn}
+                  colorText={colorTextCallBtn}
                 >
                   Позвонить
                 </Button>
               </div>
               <div className="salon-card__wrapp-button">
                 <Button
-                  background='#A40123'
+                  background={bkgRecordBtn}
+                  colorText={colorTextRecordBtn}
                 >
                   Записаться
                 </Button>
@@ -68,7 +95,8 @@ function SalonCard({
             </p>
             <div className="salon-card__wrapp-services-list">
               <ServicesList
-                services={['Косметология', 'Парикмахерские услуги', 'Макияж / брови / ресницы', 'Массаж и коррекция фигуры', 'Ногтевой сервис', 'Трихология']}
+                services={['Косметология', 'Парикмахерские услуги', 'Макияж / брови / ресницы', 'Массаж и коррекция фигуры', 'Ногтевой сервис', 'Трихология', 'Парикмахерские услуги', 'Макияж / брови / ресницы', 'Массаж и коррекция фигуры', 'Ногтевой сервис', 'Трихология']}
+                color={colorTitle}
               />
             </div>
           </div>
@@ -79,11 +107,13 @@ function SalonCard({
 }
 
 SalonCard.propTypes = {
+  bkgInfo: propTypes.string,
   salonTitle: propTypes.string,
   address: propTypes.string,
   workinghours: propTypes.string,
   telephone: propTypes.string,
-  pathImg: propTypes.string,
+  img: propTypes.string,
+  map: propTypes.element,
 }
 
 SalonCard.defaultProps = {
@@ -91,7 +121,8 @@ SalonCard.defaultProps = {
   address: '-',
   workinghours: '-',
   telephone: '-',
-  pathImg: '',
+  // img: '',
+  // map: '',
 }
 
 export default React.memo(SalonCard);
