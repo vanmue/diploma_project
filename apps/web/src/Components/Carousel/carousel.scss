@@ -1,0 +1,35 @@
+@import '../../assets/styles/mixins.scss';
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  &-line {
+    position: relative;
+    display: flex;
+    // justify-content: center;
+    margin: 0 auto;
+    width: 1280px;
+    // overflow: hidden;
+  }
+
+  &__img {
+    border-radius: 10px;
+    width: 400px;
+    height: 300px;
+    margin-right: 40px;
+  }
+
+  &__btn-prev {
+    position: absolute;
+    left: 0px;
+    top: 115px;
+  }
+
+  &__btn-next {
+    position: absolute;
+    right: 0px;
+    top: 115px;
+  }
+}

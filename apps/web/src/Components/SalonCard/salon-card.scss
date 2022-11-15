@@ -41,7 +41,8 @@
     @include inter(400, normal);
     font-size: 14px;
     line-height: 17px;
-    color: #410935;
+    color: inherit;
+    // color: #410935;
     margin-bottom: 20px;
   }
 
@@ -49,7 +50,8 @@
     @include inter(400, normal);
     font-size: 14px;
     line-height: 17px;
-    color: #410935;
+    color: inherit;
+    // color: #410935;
     margin-bottom: 5px;
   }
 
@@ -57,7 +59,8 @@
     @include inter(400, normal);
     font-size: 14px;
     line-height: 17px;
-    color: #410935;
+    color: inherit;
+    // color: #410935;
     margin-bottom: 20px;
   }
 
@@ -65,8 +68,9 @@
     @include inter(400, normal);
     font-size: 14px;
     line-height: 17px;
-    color: #410935;
-    margin-bottom: 20px;
+    color: inherit;
+    // color: #410935;
+    // margin-bottom: 20px;
   }
 
   &__salon-page-link {
@@ -74,7 +78,7 @@
     font-size: 14px;
     line-height: 17px;
     color: #410935;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
 
     &>a {
       text-decoration: none;
@@ -111,7 +115,7 @@
     font-size: 14px;
     line-height: 17px;
     text-transform: uppercase;
-    color: #410935;
+    // color: #410935;
     margin-bottom: 9px;
   }
 

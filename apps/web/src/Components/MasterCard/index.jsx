@@ -9,6 +9,7 @@ function MasterCard({
   name,
   specialization,
   salon,
+  colorTextBtn,
 }) {
 
   return (
@@ -46,6 +47,7 @@ function MasterCard({
           <div className="master-card__wrapp-button">
             <Button
               background='#A40123'
+              colorText={colorTextBtn}
             >
               Записаться
             </Button>
