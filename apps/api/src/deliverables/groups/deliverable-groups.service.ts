@@ -17,4 +17,20 @@ export class DeliverableGroupsService {
       order: { index: 'ASC' },
     });
   }
+  async findByShop(shopId: number) {
+    const deliverables = await this.deliverableGroupRepository.find({
+      where: {
+        masters: {
+          shops: {
+            id: shopId,
+          },
+        },
+      },
+    });
+    const reduced = deliverables.reduce((acc, item) => {
+      acc.set(item.id, item);
+      return acc;
+    }, new Map<number, DeliverableGroupEntity>());
+    return [...reduced.values()];
+  }
 }

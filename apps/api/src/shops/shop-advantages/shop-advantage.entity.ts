@@ -3,7 +3,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
   Unique,
@@ -24,8 +23,10 @@ export class ShopAdvantageEntity {
   @Column('text')
   name: string;
 
-  @ManyToMany(() => ShopEntity, (shop) => shop.advantages)
-  @JoinTable()
+  @ManyToMany(() => ShopEntity, (shop) => shop.advantages, {
+    onDelete: 'RESTRICT',
+    cascade: true,
+  })
   shops: ShopEntity[];
 
   @CreateDateColumn({ type: 'timestamp' })

@@ -5,10 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { CitiesModule } from './cities/cities.module';
 import { DeliverableGroupsModule } from './deliverables/groups/deliverable-groups.module';
+import { MastersModule } from './masters/masters.module';
 import { JsonService } from './services/json/json.service';
 import { ShopAdvantagesModule } from './shops/shop-advantages/shop-advantages.module';
 import { ShopsModule } from './shops/shops.module';
 import { TestResponseModule } from './test-response/test-response.module';
+import { UsersModule } from './users/users.module';
 
 const synchronize = process.env.NODE_ENV !== 'production';
 
@@ -40,6 +42,8 @@ const synchronize = process.env.NODE_ENV !== 'production';
     ShopsModule,
     CitiesModule,
     ShopAdvantagesModule,
+    MastersModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [JsonService],

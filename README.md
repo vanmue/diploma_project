@@ -15,6 +15,17 @@
 --- | --- |    }
 города - список | `GET /api/v1/cities/` |
 салоны - преимущества ("бесплатная парковка" и т.п.) | `GET /api/v1/shop-advantages/` |
+салоны - список | `GET /api/v1/shops/?deliverable_group_id=3&city_id=2` | Параметры поиска:
+--- | --- | `deliverable_group_id` - id услуги
+--- | --- | `city_id` - id города
+--- | --- | параметры опциональны, могут отсутствовать
+мастера - список | `GET /api/v1/masters/?deliverable_group_id=1&city_id=1&shop_id=1` | Параметры поиска:
+--- | --- | `deliverable_group_id` - id услуги
+--- | --- | `city_id` - id города
+--- | --- | `shop_id` - id салона
+--- | --- | параметры опциональны, могут отсутствовать
+
+
 
 ## Dev-среда
 

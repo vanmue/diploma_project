@@ -1,0 +1,14 @@
+SELECT
+  id
+FROM
+  shops
+WHERE
+  3 IN (
+    SELECT
+      "deliverable_groups_shops_shops"."deliverableGroupsId"
+    FROM
+      deliverable_groups_shops_shops
+    WHERE
+      shops.id="deliverable_groups_shops_shops"."shopsId"
+    );
+

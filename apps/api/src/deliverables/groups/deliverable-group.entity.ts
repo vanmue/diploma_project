@@ -1,10 +1,9 @@
 import { IsInt, IsNotEmpty } from 'class-validator';
-import { ShopEntity } from 'src/shops/shop.entity';
+import { MasterEntity } from 'src/masters/master.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
   Unique,
@@ -25,16 +24,18 @@ export class DeliverableGroupEntity {
   index: number; // порядковый номер в списке услуг
 
   @IsNotEmpty()
-  @Column('text')
+  @Column({ type: 'varchar' })
   name: string;
 
   @IsNotEmpty()
-  @Column('text', { comment: 'файл изображения' })
+  @Column({ type: 'varchar', comment: 'файл изображения' })
   image: string;
 
-  @ManyToMany(() => ShopEntity, (shop) => shop.deliverable_groups)
-  @JoinTable()
-  shops: ShopEntity[];
+  @ManyToMany(() => MasterEntity, (master) => master.deliverable_groups, {
+    onDelete: 'RESTRICT',
+    cascade: true,
+  })
+  masters: MasterEntity[];
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date = new Date();

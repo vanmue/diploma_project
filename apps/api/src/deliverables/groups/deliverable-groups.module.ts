@@ -9,5 +9,6 @@ import { DeliverableGroupsService } from './deliverable-groups.service';
   controllers: [DeliverableGroupsController],
   providers: [DeliverableGroupsService, JsonService],
   imports: [TypeOrmModule.forFeature([DeliverableGroupEntity])],
+  exports: [DeliverableGroupsService],
 })
 export class DeliverableGroupsModule {}
