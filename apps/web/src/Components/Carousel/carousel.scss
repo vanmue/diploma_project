@@ -5,20 +5,34 @@
   width: 100%;
   overflow: hidden;
 
-  &-line {
+  &__body {
+    display: flex;
+
+    margin: 0 auto;
+
+    height: 300px;
+    max-width: 1280px;
+    // width: 1280px;
+    overflow: hidden;
+  }
+
+  &__line {
     position: relative;
     display: flex;
-    // justify-content: center;
     margin: 0 auto;
-    width: 1280px;
-    // overflow: hidden;
+
+    // width: 1280px;
   }
 
   &__img {
     border-radius: 10px;
-    width: 400px;
+    max-width: 400px;
     height: 300px;
     margin-right: 40px;
+
+    &:last-child {
+      margin-right: 0px;
+    }
   }
 
   &__btn-prev {
