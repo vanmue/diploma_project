@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UseInterceptors,
+} from '@nestjs/common';
 import { JsonObject } from 'src/libs/src/models/JsonObject';
 import { JsonService } from 'src/services/json/json.service';
 import { ListAllDto } from './list-all.dto.interface';
@@ -6,6 +14,7 @@ import { ShopEntity } from './shop.entity';
 import { ShopsService } from './shops.service';
 
 @Controller('shops')
+@UseInterceptors(ClassSerializerInterceptor)
 export class ShopsController {
   constructor(
     private readonly shopsService: ShopsService,

@@ -1,14 +1,15 @@
+import { Exclude } from 'class-transformer';
 import { IsInt, IsNotEmpty } from 'class-validator';
-import { MasterEntity } from 'src/masters/master.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
+import { DeliverableEntity } from '../deliverable.entity';
 
 const UNIQUE_GROUP_NAME_CONSTRAINT = 'unique_group_name_constrtaint';
 
@@ -31,15 +32,17 @@ export class DeliverableGroupEntity {
   @Column({ type: 'varchar', comment: 'файл изображения' })
   image: string;
 
-  @ManyToMany(() => MasterEntity, (master) => master.deliverable_groups, {
-    onDelete: 'RESTRICT',
-    cascade: true,
-  })
-  masters: MasterEntity[];
+  @OneToMany(
+    () => DeliverableEntity,
+    (deliverable) => deliverable.deliverable_group,
+  )
+  deliverables: DeliverableEntity[];
 
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date = new Date();
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date = new Date();
 }

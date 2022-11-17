@@ -53,7 +53,7 @@ function SalonPage() {
           </div>
           <div className="salon-page__wrapp-carousel">
             <Carousel
-              images={[img1, img2, img3, img3, img2, img1]}
+              images={[img1, img1, img1, img2, img2, img2, img3, img3, img3]}
             />
           </div>
           <div className="salon-page__wrapp-master-card">

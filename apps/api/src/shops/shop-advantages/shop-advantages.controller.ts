@@ -1,9 +1,17 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { JsonService } from 'src/services/json/json.service';
 import { ShopAdvantageEntity } from './shop-advantage.entity';
 import { ShopAdvantagesService } from './shop-advantages.service';
 
 @Controller('shop-advantages')
+@UseInterceptors(ClassSerializerInterceptor)
 export class ShopAdvantagesController {
   constructor(
     private readonly shopAdvantagesService: ShopAdvantagesService,
