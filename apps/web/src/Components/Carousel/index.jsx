@@ -10,12 +10,11 @@ function Carousel({ images }) {
   const carouselLineRef = useRef(null);
 
   const handleClickPrev = () => {
-    // setOffset(offset + 1280)
+    offset == 0 ? setOffset(-1320 * (Math.ceil(images.length / 3) - 1)) : setOffset(prevOffset => prevOffset + 1320);
   }
 
   const handleClickNext = () => {
-    setOffset(prevOffset => prevOffset + 1280);
-    carouselLineRef.current.style.right = offset + 'px';
+    Math.abs(offset) == 1320 * (Math.ceil(images.length / 3) - 1) ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
   }
 
   return (
@@ -28,14 +27,20 @@ function Carousel({ images }) {
           <path d="M15.9393 33.0607C16.5251 33.6464 17.4749 33.6464 18.0607 33.0607C18.6464 32.4749 18.6464 31.5251 18.0607 30.9393L15.9393 33.0607ZM2 17L0.939339 15.9393C0.658033 16.2206 0.5 16.6022 0.5 17C0.5 17.3978 0.658033 17.7794 0.939339 18.0607L2 17ZM18.0607 3.06066C18.6464 2.47487 18.6464 1.52513 18.0607 0.93934C17.4749 0.353553 16.5251 0.353553 15.9393 0.93934L18.0607 3.06066ZM18.0607 30.9393L3.06066 15.9393L0.939339 18.0607L15.9393 33.0607L18.0607 30.9393ZM3.06066 18.0607L18.0607 3.06066L15.9393 0.93934L0.939339 15.9393L3.06066 18.0607Z" fill="#F5BFAB" />
         </svg>
       </button>
-      <div
-        className="carousel-line"
-        ref={carouselLineRef}
-      >
-        {images.map((item) => {
-          return <img className="carousel__img" src={item} alt="Фото салона" />
-        })}
+
+      <div className="carousel__body">
+        <div
+          className="carousel__line"
+          style={{ left: `${offset}px` }}
+          ref={carouselLineRef}
+        >
+          {images.map((item) => {
+            return <img className="carousel__img" src={item} alt="Фото салона" />
+          })}
+        </div>
       </div>
+
+
       <button
         className="carousel__btn-next"
         onClick={handleClickNext}
