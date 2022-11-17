@@ -19,7 +19,7 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000);
+  await app.listen(8000);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
