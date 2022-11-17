@@ -1,10 +1,12 @@
 import { IsNotEmpty } from 'class-validator';
 import { CityEntity } from 'src/cities/city.entity';
 import { DeliverableGroupEntity } from 'src/deliverables/groups/deliverable-group.entity';
+import { MasterEntity } from 'src/masters/master.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -18,27 +20,64 @@ export class ShopEntity {
   id: number;
 
   @IsNotEmpty()
-  @Column('text')
-  address: string;
+  @Column({ type: 'varchar' })
+  name: string;
 
   @IsNotEmpty()
-  @Column('text')
-  phone: string;
-
   @ManyToOne(() => CityEntity, (city) => city.shops)
   city: CityEntity;
 
-  @ManyToMany(() => ShopAdvantageEntity, (advantage) => advantage.shops, {
-    onDelete: 'RESTRICT',
-    cascade: true,
-  })
+  @IsNotEmpty()
+  @Column({ type: 'varchar' })
+  address: string;
+
+  @IsNotEmpty()
+  @Column({ type: 'varchar' })
+  working_time: string;
+
+  @IsNotEmpty()
+  @Column({ type: 'varchar' })
+  phone: string;
+
+  @ManyToMany(() => ShopAdvantageEntity, (advantage) => advantage.shops)
+  @JoinTable()
   advantages: ShopAdvantageEntity[];
 
-  @ManyToMany(
-    () => DeliverableGroupEntity,
-    (deliverableGroup) => deliverableGroup.shops,
-    { onDelete: 'RESTRICT', cascade: true },
-  )
+  @ManyToMany(() => MasterEntity, (master) => master.shops)
+  masters: MasterEntity[];
+
+  @Column('float', {
+    comment: 'долгота центра карты',
+    nullable: true,
+    select: false,
+  })
+  center_longtitude: number;
+
+  @Column('float', {
+    comment: 'широта центра карты',
+    nullable: true,
+    select: false,
+  })
+  center_latitude: number;
+
+  @Column('float', {
+    comment: 'долгота метки центра',
+    nullable: true,
+    select: false,
+  })
+  label_longtitude: number;
+
+  @Column('float', {
+    comment: 'широта метки центра',
+    nullable: true,
+    select: false,
+  })
+  label_latitude: number;
+
+  @Column('int', { comment: 'масштаб карты', nullable: true, select: false })
+  zoom: number;
+
+  // услуги салона из услуг мастеров
   deliverable_groups: DeliverableGroupEntity[];
 
   @CreateDateColumn({ type: 'timestamp' })

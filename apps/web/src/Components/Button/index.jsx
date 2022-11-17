@@ -4,8 +4,9 @@ import propTypes from 'prop-types';
 import './button.scss';
 
 function Button({
+  colorText,
+  background,
   children,
-  background
 }) {
 
   return (
@@ -16,6 +17,7 @@ function Button({
       <Link
         end
         to="/master"
+        style={{ color: `${colorText}` }}
       >
         {children}
       </Link>

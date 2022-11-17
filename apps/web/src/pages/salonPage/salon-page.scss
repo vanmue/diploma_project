@@ -1,0 +1,29 @@
+@import '../../assets/styles/mixins.scss';
+
+.salon-page {
+  height: 100%;
+  background: #410935;
+
+  &__flex {
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+  }
+
+  &__wrapp-salon-card {
+    margin-bottom: 30px;
+  }
+
+  &__wrapp-carousel {
+    margin-bottom: 50px;
+  }
+
+  &__wrapp-master-card {
+    margin-bottom: 50px;
+  }
+
+  &__wrapp-pagination {
+    display: flex;
+    margin-bottom: 23px;
+  }
+}
