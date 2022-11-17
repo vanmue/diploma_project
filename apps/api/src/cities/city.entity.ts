@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
 import { ShopEntity } from 'src/shops/shop.entity';
 import {
@@ -52,9 +53,11 @@ export class CityEntity {
   @Column('int', { comment: 'масштаб карты', nullable: true, select: false })
   zoom: number;
 
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date = new Date();
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date = new Date();
 }

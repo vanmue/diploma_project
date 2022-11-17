@@ -1,4 +1,6 @@
+import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
+import { DeliverableEntity } from 'src/deliverables/deliverable.entity';
 import { DeliverableGroupEntity } from 'src/deliverables/groups/deliverable-group.entity';
 import { ShopEntity } from 'src/shops/shop.entity';
 import { UserEntity } from 'src/users/user.entity';
@@ -38,12 +40,9 @@ export class MasterEntity {
   description: string;
 
   @IsNotEmpty()
-  @ManyToMany(
-    () => DeliverableGroupEntity,
-    (deliverableGroup) => deliverableGroup.masters,
-  )
+  @ManyToMany(() => DeliverableEntity, (deliverable) => deliverable.masters)
   @JoinTable()
-  deliverable_groups: DeliverableGroupEntity[];
+  deliverables: DeliverableEntity[];
 
   @IsNotEmpty()
   @ManyToMany(() => ShopEntity, (shop) => shop.masters)
@@ -61,10 +60,13 @@ export class MasterEntity {
   reviews: MasterReviewEntity[];
 
   reviews_count: number;
+  deliverable_groups: DeliverableGroupEntity[];
 
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date = new Date();
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date = new Date();
 }

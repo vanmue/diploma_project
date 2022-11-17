@@ -1,4 +1,6 @@
+import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
+import { AppointmentEntity } from 'src/appointments/appointment.entity';
 import { CityEntity } from 'src/cities/city.entity';
 import { DeliverableGroupEntity } from 'src/deliverables/groups/deliverable-group.entity';
 import { MasterEntity } from 'src/masters/master.entity';
@@ -9,6 +11,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -36,6 +39,14 @@ export class ShopEntity {
   working_time: string;
 
   @IsNotEmpty()
+  @Column({ type: 'int' })
+  working_start: number;
+
+  @IsNotEmpty()
+  @Column({ type: 'int' })
+  working_end: number;
+
+  @IsNotEmpty()
   @Column({ type: 'varchar' })
   phone: string;
 
@@ -45,6 +56,9 @@ export class ShopEntity {
 
   @ManyToMany(() => MasterEntity, (master) => master.shops)
   masters: MasterEntity[];
+
+  @OneToMany(() => AppointmentEntity, (appointment) => appointment.shop)
+  appointments: AppointmentEntity[];
 
   @Column('float', {
     comment: 'долгота центра карты',
@@ -80,9 +94,11 @@ export class ShopEntity {
   // услуги салона из услуг мастеров
   deliverable_groups: DeliverableGroupEntity[];
 
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date = new Date();
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date = new Date();
 }

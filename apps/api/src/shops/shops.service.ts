@@ -25,7 +25,11 @@ export class ShopsService {
     if (deliverable_group_id) {
       where = {
         ...where,
-        masters: { deliverable_groups: { id: deliverable_group_id } },
+        masters: {
+          deliverables: {
+            deliverable_group: { id: deliverable_group_id },
+          },
+        },
       };
     }
 
