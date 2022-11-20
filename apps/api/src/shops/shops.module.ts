@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeliverableGroupsModule } from 'src/deliverables/groups/deliverable-groups.module';
 import { JsonService } from 'src/services/json/json.service';
-import { ShopEntity } from './shop.entity';
+import { ShopEntity } from './entities/shop.entity';
 import { ShopsController } from './shops.controller';
 import { ShopsService } from './shops.service';
 

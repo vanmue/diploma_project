@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JsonService } from 'src/services/json/json.service';
 import { CitiesController } from './cities.controller';
 import { CitiesService } from './cities.service';
-import { CityEntity } from './city.entity';
+import { CityEntity } from './entities/city.entity';
 
 @Module({
   controllers: [CitiesController],

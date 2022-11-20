@@ -1,31 +1,28 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { UserEntity } from 'src/users/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { MasterEntity } from '../master.entity';
 
-@Entity('master_reviews')
-export class MasterReviewEntity {
+@Entity('users')
+export class UserEntity {
   @PrimaryGeneratedColumn()
+  @ApiProperty()
   id: number;
 
   @IsNotEmpty()
-  @ManyToOne(() => UserEntity)
-  author: UserEntity;
+  @Column({ type: 'varchar' })
+  @ApiProperty()
+  name: string;
 
   @IsNotEmpty()
-  @ManyToOne(() => MasterEntity, (master) => master.reviews)
-  master: MasterEntity;
-
-  @IsNotEmpty()
-  @Column({ type: 'text' })
-  review: string;
+  @Column({ type: 'varchar' })
+  @ApiProperty()
+  surname: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date = new Date();

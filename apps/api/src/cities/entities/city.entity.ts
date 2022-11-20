@@ -1,56 +1,37 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
-import { CityEntity } from 'src/cities/city.entity';
-import { DeliverableGroupEntity } from 'src/deliverables/groups/deliverable-group.entity';
-import { MasterEntity } from 'src/masters/master.entity';
+import { ShopEntity } from 'src/shops/entities/shop.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ShopAdvantageEntity } from './shop-advantages/shop-advantage.entity';
 
-@Entity('shops')
-export class ShopEntity {
+@Entity('cities')
+export class CityEntity {
   @PrimaryGeneratedColumn()
+  @ApiProperty()
   id: number;
 
   @IsNotEmpty()
   @Column({ type: 'varchar' })
+  @ApiProperty()
   name: string;
 
-  @IsNotEmpty()
-  @ManyToOne(() => CityEntity, (city) => city.shops)
-  city: CityEntity;
-
-  @IsNotEmpty()
-  @Column({ type: 'varchar' })
-  address: string;
-
-  @IsNotEmpty()
-  @Column({ type: 'varchar' })
-  working_time: string;
-
-  @IsNotEmpty()
-  @Column({ type: 'varchar' })
-  phone: string;
-
-  @ManyToMany(() => ShopAdvantageEntity, (advantage) => advantage.shops)
-  @JoinTable()
-  advantages: ShopAdvantageEntity[];
-
-  @ManyToMany(() => MasterEntity, (master) => master.shops)
-  masters: MasterEntity[];
+  @OneToMany(() => ShopEntity, (shop) => shop.city)
+  @ApiProperty({ type: () => ShopEntity })
+  shops: ShopEntity[];
 
   @Column('float', {
     comment: 'долгота центра карты',
     nullable: true,
     select: false,
   })
+  @ApiProperty()
   center_longtitude: number;
 
   @Column('float', {
@@ -58,6 +39,7 @@ export class ShopEntity {
     nullable: true,
     select: false,
   })
+  @ApiProperty()
   center_latitude: number;
 
   @Column('float', {
@@ -65,6 +47,7 @@ export class ShopEntity {
     nullable: true,
     select: false,
   })
+  @ApiProperty()
   label_longtitude: number;
 
   @Column('float', {
@@ -72,17 +55,18 @@ export class ShopEntity {
     nullable: true,
     select: false,
   })
+  @ApiProperty()
   label_latitude: number;
 
   @Column('int', { comment: 'масштаб карты', nullable: true, select: false })
+  @ApiProperty()
   zoom: number;
 
-  // услуги салона из услуг мастеров
-  deliverable_groups: DeliverableGroupEntity[];
-
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date = new Date();
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date = new Date();
 }

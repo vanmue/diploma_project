@@ -2,30 +2,7 @@
 
 ## Каталог маршрутов
 
-Название | эндпоинт | параметры
----| --- | ---
-стартовая страница | `GET /` | 
-тестовый ответ API | `GET /api/v1/test-response/` |
-группа услуг - список | `GET /api/v1/deliverable-groups/` |
-группа услуг - создание | `POST /api/v1/deliverable-groups/` | пример `body` запроса:
---- | --- |    {
---- | --- |        index: 10, // порядковый номер в списке
---- | --- |        name: "парикмахерские услуги",
---- | --- |        image: "/uploads/groups/parikmaherskiye_uslugi.png"
---- | --- |    }
-города - список | `GET /api/v1/cities/` |
-салоны - преимущества ("бесплатная парковка" и т.п.) | `GET /api/v1/shop-advantages/` |
-салоны - список | `GET /api/v1/shops/?deliverable_group_id=3&city_id=2` | Параметры поиска:
---- | --- | `deliverable_group_id` - id услуги
---- | --- | `city_id` - id города
---- | --- | параметры опциональны, могут отсутствовать
-мастера - список | `GET /api/v1/masters/?deliverable_group_id=1&city_id=1&shop_id=1` | Параметры поиска:
---- | --- | `deliverable_group_id` - id услуги
---- | --- | `city_id` - id города
---- | --- | `shop_id` - id салона
---- | --- | параметры опциональны, могут отсутствовать
-
-
+см. https://vanmue.ru:8001/swagger
 
 ## Dev-среда
 
@@ -63,6 +40,11 @@
 - старт Nginx на порту `8001`:
 
 `./docker.prod.up.sh`
+
+### Вход в Adminer
+
+- https://vanmue.ru:8001/adminer
+- база данных: `diploma-project-postgres`
 
 ## Сборка контейнеров production локально
 
