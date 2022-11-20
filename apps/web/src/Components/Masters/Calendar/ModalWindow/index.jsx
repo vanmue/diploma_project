@@ -5,6 +5,8 @@ import './modalWindow.scss'
 import image from '../../img/fotoMasters.png'
 
 function ModalWindow({ modalActive, choiceDay, data }) {
+
+
     const cell = ['10-00', '11-00', '12-00', '13-00', '14-00', '15-00', '16-00', '17-00', '18-00']
 
     const servise = Object.values(data)

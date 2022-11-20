@@ -47,7 +47,19 @@ function UserOffice() {
             rating: 'rating'
         },
     ]
-
+    const gridInfo = (item, index) => {
+        return (
+            <div key={item.date + index} className="user-record__grid">
+                <div>{item.date}</div>
+                <div>{item.time}</div>
+                <div>{item.salon}</div>
+                <div>{item.master}</div>
+                <div>{item.service}</div>
+                <div>{item.price} рублей</div>
+                <div>{item.rating}<div style={{ textDecorationLine: 'underline' }}>написать отзыв</div></div>
+            </div>
+        )
+    }
 
     return (
         <div className='main-page'>
@@ -67,36 +79,16 @@ function UserOffice() {
                         {gridColumns.map((column) => <span key={column}>{column}</span>
                         )}
                     </div>
-
                     {gridInfoActual.map((item, index) =>
-                        <div key={item.date + index} className="user-record__grid">
-                            <div>{item.date}</div>
-                            <div>{item.time}</div>
-                            <div>{item.salon}</div>
-                            <div>{item.master}</div>
-                            <div>{item.service}</div>
-                            <div>{item.price} рублей</div>
-                            <div>{item.rating}</div>
-                        </div>
-
+                        gridInfo(item, index)
                     )}
-
                     <h2 style={{ marginTop: '45px', marginBottom: '45px' }} >Архивные записи:</h2>
                     <div className="user-record__grid">
                         {gridColumns.map((column) => <span key={column}>{column}</span>
                         )}
                     </div>
                     {gridInfoarchive.map((item, index) =>
-                        <div key={item.date + index} className="user-record__grid">
-                            <div>{item.date}</div>
-                            <div>{item.time}</div>
-                            <div>{item.salon}</div>
-                            <div>{item.master}</div>
-                            <div>{item.service}</div>
-                            <div>{item.price} рублей</div>
-                            <div>{item.rating}</div>
-                        </div>
-
+                        gridInfo(item, index)
                     )}
                 </div>
             </div>

@@ -1,9 +1,9 @@
 import React from "react";
 
-function Error() {
+function Error({ err }) {
     return (
         <>
-            <h1> 404</h1>
+            <h1> {err}</h1>
         </>
     )
 }
