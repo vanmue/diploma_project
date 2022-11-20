@@ -19,7 +19,7 @@ CREATE TABLE "public"."appointments" (
     CONSTRAINT "PK_4a437a9a27e948726b8bb3e36ad" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
-CREATE INDEX "XCL_df9cdd0dec351d0a839368ad91" ON "public"."appointments" USING btree ("shopId", "masterId", "");
+CREATE INDEX "XCL_df9cdd0dec351d0a839368ad91" ON "public"."appointments" USING btree ("shopId", "masterId");
 
 INSERT INTO "appointments" ("id", "created_at", "updated_at", "masterId", "shopId", "from", "to", "deliverableId", "name", "phone", "comments") VALUES
 (5,	'2022-11-17 12:25:55.392',	'2022-11-17 12:25:55.392',	6,	1,	'2022-11-17 10:00:00+00',	'2022-11-17 11:00:00+00',	NULL,	'',	'',	''),
