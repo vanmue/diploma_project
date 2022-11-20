@@ -27,15 +27,16 @@ function Master() {
         deliverable_groups: ''
     });
     const masterId = useSelector(store => store.masterIdReducer);
-
     useEffect(() => {
         fetch('/api/v1/masters')
             .then((res) => res.json())
             .then((res) => {
-                setData(res.data?.filter(master => master.user.id === masterId.id)[0])
+                setData(res.data.filter(master => master.user.id === masterId.id)[0])
             })
+            .catch(error => console.log(error))
     }, [])
 
+    console.log(data)
     return <>
         <div className='main-page'>
             <div className="container">
@@ -55,7 +56,7 @@ function Master() {
                         </div>
                     </div>
                 </div>
-                <Calendar /* dataUser={data.user.id} */ />
+                <Calendar dataUser={data} />
                 <Price />
                 <Reviews />
             </div>

@@ -10,7 +10,7 @@ import ModalWindow from "./ModalWindow/index.jsx";
 
 
 function Calendar() {
-
+    //console.log(data)
     const [data, setData] = useState([]);
 
     let targetUrl = '/api/v1/deliverable-groups/'
