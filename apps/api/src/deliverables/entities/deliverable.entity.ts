@@ -15,7 +15,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Transform } from 'class-transformer';
 import Decimal from 'decimal.js';
 import decimalService from 'src/services/decimal/decimal.service';
-import { DeliverableGroupEntity } from '../groups/deliverable-group.entity';
+import { DeliverableGroupEntity } from '../groups/entities/deliverable-group.entity';
 
 export const UNIQUE_DELIVERABLE_NAME_CONSTRAINT =
   'unique_deliverable_name_constrtaint';

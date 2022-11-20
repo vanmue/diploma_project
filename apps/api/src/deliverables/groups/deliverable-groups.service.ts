@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { DeliverableGroupEntity } from './deliverable-group.entity';
+import { CreateDeliverableGroupEntity } from './entities/create-deliverable-group.entity';
+import { DeliverableGroupEntity } from './entities/deliverable-group.entity';
 
 @Injectable()
 export class DeliverableGroupsService {
@@ -9,12 +10,13 @@ export class DeliverableGroupsService {
     @InjectRepository(DeliverableGroupEntity)
     private readonly deliverableGroupRepository: Repository<DeliverableGroupEntity>,
   ) {}
-  async create(dto: DeliverableGroupEntity) {
+  async create(dto: CreateDeliverableGroupEntity) {
     return await this.deliverableGroupRepository.save(dto);
   }
   async findAll() {
     return await this.deliverableGroupRepository.find({
       order: { index: 'ASC' },
+      relations: ['deliverables'],
     });
   }
   async findByShop(shopId: number) {

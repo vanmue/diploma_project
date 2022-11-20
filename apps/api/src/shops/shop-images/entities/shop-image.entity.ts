@@ -1,15 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
+import { ShopEntity } from 'src/shops/entities/shop.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('users')
-export class UserEntity {
+@Entity('shop_images')
+export class ShopImageEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
   id: number;
@@ -17,20 +20,17 @@ export class UserEntity {
   @IsNotEmpty()
   @Column({ type: 'varchar' })
   @ApiProperty()
-  name: string;
+  img: string;
 
-  @IsNotEmpty()
-  @Column({ type: 'varchar' })
-  @ApiProperty()
-  surname: string;
+  @ManyToOne(() => ShopEntity, (shop) => shop.images)
+  @ApiProperty({ type: () => ShopEntity })
+  shop: ShopEntity;
 
-  @Column({ type: 'varchar', nullable: true })
-  @ApiProperty({ required: false })
-  avatar?: string;
-
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date = new Date();
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date = new Date();
 }
