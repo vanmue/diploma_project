@@ -24,6 +24,11 @@ export class UserEntity {
   @ApiProperty()
   surname: string;
 
+  @IsNotEmpty()
+  @Column({ type: 'varchar', default: '/uploads/users/' })
+  @ApiProperty()
+  avatar: string;
+
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date = new Date();
 
