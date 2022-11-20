@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeliverableGroupsModule } from 'src/deliverables/groups/deliverable-groups.module';
 import { JsonService } from 'src/services/json/json.service';
-import { MasterEntity } from './master.entity';
+import { MasterEntity } from './entities/master.entity';
 import { MastersController } from './masters.controller';
 import { MastersService } from './masters.service';
 import { MasterReviewsModule } from './reviews/master-reviews.module';

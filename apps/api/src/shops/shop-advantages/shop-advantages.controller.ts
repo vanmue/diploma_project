@@ -7,7 +7,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { JsonService } from 'src/services/json/json.service';
-import { ShopAdvantageEntity } from './shop-advantage.entity';
+import { CreateShopAdvantageEntity } from './entities/create-shop-advantage.entity';
 import { ShopAdvantagesService } from './shop-advantages.service';
 
 @Controller('shop-advantages')
@@ -25,7 +25,7 @@ export class ShopAdvantagesController {
   }
 
   @Post()
-  async create(@Body() dto: ShopAdvantageEntity) {
+  async create(@Body() dto: CreateShopAdvantageEntity) {
     const data = await this.shopAdvantagesService.create(dto);
     return this.jsonService.data(data);
   }

@@ -229,6 +229,8 @@ CREATE TABLE "public"."shops" (
     "updated_at" timestamp DEFAULT now() NOT NULL,
     "cityId" integer,
     "working_time" character varying NOT NULL,
+    "working_start" integer NOT NULL,
+    "working_end" integer NOT NULL,
     CONSTRAINT "PK_3c6aaa6607d287de99815e60b96" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
@@ -242,10 +244,10 @@ COMMENT ON COLUMN "public"."shops"."label_latitude" IS 'широта метки 
 
 COMMENT ON COLUMN "public"."shops"."zoom" IS 'масштаб карты';
 
-INSERT INTO "shops" ("id", "name", "address", "phone", "center_longtitude", "center_latitude", "label_longtitude", "label_latitude", "zoom", "created_at", "updated_at", "cityId", "working_time") VALUES
-(1,	'Салон красоты «Версаль»',	'ул. Костина, 6/1, 3 этаж (м. Красносельская)',	'4951234567',	NULL,	NULL,	NULL,	NULL,	NULL,	'2022-11-16 16:56:17.12',	'2022-11-16 16:56:17.12',	2,	'с 10:00 до 20:00 без выходных'),
-(2,	'Салон красоты «Лето»',	'пр. Ленина, 57/1 (м. Чкаловская)',	'8311234567',	NULL,	NULL,	NULL,	NULL,	NULL,	'2022-11-16 16:57:33.911',	'2022-11-16 16:57:33.911',	3,	'с 09:00 до 21:00 без выходных'),
-(3,	'Barbershop Mens'' House',	'ул. Гагарина, 228',	'8311234567',	NULL,	NULL,	NULL,	NULL,	NULL,	'2022-11-16 16:57:53.024',	'2022-11-16 16:57:53.024',	2,	'с 10:00 до 21:00 без выходных');
+INSERT INTO "shops" ("id", "name", "address", "phone", "center_longtitude", "center_latitude", "label_longtitude", "label_latitude", "zoom", "created_at", "updated_at", "cityId", "working_time", "working_start", "working_end") VALUES
+(1,	'Салон красоты «Версаль»',	'ул. Костина, 6/1, 3 этаж (м. Красносельская)',	'4951234567',	NULL,	NULL,	NULL,	NULL,	NULL,	'2022-11-16 16:56:17.12',	'2022-11-16 16:56:17.12',	2,	'с 10:00 до 20:00 без выходных',	10,	20),
+(3,	'Barbershop Mens'' House',	'ул. Гагарина, 228',	'8311234567',	NULL,	NULL,	NULL,	NULL,	NULL,	'2022-11-16 16:57:53.024',	'2022-11-16 16:57:53.024',	2,	'с 10:00 до 21:00 без выходных',	10,	20),
+(2,	'Салон красоты «Лето»',	'пр. Ленина, 57/1 (м. Чкаловская)',	'8311234567',	NULL,	NULL,	NULL,	NULL,	NULL,	'2022-11-16 16:57:33.911',	'2022-11-16 16:57:33.911',	3,	'с 09:00 до 21:00 без выходных',	9,	20);
 
 DROP TABLE IF EXISTS "shops_advantages_shop_advantages";
 CREATE TABLE "public"."shops_advantages_shop_advantages" (
@@ -305,4 +307,4 @@ ALTER TABLE ONLY "public"."shops" ADD CONSTRAINT "FK_5b9da5f0bdc5fcd104fa4430f5c
 ALTER TABLE ONLY "public"."shops_advantages_shop_advantages" ADD CONSTRAINT "FK_51b27a981686c30a19dae5d4622" FOREIGN KEY ("shopAdvantagesId") REFERENCES shop_advantages(id) ON DELETE RESTRICT NOT DEFERRABLE;
 ALTER TABLE ONLY "public"."shops_advantages_shop_advantages" ADD CONSTRAINT "FK_b208ecd87ac6780c0674c74f0ca" FOREIGN KEY ("shopsId") REFERENCES shops(id) ON UPDATE CASCADE ON DELETE CASCADE NOT DEFERRABLE;
 
--- 2022-11-17 18:11:40.321684+00
+-- 2022-11-17 18:25:25.372334+00

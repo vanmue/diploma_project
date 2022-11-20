@@ -9,7 +9,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { DeliverableEntity } from '../deliverable.entity';
+import { DeliverableEntity } from '../entities/deliverable.entity';
 
 const UNIQUE_GROUP_NAME_CONSTRAINT = 'unique_group_name_constrtaint';
 

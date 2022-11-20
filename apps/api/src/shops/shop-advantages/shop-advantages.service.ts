@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ShopAdvantageEntity } from './shop-advantage.entity';
+import { CreateShopAdvantageEntity } from './entities/create-shop-advantage.entity';
+import { ShopAdvantageEntity } from './entities/shop-advantage.entity';
 
 @Injectable()
 export class ShopAdvantagesService {
@@ -9,7 +10,7 @@ export class ShopAdvantagesService {
     @InjectRepository(ShopAdvantageEntity)
     private readonly shopAdvantageRepository: Repository<ShopAdvantageEntity>,
   ) {}
-  async create(dto: ShopAdvantageEntity) {
+  async create(dto: CreateShopAdvantageEntity) {
     return await this.shopAdvantageRepository.save(dto);
   }
   async findAll() {

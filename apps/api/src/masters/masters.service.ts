@@ -2,9 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ListAllAppointmentsDto } from 'src/appointments/list-all-appointments.dto';
 import { DeliverableGroupsService } from 'src/deliverables/groups/deliverable-groups.service';
+import { ShopEntity } from 'src/shops/entities/shop.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
 import { In, Raw, Repository } from 'typeorm';
+import { CreateMasterEntity } from './entities/create-master.entity';
+import { MasterEntity } from './entities/master.entity';
 import { ListAllMastersDto } from './list-all-masters-dto';
-import { MasterEntity } from './master.entity';
 
 @Injectable()
 export class MastersService {
@@ -13,8 +16,23 @@ export class MastersService {
     private readonly masterRepository: Repository<MasterEntity>,
     private readonly deliverableGroupsService: DeliverableGroupsService,
   ) {}
-  async create(dto: MasterEntity) {
-    return await this.masterRepository.save(dto);
+  async create(dto: CreateMasterEntity) {
+    const { userId, shops } = dto;
+
+    const user = new UserEntity();
+    user.id = userId;
+
+    const shopEntities = shops.map((id) => {
+      const shop = new ShopEntity();
+      shop.id = id;
+      return shop;
+    });
+
+    return await this.masterRepository.save({
+      ...dto,
+      user,
+      shops: shopEntities,
+    });
   }
   async findDeliverableGroups(query?: ListAllMastersDto) {
     const { city_id, deliverable_group_id, shop_id } = query;

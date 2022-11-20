@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CityEntity } from 'src/cities/entities/city.entity';
 import { DeliverableGroupsService } from 'src/deliverables/groups/deliverable-groups.service';
 import { In, Repository } from 'typeorm';
+import { CreateShopEntity } from './entities/create-shop.entity';
+import { ShopEntity } from './entities/shop.entity';
 import { ListAllDto } from './list-all.dto.interface';
-import { ShopEntity } from './shop.entity';
+import { ShopAdvantageEntity } from './shop-advantages/entities/shop-advantage.entity';
 
 @Injectable()
 export class ShopsService {
@@ -12,8 +15,19 @@ export class ShopsService {
     private readonly shopRepository: Repository<ShopEntity>,
     private readonly deliverableGroupsService: DeliverableGroupsService,
   ) {}
-  async create(dto: ShopEntity) {
-    return await this.shopRepository.save(dto);
+  async create(dto: CreateShopEntity) {
+    const { cityId, advantages: advantages } = dto;
+
+    const city = new CityEntity();
+    city.id = cityId;
+
+    const advs = advantages?.map((id) => {
+      const adv = new ShopAdvantageEntity();
+      adv.id = id;
+      return adv;
+    });
+
+    return await this.shopRepository.save({ ...dto, city, advantages: advs });
   }
   async findAll(query?: ListAllDto) {
     const { city_id, deliverable_group_id } = query;
