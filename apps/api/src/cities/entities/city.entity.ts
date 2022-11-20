@@ -29,7 +29,6 @@ export class CityEntity {
   @Column('float', {
     comment: 'долгота центра карты',
     nullable: true,
-    select: false,
   })
   @ApiProperty()
   center_longtitude: number;
@@ -37,7 +36,6 @@ export class CityEntity {
   @Column('float', {
     comment: 'широта центра карты',
     nullable: true,
-    select: false,
   })
   @ApiProperty()
   center_latitude: number;
@@ -45,7 +43,6 @@ export class CityEntity {
   @Column('float', {
     comment: 'долгота метки центра',
     nullable: true,
-    select: false,
   })
   @ApiProperty()
   label_longtitude: number;
@@ -53,12 +50,11 @@ export class CityEntity {
   @Column('float', {
     comment: 'широта метки центра',
     nullable: true,
-    select: false,
   })
   @ApiProperty()
   label_latitude: number;
 
-  @Column('int', { comment: 'масштаб карты', nullable: true, select: false })
+  @Column('int', { comment: 'масштаб карты', nullable: true })
   @ApiProperty()
   zoom: number;
 
