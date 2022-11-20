@@ -1,14 +1,19 @@
 import React, { useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import DropdownSelect from '../../Components/DropdownSelect';
+import SalonCard from '../../Components/SalonCard';
+import YandexMap from '../../Components/YandexMap';
+import Pagination from '../../Components/Pagination';
 import {
   changeNavigationColorAction,
   changingLabelInHeaderAction,
   changeHeaderBackgroundAction
 } from '../../actions/stylesActions';
-import DropdownSelect from '../../Components/DropdownSelect';
-import SalonCard from '../../Components/SalonCard';
-import YandexMap from '../../Components/YandexMap';
-import Pagination from '../../Components/Pagination';
+import {
+  getSalonsThunk,
+  getCitiesThunk,
+  getFilteringSalonsByCityThunk
+} from '../../actions/salonsAction';
 import img1 from '../../Components/SalonCard/img/1.jpg';
 import img2 from '../../Components/SalonCard/img/2.jpg';
 import img3 from '../../Components/SalonCard/img/3.jpg';
@@ -16,16 +21,25 @@ import './salons-page.scss';
 
 function SalonsPage() {
   const dispatch = useDispatch();
+  const cities = useSelector(store => store.salonsReducer.cities);
+  const salons = useSelector(store => store.salonsReducer.salons);
 
   useEffect(() => {
     dispatch(changingLabelInHeaderAction(false));
     dispatch(changeHeaderBackgroundAction('#F5BFAB'));
     dispatch(changeNavigationColorAction('#410935'));
+
+    dispatch(getCitiesThunk());
+    dispatch(getSalonsThunk());
   }, []);
 
   const renders = {
     yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
       zoom={12} items={[[53.21624037527426, 50.13260255066459],]} />
+  }
+
+  const callbacks = {
+    onGetFilteringSalonsByCity: useCallback(cityId => dispatch(getFilteringSalonsByCityThunk(cityId)))
   }
 
   return (
@@ -40,7 +54,8 @@ function SalonsPage() {
               <div className="salons-page__wrapp-drodown-select">
                 <DropdownSelect
                   dropdownTitle={'Выберите город'}
-                  items={['Москва', 'Б', 'Санкт-Петербург', 'Самара', 'А', 'Нижний Новгород', 'Новосибирск', 'Новосибирск']}
+                  items={cities}
+                  onChange={callbacks.onGetFilteringSalonsByCity}
                 />
               </div>
               <div className="salons-page__wrapp-drodown-select">
@@ -58,51 +73,27 @@ function SalonsPage() {
             </div>
           </section>
           <ul className="salons-page__salons-list">
-            <li className="salons-page__wrapp-salon-card">
-              <SalonCard
-                colorTitle={'#000000'}
-                bkgInfo={'#F5BFAB'}
-                bckCallBtn={'#410935'}
-                colorTextCallBtn={'#F5BFAB'}
-                salonTitle={'Салон-красоты «Версаль»'}
-                address={'Москва, ул. Костина, 6/1, 3 этаж (м. Красносельская)'}
-                workinghours={'Время работы: с 10:00 до 20:00 без выходных'}
-                telephone={'Телефон: (495) 123-45-67'}
-                parking={'Бесплатная гостевая парковка'}
-                textLink={'Подробная информация о салоне'}
-                img={img1}
-              />
-            </li>
-            <li className="salons-page__wrapp-salon-card">
-              <SalonCard
-                colorTitle={'#000000'}
-                bkgInfo={'#F5BFAB'}
-                bckCallBtn={'#410935'}
-                colorTextCallBtn={'#F5BFAB'}
-                salonTitle={'Салон-красоты «Версаль»'}
-                address={'Москва, ул. Костина, 6/1, 3 этаж (м. Красносельская)'}
-                workinghours={'Время работы: с 10:00 до 20:00 без выходных'}
-                telephone={'Телефон: (495) 123-45-67'}
-                parking={'Бесплатная гостевая парковка'}
-                textLink={'Подробная информация о салоне'}
-                img={img2}
-              />
-            </li>
-            <li className="salons-page__wrapp-salon-card">
-              <SalonCard
-                colorTitle={'#000000'}
-                bkgInfo={'#F5BFAB'}
-                bckCallBtn={'#410935'}
-                colorTextCallBtn={'#F5BFAB'}
-                salonTitle={'Салон-красоты «Версаль»'}
-                address={'Москва, ул. Костина, 6/1, 3 этаж (м. Красносельская)'}
-                workinghours={'Время работы: с 10:00 до 20:00 без выходных'}
-                telephone={'Телефон: (495) 123-45-67'}
-                parking={'Бесплатная гостевая парковка'}
-                textLink={'Подробная информация о салоне'}
-                img={img3}
-              />
-            </li>
+            {salons.map((item) => {
+              return <li className="salons-page__wrapp-salon-card" key={item.id}>
+                <SalonCard
+                  salonTitle={item.name}
+                  colorTitle={'#000000'}
+                  bkgInfo={'#F5BFAB'}
+                  city={item.city}
+                  address={item.address}
+                  workinghours={item.working_time}
+                  telephone={item.phone}
+                  parking={item.advantages[0]?.name}
+                  textLink={'Подробная информация о салоне'}
+                  deliverableGgroups={item.deliverable_groups}
+                  img={img1}//
+                  bckCallBtn={'#410935'}
+                  colorTextCallBtn={'#F5BFAB'}
+                  bkgRecordBtn={'#A40123'}
+                  colorTextRecordBtn={'#F5BFAB'}
+                />
+              </li>
+            })}
           </ul>
           <div className="salons-page__wrapp-pagination">
             <Pagination />
