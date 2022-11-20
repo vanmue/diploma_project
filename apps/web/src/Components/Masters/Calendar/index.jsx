@@ -10,27 +10,23 @@ import ModalWindow from "./ModalWindow/index.jsx";
 
 
 function Calendar() {
+
     const [data, setData] = useState([]);
 
-
-    let proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = 'https://vanmue.ru:8001/api/v1/deliverable-groups/'
+    let targetUrl = '/api/v1/deliverable-groups/'
 
     useEffect(() => {
-        fetch(proxyUrl + targetUrl)
+        fetch(targetUrl)
             .then((res) => res.json())
             .then((res) => {
                 const result = {};
                 for (let item of res.data) {
                     result[item.id] = item.name;
                 }
-
                 setData(result)
-
             })
-
     }, [])
-    //console.log(data);
+
     moment.updateLocale('es', { week: { dow: 1 } })
     moment.updateLocale('es', {
         months: [
@@ -38,10 +34,12 @@ function Calendar() {
             "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
         ]
     })
+
     const today = moment()
     const [itemday, setItemDay] = useState(today.clone())
     const [modalActive, setModalActive] = useState(false);
     const [choiceDay, setChoiceDay] = useState('')
+
     function cellClick(e) {
         e.stopPropagation()
         if (moment(moment(e.target.attributes.value.nodeValue)).isSameOrAfter(today.format('YYYY-MM-DD'))) {
