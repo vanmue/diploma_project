@@ -1,48 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { GET_MASTER } from "../../actions/masterRecordAction";
 import Calendar from './Calendar'
 import Price from './Price'
 import Reviews from "./Reviews";
-import image from './img/fotoMasters.png'
 import "./master.scss"
 import Rating from '../Rating'
 
 
 function Master() {
+    const [data, setData] = useState({
+        id: '',
+        profession: '',
+        description: '',
+        score: '',
+        img: '',
+        user: {
+            id: '',
+            name: '',
+            surname: ''
+        },
+        shops: [{
+            name: ''
+        }],
+        reviews_count: '',
+        deliverable_groups: ''
+    });
+    const masterId = useSelector(store => store.masterIdReducer);
+    useEffect(() => {
+        fetch('/api/v1/masters')
+            .then((res) => res.json())
+            .then((res) => {
+                setData(res.data.filter(master => master.user.id === masterId.id)[0])
+            })
+            .catch(error => console.log(error))
+    }, [])
+
+    console.log(data)
     return <>
         <div className='main-page'>
             <div className="container">
                 <div className="master__item-block">
                     <div className="master__item-img">
-                        <img src={image} alt="foto" />
+                        <img src={data.img} alt="foto" />
                     </div>
                     <div className="master__info-block">
-                        <h2 className="master__name">Светлана Иванова - мастер парикмахер</h2>
+                        <h2 className="master__name">{data.user.name} {data.user.surname} - {data.profession}</h2>
                         <div className="master-card__wrapp-rating">
                             <Rating />
                         </div>
 
-                        <p className="master__work">Работает в салоне: Салон красоты «Версаль»</p>
+                        <p className="master__work">Работает в салоне: {data.shops[0].name}</p>
                         <div className="master__info">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-                            </p>
-                            <br />
-                            <p>
-                                In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
-                            </p>
-                            <br />
-                            <p>
-                                Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.
-                            </p>
-                            <br />
-                            <p>
-                                Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien.
-                            </p>
+                            <p> {data.description} </p>
                         </div>
                     </div>
                 </div>
-
-                <Calendar />
+                <Calendar dataUser={data} />
                 <Price />
                 <Reviews />
             </div>
