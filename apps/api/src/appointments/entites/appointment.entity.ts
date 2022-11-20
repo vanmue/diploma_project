@@ -1,8 +1,9 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
-import { DeliverableEntity } from 'src/deliverables/deliverable.entity';
-import { MasterEntity } from 'src/masters/master.entity';
-import { ShopEntity } from 'src/shops/shop.entity';
+import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity';
+import { MasterEntity } from 'src/masters/entities/master.entity';
+import { ShopEntity } from 'src/shops/entities/shop.entity';
 import {
   Column,
   CreateDateColumn,
@@ -18,34 +19,39 @@ import {
   `USING GIST ("shopId" WITH =, "masterId" WITH =, TSTZRANGE("from", "to") WITH &&)`,
 )
 export class AppointmentEntity {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty()
-  @ManyToOne(() => ShopEntity)
+  @ManyToOne(() => ShopEntity, (shop) => shop.appointments)
   shop: ShopEntity;
 
-  @IsNotEmpty()
   @ManyToOne(() => MasterEntity)
   master: MasterEntity;
 
-  @IsNotEmpty()
   @ManyToOne(() => DeliverableEntity)
   deliverable: DeliverableEntity;
 
+  @ApiProperty()
+  @IsNotEmpty()
   @Column({ type: 'varchar' })
   name: string;
 
+  @ApiProperty()
+  @IsNotEmpty()
   @Column({ type: 'varchar' })
   phone: string;
 
+  @ApiProperty({ required: false })
   @Column({ type: 'text', nullable: true })
-  comments: string;
+  comments?: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @Column({ type: 'timestamptz' })
   from: Date;
 
+  @ApiProperty()
   @IsNotEmpty()
   @Column({ type: 'timestamptz' })
   to: Date;

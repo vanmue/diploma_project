@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { MasterEntity } from 'src/masters/master.entity';
+import { MasterEntity } from 'src/masters/entities/master.entity';
 import {
   Column,
   CreateDateColumn,
@@ -11,10 +11,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Transform } from 'class-transformer';
 import Decimal from 'decimal.js';
 import decimalService from 'src/services/decimal/decimal.service';
-import { DeliverableGroupEntity } from './groups/deliverable-group.entity';
+import { DeliverableGroupEntity } from '../groups/deliverable-group.entity';
 
 export const UNIQUE_DELIVERABLE_NAME_CONSTRAINT =
   'unique_deliverable_name_constrtaint';
@@ -23,10 +24,12 @@ export const UNIQUE_DELIVERABLE_NAME_CONSTRAINT =
 @Unique(UNIQUE_DELIVERABLE_NAME_CONSTRAINT, ['name'])
 export class DeliverableEntity {
   @PrimaryGeneratedColumn()
+  @ApiProperty()
   id: number;
 
   @IsNotEmpty()
   @Column({ type: 'varchar' })
+  @ApiProperty()
   name: string;
 
   @IsNotEmpty()
@@ -37,16 +40,19 @@ export class DeliverableEntity {
     transformer: decimalService,
   })
   @Transform(decimalService.toNumber)
+  @ApiProperty({ type: 'number' })
   price: Decimal;
 
   @ManyToMany(() => MasterEntity, (master) => master.deliverables, {
     onDelete: 'RESTRICT',
     cascade: true,
   })
+  @ApiProperty()
   masters: MasterEntity[];
 
   @IsNotEmpty()
   @ManyToOne(() => DeliverableGroupEntity, (group) => group.deliverables)
+  @ApiProperty()
   deliverable_group: DeliverableGroupEntity;
 
   @Exclude()

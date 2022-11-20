@@ -9,8 +9,9 @@ import {
 } from '@nestjs/common';
 import { JsonObject } from 'src/libs/src/models/JsonObject';
 import { JsonService } from 'src/services/json/json.service';
+import { CreateMasterEntity } from './entities/create-master.entity';
+import { MasterEntity } from './entities/master.entity';
 import { ListAllMastersDto } from './list-all-masters-dto';
-import { MasterEntity } from './master.entity';
 import { MastersService } from './masters.service';
 
 @Controller('masters')
@@ -28,7 +29,9 @@ export class MastersController {
   }
 
   @Post()
-  async create(@Body() dto: MasterEntity): Promise<JsonObject<MasterEntity>> {
+  async create(
+    @Body() dto: CreateMasterEntity,
+  ): Promise<JsonObject<MasterEntity>> {
     const data = await this.mastersService.create(dto);
     return this.jsonService.data(data);
   }

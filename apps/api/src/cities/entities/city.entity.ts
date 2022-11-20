@@ -1,6 +1,7 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
-import { ShopEntity } from 'src/shops/shop.entity';
+import { ShopEntity } from 'src/shops/entities/shop.entity';
 import {
   Column,
   CreateDateColumn,
@@ -13,13 +14,16 @@ import {
 @Entity('cities')
 export class CityEntity {
   @PrimaryGeneratedColumn()
+  @ApiProperty()
   id: number;
 
   @IsNotEmpty()
   @Column({ type: 'varchar' })
+  @ApiProperty()
   name: string;
 
   @OneToMany(() => ShopEntity, (shop) => shop.city)
+  @ApiProperty({ type: () => ShopEntity })
   shops: ShopEntity[];
 
   @Column('float', {
@@ -27,6 +31,7 @@ export class CityEntity {
     nullable: true,
     select: false,
   })
+  @ApiProperty()
   center_longtitude: number;
 
   @Column('float', {
@@ -34,6 +39,7 @@ export class CityEntity {
     nullable: true,
     select: false,
   })
+  @ApiProperty()
   center_latitude: number;
 
   @Column('float', {
@@ -41,6 +47,7 @@ export class CityEntity {
     nullable: true,
     select: false,
   })
+  @ApiProperty()
   label_longtitude: number;
 
   @Column('float', {
@@ -48,9 +55,11 @@ export class CityEntity {
     nullable: true,
     select: false,
   })
+  @ApiProperty()
   label_latitude: number;
 
   @Column('int', { comment: 'масштаб карты', nullable: true, select: false })
+  @ApiProperty()
   zoom: number;
 
   @Exclude()
