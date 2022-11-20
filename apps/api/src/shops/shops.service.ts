@@ -55,7 +55,7 @@ export class ShopsService {
       where: {
         id: In(ids),
       },
-      relations: ['city', 'advantages', 'masters'],
+      relations: ['city', 'advantages', 'masters', 'images'],
     });
 
     let p = Promise.resolve(null);

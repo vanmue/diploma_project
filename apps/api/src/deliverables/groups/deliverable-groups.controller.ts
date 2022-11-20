@@ -8,8 +8,9 @@ import {
 } from '@nestjs/common';
 import { JsonObject } from 'src/libs/src/models/JsonObject';
 import { JsonService } from 'src/services/json/json.service';
-import { DeliverableGroupEntity } from './deliverable-group.entity';
 import { DeliverableGroupsService } from './deliverable-groups.service';
+import { CreateDeliverableGroupEntity } from './entities/create-deliverable-group.entity';
+import { DeliverableGroupEntity } from './entities/deliverable-group.entity';
 
 @Controller('deliverable-groups')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -25,7 +26,7 @@ export class DeliverableGroupsController {
   }
   @Post()
   async create(
-    @Body() groupDto: DeliverableGroupEntity,
+    @Body() groupDto: CreateDeliverableGroupEntity,
   ): Promise<JsonObject<DeliverableGroupEntity>> {
     const data = await this.groupsService.create(groupDto);
     return this.jsonService.data(data);

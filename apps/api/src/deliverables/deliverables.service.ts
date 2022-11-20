@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateDeliverableEntity } from './entities/create-deliverable.entity';
 import { DeliverableEntity } from './entities/deliverable.entity';
-import { DeliverableGroupEntity } from './groups/deliverable-group.entity';
+import { DeliverableGroupEntity } from './groups/entities/deliverable-group.entity';
 
 @Injectable()
 export class DeliverablesService {

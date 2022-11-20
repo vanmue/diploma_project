@@ -3,7 +3,7 @@ import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
 import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
 import { CityEntity } from 'src/cities/entities/city.entity';
-import { DeliverableGroupEntity } from 'src/deliverables/groups/deliverable-group.entity';
+import { DeliverableGroupEntity } from 'src/deliverables/groups/entities/deliverable-group.entity';
 import { MasterEntity } from 'src/masters/entities/master.entity';
 import {
   Column,
@@ -17,6 +17,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ShopAdvantageEntity } from '../shop-advantages/entities/shop-advantage.entity';
+import { ShopImageEntity } from '../shop-images/entities/shop-image.entity';
 
 @Entity('shops')
 export class ShopEntity {
@@ -70,6 +71,13 @@ export class ShopEntity {
   @OneToMany(() => AppointmentEntity, (appointment) => appointment.shop)
   @ApiProperty()
   appointments: AppointmentEntity[];
+
+  @OneToMany(() => ShopImageEntity, (image) => image.shop, {
+    onDelete: 'RESTRICT',
+    cascade: true,
+  })
+  @ApiProperty({ type: () => ShopImageEntity, isArray: true, required: false })
+  images?: ShopImageEntity[];
 
   @Column('float', {
     comment: 'долгота центра карты',
