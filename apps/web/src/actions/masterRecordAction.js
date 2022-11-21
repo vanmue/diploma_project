@@ -1,1 +1,1 @@
-export const GET_MASTER_ID = 'GET_MASTER';
+export const MASTER_RECORD = 'MASTER_RECORD';

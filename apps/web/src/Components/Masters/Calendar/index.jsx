@@ -9,23 +9,16 @@ import ModalWindow from "./ModalWindow/index.jsx";
 
 
 
-function Calendar() {
-    //console.log(data)
-    const [data, setData] = useState([]);
+function Calendar({ dataMaster, record }) {
+    //console.log(dataMaster)
+    //console.log(dataMaster?.deliverable_groups.map(item => item.name))
 
-    let targetUrl = '/api/v1/deliverable-groups/'
+    //const [data, setData] = useState([]);
+    const servise = []
+    dataMaster?.deliverable_groups.map(item => servise.push(item.name))
 
-    useEffect(() => {
-        fetch(targetUrl)
-            .then((res) => res.json())
-            .then((res) => {
-                const result = {};
-                for (let item of res.data) {
-                    result[item.id] = item.name;
-                }
-                setData(result)
-            })
-    }, [])
+
+    //console.log(servise)
 
     moment.updateLocale('es', { week: { dow: 1 } })
     moment.updateLocale('es', {
@@ -67,7 +60,7 @@ function Calendar() {
             <h2 className='calendar__text'>Выбрать дату и время для записи:</h2>
             <CalendarMonth itemday={itemday} monthSubtract={monthSubtract} monthAdd={monthAdd} />
             <CalendarGrid startDay={startDay} today={today} cellClick={cellClick} />
-            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} data={data} />
+            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} data={servise} dataMaster={dataMaster} />
         </div>
     );
 }
