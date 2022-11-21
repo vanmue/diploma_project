@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
 import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
 import { CityEntity } from 'src/cities/entities/city.entity';
-import { DeliverableGroupEntity } from 'src/deliverables/groups/deliverable-group.entity';
+import { DeliverableGroupEntity } from 'src/deliverables/groups/entities/deliverable-group.entity';
 import { MasterEntity } from 'src/masters/entities/master.entity';
 import {
   Column,
@@ -17,6 +17,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ShopAdvantageEntity } from '../shop-advantages/entities/shop-advantage.entity';
+import { ShopImageEntity } from '../shop-images/entities/shop-image.entity';
 
 @Entity('shops')
 export class ShopEntity {
@@ -30,7 +31,9 @@ export class ShopEntity {
   name: string;
 
   @ManyToOne(() => CityEntity, (city) => city.shops)
-  @ApiProperty({ type: () => CityEntity })
+  @ApiProperty({
+    type: () => PickType(CityEntity, ['id' as const, 'name' as const]),
+  })
   city: CityEntity;
 
   @IsNotEmpty()
@@ -60,21 +63,30 @@ export class ShopEntity {
 
   @ManyToMany(() => ShopAdvantageEntity, (advantage) => advantage.shops)
   @JoinTable()
-  @ApiProperty()
+  @ApiProperty({ isArray: true })
   advantages: ShopAdvantageEntity[];
 
   @ManyToMany(() => MasterEntity, (master) => master.shops)
-  @ApiProperty()
+  @ApiProperty({ isArray: true })
   masters: MasterEntity[];
 
   @OneToMany(() => AppointmentEntity, (appointment) => appointment.shop)
-  @ApiProperty()
+  @ApiProperty({ isArray: true })
   appointments: AppointmentEntity[];
+
+  @OneToMany(() => ShopImageEntity, (image) => image.shop, {
+    onDelete: 'RESTRICT',
+    cascade: true,
+  })
+  @ApiProperty({
+    isArray: true,
+    required: false,
+  })
+  images?: ShopImageEntity[];
 
   @Column('float', {
     comment: 'долгота центра карты',
     nullable: true,
-    select: false,
   })
   @ApiProperty()
   center_longtitude: number;
@@ -82,15 +94,12 @@ export class ShopEntity {
   @Column('float', {
     comment: 'широта центра карты',
     nullable: true,
-    select: false,
   })
-  @ApiProperty()
   center_latitude: number;
 
   @Column('float', {
     comment: 'долгота метки центра',
     nullable: true,
-    select: false,
   })
   @ApiProperty()
   label_longtitude: number;
@@ -98,17 +107,16 @@ export class ShopEntity {
   @Column('float', {
     comment: 'широта метки центра',
     nullable: true,
-    select: false,
   })
   @ApiProperty()
   label_latitude: number;
 
-  @Column('int', { comment: 'масштаб карты', nullable: true, select: false })
+  @Column('int', { comment: 'масштаб карты', nullable: true })
   @ApiProperty()
   zoom: number;
 
   // услуги салона из услуг мастеров
-  @ApiProperty()
+  @ApiProperty({ isArray: true })
   deliverable_groups: DeliverableGroupEntity[];
 
   @Exclude()

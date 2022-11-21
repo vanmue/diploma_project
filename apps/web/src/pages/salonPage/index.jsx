@@ -44,11 +44,13 @@ function SalonPage() {
               workinghours={'Время работы: с 10:00 до 20:00 без выходных'}
               telephone={'Телефон: (495) 123-45-67'}
               parking={'Бесплатная гостевая парковка'}
+
               bckCallBtn={'#F5BFAB'}
               colorTextCallBtn={'#410935'}
-              map={renders.yandexMap}
               bkgRecordBtn={'#A40123'}
               colorTextRecordBtn={'#F5BFAB'}
+              
+              map={renders.yandexMap}
             />
           </div>
           <div className="salon-page__wrapp-carousel">

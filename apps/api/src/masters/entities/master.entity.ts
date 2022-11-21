@@ -3,7 +3,7 @@ import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
 import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
 import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity';
-import { DeliverableGroupEntity } from 'src/deliverables/groups/deliverable-group.entity';
+import { DeliverableGroupEntity } from 'src/deliverables/groups/entities/deliverable-group.entity';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import {

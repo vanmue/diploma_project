@@ -7,6 +7,7 @@ function Button({
   colorText,
   background,
   children,
+  masterId
 }) {
 
   return (
@@ -26,8 +27,10 @@ function Button({
 }
 
 Button.propTypes = {
+  background: propTypes.string.isRequired,
+  colorText: propTypes.string.isRequired,
   children: propTypes.string.isRequired,
-  background: propTypes.string.isRequired
+  masterId: propTypes.number
 }
 
 export default React.memo(Button);
