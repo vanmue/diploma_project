@@ -57,6 +57,7 @@ function DropdownSelect({
 
     sortByValue(e.currentTarget.innerHTML);
     inputRef.current.focus();
+    console.log(value)
   }
 
   return (
