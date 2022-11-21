@@ -9,5 +9,6 @@ import { DeliverableEntity } from './entities/deliverable.entity';
   imports: [TypeOrmModule.forFeature([DeliverableEntity])],
   providers: [DeliverablesService, JsonService],
   controllers: [DeliverablesController],
+  exports: [DeliverablesService],
 })
 export class DeliverablesModule {}

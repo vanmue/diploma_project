@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CityEntity } from 'src/cities/entities/city.entity';
 import { DeliverableGroupsService } from 'src/deliverables/groups/deliverable-groups.service';
+import { PaginationService } from 'src/services/pagination/pagination.service';
 import { In, Repository } from 'typeorm';
 import { CreateShopEntity } from './entities/create-shop.entity';
 import { ShopEntity } from './entities/shop.entity';
@@ -14,6 +15,7 @@ export class ShopsService {
     @InjectRepository(ShopEntity)
     private readonly shopRepository: Repository<ShopEntity>,
     private readonly deliverableGroupsService: DeliverableGroupsService,
+    private readonly paginationService: PaginationService,
   ) {}
   async create(dto: CreateShopEntity) {
     const { cityId, advantages: advantages } = dto;
@@ -29,8 +31,8 @@ export class ShopsService {
 
     return await this.shopRepository.save({ ...dto, city, advantages: advs });
   }
-  async findAll(query?: ListAllDto) {
-    const { city_id, deliverable_group_id } = query;
+  async findAllPaginated(query?: ListAllDto) {
+    const { city_id, deliverable_group_id, limit, page } = query;
 
     let where = {};
     if (city_id) {
@@ -47,7 +49,16 @@ export class ShopsService {
       };
     }
 
-    const shopsByQuery = await this.shopRepository.find({ where });
+    const paginationOptions = this.paginationService.getPaginationOptions(
+      limit,
+      page,
+    );
+
+    const [shopsByQuery, shopsTotal] = await this.shopRepository.findAndCount({
+      where,
+      ...paginationOptions,
+      order: { id: 'ASC' },
+    });
 
     const ids = shopsByQuery.map((shop) => shop.id);
 
@@ -69,6 +80,13 @@ export class ShopsService {
       );
     });
 
-    return p.then(() => shops);
+    return p.then(() =>
+      this.paginationService.getJsonObject<ShopEntity[]>(
+        shops,
+        shopsTotal,
+        limit,
+        page,
+      ),
+    );
   }
 }

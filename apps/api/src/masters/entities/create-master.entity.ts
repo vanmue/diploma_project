@@ -20,4 +20,8 @@ export class CreateMasterEntity extends OmitType(MasterEntity, [
   @ArrayNotEmpty()
   @ApiProperty({ type: Number, isArray: true })
   shops: number[];
+
+  @ArrayNotEmpty()
+  @ApiProperty({ type: Number, isArray: true })
+  deliverables: number[];
 }

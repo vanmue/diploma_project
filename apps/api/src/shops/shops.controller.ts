@@ -26,8 +26,7 @@ export class ShopsController {
   @Get()
   @ApiResponse({ type: ShopEntity, isArray: true })
   async getAll(@Query() query: ListAllDto) {
-    const data = await this.shopsService.findAll(query);
-    return this.jsonService.data(data);
+    return await this.shopsService.findAllPaginated(query);
   }
 
   @Post()
