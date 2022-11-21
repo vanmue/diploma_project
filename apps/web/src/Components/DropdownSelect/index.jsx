@@ -66,6 +66,7 @@ function DropdownSelect({
     sortByValue(e.currentTarget.innerHTML);
     onChange(e.currentTarget.dataset.citiesId);
     inputRef.current.focus();
+    console.log(value)
   }
 
   return (
