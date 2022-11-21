@@ -6,4 +6,10 @@ export class ListAllDto {
 
   @ApiProperty({ required: false })
   deliverable_group_id?: number;
+
+  @ApiProperty({ required: false })
+  limit?: string;
+
+  @ApiProperty({ required: false })
+  page?: string;
 }

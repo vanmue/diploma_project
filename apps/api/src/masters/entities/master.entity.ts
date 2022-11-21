@@ -61,11 +61,6 @@ export class MasterEntity {
   @ApiProperty({ isArray: true })
   appointments: AppointmentEntity[];
 
-  @IsNotEmpty()
-  @Column('int')
-  @ApiProperty()
-  score: number;
-
   @Column({ type: 'varchar' })
   @ApiProperty()
   img: string;
