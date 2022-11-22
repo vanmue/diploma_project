@@ -34,8 +34,8 @@ function Carousel({ images }) {
           style={{ left: `${offset}px` }}
           ref={carouselLineRef}
         >
-          {images.map((item) => {
-            return <img className="carousel__img" src={item} alt="Фото салона" />
+          {images.map((item, index) => {
+            return <img className="carousel__img" src={item.img} key={index} alt="Фото салона" />
           })}
         </div>
       </div>

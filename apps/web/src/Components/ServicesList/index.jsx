@@ -8,10 +8,10 @@ function ServicesList({ services, color }) {
       className="services-list"
       style={{ overflowY: services.length > 6 ? "scroll" : "hidden", height: "162px", color: `${color}` }}
     >
-      {services.map(item =>
+      {services.map((item, index) =>
         <li
           className="services-list__item"
-          key={item.id}
+          key={index}
         >
           <p>{item.name}</p>
         </li>
