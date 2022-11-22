@@ -8,6 +8,7 @@ import { CitiesModule } from './cities/cities.module';
 import { DeliverablesModule } from './deliverables/deliverables.module';
 import { DeliverableGroupsModule } from './deliverables/groups/deliverable-groups.module';
 import { MastersModule } from './masters/masters.module';
+import { ReviewsModule } from './reviews/reviews.module';
 import { DecimalService } from './services/decimal/decimal.service';
 import { FakerService } from './services/faker/faker.service';
 import { JsonService } from './services/json/json.service';
@@ -52,6 +53,7 @@ const synchronize = process.env.NODE_ENV !== 'production';
     UsersModule,
     AppointmentsModule,
     DeliverablesModule,
+    ReviewsModule,
     ShopImagesModule,
   ],
   controllers: [],

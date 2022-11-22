@@ -1,0 +1,54 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+  ValidateIf,
+} from 'class-validator';
+import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+@Entity('reviews')
+export class ReviewEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @ManyToOne(() => UserEntity)
+  author: UserEntity;
+
+  @ManyToOne(() => AppointmentEntity)
+  appointment: AppointmentEntity;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(5)
+  @Column({ type: 'int', nullable: true })
+  @ApiProperty({ required: false })
+  score: number;
+
+  @IsString()
+  @ValidateIf((o) => o.review)
+  @Column({ type: 'text', nullable: true })
+  @ApiProperty({ required: false })
+  review: string;
+
+  @CreateDateColumn({ type: 'timestamp' })
+  @Exclude()
+  created_at: Date = new Date();
+
+  @Exclude()
+  @UpdateDateColumn({ type: 'timestamp' })
+  updated_at: Date = new Date();
+}

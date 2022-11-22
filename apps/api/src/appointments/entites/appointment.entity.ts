@@ -3,6 +3,7 @@ import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
 import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity';
 import { MasterEntity } from 'src/masters/entities/master.entity';
+import { ReviewEntity } from 'src/reviews/entities/review.entity';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
 import {
   Column,
@@ -10,6 +11,7 @@ import {
   Entity,
   Exclusion,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -28,6 +30,9 @@ export class AppointmentEntity {
 
   @ManyToOne(() => MasterEntity)
   master: MasterEntity;
+
+  @OneToMany(() => ReviewEntity, (review) => review.appointment)
+  reviews: ReviewEntity[];
 
   @ManyToOne(() => DeliverableEntity)
   deliverable: DeliverableEntity;
