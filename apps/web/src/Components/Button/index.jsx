@@ -7,17 +7,23 @@ function Button({
   colorText,
   background,
   children,
+  onClick,
   masterId
 }) {
+
+  const handleClick = () => {
+    onClick();
+  }
 
   return (
     <button
       className='button'
       style={{ background: `${background}` }}
+      onClick={handleClick}
     >
       <Link
-        end
-        to="/master"
+        // end
+        // to="/master"
         style={{ color: `${colorText}` }}
       >
         {children}
@@ -30,7 +36,12 @@ Button.propTypes = {
   background: propTypes.string.isRequired,
   colorText: propTypes.string.isRequired,
   children: propTypes.string.isRequired,
-  masterId: propTypes.number
+  masterId: propTypes.number,
+  onClick: propTypes.func
+}
+
+Button.defaultProps = {
+  onClick: () => { }
 }
 
 export default React.memo(Button);

@@ -1,11 +1,11 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty } from 'class-validator';
-import { MasterReviewEntity } from './master-review.entity';
+import { ReviewEntity } from './review.entity';
 
-export class CreateMasterReviewEntity extends OmitType(MasterReviewEntity, [
+export class CreateReviewEntity extends OmitType(ReviewEntity, [
   'id' as const,
   'author' as const,
-  'master' as const,
+  'appointment' as const,
 ]) {
   @IsNotEmpty()
   @IsInt()
@@ -15,5 +15,5 @@ export class CreateMasterReviewEntity extends OmitType(MasterReviewEntity, [
   @IsNotEmpty()
   @IsInt()
   @ApiProperty()
-  masterId: number;
+  appointmentId: number;
 }

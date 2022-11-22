@@ -8,8 +8,9 @@ export class CreateMasterEntity extends OmitType(MasterEntity, [
   'deliverables' as const,
   'shops' as const,
   'appointments' as const,
-  'reviews' as const,
-  'reviews_count' as const,
+  'reviews_scores_count' as const,
+  'reviews_scores_sum' as const,
+  'reviews_scores_avg' as const,
   'deliverable_groups' as const,
 ]) {
   @IsNotEmpty()
