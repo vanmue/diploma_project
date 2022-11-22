@@ -3,10 +3,12 @@ import propTypes from 'prop-types';
 import './dropdown-select.scss';
 
 function DropdownSelect({
+  what,
   dropdownTitle,
   items,
   onChange
 }) {
+  const [aboutWhat, setAboutWhat] = useState(what + 'drpdn');
   const [btnActive, setBtnActive] = useState(false);
   const [itemsSort, setItemsSort] = useState(items);
   const [value, setValue] = useState('');
@@ -64,9 +66,8 @@ function DropdownSelect({
 
     setValue(e.currentTarget.innerHTML);
     sortByValue(e.currentTarget.innerHTML);
-    onChange(e.currentTarget.dataset.citiesId);
+    onChange(e.currentTarget.dataset.drpdnItemId);
     inputRef.current.focus();
-    console.log(value)
   }
 
   return (
@@ -96,7 +97,7 @@ function DropdownSelect({
         {itemsSort.map((item, index) => {
           return <li
             className="dropdown-select__list-item"
-            data-cities-id={item.id}
+            data-drpdn-item-id={item.id}
             key={index}
             style={{ background: (sampleCounter > 0 && index < sampleCounter) ? "#F5BFAB" : "#FFFFFF" }}
             onClick={handleClickListItem}
@@ -110,6 +111,7 @@ function DropdownSelect({
 }
 
 DropdownSelect.propTypes = {
+  what: propTypes.string,
   dropdownTitle: propTypes.string,
   items: propTypes.arrayOf(propTypes.object),
   onChange: propTypes.func
