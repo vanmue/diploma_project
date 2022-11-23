@@ -19,8 +19,6 @@ import { ShopsModule } from './shops/shops.module';
 import { TestResponseModule } from './test-response/test-response.module';
 import { UsersModule } from './users/users.module';
 
-const synchronize = process.env.NODE_ENV !== 'production';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -38,7 +36,7 @@ const synchronize = process.env.NODE_ENV !== 'production';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_DATABASE'),
-        synchronize,
+        synchronize: false,
         autoLoadEntities: true,
       }),
       inject: [ConfigService],
