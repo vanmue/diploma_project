@@ -7,18 +7,16 @@ function DropdownModal({
     items,
     setChoice
 }) {
-
     const [value, setValue] = useState(dropdownTitle)
     const [btnActive, setBtnActive] = useState(false);
 
     const handleClickBtn = () => {
         setBtnActive(!btnActive);
     }
-    const handleClickListItem = (e) => {
-        //console.log(e.currentTarget.innerHTML)
+    const handleClickListItem = (e, id) => {
         setValue(e.currentTarget.innerHTML)
         setBtnActive(!btnActive)
-        setChoice(e.currentTarget.innerHTML)
+        setChoice({ value: e.currentTarget.innerHTML, id: id })
 
     }
 
@@ -39,14 +37,15 @@ function DropdownModal({
                 className="dropdown__modal-select__list"
                 style={{ display: btnActive ? "block" : "none" }}
             >
-                {items.map((item, index) =>
+
+                {items[0]?.map((item) =>
                     <li
                         style={{ cursor: 'pointer' }}
                         className="dropdown__modal-select__list-item"
-                        key={index}
-                        onClick={handleClickListItem}
+                        key={item?.id}
+                        onClick={(e) => handleClickListItem(e, item?.id)}
                     >
-                        {item}
+                        {item?.name}
                     </li>
                 )}
             </ul>

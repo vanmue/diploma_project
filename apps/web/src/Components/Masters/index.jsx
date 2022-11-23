@@ -12,8 +12,13 @@ function Master() {
   const masterId = useSelector(store => store.masterIdReducer);
 
   const [data, setData] = useState(null);
-  const [record, setRecord] = useState(null)
+  const [record, setRecord] = useState(masterRecord)
   const [price, setPrise] = useState(null)
+  const [day, setDay] = useState('2022-11-17')
+
+  function getDay(day1) {
+    setDay(day1)
+  }
 
   useEffect(() => {
     fetch('/api/v1/deliverables')
@@ -25,23 +30,22 @@ function Master() {
   }, [])
 
   useEffect(() => {
-    fetch('/api/v1/appointments')
+    fetch(`/api/v1/appointments/?date=${day}&master_id=${masterId.id}`)
       .then((req) => req.json())
       .then((res) => {
-        setRecord(res.data)
+        setRecord(res.data?.filter(master => master.id === masterId.id)[0])
       })
       .catch(error => console.log(error))
-  }, [])
+  }, [day])
 
   useEffect(() => {
     fetch('/api/v1/masters')
       .then((req) => req.json())
       .then((res) => {
-        setData(res.data?.filter(master => master.user.id === masterId.id)[0])
+        setData(res.data?.filter(master => master.id === masterId.id)[0])
       })
       .catch(error => console.log(error))
   }, [])
-
   return <>
     <div className='main-page'>
       <div className="container">
@@ -61,7 +65,7 @@ function Master() {
             </div>
           </div>
         </div>
-        <Calendar dataMaster={data} record={record} />
+        <Calendar dataMaster={data} record={record} getDay={getDay} />
         <Price price={price} />
         <Reviews />
       </div>

@@ -1,7 +1,7 @@
 import { GET_MASTER_ID } from '../actions/masterIdAction';
 
 const initialStore = {
-    id: 1
+    id: 18
 }
 
 export default function masterIdReducer(store = initialStore, action) {
