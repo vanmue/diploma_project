@@ -5,6 +5,7 @@ import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity'
 import { DeliverableGroupsService } from 'src/deliverables/groups/deliverable-groups.service';
 import { ReviewsService } from 'src/reviews/reviews.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
+import { ListByShopDto } from 'src/shops/dto/list-by-shop.dto';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { In, Raw, Repository } from 'typeorm';
@@ -46,9 +47,53 @@ export class MastersService {
       deliverables: delivEntities,
     });
   }
-  async findDeliverableGroupsPaginated(query?: ListAllMastersDto) {
-    const { city_id, deliverable_group_id, master_id, shop_id, limit, page } =
-      query;
+
+  async findByShopIdPaginated(shopId: number, query: ListByShopDto) {
+    const { limit, page } = query;
+    const paginationOptions = this.paginationService.getPaginationOptions(
+      limit,
+      page,
+    );
+    const [masters, mastersTotal] = await this.masterRepository.findAndCount({
+      where: {
+        shops: {
+          id: shopId,
+        },
+      },
+      ...paginationOptions,
+      order: { id: 'ASC' },
+      relations: {
+        user: true,
+        shops: true,
+      },
+    });
+
+    let p = Promise.resolve(null);
+    masters.forEach((master) => {
+      p = p.then(() => {
+        return this.reviewService
+          .countAndSumByMaster(master.id)
+          .then((reviewsScores) => {
+            const { quantity, total, avg } = reviewsScores;
+            master.reviews_scores_count = quantity;
+            master.reviews_scores_sum = total;
+            master.reviews_scores_avg = avg;
+          });
+      });
+    });
+
+    return p.then(() =>
+      this.paginationService.getJsonObject<MasterEntity[]>(
+        masters,
+        mastersTotal,
+        limit,
+        page,
+      ),
+    );
+  }
+
+  async findAllPaginated(query?: ListAllMastersDto) {
+    const { city_id, deliverable_group_id, shop_id, limit, page } = query;
 
     let where = {};
 
@@ -67,9 +112,6 @@ export class MastersService {
           },
         },
       };
-    }
-    if (master_id) {
-      where = { ...where, id: master_id };
     }
 
     const paginationOptions = this.paginationService.getPaginationOptions(
@@ -97,17 +139,14 @@ export class MastersService {
     let p = Promise.resolve(null);
     masters.forEach((master) => {
       p = p.then(() => {
-        return Promise.all([
-          this.deliverableGroupsService.findByMaster(master.id),
-          this.reviewService.countAndSumByMaster(master.id),
-        ]).then(([groups, reviewsScores]) => {
-          master.deliverable_groups = groups;
-
-          const { quantity, total, avg } = reviewsScores;
-          master.reviews_scores_count = quantity;
-          master.reviews_scores_sum = total;
-          master.reviews_scores_avg = avg;
-        });
+        return this.reviewService
+          .countAndSumByMaster(master.id)
+          .then((reviewsScores) => {
+            const { quantity, total, avg } = reviewsScores;
+            master.reviews_scores_count = quantity;
+            master.reviews_scores_sum = total;
+            master.reviews_scores_avg = avg;
+          });
       });
     });
 
