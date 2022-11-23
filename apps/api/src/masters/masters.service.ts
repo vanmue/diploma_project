@@ -100,9 +100,10 @@ export class MastersService {
         return Promise.all([
           this.deliverableGroupsService.findByMaster(master.id),
           this.reviewService.countAndSumByMaster(master.id),
-        ]).then(([groups, reviews]) => {
+        ]).then(([groups, reviewsScores]) => {
           master.deliverable_groups = groups;
-          const { quantity, total, avg } = reviews;
+
+          const { quantity, total, avg } = reviewsScores;
           master.reviews_scores_count = quantity;
           master.reviews_scores_sum = total;
           master.reviews_scores_avg = avg;
@@ -148,9 +149,24 @@ export class MastersService {
       where = { ...where, id: master_id };
     }
 
-    return this.masterRepository.find({
+    const masters = await this.masterRepository.find({
       where,
-      relations: ['shops.appointments', 'deliverables'],
+      relations: {
+        shops: {
+          appointments: true,
+        },
+        deliverables: true,
+      },
     });
+
+    let p = Promise.resolve(null);
+    masters.forEach((master) => {
+      p = p.then(() =>
+        this.reviewService.findByMaster(master.id).then((reviews) => {
+          master.reviews = reviews;
+        }),
+      );
+    });
+    return p.then(() => masters);
   }
 }

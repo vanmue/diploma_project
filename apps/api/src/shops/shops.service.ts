@@ -66,7 +66,11 @@ export class ShopsService {
       where: {
         id: In(ids),
       },
-      relations: ['city', 'advantages', 'masters', 'images'],
+      relations: {
+        advantages: true,
+        city: true,
+        images: true,
+      },
     });
 
     let p = Promise.resolve(null);
@@ -88,5 +92,23 @@ export class ShopsService {
         page,
       ),
     );
+  }
+
+  async findById(id: number) {
+    const shop = await this.shopRepository.findOneOrFail({
+      where: {
+        id,
+      },
+      relations: {
+        city: true,
+        images: true,
+        advantages: true,
+      },
+    });
+
+    shop.deliverable_groups = await this.deliverableGroupsService.findByShop(
+      shop.id,
+    );
+    return shop;
   }
 }

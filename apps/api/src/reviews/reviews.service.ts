@@ -21,7 +21,11 @@ export class ReviewsService {
     const appointment = new AppointmentEntity();
     appointment.id = appointmentId;
 
-    return await this.reviewRepository.save({ ...dto, user, appointment });
+    return await this.reviewRepository.save({
+      ...dto,
+      author: user,
+      appointment,
+    });
   }
 
   async findAll() {
@@ -39,5 +43,16 @@ export class ReviewsService {
       .where('master.id = :masterId', { masterId })
       .andWhere('review.score IS NOT NULL')
       .getRawOne();
+  }
+
+  async findByMaster(masterId: number) {
+    return await this.reviewRepository
+      .createQueryBuilder('review')
+      .leftJoin('review.appointment', 'appointment')
+      .leftJoin('appointment.master', 'master')
+      .leftJoinAndSelect('review.author', 'user')
+      .where('master.id = :masterId', { masterId })
+      .andWhere('review.score IS NOT NULL OR review.review IS NOT NULL')
+      .getMany();
   }
 }

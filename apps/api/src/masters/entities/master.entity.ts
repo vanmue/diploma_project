@@ -4,6 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
 import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity';
 import { DeliverableGroupEntity } from 'src/deliverables/groups/entities/deliverable-group.entity';
+import { ReviewEntity } from 'src/reviews/entities/review.entity';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import {
@@ -67,11 +68,18 @@ export class MasterEntity {
 
   @ApiProperty()
   reviews_scores_count: number;
+
+  @ApiProperty()
   reviews_scores_sum: number;
+
+  @ApiProperty()
   reviews_scores_avg: number;
 
   @ApiProperty({ isArray: true })
   deliverable_groups: DeliverableGroupEntity[];
+
+  @ApiProperty({ isArray: true })
+  reviews: ReviewEntity[];
 
   @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
