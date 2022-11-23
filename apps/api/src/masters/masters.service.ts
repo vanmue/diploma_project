@@ -148,9 +148,24 @@ export class MastersService {
       where = { ...where, id: master_id };
     }
 
-    return this.masterRepository.find({
+    const masters = await this.masterRepository.find({
       where,
-      relations: ['shops.appointments', 'deliverables'],
+      relations: {
+        shops: {
+          appointments: true,
+        },
+        deliverables: true,
+      },
     });
+
+    let p = Promise.resolve(null);
+    masters.forEach((master) => {
+      p = p.then(() =>
+        this.reviewService.findByMaster(master.id).then((reviews) => {
+          master.reviews = reviews;
+        }),
+      );
+    });
+    return p.then(() => masters);
   }
 }

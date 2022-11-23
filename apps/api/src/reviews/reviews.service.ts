@@ -40,4 +40,14 @@ export class ReviewsService {
       .andWhere('review.score IS NOT NULL')
       .getRawOne();
   }
+
+  async findByMaster(masterId: number) {
+    return await this.reviewRepository
+      .createQueryBuilder('review')
+      .leftJoin('review.appointment', 'appointment')
+      .leftJoin('appointment.master', 'master')
+      .where('master.id = :masterId', { masterId })
+      .andWhere('review.score IS NOT NULL OR review.review IS NOT NULL')
+      .getMany();
+  }
 }
