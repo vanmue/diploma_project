@@ -19,5 +19,9 @@ WORKDIR /app
 COPY --from=build-stage /app/node_modules ./node_modules
 COPY --from=build-stage /app/dist/ ./
 
+# Для выполнения миграций
+COPY --from=build-stage /app/.typeorm/ ./.typeorm
+COPY --from=build-stage /app/.typeorm/ ./.docker
+
 CMD ["node", "main.js"]
 

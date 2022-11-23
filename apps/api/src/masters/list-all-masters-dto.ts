@@ -8,9 +8,6 @@ export class ListAllMastersDto {
   deliverable_group_id?: string;
 
   @ApiProperty({ required: false })
-  master_id?: string;
-
-  @ApiProperty({ required: false })
   shop_id?: string;
 
   @ApiProperty({ required: false })

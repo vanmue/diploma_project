@@ -24,7 +24,7 @@ export class MastersController {
 
   @Get()
   async getAll(@Query() query: ListAllMastersDto) {
-    return await this.mastersService.findDeliverableGroupsPaginated(query);
+    return await this.mastersService.findAllPaginated(query);
   }
 
   @Post()

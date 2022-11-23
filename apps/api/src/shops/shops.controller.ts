@@ -10,10 +10,12 @@ import {
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { JsonObject } from 'src/libs/src/models/JsonObject';
+import { MastersService } from 'src/masters/masters.service';
 import { JsonService } from 'src/services/json/json.service';
+import { ListAllDto } from './dto/list-all.dto';
+import { ListByShopDto } from './dto/list-by-shop.dto';
 import { CreateShopEntity } from './entities/create-shop.entity';
 import { ShopEntity } from './entities/shop.entity';
-import { ListAllDto } from './list-all.dto.interface';
 import { ShopsService } from './shops.service';
 
 @Controller('shops')
@@ -22,6 +24,7 @@ export class ShopsController {
   constructor(
     private readonly shopsService: ShopsService,
     private readonly jsonService: JsonService,
+    private readonly mastersService: MastersService,
   ) {}
 
   @Get()
@@ -32,9 +35,15 @@ export class ShopsController {
 
   @Get(':id')
   @ApiResponse({ type: ShopEntity })
-  async getBtId(@Param('id') id: number) {
+  async getById(@Param('id') id: number) {
     const data = await this.shopsService.findById(id);
     return this.jsonService.data(data);
+  }
+
+  @Get(':id/masters')
+  @ApiResponse({ type: ShopEntity })
+  async getMastersById(@Param('id') id: number, @Query() query: ListByShopDto) {
+    return await this.mastersService.findByShopIdPaginated(id, query);
   }
 
   @Post()

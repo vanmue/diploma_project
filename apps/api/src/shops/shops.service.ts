@@ -4,9 +4,9 @@ import { CityEntity } from 'src/cities/entities/city.entity';
 import { DeliverableGroupsService } from 'src/deliverables/groups/deliverable-groups.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { In, Repository } from 'typeorm';
+import { ListAllDto } from './dto/list-all.dto';
 import { CreateShopEntity } from './entities/create-shop.entity';
 import { ShopEntity } from './entities/shop.entity';
-import { ListAllDto } from './list-all.dto.interface';
 import { ShopAdvantageEntity } from './shop-advantages/entities/shop-advantage.entity';
 
 @Injectable()
