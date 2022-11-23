@@ -3,41 +3,34 @@ import './revievs.scss'
 import image from '../img/Ellipse.png'
 import imgStar from '../img/Star2.png'
 
-function Reviews() {
-    const revievs = [{
-        img: image,
-        name: 'Елена',
-        rating: 4,
-        reviev: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate'
-    },
-    {
-        img: image,
-        name: 'Наталья Петрова',
-        rating: 5,
-        reviev: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate'
-    },
-    {
-        img: image,
-        name: 'Светлана',
-        rating: 3,
-        reviev: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate'
-    }
-    ]
+function Reviews({ record }) {
+    // const revievs = [{
+    //     img: image,
+    //     name: 'Елена',
+    //     rating: 4,
+    //     reviev: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate'
+    // }
+    // ]
+    //console.log(record?.reviews)
 
     return <div className="revievs__block">
         <h2 className="calendar__text">Отзывы:</h2>
-        {revievs.map((item) =>
-            <div key={item.name} className="reviev__card">
-                <img className="reviev__card-img" src={item.img} alt={item.name} />
+        {record?.reviews.map((item) =>
+
+            <div key={item.id} className="reviev__card">
+                {console.log(item)}
+                <img className="reviev__card-img" src={item?.author.avatar} alt={item?.author.name} />
                 <div >
                     <div className="reviev__name-rating">
-                        <h3 className="reviev__name">{item.name}</h3>
+                        <h3 className="reviev__name">{item.author.name}</h3>
                         <div className="reviev__rating">
-                            {[...Array(item.rating)].map((e, index) =>
-                                <img key={index + item.name} src={imgStar} alt='star' />)}
+                            {console.log([...Array(item.score)])}
+                            {[...Array(item.score)].map((e, index) =>
+                                < img key={item.id + index} src={imgStar} alt='star' />
+                            )}
                         </div>
                     </div>
-                    <p className="reviev__text">{item.reviev}</p>
+                    <p className="reviev__text">{item.review}</p>
                 </div>
             </div>
         )}
