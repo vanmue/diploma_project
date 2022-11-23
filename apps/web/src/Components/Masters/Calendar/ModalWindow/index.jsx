@@ -41,7 +41,7 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record }) {
             masterId: dataMaster.id,
             shopId: dataMaster.shops[0].id,
             deliverableId: choice?.id,
-            comments: e.target[2].value,
+            comments: e.target[2].value ? e.target[2].value : '',
             from: moment(choiceDay).add(time.slice(0, -3), 'hours').toISOString(),
             name: e.target[0].value,
             phone: e.target[1].value,
