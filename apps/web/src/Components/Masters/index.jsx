@@ -28,7 +28,6 @@ function Master() {
       })
       .catch(error => console.log(error))
   }, [])
-
   useEffect(() => {
     fetch(`/api/v1/appointments/?date=${day}&master_id=${masterId.id}`)
       .then((req) => req.json())
@@ -46,6 +45,7 @@ function Master() {
       })
       .catch(error => console.log(error))
   }, [])
+
   return <>
     <div className='main-page'>
       <div className="container">
@@ -66,8 +66,8 @@ function Master() {
           </div>
         </div>
         <Calendar dataMaster={data} record={record} getDay={getDay} />
-        <Price price={price} />
-        <Reviews />
+        <Price price={record} />
+        <Reviews record={record} />
       </div>
     </div>
 
