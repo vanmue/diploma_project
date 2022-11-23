@@ -3,6 +3,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
+  Param,
   Post,
   Query,
   UseInterceptors,
@@ -27,6 +28,13 @@ export class ShopsController {
   @ApiResponse({ type: ShopEntity, isArray: true })
   async getAll(@Query() query: ListAllDto) {
     return await this.shopsService.findAllPaginated(query);
+  }
+
+  @Get(':id')
+  @ApiResponse({ type: ShopEntity })
+  async getBtId(@Param('id') id: number) {
+    const data = await this.shopsService.findById(id);
+    return this.jsonService.data(data);
   }
 
   @Post()

@@ -100,9 +100,10 @@ export class MastersService {
         return Promise.all([
           this.deliverableGroupsService.findByMaster(master.id),
           this.reviewService.countAndSumByMaster(master.id),
-        ]).then(([groups, reviews]) => {
+        ]).then(([groups, reviewsScores]) => {
           master.deliverable_groups = groups;
-          const { quantity, total, avg } = reviews;
+
+          const { quantity, total, avg } = reviewsScores;
           master.reviews_scores_count = quantity;
           master.reviews_scores_sum = total;
           master.reviews_scores_avg = avg;
