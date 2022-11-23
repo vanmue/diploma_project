@@ -9,14 +9,12 @@ import ModalWindow from "./ModalWindow/index.jsx";
 
 
 
-function Calendar({ dataMaster, record }) {
-    //console.log(dataMaster)
-    //console.log(dataMaster?.deliverable_groups.map(item => item.name))
+function Calendar({ dataMaster, record, getDay }) {
 
-    //const [data, setData] = useState([]);
-    const servise = []
-    dataMaster?.deliverable_groups.map(item => servise.push(item.name))
+    const servise = [dataMaster?.deliverable_groups]
 
+    /* const recordDay = record?.shops[0].appointments.map(rec => rec.from)
+    console.log(recordDay) */
 
     //console.log(servise)
 
@@ -35,11 +33,11 @@ function Calendar({ dataMaster, record }) {
 
     function cellClick(e) {
         e.stopPropagation()
+        getDay(e.target.attributes.value.nodeValue)
         if (moment(moment(e.target.attributes.value.nodeValue)).isSameOrAfter(today.format('YYYY-MM-DD'))) {
-            setChoiceDay(moment(e.target.attributes.value.nodeValue).format('D MMMM'))
+            setChoiceDay(moment(e.target.attributes.value.nodeValue).toISOString())
             setModalActive(true)
         }
-
     }
     function modalClose() {
         setModalActive(false)
@@ -59,8 +57,8 @@ function Calendar({ dataMaster, record }) {
         <div onClick={modalClose}>
             <h2 className='calendar__text'>Выбрать дату и время для записи:</h2>
             <CalendarMonth itemday={itemday} monthSubtract={monthSubtract} monthAdd={monthAdd} />
-            <CalendarGrid startDay={startDay} today={today} cellClick={cellClick} />
-            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} data={servise} dataMaster={dataMaster} />
+            <CalendarGrid startDay={startDay} today={today} cellClick={cellClick} getDay={getDay} />
+            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} data={servise} dataMaster={dataMaster} record={record} />
         </div>
     );
 }
