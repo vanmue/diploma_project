@@ -21,8 +21,18 @@ function SalonCard({
   bkgRecordBtn,
   colorTextRecordBtn,
   img,
-  map
+  map,
+  onClick
 }) {
+
+  const handleClickLink = (e) => {
+    // console.log("e.currentTarget.closest('.salons-page__wrapp-salon-card'):", e.currentTarget.closest('.salons-page__wrapp-salon-card').dataset.salonId)
+    // console.log('onClick :', typeof onClick)
+    if (typeof onClick == 'function') {
+      let id = e.currentTarget.closest('.salons-page__wrapp-salon-card').dataset.salonId;
+      onClick(id);
+    }
+  }
 
   return (
     <div className="salon-card">
@@ -61,7 +71,7 @@ function SalonCard({
               Телефон: {telephone}
               {/* <div>Телефон: <span>(495) 123-45-67</span></div> */}
             </div>
-            {textLink ? (<div className="salon-card__salon-page-link" style={{ marginBottom: "20px" }}>
+            {textLink ? (<div className="salon-card__salon-page-link" style={{ marginBottom: "20px" }} onClick={handleClickLink}>
               <Link to="/salon">{textLink}</Link>
             </div>) : ''}
 
@@ -69,16 +79,18 @@ function SalonCard({
             <div className="salon-card__buttons">
               <div className="salon-card__wrapp-button">
                 <Button
-                  background={bckCallBtn}
                   colorText={colorTextCallBtn}
+                  background={bckCallBtn}
+                  onClick={() => { }}
                 >
                   Позвонить
                 </Button>
               </div>
               <div className="salon-card__wrapp-button">
                 <Button
-                  background={bkgRecordBtn}
                   colorText={colorTextRecordBtn}
+                  background={bkgRecordBtn}
+                  onClick={() => { }}
                 >
                   Записаться
                 </Button>
@@ -115,6 +127,7 @@ SalonCard.propTypes = {
   // parking: propTypes.string,
   img: propTypes.string,
   map: propTypes.element,
+  onClick: propTypes.func,
 }
 
 SalonCard.defaultProps = {
@@ -124,6 +137,7 @@ SalonCard.defaultProps = {
   workinghours: '-',
   telephone: '-',
   deliverableGgroups: [{}],
+  onClick: () => { }
   // img: '',
   // map: '',
 }

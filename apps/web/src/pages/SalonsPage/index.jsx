@@ -4,25 +4,41 @@ import DropdownSelect from '../../Components/DropdownSelect';
 import SalonCard from '../../Components/SalonCard';
 import YandexMap from '../../Components/YandexMap';
 import Pagination from '../../Components/Pagination';
+import Button from '../../Components/Button';
 import {
   changeNavigationColorAction,
   changingLabelInHeaderAction,
   changeHeaderBackgroundAction
 } from '../../actions/stylesActions';
 import {
-  getSalonsThunk,
+  setActiveSalonIdAction,
   getCitiesThunk,
+  getServicesGroupsThunk,
+  getFilteringSalonsThunk,
+  getSalonsThunk,
   getFilteringSalonsByCityThunk
 } from '../../actions/salonsAction';
 import img1 from '../../Components/SalonCard/img/1.jpg';
 import img2 from '../../Components/SalonCard/img/2.jpg';
 import img3 from '../../Components/SalonCard/img/3.jpg';
 import './salons-page.scss';
+import { useState } from 'react';
 
 function SalonsPage() {
-  const dispatch = useDispatch();
   const cities = useSelector(store => store.salonsReducer.cities);
+  const groupsServices = useSelector(store => store.salonsReducer.groupsServices);
   const salons = useSelector(store => store.salonsReducer.salons);
+
+  const activeSalon = useSelector(store => store.salonsReducer.activeSalonId);
+
+  // const [citiyId, setCitiesId] = useState({
+
+  // });
+  const [cityId, setCitiesId] = useState(null);
+  const [serviceId, setServiceId] = useState(null);
+  const dispatch = useDispatch();
+
+  // console.log('SalonsPage activeSalon: ', activeSalon);
 
   useEffect(() => {
     dispatch(changingLabelInHeaderAction(false));
@@ -30,16 +46,26 @@ function SalonsPage() {
     dispatch(changeNavigationColorAction('#410935'));
 
     dispatch(getCitiesThunk());
+    dispatch(getServicesGroupsThunk());
     dispatch(getSalonsThunk());
   }, []);
 
-  const renders = {
-    yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
-      zoom={12} items={[[53.21624037527426, 50.13260255066459],]} />
-  }
+
+
+  // const renders = {
+  //   yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
+  //     zoom={12} items={[[53.21624037527426, 50.13260255066459],]} />
+  // }
 
   const callbacks = {
-    onGetFilteringSalonsByCity: useCallback(cityId => dispatch(getFilteringSalonsByCityThunk(cityId)))
+    onSetCitiesId: useCallback(id => setCitiesId(id)),
+    onSetServiceId: useCallback(id => setServiceId(id)),
+    onSetActiveSalonId: useCallback((id) => {
+      dispatch(setActiveSalonIdAction(id));
+    }),
+    // onGetFilteringSalonsByCity: useCallback(cityId => dispatch(getFilteringSalonsByCityThunk(cityId))),
+    onGetFilteringSalons: useCallback(() => dispatch(getFilteringSalonsThunk(cityId, serviceId))),
+    // onGetFilteringSalons: useCallback((cityId, serviceId) => dispatch(getFilteringSalonsThunk(cityId, serviceId))),
   }
 
   return (
@@ -53,28 +79,37 @@ function SalonsPage() {
             <div className="salons-page__search-dropdowns">
               <div className="salons-page__wrapp-drodown-select">
                 <DropdownSelect
+                  what='cities'
                   dropdownTitle={'Выберите город'}
                   items={cities}
-                  onChange={callbacks.onGetFilteringSalonsByCity}
+                  onChange={callbacks.onSetCitiesId}
                 />
               </div>
-              <div className="salons-page__wrapp-drodown-select">
+              {/* <div className="salons-page__wrapp-drodown-select">
                 <DropdownSelect
                   dropdownTitle={'Выберите Салон красоты'}
                   items={['Салон-красоты «Версаль»', 'Салон-красоты «Лето»', 'Студия маникюра «Чародейка»', 'SPA салон «Клеопатра»',]}
                 />
-              </div>
+              </div> */}
               <div className="salons-page__wrapp-drodown-select">
                 <DropdownSelect
                   dropdownTitle={'Выберите услугу'}
-                  items={['Парикмахерские услуги', 'Маникюр', 'Педикюр', 'Брови и ресницы',]}
+                  items={groupsServices}
+                  onChange={callbacks.onSetServiceId}
                 />
               </div>
+              <Button
+                colorText='#F5BFAB'
+                background='#A40123'
+                onClick={callbacks.onGetFilteringSalons}
+              >
+                Поиск
+              </Button>
             </div>
           </section>
           <ul className="salons-page__salons-list">
             {salons.map((item) => {
-              return <li className="salons-page__wrapp-salon-card" key={item.id}>
+              return <li className="salons-page__wrapp-salon-card" data-salon-id={item.id} key={item.id}>
                 <SalonCard
                   salonTitle={item.name}
                   colorTitle={'#000000'}
@@ -91,6 +126,7 @@ function SalonsPage() {
                   colorTextCallBtn={'#F5BFAB'}
                   bkgRecordBtn={'#A40123'}
                   colorTextRecordBtn={'#F5BFAB'}
+                  onClick={callbacks.onSetActiveSalonId}
                 />
               </li>
             })}

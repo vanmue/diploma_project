@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import SalonCard from '../../Components/SalonCard';
 import YandexMap from '../../Components/YandexMap';
 import Carousel from '../../Components/Carousel';
@@ -18,7 +18,12 @@ import master2 from '../masters/img/master-2.jpg';
 import './salon-page.scss';
 
 function SalonPage() {
+  const activeSalonId = useSelector(store => store.salonsReducer.activeSalonId);
+  const activeSalon = useSelector(store => store.salonsReducer.salons.find((el) => el.id == activeSalonId));
   const dispatch = useDispatch();
+
+  console.log('SalonPage activeSalonId: ', activeSalonId);
+  console.log('SalonPage activeSalon: ', activeSalon);
 
   useEffect(() => {
     dispatch(changingLabelInHeaderAction(false));
@@ -28,7 +33,7 @@ function SalonPage() {
 
   const renders = {
     yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
-      zoom={12} items={[[53.21624037527426, 50.13260255066459],]} />
+      zoom={12} items={[[53.21624037527426, 50.13260255066459]]} />
   }
 
   return (
@@ -39,26 +44,43 @@ function SalonPage() {
             <SalonCard
               colorTitle={'#F5BFAB'}
               bkgInfo={'#410935'}
-              salonTitle={'Салон-красоты «Версаль»'}
-              address={'Москва, ул. Костина, 6/1, 3 этаж (м. Красносельская)'}
-              workinghours={'Время работы: с 10:00 до 20:00 без выходных'}
-              telephone={'Телефон: (495) 123-45-67'}
-              parking={'Бесплатная гостевая парковка'}
+              salonTitle={activeSalon?.name}
+              address={activeSalon?.address}
+              city={activeSalon?.city}
+              workinghours={activeSalon?.working_time}
+              telephone={activeSalon?.phone}
+              parking={activeSalon?.advantages[0]?.name}
+              deliverableGgroups={activeSalon?.deliverable_groups}
 
               bckCallBtn={'#F5BFAB'}
               colorTextCallBtn={'#410935'}
               bkgRecordBtn={'#A40123'}
               colorTextRecordBtn={'#F5BFAB'}
-              
+
               map={renders.yandexMap}
             />
           </div>
           <div className="salon-page__wrapp-carousel">
             <Carousel
-              images={[img1, img1, img1, img2, img2, img2, img3, img3, img3]}
+              images={activeSalon.images}
             />
+            {/* <Carousel
+              images={[img1, img1, img1, img2, img2, img2, img3, img3, img3]}
+            /> */}
           </div>
-          <div className="salon-page__wrapp-master-card">
+          {activeSalon.masters.map((el) => (
+            <div className="salon-page__wrapp-master-card" key={el.id}>
+              <MasterCard
+                pathImg={el.img}
+                name={'Светлана Иванова '}
+                specialization={el.profession}
+                salon={activeSalon.name}
+                description={el.description}
+                colorTextBtn={'#F5BFAB'}
+              />
+            </div>
+          ))}
+          {/* <div className="salon-page__wrapp-master-card">
             <MasterCard
               pathImg={master1}
               name={'Светлана Иванова '}
@@ -66,8 +88,8 @@ function SalonPage() {
               salon={'Салон красоты «Версаль»'}
               colorTextBtn={'#F5BFAB'}
             />
-          </div>
-          <div className="salon-page__wrapp-master-card">
+          </div> */}
+          {/* <div className="salon-page__wrapp-master-card">
             <MasterCard
               pathImg={master2}
               name={'Светлана Иванова '}
@@ -75,7 +97,7 @@ function SalonPage() {
               salon={'Салон красоты «Версаль»'}
               colorTextBtn={'#F5BFAB'}
             />
-          </div>
+          </div> */}
           <div className="salon-page__wrapp-pagination">
             <Pagination />
           </div>

@@ -18,7 +18,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { MasterReviewEntity } from '../reviews/entities/master-review.entity';
 
 @Entity('masters')
 export class MasterEntity {
@@ -30,6 +29,7 @@ export class MasterEntity {
   @OneToOne(() => UserEntity, undefined, {
     onDelete: 'RESTRICT',
     cascade: true,
+    eager: true,
   })
   @JoinColumn()
   @ApiProperty()
@@ -61,21 +61,14 @@ export class MasterEntity {
   @ApiProperty({ isArray: true })
   appointments: AppointmentEntity[];
 
-  @IsNotEmpty()
-  @Column('int')
-  @ApiProperty()
-  score: number;
-
   @Column({ type: 'varchar' })
   @ApiProperty()
   img: string;
 
-  @OneToMany(() => MasterReviewEntity, (review) => review.master)
-  @ApiProperty({ isArray: true })
-  reviews: MasterReviewEntity[];
-
   @ApiProperty()
-  reviews_count: number;
+  reviews_scores_count: number;
+  reviews_scores_sum: number;
+  reviews_scores_avg: number;
 
   @ApiProperty({ isArray: true })
   deliverable_groups: DeliverableGroupEntity[];
