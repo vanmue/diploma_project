@@ -12,12 +12,11 @@ import {
 } from '../../actions/stylesActions';
 import {
   setActiveSalonIdAction,
-  getCitiesThunk,
   getServicesGroupsThunk,
   getFilteringSalonsThunk,
   getSalonsThunk,
-  getFilteringSalonsByCityThunk
 } from '../../actions/salonsAction';
+import { getCitiesThunk } from '../../actions/citiesActions';
 import img1 from '../../Components/SalonCard/img/1.jpg';
 import img2 from '../../Components/SalonCard/img/2.jpg';
 import img3 from '../../Components/SalonCard/img/3.jpg';
@@ -25,20 +24,15 @@ import './salons-page.scss';
 import { useState } from 'react';
 
 function SalonsPage() {
-  const cities = useSelector(store => store.salonsReducer.cities);
+  const cities = useSelector(store => store.citiesReducer.cities);
   const groupsServices = useSelector(store => store.salonsReducer.groupsServices);
   const salons = useSelector(store => store.salonsReducer.salons);
+  // const activePage = useSelector(store => store.salonsReducer.activePage);
+  // const activeSalon = useSelector(store => store.salonsReducer.activeSalonId);
 
-  const activeSalon = useSelector(store => store.salonsReducer.activeSalonId);
-
-  // const [citiyId, setCitiesId] = useState({
-
-  // });
   const [cityId, setCitiesId] = useState(null);
   const [serviceId, setServiceId] = useState(null);
   const dispatch = useDispatch();
-
-  // console.log('SalonsPage activeSalon: ', activeSalon);
 
   useEffect(() => {
     dispatch(changingLabelInHeaderAction(false));
@@ -47,25 +41,35 @@ function SalonsPage() {
 
     dispatch(getCitiesThunk());
     dispatch(getServicesGroupsThunk());
-    dispatch(getSalonsThunk());
+    dispatch(getFilteringSalonsThunk(cityId, serviceId));
   }, []);
 
 
 
-  // const renders = {
-  //   yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
-  //     zoom={12} items={[[53.21624037527426, 50.13260255066459],]} />
-  // }
+  const renders = {
+    yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
+      zoom={12} items={[[53.21624037527426, 50.13260255066459],]} />
+  }
 
   const callbacks = {
-    onSetCitiesId: useCallback(id => setCitiesId(id)),
-    onSetServiceId: useCallback(id => setServiceId(id)),
+    onSetCitiesId: useCallback(id => {
+      // console.log('SalonsPage onSetCitiesId:', id)
+      setCitiesId(id)
+    }),
+    onSetServiceId: useCallback(id => {
+      // console.log('SalonsPage onSetServiceId:', id)
+      setServiceId(id)
+    }),
     onSetActiveSalonId: useCallback((id) => {
       dispatch(setActiveSalonIdAction(id));
     }),
-    // onGetFilteringSalonsByCity: useCallback(cityId => dispatch(getFilteringSalonsByCityThunk(cityId))),
-    onGetFilteringSalons: useCallback(() => dispatch(getFilteringSalonsThunk(cityId, serviceId))),
-    // onGetFilteringSalons: useCallback((cityId, serviceId) => dispatch(getFilteringSalonsThunk(cityId, serviceId))),
+    onGetFilteringSalons: useCallback(() => {
+      dispatch(getFilteringSalonsThunk(cityId, serviceId));
+    }),
+    onGetActivePageForSalons: useCallback((numberPage) => {
+      console.log('SalonsPage onGetActivePageForSalons:', numberPage)
+      dispatch(getFilteringSalonsThunk(cityId, serviceId, numberPage));
+    }),
   }
 
   return (
@@ -108,7 +112,8 @@ function SalonsPage() {
             </div>
           </section>
           <ul className="salons-page__salons-list">
-            {salons.map((item) => {
+            {salons?.map((item) => {
+              let imgPreview = item.images.find(el => el.is_preview == true);
               return <li className="salons-page__wrapp-salon-card" data-salon-id={item.id} key={item.id}>
                 <SalonCard
                   salonTitle={item.name}
@@ -121,7 +126,8 @@ function SalonsPage() {
                   parking={item.advantages[0]?.name}
                   textLink={'Подробная информация о салоне'}
                   deliverableGgroups={item.deliverable_groups}
-                  img={img1}//
+                  img={imgPreview.img}
+                  // img={img1}//
                   bckCallBtn={'#410935'}
                   colorTextCallBtn={'#F5BFAB'}
                   bkgRecordBtn={'#A40123'}
@@ -132,7 +138,9 @@ function SalonsPage() {
             })}
           </ul>
           <div className="salons-page__wrapp-pagination">
-            <Pagination />
+            <Pagination
+              onClick={callbacks.onGetActivePageForSalons}
+            />
           </div>
         </div>
       </div>

@@ -37,7 +37,9 @@ function SalonCard({
   return (
     <div className="salon-card">
       <div className="salon-card__img">
-        {img ? <img src={img} alt="Фото салона" /> : map}
+        <img src={img} alt="Фото салона" />
+        {/* {img ? <img src={img} alt="Фото салона" /> : "map опять  не передалось"} */}
+        {/* {img ? <img src={img} alt="Фото салона" /> : map} */}
       </div>
       <div
         className="salon-card__info"
@@ -137,9 +139,9 @@ SalonCard.defaultProps = {
   workinghours: '-',
   telephone: '-',
   deliverableGgroups: [{}],
-  onClick: () => { }
+  onClick: () => { },
   // img: '',
-  // map: '',
+  // map: '-',
 }
 
 export default React.memo(SalonCard);

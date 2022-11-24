@@ -1,7 +1,8 @@
 import {
-  GET_CITIES,
   GET_GROUPS_SERVICES,
   GET_SALONS,
+  GET_ACTIVE_SALON_BY_ID,
+  // GET_MASTERS_OF_ACTIVE_SALON,
   GET_FILTERING_SALONS,
   SET_ACTIVE_SALON_ID,
   GET_FILTERING_SALONS_BY_CITY,
@@ -11,21 +12,16 @@ import {
 } from "../actions/salonsAction";
 
 const initialStore = {
-  cities: [],
   groupsServices: [],
   salons: [],
   activeSalonId: null,
-  activePage: 9,
+  activeSalon: null,
+  // mastersActiveSalon: null,
+  activePage: 1,
 }
 
 export default function salonsReducer(store = initialStore, action) {
   switch (action.type) {
-    case GET_CITIES: {
-      return {
-        ...store,
-        cities: action.payload
-      }
-    }
     case GET_GROUPS_SERVICES: {
       return {
         ...store,
@@ -39,24 +35,38 @@ export default function salonsReducer(store = initialStore, action) {
       }
     }
     case SET_ACTIVE_SALON_ID: {
-      console.log('SET_ACTIVE_SALON_ID action.payload: ', action.payload)
+      // console.log('SET_ACTIVE_SALON_ID action.payload: ', action.payload)
       return {
         ...store,
         activeSalonId: action.payload
       }
     }
-    case GET_FILTERING_SALONS: {
+    case GET_ACTIVE_SALON_BY_ID: {
+      // console.log('GET_ACTIVE_SALON_BY_ID action.payload: ', action.payload)
       return {
         ...store,
-        salons: action.payload
+        activeSalon: action.payload
       }
     }
-    case GET_FILTERING_SALONS_BY_CITY: {
-      return {
-        ...store,
-        salons: action.payload
-      }
-    }
+    // case GET_MASTERS_OF_ACTIVE_SALON: {
+    //   // console.log('GET_MASTERS_OF_ACTIVE_SALON action.payload: ', action.payload)
+    //   return {
+    //     ...store,
+    //     mastersActiveSalon: action.payload
+    //   }
+    // }
+    // case GET_FILTERING_SALONS: {
+    //   return {
+    //     ...store,
+    //     salons: action.payload
+    //   }
+    // }
+    // case GET_FILTERING_SALONS_BY_CITY: {
+    //   return {
+    //     ...store,
+    //     salons: action.payload
+    //   }
+    // }
     case CHANGE_ACTIVE_PAGE_FOR_PAGINATION: {
       return {
         ...store,

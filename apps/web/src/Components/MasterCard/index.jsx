@@ -5,8 +5,10 @@ import Button from '../Button';
 import './master-card.scss';
 
 function MasterCard({
-  salon,
   name,
+  surname,
+  rating,
+  salon,
   pathImg,
   specialization,
   description,
@@ -20,7 +22,7 @@ function MasterCard({
       <div className="master-card__info">
         <div className="master-card__title">
           <p className="master-card__name">
-            {name}
+            {name}  {surname}
           </p>
           <span>&nbsp;-&nbsp;</span>
           <p className="master-card__specialization">
@@ -32,6 +34,7 @@ function MasterCard({
           <div className="master-card__wrapp-rating">
             <Rating
               isAcive={true}
+              rating={rating}
             />
           </div>
 
@@ -61,16 +64,19 @@ function MasterCard({
 }
 
 MasterCard.propTypes = {
-  salon: propTypes.string,
   name: propTypes.string,
+  surname: propTypes.string,
+  rating: propTypes.number,
+  salon: propTypes.string,
   pathImg: propTypes.string,
   specialization: propTypes.string,
   description: propTypes.string,
 }
 
 MasterCard.defaultProps = {
-  salon: '-',
   name: '-',
+  surname: '-',
+  salon: '-',
   specialization: '-',
   description: '-',
 }
