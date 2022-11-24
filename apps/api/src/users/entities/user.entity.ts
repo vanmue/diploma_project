@@ -1,15 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 
+export const UNIQUE_EMAIL_CONSTRAINT = 'unique_email_constrtaint';
+
 @Entity('users')
+@Unique(UNIQUE_EMAIL_CONSTRAINT, ['email'])
 export class UserEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
@@ -28,6 +32,18 @@ export class UserEntity {
   @Column({ type: 'varchar', nullable: true })
   @ApiProperty({ required: false })
   avatar?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column({ type: 'varchar' })
+  @ApiProperty({ required: true })
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column({ type: 'varchar' })
+  @ApiProperty({ required: true })
+  password: string;
 
   @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
