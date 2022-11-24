@@ -28,6 +28,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   getMe(@Request() req) {
-    return req.user;
+    const data = req.user;
+    return this.jsonService.data(data);
   }
 }
