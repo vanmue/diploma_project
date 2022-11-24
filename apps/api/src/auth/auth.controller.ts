@@ -1,6 +1,7 @@
 import {
   ClassSerializerInterceptor,
   Controller,
+  Get,
   Post,
   Request,
   UseGuards,
@@ -9,6 +10,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { JsonService } from 'src/services/json/json.service';
 import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -22,5 +24,10 @@ export class AuthController {
   async login(@Request() req) {
     const data = await this.authService.login(req.user);
     return this.jsonService.data(data);
+  }
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  getMe(@Request() req) {
+    return req.user;
   }
 }

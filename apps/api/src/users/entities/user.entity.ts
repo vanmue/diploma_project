@@ -41,7 +41,7 @@ export class UserEntity {
 
   @IsString()
   @IsNotEmpty()
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', select: false })
   @ApiProperty({ required: true })
   password: string;
 
