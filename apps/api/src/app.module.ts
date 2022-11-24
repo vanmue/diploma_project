@@ -18,6 +18,7 @@ import { ShopImagesModule } from './shops/shop-images/shop-images.module';
 import { ShopsModule } from './shops/shops.module';
 import { TestResponseModule } from './test-response/test-response.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { UsersModule } from './users/users.module';
     DeliverablesModule,
     ReviewsModule,
     ShopImagesModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [JsonService, DecimalService, FakerService, PaginationService],
