@@ -10,25 +10,26 @@ import {
   changingLabelInHeaderAction,
   changeHeaderBackgroundAction
 } from '../../actions/stylesActions';
-import img1 from '../../Components/Carousel/img/carusel-img-1.jpg';
-import img2 from '../../Components/Carousel/img/carusel-img-2.jpg';
-import img3 from '../../Components/Carousel/img/carusel-img-3.jpg';
-import master1 from '../masters/img/master-1.jpg';
-import master2 from '../masters/img/master-2.jpg';
+import {
+  getAciveSalonByIdThunk,
+  // getMastersOfAciveSalonThunk,
+} from '../../actions/salonsAction';
+import { getAllMasterForActiveSalonThunk } from '../../actions/mastersActions';
 import './salon-page.scss';
 
 function SalonPage() {
   const activeSalonId = useSelector(store => store.salonsReducer.activeSalonId);
-  const activeSalon = useSelector(store => store.salonsReducer.salons.find((el) => el.id == activeSalonId));
+  const activeSalon = useSelector(store => store.salonsReducer.activeSalon);
+  const mastersActiveSalon = useSelector(store => store.mastersReducer.mastersActiveSalon);
   const dispatch = useDispatch();
-
-  console.log('SalonPage activeSalonId: ', activeSalonId);
-  console.log('SalonPage activeSalon: ', activeSalon);
 
   useEffect(() => {
     dispatch(changingLabelInHeaderAction(false));
     dispatch(changeHeaderBackgroundAction('#F5BFAB'));
     dispatch(changeNavigationColorAction('#410935'));
+
+    dispatch(getAciveSalonByIdThunk(activeSalonId));
+    dispatch(getAllMasterForActiveSalonThunk(activeSalonId));
   }, []);
 
   const renders = {
@@ -62,24 +63,41 @@ function SalonPage() {
           </div>
           <div className="salon-page__wrapp-carousel">
             <Carousel
-              images={activeSalon.images}
+              images={activeSalon?.images}
             />
             {/* <Carousel
               images={[img1, img1, img1, img2, img2, img2, img3, img3, img3]}
             /> */}
           </div>
-          {activeSalon.masters.map((el) => (
+          {mastersActiveSalon?.map((el) => (
             <div className="salon-page__wrapp-master-card" key={el.id}>
               <MasterCard
+                name={el.user.name}
+                surname={el.user.surname}
                 pathImg={el.img}
-                name={'Светлана Иванова '}
+                rating={el.reviews_scores_count}
+                specialization={el.profession}
+                salon={activeSalon?.name}
+                description={el.description}
+                colorTextBtn={'#F5BFAB'}
+              />
+            </div>
+          ))}
+          {/* {activeSalon.masters.map((el) => (
+            <div className="salon-page__wrapp-master-card" key={el.id}>
+              <MasterCard
+                name={el.user.name}
+                surname={el.user.surname}
+                pathImg={el.img}
                 specialization={el.profession}
                 salon={activeSalon.name}
                 description={el.description}
                 colorTextBtn={'#F5BFAB'}
               />
             </div>
-          ))}
+          ))} */}
+
+
           {/* <div className="salon-page__wrapp-master-card">
             <MasterCard
               pathImg={master1}

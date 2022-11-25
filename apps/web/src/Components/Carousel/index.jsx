@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import propTypes from 'prop-types';
 // import prev from './img/arrow-prev.svg';
 // import next from './img/arrow-next.svg';
 // import prev from './img/arrow-prev.png';
@@ -10,11 +11,11 @@ function Carousel({ images }) {
   const carouselLineRef = useRef(null);
 
   const handleClickPrev = () => {
-    offset == 0 ? setOffset(-1320 * (Math.ceil(images.length / 3) - 1)) : setOffset(prevOffset => prevOffset + 1320);
+    offset == 0 ? setOffset(-1320 * (Math.ceil(images?.length / 3) - 1)) : setOffset(prevOffset => prevOffset + 1320);
   }
 
   const handleClickNext = () => {
-    Math.abs(offset) == 1320 * (Math.ceil(images.length / 3) - 1) ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
+    Math.abs(offset) == 1320 * (Math.ceil(images?.length / 3) - 1) ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
   }
 
   return (
@@ -34,7 +35,7 @@ function Carousel({ images }) {
           style={{ left: `${offset}px` }}
           ref={carouselLineRef}
         >
-          {images.map((item, index) => {
+          {images?.map((item, index) => {
             return <img className="carousel__img" src={item.img} key={index} alt="Фото салона" />
           })}
         </div>
@@ -51,6 +52,14 @@ function Carousel({ images }) {
       </button>
     </div>
   )
+}
+
+Carousel.propTypes = {
+  images: propTypes.arrayOf(propTypes.object)
+}
+
+Carousel.defaultProps = {
+  images: null
 }
 
 export default React.memo(Carousel);

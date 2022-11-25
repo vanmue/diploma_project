@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import propTypes from 'prop-types';
 import './rating.scss'
 
 function Rating({
-  isAcive
+  isAcive,
+  rating
 }) {
   const [ratingActiveWidth, setRatingActiveWidth] = useState(70);
-  const grade = 3.5;
+  // const [grade, setGrade] = useState(rating);
 
+  useEffect(() => {
+    setRatingActiveWidth(rating / 0.05);
+  }, [rating])
+  // const grade = 3.5;
+  // console.log("rating :", rating)
   const handleFocusStar = (e) => {
     if (!isAcive) {
       return;
@@ -30,7 +36,8 @@ function Rating({
   }
 
   const handleRatingItemsMouseLeave = () => {
-    setRatingActiveWidth(grade / 0.05);
+    setRatingActiveWidth(rating / 0.05);
+    // setRatingActiveWidth(grade / 0.05);
   }
 
   return (
@@ -87,7 +94,8 @@ function Rating({
 }
 
 Rating.propTypes = {
-  isAcive: propTypes.bool
+  isAcive: propTypes.bool,
+  rating: propTypes.number
 }
 
 export default React.memo(Rating);

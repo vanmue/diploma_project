@@ -1,25 +1,28 @@
-import { GET_ALL_CITIES_SUCCESS } from '../actions/citiesActions';
+import {
+  GET_ALL_CITIES_SUCCESS,
+  GET_ALL_CITIES
+} from '../actions/citiesActions';
 
 const initialStore = {
-  cities: [
-    'Москва',
-    'Питер',
-    'Екатеренбург',
-    'Самара',
-    'Воронеж'
-  ]
+  cities: []
 }
 
 export default function citiesReducer(store = initialStore, action) {
   switch (action.type) {
-    case GET_ALL_CITIES_SUCCESS: {
+    case GET_ALL_CITIES: {
       return {
         ...store,
-        cities: [
-          ...action.payload.rooms
-        ]
+        cities: action.payload
       }
     }
+    // case GET_ALL_CITIES_SUCCESS: {
+    //   return {
+    //     ...store,
+    //     cities: [
+    //       ...action.payload.rooms
+    //     ]
+    //   }
+    // }
     default:
       return store;
   }
