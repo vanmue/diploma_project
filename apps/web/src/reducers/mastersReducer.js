@@ -1,5 +1,6 @@
 import {
   GET_ALL_MASTERS,
+  GET_FILTERING_MASTERS,
   GET_ALL_MASTERS_FOR_ACTIVE_SALON
 } from "../actions/mastersActions";
 // import {
@@ -8,18 +9,14 @@ import {
 
 const initialStore = {
   masters: [],
+  activePageMasters: 1,
   mastersActiveSalon: null,
-  activePage: 1
-  // masters: [
-  //   {
-  //     rating: 4.5
-  //   }
-  // ]
+  activePageMastersActiveSalon: 1,
 }
 
 export default function mastersReducer(store = initialStore, action) {
   switch (action.type) {
-    case GET_ALL_MASTERS: {
+    case GET_FILTERING_MASTERS: {
       return {
         ...store,
         masters: action.payload

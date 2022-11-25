@@ -1,32 +1,59 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DropdownSelect from '../../Components/DropdownSelect';
 import MasterCard from '../../Components/MasterCard';
 import Pagination from '../../Components/Pagination';
+import Button from '../../Components/Button';
+import { getFilteringMastersThunk } from '../../actions/mastersActions';
+import { getCitiesThunk } from '../../actions/citiesActions';
+import { getServicesGroupsThunk } from '../../actions/servicesActions';
+import { getAllSalonsThunk } from '../../actions/salonsAction';
 import {
   changeNavigationColorAction,
   changingLabelInHeaderAction,
   changeHeaderBackgroundAction
 } from '../../actions/stylesActions';
-import {
-  getMastersThunk
-} from '../../actions/mastersActions';
 import master1 from './img/master-1.jpg';
 import master2 from './img/master-2.jpg';
 import master3 from './img/master-3.jpg';
 import './masters.scss';
 
 function MastersPage() {
-  const masters = useSelector(store => store.mastersReducer.masters)
+  const cities = useSelector(store => store.citiesReducer.cities);
+  const groupsServices = useSelector(store => store.servicesReducer.groupsServices);
+  const allSalons = useSelector(store => store.salonsReducer.salons);
+  const masters = useSelector(store => store.mastersReducer.masters);
   const dispatch = useDispatch();
+
+  const [cityId, setCitiesId] = useState(null);
+  const [serviceId, setServiceId] = useState(null);
+  const [salonId, setSalonId] = useState(null);
 
   useEffect(() => {
     dispatch(changingLabelInHeaderAction(false));
     dispatch(changeHeaderBackgroundAction('#F5BFAB'));
     dispatch(changeNavigationColorAction('#410935'));
 
-    dispatch(getMastersThunk());
+    dispatch(getCitiesThunk());
+    dispatch(getServicesGroupsThunk());
+    dispatch(getAllSalonsThunk());
+    dispatch(getFilteringMastersThunk());
   }, []);
+
+  const callbacks = {
+    onSetCitiesId: useCallback((id) => {
+      setCitiesId(id);
+    }),
+    onSetServicesId: useCallback((id) => {
+      setServiceId(id);
+    }),
+    onSetSalonsId: useCallback((id) => {
+      setSalonId(id);
+    }),
+    onGetFilteringMasters: useCallback(() => {
+      dispatch(getFilteringMastersThunk(cityId, serviceId, salonId));
+    })
+  }
 
   return (
     <div className='masters-page'>
@@ -38,49 +65,48 @@ function MastersPage() {
             <div className="masters-page__wrapp-dropdown-select">
               <DropdownSelect
                 dropdownTitle={'Выберите город'}
-                items={['Москва', 'Санкт-Петербург', 'Нижний Новгород', 'Новосибирск', 'Новосибирск']}
+                items={cities}
+                onChange={callbacks.onSetCitiesId}
               />
             </div>
             <div className="masters-page__wrapp-dropdown-select">
               <DropdownSelect
                 dropdownTitle={'Выберите услугу'}
-                items={['Парикмахерские услуги', 'Маникюр', 'Педикюр', 'Брови и ресницы',]}
+                items={groupsServices}
+                onChange={callbacks.onSetServicesId}
               />
             </div>
             <div className="masters-page__wrapp-dropdown-select">
               <DropdownSelect
                 dropdownTitle={'Выберите Салон красоты'}
-                items={['Салон-красоты «Версаль»', 'Салон-красоты «Лето»', 'Студия маникюра «Чародейка»', 'SPA салон «Клеопатра»',]}
+                items={allSalons}
+                onChange={callbacks.onSetSalonsId}
               />
             </div>
+            <Button
+              colorText={"#F5BFAB"}
+              background={"#A40123"}
+              onClick={callbacks.onGetFilteringMasters}
+            >ПОИСК
+            </Button>
           </section>
           <section className="masters-page__masters">
             <h2 className="masters-page__masters-h2">Секция мастеров</h2>
             <ul className="masters-page__list">
-              <li className="masters-page__wrapp-master-card">
-                <MasterCard
-                  pathImg={master1}
-                  name={'Светлана Иванова'}
-                  specialization={'мастер парикмахер'}
-                  salon={'Салон красоты «Версаль»'}
-                />
-              </li>
-              <li className="masters-page__wrapp-master-card">
-                <MasterCard
-                  pathImg={master2}
-                  name={'Наталья Петрова'}
-                  specialization={'мастер визажист'}
-                  salon={'Салон красоты «Версаль»'}
-                />
-              </li>
-              <li className="masters-page__wrapp-master-card">
-                <MasterCard
-                  pathImg={master3}
-                  name={'Марина Светлова '}
-                  specialization={'мастер маникюра'}
-                  salon={'Салон красоты «Версаль»'}
-                />
-              </li>
+              {masters?.map((el) => {
+
+                return <li className="masters-page__wrapp-master-card" key={el.id}>
+                  <MasterCard
+                    name={el.user.name}
+                    surname={el.user.surname}
+                    specialization={el.profession}
+                    description={el.description}
+                    salon={el.shops[0].name}
+                    rating={el.reviews_scores_count}
+                    pathImg={el.img}
+                  />
+                </li>
+              })}
             </ul>
 
           </section>

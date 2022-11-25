@@ -1,16 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ListAllAppointmentsDto } from 'src/appointments/list-all-appointments.dto';
+import { DeliverablesService } from 'src/deliverables/deliverables.service';
 import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity';
-import { DeliverableGroupsService } from 'src/deliverables/groups/deliverable-groups.service';
 import { ReviewsService } from 'src/reviews/reviews.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { ListByShopDto } from 'src/shops/dto/list-by-shop.dto';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
+import { ShopsService } from 'src/shops/shops.service';
 import { UserEntity } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
 import { In, Raw, Repository } from 'typeorm';
 import { CreateMasterEntity } from './entities/create-master.entity';
 import { MasterEntity } from './entities/master.entity';
+import { UpdateMasterEntity } from './entities/update-master.entity';
 import { ListAllMastersDto } from './list-all-masters-dto';
 
 @Injectable()
@@ -18,9 +21,11 @@ export class MastersService {
   constructor(
     @InjectRepository(MasterEntity)
     private readonly masterRepository: Repository<MasterEntity>,
-    private readonly deliverableGroupsService: DeliverableGroupsService,
     private readonly paginationService: PaginationService,
-    private readonly reviewService: ReviewsService,
+    private readonly reviewsService: ReviewsService,
+    private readonly shopsService: ShopsService,
+    private readonly deliverablesService: DeliverablesService,
+    private readonly usersService: UsersService,
   ) {}
   async create(dto: CreateMasterEntity) {
     const { userId, shops, deliverables } = dto;
@@ -71,7 +76,7 @@ export class MastersService {
     let p = Promise.resolve(null);
     masters.forEach((master) => {
       p = p.then(() => {
-        return this.reviewService
+        return this.reviewsService
           .countAndSumByMaster(master.id)
           .then((reviewsScores) => {
             const { quantity, total, avg } = reviewsScores;
@@ -143,7 +148,7 @@ export class MastersService {
     let p = Promise.resolve(null);
     masters.forEach((master) => {
       p = p.then(() => {
-        return this.reviewService
+        return this.reviewsService
           .countAndSumByMaster(master.id)
           .then((reviewsScores) => {
             const { quantity, total, avg } = reviewsScores;
@@ -205,11 +210,38 @@ export class MastersService {
     let p = Promise.resolve(null);
     masters.forEach((master) => {
       p = p.then(() =>
-        this.reviewService.findByMaster(master.id).then((reviews) => {
+        this.reviewsService.findByMaster(master.id).then((reviews) => {
           master.reviews = reviews;
         }),
       );
     });
     return p.then(() => masters);
+  }
+
+  async update(id: number, dto: UpdateMasterEntity) {
+    const master = await this.masterRepository.findOneByOrFail({ id });
+
+    const keys = ['profession', 'description', 'img'];
+    keys.forEach((key) => {
+      if (dto[key]) {
+        master[key] = dto[key];
+      }
+    });
+
+    if (dto.userId) {
+      master.user = await this.usersService.findById(dto.userId);
+    }
+
+    if (dto.shops) {
+      master.shops = await this.shopsService.findByIds(dto.shops);
+    }
+
+    if (dto.deliverables) {
+      master.deliverables = await this.deliverablesService.findByIds(
+        dto.deliverables,
+      );
+    }
+
+    return this.masterRepository.save(master);
   }
 }

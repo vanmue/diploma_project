@@ -1,9 +1,12 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DeliverablesModule } from 'src/deliverables/deliverables.module';
 import { DeliverableGroupsModule } from 'src/deliverables/groups/deliverable-groups.module';
 import { ReviewsModule } from 'src/reviews/reviews.module';
 import { JsonService } from 'src/services/json/json.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
+import { ShopsModule } from 'src/shops/shops.module';
+import { UsersModule } from 'src/users/users.module';
 import { MasterEntity } from './entities/master.entity';
 import { MastersController } from './masters.controller';
 import { MastersService } from './masters.service';
@@ -15,6 +18,9 @@ import { MastersService } from './masters.service';
     TypeOrmModule.forFeature([MasterEntity]),
     DeliverableGroupsModule,
     ReviewsModule,
+    forwardRef(() => ShopsModule),
+    DeliverablesModule,
+    UsersModule,
   ],
   exports: [MastersService],
 })

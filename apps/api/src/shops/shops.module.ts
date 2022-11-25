@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeliverableGroupsModule } from 'src/deliverables/groups/deliverable-groups.module';
 import { MastersModule } from 'src/masters/masters.module';
@@ -14,7 +14,7 @@ import { ShopsService } from './shops.service';
   imports: [
     TypeOrmModule.forFeature([ShopEntity]),
     DeliverableGroupsModule,
-    MastersModule,
+    forwardRef(() => MastersModule),
   ],
   exports: [ShopsService],
 })
