@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateDeliverableEntity } from './entities/create-deliverable.entity';
 import { DeliverableEntity } from './entities/deliverable.entity';
 import { DeliverableGroupEntity } from './groups/entities/deliverable-group.entity';
@@ -23,5 +23,9 @@ export class DeliverablesService {
 
   async findAll() {
     return this.deliverableRepository.find();
+  }
+
+  async findByIds(ids: number[]) {
+    return this.deliverableRepository.findBy({ id: In(ids) });
   }
 }

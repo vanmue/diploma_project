@@ -111,4 +111,8 @@ export class ShopsService {
     );
     return shop;
   }
+
+  async findByIds(ids: number[]) {
+    return await this.shopRepository.findBy({ id: In(ids) });
+  }
 }
