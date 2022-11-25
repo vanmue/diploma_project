@@ -143,28 +143,27 @@ export class MastersService {
       .orderBy('master.id', 'ASC')
       .getMany();
 
-    let p = Promise.resolve(null);
-    masters.forEach((master) => {
-      p = p.then(() => {
-        return this.reviewsService
-          .countAndSumByMaster(master.id)
-          .then((reviewsScores) => {
-            const { quantity, total, avg } = reviewsScores;
-            master.reviews_scores_count = quantity;
-            master.reviews_scores_sum = total;
-            master.reviews_scores_avg = avg;
-          });
-      });
-    });
+    const asyncForEach = async (
+      masters: MasterEntity[],
+      callback: (master: MasterEntity) => void,
+    ) => {
+      for (let iMaster = 0; iMaster < masters.length; iMaster++) {
+        await callback(masters[iMaster]);
+      }
+    };
 
-    return p.then(() =>
-      this.paginationService.getJsonObject<MasterEntity[]>(
-        masters,
-        mastersTotal,
-        limit,
-        page,
-      ),
+    await asyncForEach(masters, async (master: MasterEntity) =>
+      this.reviewsService
+        .countAndSumByMaster(master.id)
+        .then((reviewsScores) => {
+          const { quantity, total, avg } = reviewsScores;
+          master.reviews_scores_count = quantity;
+          master.reviews_scores_sum = total;
+          master.reviews_scores_avg = avg;
+        }),
     );
+
+    return masters;
   }
   async findAppointments(query?: ListAllAppointmentsDto) {
     const { master_id, date, shop_id } = query;
