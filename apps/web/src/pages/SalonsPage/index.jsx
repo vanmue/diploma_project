@@ -12,10 +12,9 @@ import {
 } from '../../actions/stylesActions';
 import {
   setActiveSalonIdAction,
-  getServicesGroupsThunk,
   getFilteringSalonsThunk,
-  getSalonsThunk,
 } from '../../actions/salonsAction';
+import { getServicesGroupsThunk } from '../../actions/servicesActions';
 import { getCitiesThunk } from '../../actions/citiesActions';
 import img1 from '../../Components/SalonCard/img/1.jpg';
 import img2 from '../../Components/SalonCard/img/2.jpg';
@@ -25,10 +24,8 @@ import { useState } from 'react';
 
 function SalonsPage() {
   const cities = useSelector(store => store.citiesReducer.cities);
-  const groupsServices = useSelector(store => store.salonsReducer.groupsServices);
+  const groupsServices = useSelector(store => store.servicesReducer.groupsServices);
   const salons = useSelector(store => store.salonsReducer.salons);
-  // const activePage = useSelector(store => store.salonsReducer.activePage);
-  // const activeSalon = useSelector(store => store.salonsReducer.activeSalonId);
 
   const [cityId, setCitiesId] = useState(null);
   const [serviceId, setServiceId] = useState(null);

@@ -17,7 +17,6 @@ export const getCitiesThunk = () => async (dispatch, getState) => {
   fetch('/api/v1/cities')
     .then(req => req.json())
     .then(res => {
-      // console.log('getCitiesThunk: ', res.data)
       dispatch(getCitiesAction(res.data));
     })
   // .catch(console.log('getCitiesThunk: ', 'Что-то не получилось'));

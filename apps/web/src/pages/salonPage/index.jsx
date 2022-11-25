@@ -1,20 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SalonCard from '../../Components/SalonCard';
 import YandexMap from '../../Components/YandexMap';
 import Carousel from '../../Components/Carousel';
 import MasterCard from '../../Components/MasterCard';
 import Pagination from '../../Components/Pagination';
+import { getAciveSalonByIdThunk } from '../../actions/salonsAction';
+import { getAllMasterForActiveSalonThunk } from '../../actions/mastersActions';
 import {
   changeNavigationColorAction,
   changingLabelInHeaderAction,
   changeHeaderBackgroundAction
 } from '../../actions/stylesActions';
-import {
-  getAciveSalonByIdThunk,
-  // getMastersOfAciveSalonThunk,
-} from '../../actions/salonsAction';
-import { getAllMasterForActiveSalonThunk } from '../../actions/mastersActions';
 import './salon-page.scss';
 
 function SalonPage() {
@@ -31,6 +28,12 @@ function SalonPage() {
     dispatch(getAciveSalonByIdThunk(activeSalonId));
     dispatch(getAllMasterForActiveSalonThunk(activeSalonId));
   }, []);
+
+  const callbacks = {
+    onGetAllMastersForAciveSalon: useCallback((page) => {
+      dispatch(getAllMasterForActiveSalonThunk(activeSalonId, page));
+    })
+  }
 
   const renders = {
     yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
@@ -83,41 +86,10 @@ function SalonPage() {
               />
             </div>
           ))}
-          {/* {activeSalon.masters.map((el) => (
-            <div className="salon-page__wrapp-master-card" key={el.id}>
-              <MasterCard
-                name={el.user.name}
-                surname={el.user.surname}
-                pathImg={el.img}
-                specialization={el.profession}
-                salon={activeSalon.name}
-                description={el.description}
-                colorTextBtn={'#F5BFAB'}
-              />
-            </div>
-          ))} */}
-
-
-          {/* <div className="salon-page__wrapp-master-card">
-            <MasterCard
-              pathImg={master1}
-              name={'Светлана Иванова '}
-              specialization={'мастер парикмахер'}
-              salon={'Салон красоты «Версаль»'}
-              colorTextBtn={'#F5BFAB'}
-            />
-          </div> */}
-          {/* <div className="salon-page__wrapp-master-card">
-            <MasterCard
-              pathImg={master2}
-              name={'Светлана Иванова '}
-              specialization={'мастер парикмахер'}
-              salon={'Салон красоты «Версаль»'}
-              colorTextBtn={'#F5BFAB'}
-            />
-          </div> */}
           <div className="salon-page__wrapp-pagination">
-            <Pagination />
+            <Pagination
+              onClick={callbacks.onGetAllMastersForAciveSalon}
+            />
           </div>
         </div>
       </div>
