@@ -114,6 +114,8 @@ export class MastersService {
       };
     }
 
+    console.log('where', where);
+
     const paginationOptions = this.paginationService.getPaginationOptions(
       limit,
       page,
@@ -131,6 +133,8 @@ export class MastersService {
       .createQueryBuilder('master')
       .leftJoinAndSelect('master.user', 'user')
       .leftJoinAndSelect('master.shops', 'shop')
+      .leftJoinAndSelect('master.deliverables', 'deliverable')
+      .leftJoinAndSelect('deliverable.deliverable_group', 'deliverable_group')
       .leftJoinAndSelect('shop.city', 'city')
       .where({ id: In(ids) })
       .orderBy('master.id', 'ASC')

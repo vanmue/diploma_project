@@ -13,10 +13,13 @@ import {
 } from '../../actions/salonsAction';
 import './pagination.scss';
 
-function Pagination() {
-  const activePage = useSelector((store) => store.salonsReducer.activePage);
+function Pagination({
+  onClick
+}) {
+  // const activePage = useSelector((store) => store.salonsReducer.activePage);
+  const [activePage, setActivePage] = useState(1);
+  const [arrayPagination, setArrayPagination] = useState([]);
   const dispatch = useDispatch();
-  const [arrayPagination, setArrayPagination] = useState([])
 
   const count = 122;
   const limit = 10;
@@ -26,7 +29,6 @@ function Pagination() {
   useEffect(() => {
     let items = [];
     let currentPage = activePage;
-    // console.log(currentPage)
 
     // Количество страниц
     const length = Math.ceil(count / Math.max(limit, 1));
@@ -68,7 +70,12 @@ function Pagination() {
   }, [activePage]);
 
   const onClickHandlerNumber = (e) => {
-    dispatch(changeActivePageForPaginationAction(e.currentTarget.querySelector('.pagination__list-item-number').innerHTML));
+    let page = e.currentTarget.querySelector('.pagination__list-item-number').innerHTML;
+    console.log('Pagination onClickHandlerNumber prev page: ', page)
+    setActivePage(page);
+    console.log('Pagination onClickHandlerNumber  page: ', page)
+    // dispatch(changeActivePageForPaginationAction(page));
+    onClick(page);
   }
 
   const onClickHandlerArrowPrev = (e) => {
