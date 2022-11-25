@@ -119,8 +119,6 @@ export class MastersService {
       };
     }
 
-    console.log('where', where);
-
     const paginationOptions = this.paginationService.getPaginationOptions(
       limit,
       page,
