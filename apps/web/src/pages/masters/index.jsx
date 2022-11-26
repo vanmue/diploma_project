@@ -8,6 +8,7 @@ import { getFilteringMastersThunk } from '../../actions/mastersActions';
 import { getCitiesThunk } from '../../actions/citiesActions';
 import { getServicesGroupsThunk } from '../../actions/servicesActions';
 import { getAllSalonsThunk } from '../../actions/salonsAction';
+import { setIdActiveMasterAction } from '../../actions/masterIdAction';
 import {
   changeNavigationColorAction,
   changingLabelInHeaderAction,
@@ -95,7 +96,7 @@ function MastersPage() {
             <ul className="masters-page__list">
               {masters?.map((el) => {
 
-                return <li className="masters-page__wrapp-master-card" key={el.id}>
+                return <li className="masters-page__wrapp-master-card" data-master-id={el.id} key={el.id}>
                   <MasterCard
                     name={el.user.name}
                     surname={el.user.surname}

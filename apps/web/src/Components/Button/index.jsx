@@ -11,8 +11,8 @@ function Button({
   masterId
 }) {
 
-  const handleClick = () => {
-    onClick();
+  const handleClick = (e) => {
+    onClick(e);
   }
 
   return (
