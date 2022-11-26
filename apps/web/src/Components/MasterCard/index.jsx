@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import propTypes from 'prop-types';
 import Rating from '../Rating';
 import Button from '../Button';
+import { setIdActiveMasterAction } from '../../actions/masterIdAction';
 import './master-card.scss';
 
 function MasterCard({
@@ -13,6 +15,14 @@ function MasterCard({
   specialization,
   description,
 }) {
+  const dispatch = useDispatch();
+
+  const callbacks = {
+    onSetIdActiveMaster: useCallback((e) => {
+      let masterId = e.currentTarget.closest('.masters-page__wrapp-master-card').dataset.masterId;
+      dispatch(setIdActiveMasterAction(masterId));
+    })
+  }
 
   return (
     <div className='master-card'>
@@ -52,6 +62,7 @@ function MasterCard({
             <Button
               background='#A40123'
               colorText='#F5BFAB'
+              onClick={callbacks.onSetIdActiveMaster}
             >
               Записаться
             </Button>
