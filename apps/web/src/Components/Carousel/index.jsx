@@ -6,7 +6,10 @@ import propTypes from 'prop-types';
 // import next from './img/arrow-next.png';
 import './carousel.scss';
 
-function Carousel({ images }) {
+function Carousel({
+  images,
+  isEdited
+}) {
   const [offset, setOffset] = useState(0);
   const carouselLineRef = useRef(null);
 
@@ -38,6 +41,10 @@ function Carousel({ images }) {
           {images?.map((item, index) => {
             return <img className="carousel__img" src={item.img} key={index} alt="Фото салона" />
           })}
+          {isEdited ? <div className="carousel__add-img">
+            <input src="" alt="Загрузка фото" type="file" />
+          </div> : ""}
+          {/* {isEdited ? <img className="carousel__img" src="" alt="Загрузка фото" /> : ""} */}
         </div>
       </div>
 
@@ -55,11 +62,13 @@ function Carousel({ images }) {
 }
 
 Carousel.propTypes = {
-  images: propTypes.arrayOf(propTypes.object)
+  images: propTypes.arrayOf(propTypes.object),
+  isEdited: propTypes.bool
 }
 
 Carousel.defaultProps = {
-  images: null
+  images: null,
+  isEdited: false
 }
 
 export default React.memo(Carousel);
