@@ -8,7 +8,6 @@ function Button({
   background,
   children,
   onClick,
-  masterId
 }) {
 
   const handleClick = (e) => {
@@ -36,7 +35,6 @@ Button.propTypes = {
   background: propTypes.string.isRequired,
   colorText: propTypes.string.isRequired,
   children: propTypes.string.isRequired,
-  masterId: propTypes.number,
   onClick: propTypes.func
 }
 
