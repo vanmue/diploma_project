@@ -23,7 +23,7 @@ function Button({
     >
       <Link
         // end
-        // to="/master"
+        to="/master"
         style={{ color: `${colorText}` }}
       >
         {children}

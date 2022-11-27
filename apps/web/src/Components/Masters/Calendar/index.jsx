@@ -11,13 +11,7 @@ import ModalWindow from "./ModalWindow/index.jsx";
 
 function Calendar({ dataMaster, record, getDay }) {
 
-    const servise = [dataMaster?.deliverable_groups]
-
-    /* const recordDay = record?.shops[0].appointments.map(rec => rec.from)
-    console.log(recordDay) */
-
-    //console.log(servise)
-
+    const data = [dataMaster?.deliverables]
     moment.updateLocale('es', { week: { dow: 1 } })
     moment.updateLocale('es', {
         months: [
@@ -30,6 +24,10 @@ function Calendar({ dataMaster, record, getDay }) {
     const [itemday, setItemDay] = useState(today.clone())
     const [modalActive, setModalActive] = useState(false);
     const [choiceDay, setChoiceDay] = useState('')
+
+    function changeModalActive() {
+        setModalActive(false)
+    }
 
     function cellClick(e) {
         e.stopPropagation()
@@ -58,7 +56,7 @@ function Calendar({ dataMaster, record, getDay }) {
             <h2 className='calendar__text'>Выбрать дату и время для записи:</h2>
             <CalendarMonth itemday={itemday} monthSubtract={monthSubtract} monthAdd={monthAdd} />
             <CalendarGrid startDay={startDay} today={today} cellClick={cellClick} getDay={getDay} />
-            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} data={servise} dataMaster={dataMaster} record={record} />
+            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} data={data} dataMaster={dataMaster} record={record} changeModalActive={changeModalActive} />
         </div>
     );
 }

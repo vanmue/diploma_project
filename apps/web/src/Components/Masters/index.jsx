@@ -1,51 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { GET_MASTER } from "../../actions/masterIdAction";
 import Calendar from './Calendar'
 import Price from './Price'
 import Reviews from "./Reviews";
 import "./master.scss"
 import Rating from '../Rating'
+import { getMasterIdActionThunk } from '../../actions/masterIdAction'
 
 function Master() {
   const masterRecord = useSelector(store => store.masterRecoredReducer);
-  const masterId = useSelector(store => store.masterIdReducer);
+  const masterId = useSelector(store => store.masterIdReducer.id);
+  const data = useSelector(store => store.masterIdReducer.dataMaster)
 
-  const [data, setData] = useState(null);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getMasterIdActionThunk(masterId))
+  }, [])
+
   const [record, setRecord] = useState(masterRecord)
-  const [price, setPrise] = useState(null)
-  const [day, setDay] = useState('2022-11-17')
+  const [day, setDay] = useState('')
 
   function getDay(day1) {
     setDay(day1)
   }
+  useEffect(() => {
 
-  useEffect(() => {
-    fetch('/api/v1/deliverables')
+    fetch(`/api/v1/appointments/?date=${day}&master_id=${masterId}`)
       .then((req) => req.json())
       .then((res) => {
-        setPrise(res.data)
-      })
-      .catch(error => console.log(error))
-  }, [])
-  useEffect(() => {
-    fetch(`/api/v1/appointments/?date=${day}&master_id=${masterId.id}`)
-      .then((req) => req.json())
-      .then((res) => {
-        setRecord(res.data?.filter(master => master.id === masterId.id)[0])
+        console.log(res)
+        console.log(res.data?.filter(master => master.id === masterId)[0])
+        setRecord(res.data?.filter(master => master.id === masterId)[0])
+
       })
       .catch(error => console.log(error))
   }, [day])
 
-  useEffect(() => {
-    fetch('/api/v1/masters')
-      .then((req) => req.json())
-      .then((res) => {
-        setData(res.data?.filter(master => master.id === masterId.id)[0])
-      })
-      .catch(error => console.log(error))
-  }, [])
-
+  console.log(record)
   return <>
     <div className='main-page'>
       <div className="container">

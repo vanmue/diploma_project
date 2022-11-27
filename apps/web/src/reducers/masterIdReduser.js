@@ -4,17 +4,17 @@ import {
 } from '../actions/masterIdAction';
 
 const initialStore = {
-  id: 7
+  id: 7,
+  dataMaster: null
 }
 
 export default function masterIdReducer(store = initialStore, action) {
+
   switch (action.type) {
     case GET_MASTER_ID: {
       return {
         ...store,
-        user: {
-          ...action.peyload
-        }
+        dataMaster: action.payload
       }
     }
     case SET_ACTIVE_MASTER_ID: {
