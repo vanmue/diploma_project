@@ -22,7 +22,9 @@ function SalonCard({
   colorTextRecordBtn,
   img,
   map,
-  onClick
+  isEdited,
+  onClick,
+  onClickEditing
 }) {
 
   const handleClickLink = (e) => {
@@ -34,12 +36,17 @@ function SalonCard({
     }
   }
 
+  const handleClickBtnEditing = () => {
+    onClickEditing();
+  }
+
   return (
     <div className="salon-card">
       <div className="salon-card__img">
-        <img src={img} alt="Фото салона" />
+        {/* <img src={img} alt="Фото салона" /> */}
         {/* {img ? <img src={img} alt="Фото салона" /> : "map опять  не передалось"} */}
-        {/* {img ? <img src={img} alt="Фото салона" /> : map} */}
+        {img ? <img src={img} alt="Фото салона" /> : map ? map : ""}
+        {/* {img ? <img src={img} alt="Фото салона" /> : map } */}
       </div>
       <div
         className="salon-card__info"
@@ -76,29 +83,29 @@ function SalonCard({
             {textLink ? (<div className="salon-card__salon-page-link" style={{ marginBottom: "20px" }} onClick={handleClickLink}>
               <Link to="/salon">{textLink}</Link>
             </div>) : ''}
-
-
-            <div className="salon-card__buttons">
-              <div className="salon-card__wrapp-button">
-                <Button
-                  colorText={colorTextCallBtn}
-                  background={bckCallBtn}
-                  onClick={() => { }}
-                >
-                  Позвонить
-                </Button>
-              </div>
-              <div className="salon-card__wrapp-button">
-                <Button
-                  colorText={colorTextRecordBtn}
-                  background={bkgRecordBtn}
-                  onClick={() => { }}
-                >
-                  Записаться
-                </Button>
-              </div>
-            </div>
-
+            {isEdited ? <div className="salon-card__edited">
+              <button onClick={handleClickBtnEditing} className="salon-card__edited-btn">Изменить данные</button>
+            </div> :
+              <div className="salon-card__buttons">
+                <div className="salon-card__wrapp-button">
+                  <Button
+                    colorText={colorTextCallBtn}
+                    background={bckCallBtn}
+                    onClick={() => { }}
+                  >
+                    Позвонить
+                  </Button>
+                </div>
+                <div className="salon-card__wrapp-button">
+                  <Button
+                    colorText={colorTextRecordBtn}
+                    background={bkgRecordBtn}
+                    onClick={() => { }}
+                  >
+                    Записаться
+                  </Button>
+                </div>
+              </div>}
           </div>
           <div className="salon-card__services">
             <p className="salon-card__services-title">
@@ -129,7 +136,9 @@ SalonCard.propTypes = {
   // parking: propTypes.string,
   img: propTypes.string,
   map: propTypes.element,
+  isEdited: propTypes.bool,
   onClick: propTypes.func,
+  onClickEditing: propTypes.func,
 }
 
 SalonCard.defaultProps = {
@@ -139,7 +148,9 @@ SalonCard.defaultProps = {
   workinghours: '-',
   telephone: '-',
   deliverableGgroups: [{}],
+  isEdited: false,
   onClick: () => { },
+  onClickEditing: () => { },
   // img: '',
   // map: '-',
 }

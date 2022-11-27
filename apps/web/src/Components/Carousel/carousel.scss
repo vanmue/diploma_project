@@ -24,13 +24,21 @@
 
   &__img {
     border-radius: 10px;
-    max-width: 400px;
+    width: 400px;
+    // max-width: 400px;
     height: 300px;
     margin-right: 40px;
 
     &:last-child {
       margin-right: 0px;
     }
+  }
+
+  &__add-img {
+    border-radius: 10px;
+    width: 400px;
+    height: 300px;
+    margin-right: 40px;
   }
 
   &__btn-prev {

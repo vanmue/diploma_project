@@ -9,7 +9,8 @@ function SignIn() {
         end
         className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
         style={{ color: '#FFFFFF' }}
-        to="/user-office"
+        // to="/user-office"
+        to="/salon-admine-office"
       >
         <span>Личный кабинет</span>
       </NavLink>

@@ -7,6 +7,7 @@ function DropdownModal({
     items,
     setChoice
 }) {
+    //console.log(items)
     const [value, setValue] = useState(dropdownTitle)
     const [btnActive, setBtnActive] = useState(false);
 
