@@ -4,6 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
 import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity';
 import { DeliverableGroupEntity } from 'src/deliverables/groups/entities/deliverable-group.entity';
+import { FileEntity } from 'src/files/entities/file.entity';
 import { ReviewEntity } from 'src/reviews/entities/review.entity';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
@@ -14,6 +15,7 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -65,6 +67,10 @@ export class MasterEntity {
   @Column({ type: 'varchar' })
   @ApiProperty()
   img: string;
+
+  @ManyToOne(() => FileEntity)
+  @JoinColumn({ name: 'imgId', referencedColumnName: 'id' })
+  img_file: FileEntity;
 
   @ApiProperty()
   reviews_scores_count: number;

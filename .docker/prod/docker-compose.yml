@@ -17,6 +17,8 @@ services:
     build:
       context: apps/api
       dockerfile: .docker/prod/Dockerfile
+    volumes:
+      - ./storage/app/public/uploads:/uploads
     env_file:
       - apps/api/.docker/prod/.env
     restart: unless-stopped

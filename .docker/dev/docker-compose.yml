@@ -20,6 +20,7 @@ services:
     working_dir: /app
     volumes:
       - ./apps/api:/app
+      - ./storage/app/public/uploads:/uploads
     env_file:
       - ./apps/api/.docker/dev/.env
     environment:  

@@ -8,11 +8,10 @@ function Button({
   background,
   children,
   onClick,
-  masterId
 }) {
 
-  const handleClick = () => {
-    onClick();
+  const handleClick = (e) => {
+    onClick(e);
   }
 
   return (
@@ -23,7 +22,7 @@ function Button({
     >
       <Link
         // end
-        // to="/master"
+        to="/master"
         style={{ color: `${colorText}` }}
       >
         {children}
@@ -36,7 +35,6 @@ Button.propTypes = {
   background: propTypes.string.isRequired,
   colorText: propTypes.string.isRequired,
   children: propTypes.string.isRequired,
-  masterId: propTypes.number,
   onClick: propTypes.func
 }
 

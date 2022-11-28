@@ -4,7 +4,7 @@ import DropdownModal from './dropdownModal'
 import moment from 'moment'
 import './modalWindow.scss'
 
-function ModalWindow({ modalActive, choiceDay, data, dataMaster, record }) {
+function ModalWindow({ modalActive, choiceDay, data, dataMaster, record, changeModalActive }) {
     let cell = ['10-00', '11-00', '12-00', '13-00', '14-00', '15-00', '16-00', '17-00', '18-00']
 
     const [tel, setTel] = useState('');
@@ -14,8 +14,10 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record }) {
     const [choose, setChoose] = useState(true)
     const [choice, setChoice] = useState({})
     const [form, setForm] = useState(null)
+    //const[cellRender,setCellRender]=useState(cell)
 
     function chooseTime(e) {
+
         if (choose) {
             e.target.attributes[1].nodeValue = "background: rgb(65, 9, 53); color: rgb(255, 255, 255);"
             setTime(e.target.outerText)
@@ -24,9 +26,10 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record }) {
         }
         setChoose(false)
     }
+
     function handleSubmit(e) {
-        console.log(e)
         e.preventDefault()
+        changeModalActive()
         if (choice === null) {
             alert('выбирите услугу')
         } else if (!time) {
@@ -47,9 +50,12 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record }) {
             phone: e.target[1].value,
             to: moment(choiceDay).add((time.slice(0, -3) + 1), 'hours').toISOString(),
         })
+
     }
 
     if (form) {
+
+        console.log(form)
         fetch(`/api/v1/appointments`, {
             method: 'POST',
             headers: {
@@ -67,7 +73,6 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record }) {
             record?.shops[0].appointments.map(rec => moment(rec.from).format('HH-mm')).indexOf(time) === -1
         )
     }
-
     return <>
         <div className="fixed-overlay" style={{ display: modalActive ? "block" : "none" }}>
             <div onClick={(e) => e.stopPropagation()} className="modal">
