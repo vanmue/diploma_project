@@ -22,7 +22,9 @@ export class DeliverablesService {
   }
 
   async findAll() {
-    return this.deliverableRepository.find();
+    return this.deliverableRepository.find({
+      relations: ['deliverable_group'],
+    });
   }
 
   async findByIds(ids: number[]) {
