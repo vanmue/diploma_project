@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import propTypes from 'prop-types';
+import Button from '../Button';
 import imgCam from './img/camera.png';
 import './master-add-card.scss';
 
@@ -69,20 +70,64 @@ function MasterAddCard() {
           </div>
 
           <div className="master-add-card__info-services master-add-card__info-item">
-            <label
+            <div
               className="master-add-card__info-services-label"
-              htmlFor="master-service"
+            // htmlFor="master-service"
             >
               Услуги мастера:
-            </label>
-            <input
-              id="master-desk"
-              className="master-add-card__info-desk-textarea"
-              name="desk"
-            />
+            </div>
+            <div
+              // id="master-services"
+              className="master-add-card__info-services-flex"
+              name="services"
+            >
+              <div className="master-add-card__info-services-services ">
+                <input
+                  id="master-service-1"
+                  className="master-add-card__info-services-service"
+                  type="text" />
+                <input
+                  id="master-service-2"
+                  className="master-add-card__info-services-service"
+                  type="text" />
+                <input
+                  id="master-service-3"
+                  className="master-add-card__info-services-service"
+                  type="text" />
+              </div>
+              <div className="master-add-card__info-services-prices">
+                <div className="master-add-card__info-services-prices-title">
+                  Стоимость:
+                </div>
+                <div className="master-add-card__info-services-prices-prices">
+                  <input
+                    id="master-service-price-1"
+                    className="master-add-card__info-services-prices-input"
+                    type="text" />
+                  <input
+                    id="master-service-price-2"
+                    className="master-add-card__info-services-prices-input"
+                    type="text" />
+                  <input
+                    id="master-service-price-3"
+                    className="master-add-card__info-services-prices-input"
+                    type="text" />
+
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
+
+      <div className="master-add-card__wrapp-button">
+        <Button
+          background={"#410935"}
+          colorText={"#FFFFFF"}
+        >Сохранить</Button>
+      </div>
+
     </div>
   )
 }

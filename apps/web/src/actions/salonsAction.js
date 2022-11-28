@@ -8,7 +8,65 @@ export const GET_FILTERING_SALONS_BY_CITY = '@@salons/GET_FILTERING_SALONS_BY_CI
 export const CHANGE_ACTIVE_PAGE_FOR_PAGINATION = '@@salons/CHANGE_ACTIVE_PAGE_FOR_PAGINATION';
 export const INCREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/INCREMENT_ACTIVE_PAGE_PAGINATION';
 export const DECREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/DECREMENT_ACTIVE_PAGE_PAGINATION';
+export const POST_NEW_SALON = '@@salons/POST_NEW_SALON';
+export const POST_IMAGE_FOR_SALON = '@@salons/POST_IMAGE_FOR_SALON';
 // export const CHANGE_ARRAY_PAGINATION = '@@salons/CHANGE_ARRAY_PAGINATION';
+
+/**
+ * Создание салона
+*/
+export const postNewSalonAction = (date) => ({
+  type: POST_NEW_SALON,
+  payload: date
+});
+/** 
+ * Запрос на создание нового салона
+*/
+export const postNewSalonThunk = (data) => async (dispatch, getState) => {
+
+  fetch('/api/v1/shops', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('postNewSalonThunk res:', res);
+      // dispatch(postNewSalonAction(res));
+    })
+  // .catch(console.log('postNewSalonThunk: ', 'Что-то не получилось'));
+}
+
+
+/**
+ * Картинка для салона
+*/
+export const postImageForSalonAction = (date) => ({
+  type: POST_IMAGE_FOR_SALON,
+  payload: date
+});
+/** 
+ * Отправка картинки для салона в поле images
+*/
+export const postImageForSalonThunk = (data) => async (dispatch, getState) => {
+
+  fetch('/api/v1/shop-images', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('postImageForSalonThunk res:', res);
+      // dispatch(postImageForSalonAction(res));
+    })
+  // .catch(console.log('postNewSalonThunk: ', 'Что-то не получилось'));
+}
+
 
 /**
  * Получение всех салонов
