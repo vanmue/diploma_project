@@ -49,7 +49,7 @@ export class MastersService {
     };
 
     if (fileId) {
-      const img_file = await this.filesService.findById(fileId); // Заглушка
+      const img_file = await this.filesService.findById(fileId);
       if (img_file) {
         values = { ...values, img_file };
       }
@@ -231,7 +231,7 @@ export class MastersService {
   async update(id: number, dto: UpdateMasterEntity) {
     const master = await this.masterRepository.findOneByOrFail({ id });
 
-    const keys = ['profession', 'description', 'img'];
+    const keys = ['profession', 'description'];
     keys.forEach((key) => {
       if (dto[key]) {
         master[key] = dto[key];
@@ -242,8 +242,11 @@ export class MastersService {
       master.user = await this.usersService.findById(dto.userId);
     }
 
-    if (dto.shops) {
-      master.shops = await this.shopsService.findByIds(dto.shops);
+    if (dto.fileId) {
+      const img_file = await this.filesService.findById(dto.fileId);
+      if (img_file) {
+        master.img_file = img_file;
+      }
     }
 
     if (dto.deliverables) {
@@ -252,6 +255,10 @@ export class MastersService {
       );
     }
 
-    return this.masterRepository.save(master);
+    if (dto.shops) {
+      master.shops = await this.shopsService.findByIds(dto.shops);
+    }
+
+    return await this.masterRepository.save(master);
   }
 }

@@ -95,6 +95,7 @@ export class ShopEntity {
     comment: 'широта центра карты',
     nullable: true,
   })
+  @ApiProperty()
   center_latitude: number;
 
   @Column('float', {
