@@ -28,7 +28,7 @@ export class MastersService {
     private readonly filesService: FilesService,
   ) {}
   async create(dto: CreateMasterEntity) {
-    const { userId, shops, deliverables } = dto;
+    const { userId, shops, deliverables, fileId } = dto;
 
     const user = new UserEntity();
     user.id = userId;
@@ -39,15 +39,21 @@ export class MastersService {
       deliverables,
     );
 
-    const img = await this.filesService.findById(1); // Заглушка
-
-    const values = {
+    let values = {};
+    values = {
+      ...values,
       ...dto,
       user,
       shops: shopEntities,
       deliverables: delivEntities,
-      img_file: img,
     };
+
+    if (fileId) {
+      const img_file = await this.filesService.findById(fileId); // Заглушка
+      if (img_file) {
+        values = { ...values, img_file };
+      }
+    }
 
     return await this.masterRepository.save(values);
   }
