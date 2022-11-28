@@ -2,6 +2,7 @@ import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeliverablesModule } from 'src/deliverables/deliverables.module';
 import { DeliverableGroupsModule } from 'src/deliverables/groups/deliverable-groups.module';
+import { FilesModule } from 'src/files/files.module';
 import { ReviewsModule } from 'src/reviews/reviews.module';
 import { JsonService } from 'src/services/json/json.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
@@ -21,6 +22,7 @@ import { MastersService } from './masters.service';
     forwardRef(() => ShopsModule),
     DeliverablesModule,
     UsersModule,
+    FilesModule,
   ],
   exports: [MastersService],
 })

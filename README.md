@@ -1,5 +1,10 @@
 # diploma_project
 
+## Создание мастера
+
+1. Создать пользователя POST /api/v1/users/
+2. 
+
 ## Каталог маршрутов
 
 см. https://vanmue.ru:8001/swagger

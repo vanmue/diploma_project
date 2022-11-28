@@ -2,11 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ListAllAppointmentsDto } from 'src/appointments/list-all-appointments.dto';
 import { DeliverablesService } from 'src/deliverables/deliverables.service';
-import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity';
+import { FilesService } from 'src/files/files.service';
 import { ReviewsService } from 'src/reviews/reviews.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { ListByShopDto } from 'src/shops/dto/list-by-shop.dto';
-import { ShopEntity } from 'src/shops/entities/shop.entity';
 import { ShopsService } from 'src/shops/shops.service';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
@@ -26,6 +25,7 @@ export class MastersService {
     private readonly shopsService: ShopsService,
     private readonly deliverablesService: DeliverablesService,
     private readonly usersService: UsersService,
+    private readonly filesService: FilesService,
   ) {}
   async create(dto: CreateMasterEntity) {
     const { userId, shops, deliverables } = dto;
@@ -33,24 +33,24 @@ export class MastersService {
     const user = new UserEntity();
     user.id = userId;
 
-    const shopEntities = shops.map((id) => {
-      const shop = new ShopEntity();
-      shop.id = id;
-      return shop;
-    });
+    const shopEntities = await this.shopsService.findByIds(shops);
 
-    const delivEntities = deliverables.map((d) => {
-      const deliv = new DeliverableEntity();
-      deliv.id = d;
-      return deliv;
-    });
+    const delivEntities = await this.deliverablesService.findByIds(
+      deliverables,
+    );
 
-    return await this.masterRepository.save({
+    const img = await this.filesService.findById(1); // Заглушка
+
+    const values = {
       ...dto,
       user,
       shops: shopEntities,
       deliverables: delivEntities,
-    });
+      img_file: img,
+    };
+
+    console.log('values', values);
+    return await this.masterRepository.save(values);
   }
 
   async findByShopIdPaginated(shopId: number, query: ListByShopDto) {
@@ -70,6 +70,7 @@ export class MastersService {
       relations: {
         user: true,
         shops: true,
+        img_file: true,
       },
     });
 
@@ -134,6 +135,7 @@ export class MastersService {
 
     const masters = await this.masterRepository
       .createQueryBuilder('master')
+      .leftJoinAndSelect('master.img_file', 'img_file')
       .leftJoinAndSelect('master.user', 'user')
       .leftJoinAndSelect('master.shops', 'shop')
       .leftJoinAndSelect('master.deliverables', 'deliverable')
@@ -163,7 +165,12 @@ export class MastersService {
         }),
     );
 
-    return masters;
+    return this.paginationService.getJsonObject<MasterEntity[]>(
+      masters,
+      mastersTotal,
+      limit,
+      page,
+    );
   }
   async findAppointments(query?: ListAllAppointmentsDto) {
     const { master_id, date, shop_id } = query;
@@ -201,6 +208,7 @@ export class MastersService {
           appointments: true,
         },
         deliverables: true,
+        img_file: true,
       },
     });
 
