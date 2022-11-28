@@ -7,11 +7,13 @@ function Button({
   colorText,
   background,
   children,
+  linkTo,
   onClick,
 }) {
 
   const handleClick = (e) => {
     onClick(e);
+    console.log("Button click")
   }
 
   return (
@@ -22,7 +24,7 @@ function Button({
     >
       <Link
         // end
-        to="/master"
+        to={linkTo ? linkTo : ""}
         style={{ color: `${colorText}` }}
       >
         {children}

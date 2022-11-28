@@ -22,9 +22,10 @@ function Pagination({
   const dispatch = useDispatch();
 
   const count = 122;
-  const limit = 10;
-  const indent = 2;
-  const ee = 13;
+  const limit = 10; // Число элементов на странице
+  
+  const indent = 2; // Число цифр показываемых с лева и права от активной
+  const ee = 13;  // Количество страниц
 
   useEffect(() => {
     let items = [];

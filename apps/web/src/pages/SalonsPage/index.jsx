@@ -110,7 +110,8 @@ function SalonsPage() {
           </section>
           <ul className="salons-page__salons-list">
             {salons?.map((item) => {
-              let imgPreview = item.images.find(el => el.is_preview == true);
+              let imgPreview = item.images.length > 0 ? item.images.find(el => el.is_preview == true) : '';
+              // let imgPreview = item.images.find(el => el.is_preview == true);
               return <li className="salons-page__wrapp-salon-card" data-salon-id={item.id} key={item.id}>
                 <SalonCard
                   salonTitle={item.name}
@@ -123,8 +124,7 @@ function SalonsPage() {
                   parking={item.advantages[0]?.name}
                   textLink={'Подробная информация о салоне'}
                   deliverableGgroups={item.deliverable_groups}
-                  img={imgPreview.img}
-                  // img={img1}//
+                  img={imgPreview != '' ? imgPreview.img : ''}
                   bckCallBtn={'#410935'}
                   colorTextCallBtn={'#F5BFAB'}
                   bkgRecordBtn={'#A40123'}

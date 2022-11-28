@@ -1,6 +1,9 @@
 @import '../../assets/styles/mixins.scss';
 
 .master-add-card {
+  display: flex;
+  flex-direction: column;
+
   border-radius: 10px;
   padding: 30px 40px 20px 40px;
   background: #F5BFAB;
@@ -138,6 +141,69 @@
       }
     }
 
+    &-services {
+      display: flex;
+      align-items: flex-start;
+
+      &-label {
+        width: 148px;
+        @include inter(400, normal);
+        font-size: 14px;
+        line-height: 17px;
+        color: #410935;
+      }
+
+      &-flex {
+        display: flex;
+        @include inter(400, normal);
+
+      }
+
+      &-services {
+        display: flex;
+        flex-direction: column;
+        width: 438px;
+        margin-right: 30px;
+      }
+
+      &-service {
+        margin-bottom: 20px;
+        height: 30px;
+        border: 1px solid #410935;
+        border-radius: 5px;
+        background: #F5BFAB;
+      }
+
+      &-prices {
+        display: flex;
+
+        &-title {
+          @include inter(400, normal);
+          font-size: 14px;
+          line-height: 17px;
+          color: #410935;
+          margin-right: 30px;
+        }
+
+        &-prices {
+          display: flex;
+          flex-direction: column;
+          width: 333px;
+        }
+
+        &-input {
+          margin-bottom: 20px;
+          height: 30px;
+          border: 1px solid #410935;
+          border-radius: 5px;
+          background: #F5BFAB;
+        }
+      }
+    }
+
   }
 
+  &__wrapp-button {
+    margin: 0 auto;
+  }
 }

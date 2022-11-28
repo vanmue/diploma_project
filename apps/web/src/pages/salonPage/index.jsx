@@ -77,7 +77,7 @@ function SalonPage() {
               <MasterCard
                 name={el.user.name}
                 surname={el.user.surname}
-                pathImg={el.img}
+                pathImg={el.img_file.path}
                 rating={el.reviews_scores_count}
                 specialization={el.profession}
                 salon={activeSalon?.name}
