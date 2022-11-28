@@ -49,7 +49,6 @@ export class MastersService {
       img_file: img,
     };
 
-    console.log('values', values);
     return await this.masterRepository.save(values);
   }
 
