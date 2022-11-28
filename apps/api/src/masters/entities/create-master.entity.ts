@@ -5,7 +5,6 @@ import { MasterEntity } from './master.entity';
 export class CreateMasterEntity extends PickType(MasterEntity, [
   'profession' as const,
   'description' as const,
-  'img' as const,
 ]) {
   @IsNotEmpty()
   @IsInt()
@@ -19,4 +18,9 @@ export class CreateMasterEntity extends PickType(MasterEntity, [
   @ArrayNotEmpty()
   @ApiProperty({ type: Number, isArray: true })
   deliverables: number[];
+
+  @IsNotEmpty()
+  @IsInt()
+  @ApiProperty()
+  fileId: number;
 }

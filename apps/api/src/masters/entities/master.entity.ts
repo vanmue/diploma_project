@@ -64,12 +64,9 @@ export class MasterEntity {
   @ApiProperty({ isArray: true })
   appointments: AppointmentEntity[];
 
-  @Column({ type: 'varchar' })
-  @ApiProperty()
-  img: string;
-
   @ManyToOne(() => FileEntity)
   @JoinColumn({ name: 'imgId', referencedColumnName: 'id' })
+  @ApiProperty()
   img_file: FileEntity;
 
   @ApiProperty()

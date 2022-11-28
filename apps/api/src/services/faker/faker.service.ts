@@ -67,7 +67,6 @@ export class FakerService {
           master.deliverables.push(delId);
         }
         master.shops = [shops[getIndex(shops.length)].id];
-        master.img = images[getIndex(3)];
         console.log('master', master);
         return this.mastersService.create(master);
       });
