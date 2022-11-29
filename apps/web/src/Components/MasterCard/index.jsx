@@ -62,6 +62,7 @@ function MasterCard({
             <Button
               background='#A40123'
               colorText='#F5BFAB'
+              linkTo='/master'
               onClick={callbacks.onSetIdActiveMaster}
             >
               Записаться
