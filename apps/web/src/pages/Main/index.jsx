@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ServicesCard from '../../Components/ServicesCard';
 import Select from '../../Components/Select';
 import YandexMap from '../../Components/YandexMap';
+import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
 import {
   changeNavigationColorAction,
   changingLabelInHeaderAction,
   changeHeaderBackgroundAction
 } from '../../actions/stylesActions';
-import { useDispatch } from 'react-redux';
 import './main-page.scss';
 
 function MainPage() {
 
-  const [listServices, setListServices] = useState([]);
-  const cities = useSelector(store => store.citiesReducer);
-
   const dispatch = useDispatch();
+  const select = useSelector(store => ({
+    deliverables: store.deliverablesReducer.deliverables,
+    serviceGroups: store.deliverablesReducer.serviceGroups,
+  }));
 
   useEffect(() => {
-    fetch('/api/v1/deliverable-groups')
-      .then(res => res.json())
-      .then(data => setListServices(data.data))
-
     dispatch(changingLabelInHeaderAction(true));
     dispatch(changeHeaderBackgroundAction('rgba(65, 9, 53, 0.7)'));
     dispatch(changeNavigationColorAction('#FFFFFF'));
+    dispatch(getAllServiceGroupsThunk());
   }, []);
+  useEffect(() => {
+    console.log('MainPage useEffect select.serviceGroups:', select.serviceGroups)
+  }, [select.serviceGroups]);
 
   return (
     <div className='main-page'>
@@ -51,19 +52,20 @@ function MainPage() {
             <div className="main-page__wrapp-select">
               <Select
                 titleSelect={"Выберите город"}
-                cities={cities.cities}
+              // cities={cities.cities}
               />
             </div>
             <h2 className="main-page__services-h2">Услуги</h2>
             <div className="main-page__services-list">
-              {listServices.map(item => {
+              {select.serviceGroups.map(item => {
                 return <div
                   className="main-page__wrapp-services-card"
-                  key={item.id}
+                  data-deliverables={item?.id}
+                  key={item?.id}
                 >
                   <ServicesCard
-                    title={item.name}
-                    pathImg={item.image}
+                    title={item?.name}
+                    pathImg={item?.image}
                   />
                 </div>
               })}
