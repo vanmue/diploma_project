@@ -12,6 +12,7 @@ import { getCitiesThunk } from '../../actions/citiesActions';
 import { getAllAdvantagesThunk } from '../../actions/advantagesActions';
 import { postNewSalonThunk } from '../../actions/salonsAction';
 import { postImageForSalonThunk } from '../../actions/salonsAction';
+// import { getAllDeliverablesThunk } from '../../actions/deliverablesActions';
 import img1 from '../../Components/Carousel/img/carusel-img-1.jpg';
 import img2 from '../../Components/Carousel/img/carusel-img-2.jpg';
 import img3 from '../../Components/Carousel/img/carusel-img-3.jpg';
@@ -76,11 +77,12 @@ function SalonAdminOffice() {
 
     dispatch(getCitiesThunk());
     dispatch(getAllAdvantagesThunk());
+    // dispatch(getAllDeliverablesThunk());
   }, []);
-  useEffect(() => {
-    console.log('SalonAdminOffice useEffect formNewSalon: ', formNewSalon)
-    // console.log('SalonAdminOffice useEffect select.advantages: ', select.advantages)
-  }, [formNewSalon, select.advantages]);
+  // useEffect(() => {
+  //   console.log('SalonAdminOffice useEffect formNewSalon: ', formNewSalon)
+  //   // console.log('SalonAdminOffice useEffect select.advantages: ', select.advantages)
+  // }, [formNewSalon, select.advantages]);
 
   const handleChangeTextareaModalNewSalon = (e) => {
     console.log('handleChangeTextareaModalNewSalon e: ', e.currentTarget.getAttribute("id"))
@@ -127,10 +129,6 @@ function SalonAdminOffice() {
     setIsActiveModal(prevIsActiveModal => !prevIsActiveModal);
   }
 
-  // const handleClickBtnPostNewSalon = () => {
-  //   console.log('handleClickBtnPostNewSalon')
-  // }
-
   const callbacks = {
     onSetIsActiveEditingSalonModal: useCallback(() => {
       setIsActiveModal(prevIsActiveModal => !prevIsActiveModal);
@@ -150,15 +148,19 @@ function SalonAdminOffice() {
       dispatch(postNewSalonThunk(formNewSalon));
     }),
     onPostImageForSalon: useCallback(() => {
-      dispatch(postImageForSalonThunk(imageForSalon));
       console.log('onPostImageForSalon imageForSalon:', imageForSalon);
+      dispatch(postImageForSalonThunk(imageForSalon));
     }),
     onChangeUploadImageForSalon: useCallback(() => {
       let inputFile = document.querySelector('.carousel__add-img-input').files[0]
-      console.log('onChangeUploadImageForSalon');
+
+      console.log('onChangeUploadImageForSalon .files[0]', inputFile);
+      // console.log('onChangeUploadImageForSalon .files[0].name', inputFile.name);
       // console.log('document.querySelector inputFile :', inputFile);
       setImageForSalon({ ...imageForSalon, img: inputFile });
     }),
+    // onGetAllDelicerables: useCallback(() => {
+    // }),
   }
   // carousel__add-img-input
   const renders = {
@@ -208,7 +210,9 @@ function SalonAdminOffice() {
             />
           </div>
           <div className="salon-admine-office__wrapp-master-add-card">
-            <MasterAddCard />
+            <MasterAddCard
+            // onClick={callbacks.onGetAllDelicerables}
+            />
           </div>
 
           <div className="salon-admine-office__masters">

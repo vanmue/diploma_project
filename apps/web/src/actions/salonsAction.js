@@ -52,12 +52,28 @@ export const postImageForSalonAction = (date) => ({
 */
 export const postImageForSalonThunk = (data) => async (dispatch, getState) => {
 
+  let formData = new FormData;
+  formData.append('img', data.img);
+  formData.append('is_preview', data.is_preview);
+  formData.append('shopId', data.shopId);
+
   fetch('/api/v1/shop-images', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=utf-8'
+      'Content-Type': 'multipart/form-data',
+      // 'Content-Type': 'multipart/form-data;boundary',
+      'Content-Disposition': 'form-data; name="img"',
+      'Content-Disposition': 'form-data; name="is_preview"',
+      'Content-Disposition': 'form-data; name="shopId"',
+      // 'Content-Type': 'multipart/form-data;boundary="boundary"'
+      // 'Content-Type': 'application/json;'
+      // 'Content-Type': 'application/json;charset=utf-8'
+
+      // 'Content-Disposition': 'form-data; name="is_preview"; name="shopId"'
     },
-    body: JSON.stringify(data)
+    body: formData
+    // body: new FormData(data)
+    // body: JSON.stringify(data)
   })
     .then(req => req.json())
     .then(res => {
