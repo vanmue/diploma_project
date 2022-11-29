@@ -19,6 +19,11 @@ export class FilesService {
     };
     return await this.fileRepository.save(dto);
   }
+
+  async findAll() {
+    return await this.fileRepository.find();
+  }
+
   async findById(id: number) {
     return await this.fileRepository.findOneByOrFail({ id });
   }

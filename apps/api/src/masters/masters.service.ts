@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ListAllAppointmentsDto } from 'src/appointments/list-all-appointments.dto';
 import { DeliverablesService } from 'src/deliverables/deliverables.service';
 import { FilesService } from 'src/files/files.service';
 import { ReviewsService } from 'src/reviews/reviews.service';
@@ -9,11 +8,11 @@ import { ListByShopDto } from 'src/shops/dto/list-by-shop.dto';
 import { ShopsService } from 'src/shops/shops.service';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { In, Raw, Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
+import { ListAllMastersDto } from './dto/list-all-masters.dto';
 import { CreateMasterEntity } from './entities/create-master.entity';
 import { MasterEntity } from './entities/master.entity';
 import { UpdateMasterEntity } from './entities/update-master.entity';
-import { ListAllMastersDto } from './list-all-masters-dto';
 
 @Injectable()
 export class MastersService {
@@ -177,55 +176,16 @@ export class MastersService {
       page,
     );
   }
-  async findAppointments(query?: ListAllAppointmentsDto) {
-    const { master_id, date, shop_id } = query;
 
-    let where = {};
-    if (date) {
-      where = {
-        ...where,
-        shops: {
-          appointments: {
-            from: Raw((alias) => `date_trunc('day', ${alias}) = :dt`, {
-              dt: date,
-            }),
-          },
-        },
-      };
-    }
-    if (shop_id) {
-      where = {
-        ...where,
-        shops: {
-          id: shop_id,
-        },
-      };
-    }
-
-    if (master_id) {
-      where = { ...where, id: master_id };
-    }
-
-    const masters = await this.masterRepository.find({
-      where,
-      relations: {
-        shops: {
-          appointments: true,
-        },
-        deliverables: true,
-        img_file: true,
-      },
+  async findById(id: number) {
+    const master = await this.masterRepository.findOneOrFail({
+      where: { id },
+      relations: ['deliverables'],
     });
 
-    let p = Promise.resolve(null);
-    masters.forEach((master) => {
-      p = p.then(() =>
-        this.reviewsService.findByMaster(master.id).then((reviews) => {
-          master.reviews = reviews;
-        }),
-      );
-    });
-    return p.then(() => masters);
+    master.reviews = await this.reviewsService.findByMaster(master.id);
+
+    return master;
   }
 
   async update(id: number, dto: UpdateMasterEntity) {

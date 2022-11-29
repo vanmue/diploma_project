@@ -19,4 +19,9 @@ export class CreateAppointmentEntity extends OmitType(AppointmentEntity, [
   @IsNotEmpty()
   @IsInt()
   deliverableId: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsInt()
+  userId: number;
 }
