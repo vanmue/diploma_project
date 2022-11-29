@@ -70,8 +70,9 @@ function Carousel({
             </div>
             <input
               className="carousel__add-img-input"
-              src=""
+              // type="multipart/form-data"
               type="file"
+              accept=".png,.jpg"
               alt="Загрузка фото"
               onChange={onChangeInputUploadImageForSalon}
             />

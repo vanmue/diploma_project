@@ -1,10 +1,53 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import propTypes from 'prop-types';
+import { getAllDeliverablesThunk } from '../../actions/deliverablesActions';
+import { postImageFormMasterThunk } from '../../actions/mastersActions';
 import Button from '../Button';
 import imgCam from './img/camera.png';
 import './master-add-card.scss';
 
-function MasterAddCard() {
+function MasterAddCard({
+  onClick
+}) {
+  const dispatch = useDispatch();
+  const select = {
+    deliverables: useSelector((store => store.deliverablesReducer.deliverables)),
+  }
+  const [fromImgForMaster, setFromImgForMaster] = useState({
+    file: null
+  });
+  const [formAddMaster, setFormAddMaster] = useState({
+    userId: null,
+    fileId: null,
+    profession: '',
+    description: '',
+    deliverables: [],
+    shop: []
+  });
+
+  useEffect(() => {
+    dispatch(getAllDeliverablesThunk());
+  }, []);
+  // useEffect(() => {
+
+  // }, []);
+  useEffect(() => {
+    console.log('MasterAddCard select.deliverables:', select.deliverables)
+    console.log('MasterAddCard fromImgForMaster:', fromImgForMaster)
+  }, [fromImgForMaster]);
+  const handleChangeUploadImg = (e) => {
+    setFromImgForMaster({ ...fromImgForMaster, file: e.currentTarget.value })
+    // setFromImgForMaster({ ...fromImgForMaster, file: e.currentTarget.files[0] })
+  }
+
+  const callbacks = {
+    onGetAllDeliverables: useCallback(() => {
+    }),
+    onPostImageForMaster: useCallback(() => {
+      dispatch(postImageFormMasterThunk(fromImgForMaster));
+    }),
+  }
 
   return (
     <div className="master-add-card">
@@ -18,8 +61,24 @@ function MasterAddCard() {
             <img className="master-add-card__img-upload-pic-pic" src={imgCam} alt="Фотоаппарат" />
             <p className="master-add-card__img-upload-desc">Добавить фото</p>
           </div>
-
-          <input className="master-add-card__img-upload-input" src="" type="file" alt="Загрузка фото" />
+          <div
+            className="master-add-card__img-upload-wrapp-button"
+            style={{ position: "absolute", left: '8px', bottom: '10px', zIndex: '2' }}
+          >
+            <Button
+              background={"#410935"}
+              colorText={"#FFFFFF"}
+              onClick={callbacks.onPostImageForMaster}
+            >Отправить</Button>
+          </div>
+          <input
+            className="master-add-card__img-upload-input"
+            src=""
+            type="file"
+            accept=".png,.jpg"
+            alt="Загрузка фото"
+            onChange={handleChangeUploadImg}
+          />
         </div>
 
         <div className="master-add-card__info">
@@ -72,11 +131,19 @@ function MasterAddCard() {
           <div className="master-add-card__info-services master-add-card__info-item">
             <div
               className="master-add-card__info-services-label"
-            // htmlFor="master-service"
             >
               Услуги мастера:
             </div>
-            <div
+            <div className="master-add-card__info-services-list">
+              {select.deliverables?.map((el) => {
+                return <label htmlFor={`service-${el.id}`} key={el.id}>
+                  <input id={`service-${el.id}`} type="checkbox"
+                  />
+                  {el.name}
+                </label>
+              })}
+            </div>
+            {/* <div
               // id="master-services"
               className="master-add-card__info-services-flex"
               name="services"
@@ -115,7 +182,7 @@ function MasterAddCard() {
 
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
         </div>
@@ -133,11 +200,11 @@ function MasterAddCard() {
 }
 
 MasterAddCard.propTypes = {
-
+  onClick: propTypes.func
 }
 
 MasterAddCard.defaultProps = {
-
+  onClick: () => { }
 }
 
 export default React.memo(MasterAddCard);

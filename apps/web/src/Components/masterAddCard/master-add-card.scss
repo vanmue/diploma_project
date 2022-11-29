@@ -153,52 +153,57 @@
         color: #410935;
       }
 
-      &-flex {
-        display: flex;
-        @include inter(400, normal);
-
-      }
-
-      &-services {
+      &-list {
         display: flex;
         flex-direction: column;
-        width: 438px;
-        margin-right: 30px;
       }
 
-      &-service {
-        margin-bottom: 20px;
-        height: 30px;
-        border: 1px solid #410935;
-        border-radius: 5px;
-        background: #F5BFAB;
-      }
+      // &-flex {
+      //   display: flex;
+      //   @include inter(400, normal);
 
-      &-prices {
-        display: flex;
+      // }
 
-        &-title {
-          @include inter(400, normal);
-          font-size: 14px;
-          line-height: 17px;
-          color: #410935;
-          margin-right: 30px;
-        }
+      // &-services {
+      //   display: flex;
+      //   flex-direction: column;
+      //   width: 438px;
+      //   margin-right: 30px;
+      // }
 
-        &-prices {
-          display: flex;
-          flex-direction: column;
-          width: 333px;
-        }
+      // &-service {
+      //   margin-bottom: 20px;
+      //   height: 30px;
+      //   border: 1px solid #410935;
+      //   border-radius: 5px;
+      //   background: #F5BFAB;
+      // }
 
-        &-input {
-          margin-bottom: 20px;
-          height: 30px;
-          border: 1px solid #410935;
-          border-radius: 5px;
-          background: #F5BFAB;
-        }
-      }
+      // &-prices {
+      //   display: flex;
+
+      //   &-title {
+      //     @include inter(400, normal);
+      //     font-size: 14px;
+      //     line-height: 17px;
+      //     color: #410935;
+      //     margin-right: 30px;
+      //   }
+
+      //   &-prices {
+      //     display: flex;
+      //     flex-direction: column;
+      //     width: 333px;
+      //   }
+
+      //   &-input {
+      //     margin-bottom: 20px;
+      //     height: 30px;
+      //     border: 1px solid #410935;
+      //     border-radius: 5px;
+      //     background: #F5BFAB;
+      //   }
+      // }
     }
 
   }
