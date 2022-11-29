@@ -19,6 +19,6 @@ export const getCitiesThunk = () => async (dispatch, getState) => {
     .then(res => {
       dispatch(getCitiesAction(res.data));
     })
-  // .catch(console.log('getCitiesThunk: ', 'Что-то не получилось'));
+    .catch(console.log('getCitiesThunk: ', 'Что-то не получилось'));
 }
 

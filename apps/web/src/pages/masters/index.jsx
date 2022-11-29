@@ -41,6 +41,10 @@ function MastersPage() {
     dispatch(getFilteringMastersThunk());
   }, []);
 
+  useEffect(() => {
+    console.log('MastersPage masters:', masters)
+  }, [masters])
+
   const callbacks = {
     onSetCitiesId: useCallback((id) => {
       setCitiesId(id);
@@ -96,7 +100,7 @@ function MastersPage() {
             <ul className="masters-page__list">
               {masters?.map((el) => {
 
-                return <li className="masters-page__wrapp-master-card" data-master-id={el.id} key={el.id}>
+                return <li className="masters-page__wrapp-master-card" data-master-id={el.id} data-salon-id={el.shops[0].id} key={el.id}>
                   <MasterCard
                     name={el.user.name}
                     surname={el.user.surname}

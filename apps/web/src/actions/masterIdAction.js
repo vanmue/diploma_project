@@ -5,11 +5,15 @@ export const SET_ACTIVE_MASTER_ID = '@@masterId/SET_ACTIVE_MASTER_ID';
 /**
  * Установка id для активного мастера
 */
-export const setIdActiveMasterAction = (date) => ({
+export const setIdActiveMasterAction = (masterId, salonId) => ({
   type: SET_ACTIVE_MASTER_ID,
-  payload: date
+  payload: {
+    masterId,
+    salonId
+  }
 });
 
+//
 export const getMasterIdAction = (date) => ({
   type: GET_MASTER_ID,
   payload: date

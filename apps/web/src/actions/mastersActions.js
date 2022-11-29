@@ -17,6 +17,9 @@ export const postImageForMasterAction = (date) => ({
 */
 export const postImageFormMasterThunk = (data) => async (dispatch, getState) => {
 
+  // let formData = new formData();
+  // formData.append('file', data.file);
+
   fetch('/api/v1/files', {
     method: 'POST',
     headers: {
@@ -27,6 +30,7 @@ export const postImageFormMasterThunk = (data) => async (dispatch, getState) => 
 
       // 'Content-Disposition': 'form-data; name="is_preview"; name="shopId"'
     },
+    // body: formData
     body: JSON.stringify(data)
   })
     .then(req => req.json())
