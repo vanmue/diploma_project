@@ -1,7 +1,43 @@
 export const GET_ALL_MASTERS = '@@masters/GET_ALL_MASTERS';
 export const GET_FILTERING_MASTERS = '@@masters/GET_FILTERING_MASTERS';
 export const GET_ALL_MASTERS_FOR_ACTIVE_SALON = '@@masters/GET_ALL_MASTERS_FOR_ACTIVE_SALON';
+export const POST_IMAGE_FOR_MASTER = '@@salons/POST_IMAGE_FOR_MASTER';
 // export const DECREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/DECREMENT_ACTIVE_PAGE_PAGINATION';
+
+
+/**
+ * Картинка для лица мастера
+*/
+export const postImageForMasterAction = (date) => ({
+  type: POST_IMAGE_FOR_MASTER,
+  payload: date
+});
+/** 
+ * Отправка картинки для лица мастера
+*/
+export const postImageFormMasterThunk = (data) => async (dispatch, getState) => {
+
+  fetch('/api/v1/files', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      // 'Content-Type': 'multipart/form-data;boundary="boundary"'
+      // 'Content-Type': 'application/json;'
+      // 'Content-Type': 'application/json;charset=utf-8'
+
+      // 'Content-Disposition': 'form-data; name="is_preview"; name="shopId"'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('postImageFormMasterThunk res:', res);
+      // dispatch(postImageForMasterAction(res));
+    })
+  // .catch(console.log('postNewSalonThunk: ', 'Что-то не получилось'));
+}
+
+
 
 /**
  * Запись всех мастеров в reducer

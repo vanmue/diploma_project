@@ -20,7 +20,20 @@
     margin-bottom: 50px;
   }
 
-  &__wrapp-master-add-card {}
+  &__wrapp-master-add-card {
+    margin-bottom: 50px;
+  }
+
+  &__masters {
+    &-title {
+      @include inter(700, normal);
+      font-size: 14px;
+      line-height: 17px;
+      text-transform: uppercase;
+      color: #F5BFAB;
+      margin-bottom: 50px;
+    }
+  }
 
   &__editing-salon {
     position: relative;
@@ -83,5 +96,9 @@
     line-height: 29px;
     text-transform: uppercase;
     color: #410935;
+  }
+
+  &__wrapp-drpdn-add-salon {
+    width: 100%;
   }
 }

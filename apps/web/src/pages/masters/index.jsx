@@ -104,7 +104,7 @@ function MastersPage() {
                     description={el.description}
                     salon={el.shops[0].name}
                     rating={el.reviews_scores_count}
-                    pathImg={el.img}
+                    pathImg={el.img_file.path}
                   />
                 </li>
               })}

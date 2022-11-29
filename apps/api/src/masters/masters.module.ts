@@ -1,5 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppointmentsModule } from 'src/appointments/appointments.module';
 import { DeliverablesModule } from 'src/deliverables/deliverables.module';
 import { DeliverableGroupsModule } from 'src/deliverables/groups/deliverable-groups.module';
 import { FilesModule } from 'src/files/files.module';
@@ -23,6 +24,7 @@ import { MastersService } from './masters.service';
     DeliverablesModule,
     UsersModule,
     FilesModule,
+    AppointmentsModule,
   ],
   exports: [MastersService],
 })

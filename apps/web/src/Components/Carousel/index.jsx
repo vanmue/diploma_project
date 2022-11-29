@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import propTypes from 'prop-types';
+import Button from '../Button';
+import imgAddFoto from './img/add-foto-pic.png';
 // import prev from './img/arrow-prev.svg';
 // import next from './img/arrow-next.svg';
 // import prev from './img/arrow-prev.png';
@@ -8,7 +10,9 @@ import './carousel.scss';
 
 function Carousel({
   images,
-  isEdited
+  isEdited,
+  onClick,
+  onChange
 }) {
   const [offset, setOffset] = useState(0);
   const carouselLineRef = useRef(null);
@@ -19,6 +23,17 @@ function Carousel({
 
   const handleClickNext = () => {
     Math.abs(offset) == 1320 * (Math.ceil(images?.length / 3) - 1) ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
+  }
+
+  const onChangeInputUploadImageForSalon = () => {
+    onChange();
+  }
+
+  const callbacks = {
+    onClickBtnUploadImageForSalon: useCallback(() => {
+      console.log('Carousel onClickBtnUploadImageForSalon');
+      onClick();
+    }),
   }
 
   return (
@@ -42,9 +57,26 @@ function Carousel({
             return <img className="carousel__img" src={item.img} key={index} alt="Фото салона" />
           })}
           {isEdited ? <div className="carousel__add-img">
-            <input src="" alt="Загрузка фото" type="file" />
+            <div className="carousel__add-img-pic">
+              <img src={imgAddFoto} alt="Фотоаппарат" />
+              <p className="carousel__add-img-pic-desk">Добавить фото</p>
+            </div>
+            <div className="carousel__wrapp-button">
+              <Button
+                background={'#410935'}
+                colorText={'#FFFFFF'}
+                onClick={callbacks.onClickBtnUploadImageForSalon}
+              >Загрузить</Button>
+            </div>
+            <input
+              className="carousel__add-img-input"
+              // type="multipart/form-data"
+              type="file"
+              accept=".png,.jpg"
+              alt="Загрузка фото"
+              onChange={onChangeInputUploadImageForSalon}
+            />
           </div> : ""}
-          {/* {isEdited ? <img className="carousel__img" src="" alt="Загрузка фото" /> : ""} */}
         </div>
       </div>
 
@@ -63,12 +95,16 @@ function Carousel({
 
 Carousel.propTypes = {
   images: propTypes.arrayOf(propTypes.object),
-  isEdited: propTypes.bool
+  isEdited: propTypes.bool,
+  onClick: propTypes.func,
+  onChange: propTypes.func
 }
 
 Carousel.defaultProps = {
   images: null,
-  isEdited: false
+  isEdited: false,
+  onClick: () => { },
+  onChange: () => { }
 }
 
 export default React.memo(Carousel);

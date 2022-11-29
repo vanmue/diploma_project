@@ -18,7 +18,7 @@ export class ShopsService {
     private readonly paginationService: PaginationService,
   ) {}
   async create(dto: CreateShopEntity) {
-    const { cityId, advantages: advantages } = dto;
+    const { cityId, advantages } = dto;
 
     const city = new CityEntity();
     city.id = cityId;
