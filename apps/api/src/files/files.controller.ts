@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ClassSerializerInterceptor,
   Controller,
   Get,
@@ -28,7 +29,8 @@ export class FilesController {
   @UseInterceptors(FileInterceptor('file'))
   async create(@UploadedFile() file: Express.Multer.File) {
     if (file == null) {
-      return this.jsonService.errors({ file: 'undefined' });
+      const json = this.jsonService.errors({ file: 'undefined' });
+      throw new BadRequestException(json);
     }
 
     const data = await this.filesService.create(file);

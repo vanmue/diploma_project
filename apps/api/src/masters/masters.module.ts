@@ -12,9 +12,10 @@ import { UsersModule } from 'src/users/users.module';
 import { MasterEntity } from './entities/master.entity';
 import { MastersController } from './masters.controller';
 import { MastersService } from './masters.service';
+import { ShopsController } from './shops/shops.controller';
 
 @Module({
-  controllers: [MastersController],
+  controllers: [MastersController, ShopsController],
   providers: [MastersService, JsonService, PaginationService],
   imports: [
     TypeOrmModule.forFeature([MasterEntity]),

@@ -27,29 +27,15 @@ export class MastersController {
     private readonly appointmentsService: AppointmentsService,
   ) {}
 
-  @Get()
-  async getAll(@Query() query: ListAllMastersDto) {
-    return await this.mastersService.findAllPaginated(query);
-  }
-
   @Get(':id')
   async getMaster(@Param('id') id: number) {
     const data = await this.mastersService.findById(id);
     return this.jsonService.data(data);
   }
 
-  @Get(':masterId/shops/:shopId/appointments')
-  async getAppointments(
-    @Query('date') date: Date,
-    @Param('masterId') masterId: number,
-    @Param('shopId') shopId: number,
-  ) {
-    const data = await this.appointmentsService.findByMaster(
-      masterId,
-      shopId,
-      date,
-    );
-    return this.jsonService.data(data);
+  @Get()
+  async getAll(@Query() query: ListAllMastersDto) {
+    return await this.mastersService.findAllPaginated(query);
   }
 
   @Post()
