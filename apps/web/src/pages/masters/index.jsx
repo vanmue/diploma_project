@@ -105,6 +105,9 @@ function MastersPage() {
                     salon={el.shops[0].name}
                     rating={el.reviews_scores_count}
                     pathImg={el.img_file.path}
+                    textBtn={'Записаться'}
+                    colorTextBtnRecord={'#F5BFAB'}
+                    colorBkgBtnRecord={'#A40123'}
                     // linkTo={'/master'}
                     linkTo={''}
                   />

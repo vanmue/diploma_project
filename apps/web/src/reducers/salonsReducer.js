@@ -11,7 +11,8 @@ import {
 
 const initialStore = {
   salons: [],
-  activeSalonId: null,
+  activeSalonId: 4,
+  // activeSalonId: null,
   activeSalon: null,
   activePage: 1,
 }

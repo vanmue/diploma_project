@@ -25,6 +25,14 @@
     margin-bottom: 50px;
   }
 
+  &__wrapp-master-card {
+    margin-bottom: 40px;
+  }
+
+  &__wrapp-pagination {
+    display: flex;
+  }
+
   &__masters {
     &-title {
       @include inter(700, normal);

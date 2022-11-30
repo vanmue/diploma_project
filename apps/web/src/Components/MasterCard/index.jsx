@@ -14,6 +14,9 @@ function MasterCard({
   pathImg,
   specialization,
   description,
+  textBtn,
+  colorTextBtnRecord,
+  colorBkgBtnRecord,
   linkTo
 }) {
   const dispatch = useDispatch();
@@ -62,12 +65,12 @@ function MasterCard({
           </div>
           <div className="master-card__wrapp-button">
             <Button
-              background='#A40123'
-              colorText='#F5BFAB'
+              colorText={colorTextBtnRecord}
+              background={colorBkgBtnRecord}
               linkTo={linkTo}
               onClick={callbacks.onSetIdActiveMaster}
             >
-              Записаться
+              {textBtn}
             </Button>
           </div>
         </div>
@@ -85,6 +88,7 @@ MasterCard.propTypes = {
   pathImg: propTypes.string,
   specialization: propTypes.string,
   description: propTypes.string,
+  textBtn: propTypes.string,
   linkTo: propTypes.string,
 }
 
