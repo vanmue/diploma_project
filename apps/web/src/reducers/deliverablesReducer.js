@@ -5,14 +5,13 @@ import {
 
 const initialStore = {
   deliverables: null,
-  serviceGroups: [{}]
+  serviceGroups: null
 }
 
 export default function deliverablesReducer(store = initialStore, action) {
 
   switch (action.type) {
     case GET_ALL_SERVICE_GROUPS: {
-      // console.log("deliverablesReducer GET_ALL_SERVICE_GROUPS:", action.payload)
       return {
         ...store,
         serviceGroups: action.payload

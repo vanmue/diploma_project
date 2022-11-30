@@ -14,11 +14,12 @@ export const getCitiesAction = (date) => ({
  * Get запрос на получение  всех городов
 */
 export const getCitiesThunk = () => async (dispatch, getState) => {
+
   fetch('/api/v1/cities')
     .then(req => req.json())
     .then(res => {
       dispatch(getCitiesAction(res.data));
     })
-    .catch(console.log('getCitiesThunk: ', 'Что-то не получилось'));
+    .catch(err => console.log('getCitiesThunk ERROR: ', err));
 }
 

@@ -6,7 +6,7 @@ import Pagination from '../../Components/Pagination';
 import Button from '../../Components/Button';
 import { getFilteringMastersThunk } from '../../actions/mastersActions';
 import { getCitiesThunk } from '../../actions/citiesActions';
-import { getServicesGroupsThunk } from '../../actions/servicesActions';
+import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
 import { getAllSalonsThunk } from '../../actions/salonsAction';
 import { setIdActiveMasterAction } from '../../actions/masterIdAction';
 import {
@@ -14,21 +14,21 @@ import {
   changingLabelInHeaderAction,
   changeHeaderBackgroundAction
 } from '../../actions/stylesActions';
-import master1 from './img/master-1.jpg';
-import master2 from './img/master-2.jpg';
-import master3 from './img/master-3.jpg';
 import './masters.scss';
 
 function MastersPage() {
-  const cities = useSelector(store => store.citiesReducer.cities);
-  const groupsServices = useSelector(store => store.servicesReducer.groupsServices);
-  const allSalons = useSelector(store => store.salonsReducer.salons);
-  const masters = useSelector(store => store.mastersReducer.masters);
-  const dispatch = useDispatch();
+
+  const select = useSelector(store => ({
+    cities: store.citiesReducer.cities,
+    groupsServices: store.deliverablesReducer.serviceGroups,
+    allSalons: store.salonsReducer.salons,
+    masters: store.mastersReducer.masters,
+  }));
 
   const [cityId, setCitiesId] = useState(null);
   const [serviceId, setServiceId] = useState(null);
   const [salonId, setSalonId] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(changingLabelInHeaderAction(false));
@@ -36,14 +36,10 @@ function MastersPage() {
     dispatch(changeNavigationColorAction('#410935'));
 
     dispatch(getCitiesThunk());
-    dispatch(getServicesGroupsThunk());
+    dispatch(getAllServiceGroupsThunk());
     dispatch(getAllSalonsThunk());
     dispatch(getFilteringMastersThunk());
   }, []);
-
-  useEffect(() => {
-    console.log('MastersPage masters:', masters)
-  }, [masters])
 
   const callbacks = {
     onSetCitiesId: useCallback((id) => {
@@ -70,21 +66,21 @@ function MastersPage() {
             <div className="masters-page__wrapp-dropdown-select">
               <DropdownSelect
                 dropdownTitle={'Выберите город'}
-                items={cities}
+                items={select.cities}
                 onChange={callbacks.onSetCitiesId}
               />
             </div>
             <div className="masters-page__wrapp-dropdown-select">
               <DropdownSelect
                 dropdownTitle={'Выберите услугу'}
-                items={groupsServices}
+                items={select.groupsServices}
                 onChange={callbacks.onSetServicesId}
               />
             </div>
             <div className="masters-page__wrapp-dropdown-select">
               <DropdownSelect
                 dropdownTitle={'Выберите Салон красоты'}
-                items={allSalons}
+                items={select.allSalons}
                 onChange={callbacks.onSetSalonsId}
               />
             </div>
@@ -98,7 +94,7 @@ function MastersPage() {
           <section className="masters-page__masters">
             <h2 className="masters-page__masters-h2">Секция мастеров</h2>
             <ul className="masters-page__list">
-              {masters?.map((el) => {
+              {select.masters?.map((el) => {
 
                 return <li className="masters-page__wrapp-master-card" data-master-id={el.id} data-salon-id={el.shops[0].id} key={el.id}>
                   <MasterCard
@@ -109,6 +105,8 @@ function MastersPage() {
                     salon={el.shops[0].name}
                     rating={el.reviews_scores_count}
                     pathImg={el.img_file.path}
+                    // linkTo={'/master'}
+                    linkTo={''}
                   />
                 </li>
               })}

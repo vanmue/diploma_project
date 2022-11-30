@@ -19,7 +19,12 @@ import img3 from '../../Components/Carousel/img/carusel-img-3.jpg';
 import './salon-admin-office.scss';
 
 function SalonAdminOffice() {
-  const dispatch = useDispatch();
+
+  const select = {
+    cities: useSelector((store => store.citiesReducer.cities)),
+    advantages: useSelector((store => store.advantagesReducer.advantages)),
+  }
+
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [imageForSalon, setImageForSalon] = useState({
     img: "",
@@ -33,21 +38,16 @@ function SalonAdminOffice() {
     working_start: 0,
     working_end: 0,
     phone: null,
-    images: [
-      null
-    ],
     center_longtitude: 0,
     center_latitude: 0,
     label_longtitude: 0,
     label_latitude: 0,
     zoom: 0,
     cityId: 0,
-    advantages: [
-
-    ]
+    advantages: []
   });
   const formNewSalonTest = {
-    name: "NewSalon-1",
+    name: "NewSalon-2",
     address: "Семфтропольская улица",
     working_time: "начало в 10 до 20",
     working_start: 10,
@@ -58,17 +58,10 @@ function SalonAdminOffice() {
     label_longtitude: 59.93069550217494,
     label_latitude: 30.295617482627414,
     zoom: 10,
-    cityId: 1,
-    advantages: [
-      1
-    ]
+    cityId: 3,
+    advantages: [1]
   }
-
-
-  const select = {
-    cities: useSelector((store => store.citiesReducer.cities)),
-    advantages: useSelector((store => store.advantagesReducer.advantages)),
-  }
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(changingLabelInHeaderAction(false));
@@ -135,7 +128,6 @@ function SalonAdminOffice() {
     }),
     onSetCitiesId: useCallback((id) => {
       setFormNewSalon({ ...formNewSalon, cityId: Number(id) })
-      // console.log('SalonAdminOffice id: ', id)
     }),
     onSetАdvantagesId: useCallback((id) => {
       let arrAdv = formNewSalon.advantages;
@@ -145,6 +137,7 @@ function SalonAdminOffice() {
     }),
     onPostNewSalon: useCallback((id) => {
       console.log('handleClickBtnPostNewSalon');
+      // dispatch(postNewSalonThunk(formNewSalonTest));
       dispatch(postNewSalonThunk(formNewSalon));
     }),
     onPostImageForSalon: useCallback(() => {
@@ -198,12 +191,11 @@ function SalonAdminOffice() {
               // img,
               map={renders.yandexMap}
               onClickEditing={callbacks.onSetIsActiveEditingSalonModal}
-            // onClick
             />
           </div>
           <div className="salon-admine-office__wrapp-carousel">
             <Carousel
-              images={[{ img: img1 }, { img: img2 },]} //{ img: img3 }, { img: img1 }
+              images={[{ img: img1 }, { img: img2 },]}
               isEdited
               onClick={callbacks.onPostImageForSalon}
               onChange={callbacks.onChangeUploadImageForSalon}

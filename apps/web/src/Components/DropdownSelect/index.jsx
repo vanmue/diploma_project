@@ -3,12 +3,10 @@ import propTypes from 'prop-types';
 import './dropdown-select.scss';
 
 function DropdownSelect({
-  what,
   dropdownTitle,
   items,
   onChange
 }) {
-  const [aboutWhat, setAboutWhat] = useState(what + 'drpdn');
   const [btnActive, setBtnActive] = useState(false);
   const [itemsSort, setItemsSort] = useState(items);
   const [value, setValue] = useState('');
@@ -60,7 +58,6 @@ function DropdownSelect({
     setValue(e.target.value);
     sortByValue(e.target.value);
     if (e.target.value.length == 0) onChange(null);
-    // console.log('DropdownSelect handleChangeInput e.target.value.length:', e.target.value.length);
   }
 
   // Обработчик выбора одного из вариантов
@@ -96,7 +93,7 @@ function DropdownSelect({
         style={{ display: btnActive ? "block" : "none" }}
         ref={listRef}
       >
-        {itemsSort.map((item, index) => {
+        {itemsSort?.map((item, index) => {
           return <li
             className="dropdown-select__list-item"
             data-drpdn-item-id={item.id}
@@ -113,7 +110,6 @@ function DropdownSelect({
 }
 
 DropdownSelect.propTypes = {
-  what: propTypes.string,
   dropdownTitle: propTypes.string,
   items: propTypes.arrayOf(propTypes.object),
   onChange: propTypes.func

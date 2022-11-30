@@ -14,6 +14,7 @@ function MasterCard({
   pathImg,
   specialization,
   description,
+  linkTo
 }) {
   const dispatch = useDispatch();
 
@@ -63,7 +64,7 @@ function MasterCard({
             <Button
               background='#A40123'
               colorText='#F5BFAB'
-              linkTo='/master'
+              linkTo={linkTo}
               onClick={callbacks.onSetIdActiveMaster}
             >
               Записаться
@@ -84,6 +85,7 @@ MasterCard.propTypes = {
   pathImg: propTypes.string,
   specialization: propTypes.string,
   description: propTypes.string,
+  linkTo: propTypes.string,
 }
 
 MasterCard.defaultProps = {

@@ -3,7 +3,7 @@ import {
 } from '../actions/citiesActions';
 
 const initialStore = {
-  cities: []
+  cities: null
 }
 
 export default function citiesReducer(store = initialStore, action) {
