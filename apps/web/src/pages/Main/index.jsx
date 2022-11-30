@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ServicesCard from '../../Components/ServicesCard';
 import Select from '../../Components/Select';
@@ -25,9 +25,6 @@ function MainPage() {
     dispatch(changeNavigationColorAction('#FFFFFF'));
     dispatch(getAllServiceGroupsThunk());
   }, []);
-  useEffect(() => {
-    console.log('MainPage useEffect select.serviceGroups:', select.serviceGroups)
-  }, [select.serviceGroups]);
 
   return (
     <div className='main-page'>
@@ -57,7 +54,7 @@ function MainPage() {
             </div>
             <h2 className="main-page__services-h2">Услуги</h2>
             <div className="main-page__services-list">
-              {select.serviceGroups.map(item => {
+              {select.serviceGroups?.map(item => {
                 return <div
                   className="main-page__wrapp-services-card"
                   data-deliverables={item?.id}

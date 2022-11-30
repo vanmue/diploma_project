@@ -1,4 +1,5 @@
 @import '../../assets/styles/mixins.scss';
+@import '../../assets/styles/colors.scss';
 
 .salon-card {
   display: flex;
@@ -13,7 +14,7 @@
 
   &__info {
     width: 900px;
-    background: #F5BFAB;
+    background: $beige;
     border-radius: 10px;
     padding: 25px 0 0 26px;
   }
@@ -24,7 +25,7 @@
     font-size: 24px;
     line-height: 29px;
     text-transform: uppercase;
-    color: #000000;
+    color: $black;
     margin-bottom: 10px;
   }
 
@@ -72,22 +73,22 @@
     @include inter(400, normal);
     font-size: 14px;
     line-height: 17px;
-    color: #410935;
+    color: $darkViolet;
 
     &>a {
       text-decoration: none;
-      border-bottom: 1px solid #410935;
+      border-bottom: 1px solid $darkViolet;
 
       &:link {
-        color: #410935;
+        color: $darkViolet;
       }
 
       &:visited {
-        color: #410935;
+        color: $darkViolet;
       }
 
       &:active {
-        color: #410935;
+        color: $darkViolet;
       }
     }
   }
@@ -97,13 +98,9 @@
     justify-content: space-between;
   }
 
-  &__wrapp-button {}
-
-  &__edited {}
-
   &__edited-btn {
-    color: #FFFFFF;
-    background: #410935;
+    color: $white;
+    background: $darkViolet;
   }
 
   &__services {
@@ -118,6 +115,4 @@
     text-transform: uppercase;
     margin-bottom: 9px;
   }
-
-  &__wrapp-services-list {}
 }
