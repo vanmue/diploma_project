@@ -1,14 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { AuthModule } from './auth/auth.module';
 import { CitiesModule } from './cities/cities.module';
+import { CustomersModule } from './customers/customers.module';
 import { DeliverablesModule } from './deliverables/deliverables.module';
 import { DeliverableGroupsModule } from './deliverables/groups/deliverable-groups.module';
 import { FilesModule } from './files/files.module';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { MastersModule } from './masters/masters.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { DecimalService } from './services/decimal/decimal.service';
@@ -21,7 +24,6 @@ import { ShopAdvantagesModule } from './shops/shop-advantages/shop-advantages.mo
 import { ShopsModule } from './shops/shops.module';
 import { TestResponseModule } from './test-response/test-response.module';
 import { UsersModule } from './users/users.module';
-import { CustomersModule } from './customers/customers.module';
 
 @Module({
   imports: [
@@ -63,6 +65,15 @@ import { CustomersModule } from './customers/customers.module';
     CustomersModule,
   ],
   controllers: [],
-  providers: [JsonService, DecimalService, FakerService, PaginationService],
+  providers: [
+    JsonService,
+    DecimalService,
+    FakerService,
+    PaginationService,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}
