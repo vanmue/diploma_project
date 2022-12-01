@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserThunk } from '../../actions/userInfoActions'
 import './user-office.scss'
 
 import userFoto from './img/Ellipse.png'
 
 function UserOffice() {
 
+    const userInfo = useSelector(store => store.userInfoReducer)
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getUserThunk(6))
+    }, [])
+
+    console.log(userInfo.dataUser.user)
     const gridColumns = ['Дата', 'Время', 'Салон', 'Мастер', 'Услуга', 'Стоимость']
 
     const gridInfoActual = [

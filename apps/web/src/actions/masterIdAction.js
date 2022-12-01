@@ -14,10 +14,14 @@ export const getMasterIdAction = (date) => ({
   type: GET_MASTER_ID,
   payload: date
 })
-export const getMasterIdActionThunk = (masterId) => async (dispatch, getState) => {
-  fetch(`/api/v1/appointments/?master_id=${masterId}`)
+export const getMasterIdActionThunk = (data) => async (dispatch, getState) => {
+  console.log(data)
+  fetch(`/api/v1/masters/${data}`)
     .then(req => req.json())
     .then(res => {
-      dispatch(getMasterIdAction(res.data[0]));
+      console.log(res)
+      dispatch(getMasterIdAction(res.data));
     })
 }
+
+

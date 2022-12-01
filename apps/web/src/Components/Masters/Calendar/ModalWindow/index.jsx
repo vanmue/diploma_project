@@ -69,6 +69,7 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record, changeM
     }
 
     if (record?.shops[0].appointments) {
+        console.log(record?.shops[0].appointments)
         cell = cell.filter(time =>
             record?.shops[0].appointments.map(rec => moment(rec.from).format('HH-mm')).indexOf(time) === -1
         )
