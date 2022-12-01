@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import propTypes from 'prop-types';
 import { getAllDeliverablesThunk } from '../../actions/deliverablesActions';
-import { postImageFormMasterThunk } from '../../actions/mastersActions';
+import { postImageFormMasterThunk, postNewMasterThunk } from '../../actions/mastersActions';
 import Button from '../Button';
 import imgCam from './img/camera.png';
 import './master-add-card.scss';
@@ -16,13 +16,21 @@ function MasterAddCard({
   }));
   const [formImgForMaster, setFormImgForMaster] = useState(null);
   const [formForAddMasterInSalon, setFormForAddMasterInSalon] = useState({
-    fileId: null,                           // {number} - id картинки для лица мастера
-    userId: null,                           // {number} - id пользователя
-    profession: null,                       // {string} - название профессии
-    description: null,                      // {string} - описание мастера
-    shops: [4],                              // {[number]} - id салона
-    deliverables: [],                       // {[number]} - id услуг
+    fileId: null,                         // {number} - id картинки для лица мастера
+    userId: 49,                           // {number} - id пользователя
+    profession: 'profession',             // {string} - название профессии
+    description: 'description',           // {string} - описание мастера
+    shops: [4],                           // {[number]} - id салона
+    deliverables: [1, 3],                 // {[number]} - id услуг
   });
+  // {
+  //   fileId: null,                       // {number} - id картинки для лица мастера
+  //   userId: 48,                         // {number} - id пользователя
+  //   profession: null,                   // {string} - название профессии
+  //   description: null,                  // {string} - описание мастера
+  //   shops: [4],                         // {[number]} - id салона
+  //   deliverables: [],                   // {[number]} - id услуг
+  // }
   const inputRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -72,8 +80,11 @@ function MasterAddCard({
     let currentValue = e.currentTarget.value;
     switch (current) {
       case "master-id":
-        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, userId: currentValue });
-        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: select.imgForFaceMasterId });
+        setFormForAddMasterInSalon({
+          ...formForAddMasterInSalon,
+          userId: +currentValue,
+          fileId: select.imgForFaceMasterId
+        });
         break;
       case "master-profession":
         setFormForAddMasterInSalon({ ...formForAddMasterInSalon, profession: currentValue })
@@ -93,6 +104,7 @@ function MasterAddCard({
       dispatch(postImageFormMasterThunk(formImgForMaster));
     }),
     onPostNewMaster: useCallback(() => {
+      dispatch(postNewMasterThunk(formForAddMasterInSalon));
       // let delivList = document.querySelector('.master-add-card__info-services-list').querySelectorAll('input');
       // let delivListChecked
       // console.log('MasterAddCard onPostNewMaster delivList: ', delivList)
