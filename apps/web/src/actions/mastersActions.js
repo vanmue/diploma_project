@@ -2,7 +2,40 @@ export const GET_ALL_MASTERS = '@@masters/GET_ALL_MASTERS';
 export const GET_FILTERING_MASTERS = '@@masters/GET_FILTERING_MASTERS';
 export const GET_ALL_MASTERS_FOR_ACTIVE_SALON = '@@masters/GET_ALL_MASTERS_FOR_ACTIVE_SALON';
 export const POST_IMAGE_FOR_MASTER = '@@salons/POST_IMAGE_FOR_MASTER';
+export const POST_NEW_MASTER = '@@salons/POST_NEW_MASTER';
 // export const DECREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/DECREMENT_ACTIVE_PAGE_PAGINATION';
+
+
+/**
+ * 
+*/
+export const postNewMasterAction = (date) => ({
+  type: POST_NEW_MASTER,
+  payload: date
+});
+/** 
+ * POST запрос на создание мастера
+ * @param {{}} date - данные мастера
+*/
+export const postNewMasterThunk = (data) => async (dispatch, getState) => {
+
+  // let formData = new FormData();
+  // formData.append("file", data);
+
+  fetch("/api/v1/masters", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('postNewMasterThunk res:', res);
+      // dispatch(postImageForMasterAction(res.data.id));
+    })
+    .catch(err => console.log('postNewMasterThunk: ', err));
+}
 
 
 /**
