@@ -10,42 +10,93 @@ import './master-add-card.scss';
 function MasterAddCard({
   onClick
 }) {
+  const select = useSelector((store) => ({
+    deliverables: store.deliverablesReducer.deliverables,
+    imgForFaceMasterId: store.mastersReducer.imgForFaceMasterId,
+  }));
+  const [formImgForMaster, setFormImgForMaster] = useState(null);
+  const [formForAddMasterInSalon, setFormForAddMasterInSalon] = useState({
+    fileId: null,                           // {number} - id картинки для лица мастера
+    userId: null,                           // {number} - id пользователя
+    profession: null,                       // {string} - название профессии
+    description: null,                      // {string} - описание мастера
+    shops: [4],                              // {[number]} - id салона
+    deliverables: [],                       // {[number]} - id услуг
+  });
+  const inputRef = useRef(null);
   const dispatch = useDispatch();
-  const select = {
-    deliverables: useSelector((store => store.deliverablesReducer.deliverables)),
-  }
-  const [fromImgForMaster, setFromImgForMaster] = useState({
-    file: null
-  });
-  const [formAddMaster, setFormAddMaster] = useState({
-    userId: null,
-    fileId: null,
-    profession: '',
-    description: '',
-    deliverables: [],
-    shop: []
-  });
 
   useEffect(() => {
     dispatch(getAllDeliverablesThunk());
   }, []);
-  // useEffect(() => {
 
-  // }, []);
   useEffect(() => {
-    // console.log('MasterAddCard select.deliverables:', select.deliverables)
-    // console.log('MasterAddCard fromImgForMaster:', fromImgForMaster)
-  }, [fromImgForMaster]);
+    console.log('MasterAddCard formForAddMasterInSalon', formForAddMasterInSalon);
+    // setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: select.imgForFaceMasterId });
+    // console.log('MasterAddCard formForAddMasterInSalon', formForAddMasterInSalon)
+  }, [formForAddMasterInSalon]);
+
   const handleChangeUploadImg = (e) => {
-    // setFromImgForMaster({ ...fromImgForMaster, file: e.currentTarget.value })
-    setFromImgForMaster({ ...fromImgForMaster, file: e.currentTarget.files[0] })
+    setFormImgForMaster(e.currentTarget.files[0]);
+  }
+
+  const handleChangeServicesCheckbox = (e) => {
+
+    let id = e.currentTarget.dataset.serviceId;
+    let servicesList = [...formForAddMasterInSalon.deliverables];
+    let index = servicesList.indexOf(id, 0);
+
+    if (index == -1) {
+
+      setFormForAddMasterInSalon({
+        ...formForAddMasterInSalon,
+        deliverables: [
+          ...formForAddMasterInSalon.deliverables,
+          id
+        ]
+      });
+    } else {
+
+      servicesList.splice(index, 1);
+      setFormForAddMasterInSalon({
+        ...formForAddMasterInSalon,
+        deliverables: [
+          ...servicesList
+        ]
+      });
+    }
+  }
+
+  const handleChangeInputText = (e) => {
+    let current = e.currentTarget.id;
+    let currentValue = e.currentTarget.value;
+    switch (current) {
+      case "master-id":
+        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, userId: currentValue });
+        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: select.imgForFaceMasterId });
+        break;
+      case "master-profession":
+        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, profession: currentValue })
+        break;
+      case "master-desk":
+        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, description: currentValue })
+        break;
+      default:
+        break;
+    }
   }
 
   const callbacks = {
     onGetAllDeliverables: useCallback(() => {
     }),
     onPostImageForMaster: useCallback(() => {
-      dispatch(postImageFormMasterThunk(fromImgForMaster));
+      dispatch(postImageFormMasterThunk(formImgForMaster));
+    }),
+    onPostNewMaster: useCallback(() => {
+      // let delivList = document.querySelector('.master-add-card__info-services-list').querySelectorAll('input');
+      // let delivListChecked
+      // console.log('MasterAddCard onPostNewMaster delivList: ', delivList)
+      // console.log('MasterAddCard onPostNewMaster: ', formForAddMasterInSalon)
     }),
   }
 
@@ -73,42 +124,46 @@ function MasterAddCard({
           </div>
           <input
             className="master-add-card__img-upload-input"
-            src=""
             type="file"
-            accept=".png,.jpg"
-            alt="Загрузка фото"
+            accept="image/*"
+            name='file'
+            // accept="image/png, image/jpeg"
             onChange={handleChangeUploadImg}
           />
         </div>
 
         <div className="master-add-card__info">
-          <div className="master-add-card__info-name master-add-card__info-item">
+          <div className="master-add-card__info-id master-add-card__info-item">
             <label
-              className="master-add-card__info-name-label"
+              className="master-add-card__info-id-label"
               htmlFor="master-name"
             >
-              Имя:
+              Идентификатор:
             </label>
             <input
-              id="master-name"
-              className="master-add-card__info-name-input"
-              name="name"
+              id="master-id"
+              className="master-add-card__info-id-input"
+              name="master-id"
               type="text"
+              placeholder='Введите идентификатор пользователя'
+              onChange={handleChangeInputText}
             />
           </div>
 
-          <div className="master-add-card__info-surname master-add-card__info-item">
+          <div className="master-add-card__info-profession master-add-card__info-item">
             <label
-              className="master-add-card__info-surname-label"
-              htmlFor="master-surname"
+              className="master-add-card__info-profession-label"
+              htmlFor="master-profession"
             >
-              Фамилия:
+              Профессия:
             </label>
             <input
-              id="master-surname"
-              className="master-add-card__info-surname-input"
-              name="surname"
+              id="master-profession"
+              className="master-add-card__info-profession-input"
+              name="master-profession"
               type="text"
+              placeholder='мастер парикмахер'
+              onChange={handleChangeInputText}
             />
           </div>
 
@@ -122,9 +177,9 @@ function MasterAddCard({
             <textarea
               id="master-desk"
               className="master-add-card__info-desk-textarea"
-              // rows="5"
-              // cols="33"
               name="desk"
+              placeholder='Не много информации о себе'
+              onChange={handleChangeInputText}
             />
           </div>
 
@@ -134,55 +189,22 @@ function MasterAddCard({
             >
               Услуги мастера:
             </div>
-            <div className="master-add-card__info-services-list">
+            <div
+              className="master-add-card__info-services-list"
+              ref={inputRef}
+            >
               {select.deliverables?.map((el) => {
                 return <label htmlFor={`service-${el.id}`} key={el.id}>
-                  <input id={`service-${el.id}`} type="checkbox"
+                  <input
+                    id={`service-${el.id}`}
+                    data-service-id={el.id}
+                    type="checkbox"
+                    onChange={handleChangeServicesCheckbox}
                   />
                   {el.name}
                 </label>
               })}
             </div>
-            {/* <div
-              // id="master-services"
-              className="master-add-card__info-services-flex"
-              name="services"
-            >
-              <div className="master-add-card__info-services-services ">
-                <input
-                  id="master-service-1"
-                  className="master-add-card__info-services-service"
-                  type="text" />
-                <input
-                  id="master-service-2"
-                  className="master-add-card__info-services-service"
-                  type="text" />
-                <input
-                  id="master-service-3"
-                  className="master-add-card__info-services-service"
-                  type="text" />
-              </div>
-              <div className="master-add-card__info-services-prices">
-                <div className="master-add-card__info-services-prices-title">
-                  Стоимость:
-                </div>
-                <div className="master-add-card__info-services-prices-prices">
-                  <input
-                    id="master-service-price-1"
-                    className="master-add-card__info-services-prices-input"
-                    type="text" />
-                  <input
-                    id="master-service-price-2"
-                    className="master-add-card__info-services-prices-input"
-                    type="text" />
-                  <input
-                    id="master-service-price-3"
-                    className="master-add-card__info-services-prices-input"
-                    type="text" />
-
-                </div>
-              </div>
-            </div> */}
           </div>
 
         </div>
@@ -192,6 +214,7 @@ function MasterAddCard({
         <Button
           background={"#410935"}
           colorText={"#FFFFFF"}
+          onClick={callbacks.onPostNewMaster}
         >Сохранить</Button>
       </div>
 
