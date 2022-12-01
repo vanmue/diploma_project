@@ -15,11 +15,13 @@ import { DecimalService } from './services/decimal/decimal.service';
 import { FakerService } from './services/faker/faker.service';
 import { JsonService } from './services/json/json.service';
 import { PaginationService } from './services/pagination/pagination.service';
+import { ShopImagesModule } from './shop-images/shop-images.module';
+import { ImagesByShopModule } from './shops/images-by-shop/images-by-shop.module';
 import { ShopAdvantagesModule } from './shops/shop-advantages/shop-advantages.module';
-import { ShopImagesModule } from './shops/shop-images/shop-images.module';
 import { ShopsModule } from './shops/shops.module';
 import { TestResponseModule } from './test-response/test-response.module';
 import { UsersModule } from './users/users.module';
+import { CustomersModule } from './customers/customers.module';
 
 @Module({
   imports: [
@@ -45,18 +47,20 @@ import { UsersModule } from './users/users.module';
     }),
 
     TestResponseModule,
-    DeliverableGroupsModule,
-    ShopsModule,
-    CitiesModule,
-    ShopAdvantagesModule,
-    MastersModule,
-    UsersModule,
     AppointmentsModule,
-    DeliverablesModule,
-    ReviewsModule,
-    ShopImagesModule,
     AuthModule,
+    CitiesModule,
+    DeliverableGroupsModule,
+    DeliverablesModule,
     FilesModule,
+    ImagesByShopModule,
+    MastersModule,
+    ReviewsModule,
+    ShopAdvantagesModule,
+    ShopImagesModule,
+    ShopsModule,
+    UsersModule,
+    CustomersModule,
   ],
   controllers: [],
   providers: [JsonService, DecimalService, FakerService, PaginationService],

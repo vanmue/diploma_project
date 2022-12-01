@@ -4,15 +4,15 @@ import { DeliverablesService } from 'src/deliverables/deliverables.service';
 import { FilesService } from 'src/files/files.service';
 import { ReviewsService } from 'src/reviews/reviews.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
-import { ListByShopDto } from 'src/shops/dto/list-by-shop.dto';
+import { ListByShopDto } from 'src/shops/query-dto/list-by-shop.dto';
 import { ShopsService } from 'src/shops/shops.service';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { In, Repository } from 'typeorm';
-import { ListAllMastersDto } from './dto/list-all-masters.dto';
 import { CreateMasterEntity } from './entities/create-master.entity';
 import { MasterEntity } from './entities/master.entity';
 import { UpdateMasterEntity } from './entities/update-master.entity';
+import { ListAllMastersDto } from './query-dto/list-all-masters.dto';
 
 @Injectable()
 export class MastersService {
@@ -20,11 +20,11 @@ export class MastersService {
     @InjectRepository(MasterEntity)
     private readonly masterRepository: Repository<MasterEntity>,
     private readonly paginationService: PaginationService,
+    private readonly deliverablesService: DeliverablesService,
+    private readonly filesService: FilesService,
     private readonly reviewsService: ReviewsService,
     private readonly shopsService: ShopsService,
-    private readonly deliverablesService: DeliverablesService,
     private readonly usersService: UsersService,
-    private readonly filesService: FilesService,
   ) {}
   async create(dto: CreateMasterEntity) {
     const { userId, shops, deliverables, fileId } = dto;
@@ -178,6 +178,12 @@ export class MastersService {
   }
 
   async findById(id: number) {
+    return await this.masterRepository.findOneOrFail({
+      where: { id },
+    });
+  }
+
+  async findReviewsByMaster(id: number) {
     const master = await this.masterRepository.findOneOrFail({
       where: { id },
       relations: ['deliverables'],

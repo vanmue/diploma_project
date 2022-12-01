@@ -9,14 +9,14 @@ import {
 import { AppointmentsService } from 'src/appointments/appointments.service';
 import { JsonService } from 'src/services/json/json.service';
 
-@Controller('masters/:masterId/shops')
+@Controller('masters/:masterId/shops/:shopId/appointments')
 @UseInterceptors(ClassSerializerInterceptor)
-export class ShopsController {
+export class AppointmentsByMasterController {
   constructor(
     private readonly appointmentsService: AppointmentsService,
     private readonly jsonService: JsonService,
   ) {}
-  @Get(':shopId/appointments')
+  @Get()
   async getAppointments(
     @Query('date') date: Date,
     @Param('masterId') masterId: number,

@@ -4,9 +4,9 @@ import { CityEntity } from 'src/cities/entities/city.entity';
 import { DeliverableGroupsService } from 'src/deliverables/groups/deliverable-groups.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { In, Repository } from 'typeorm';
-import { ListAllDto } from './dto/list-all.dto';
 import { CreateShopEntity } from './entities/create-shop.entity';
 import { ShopEntity } from './entities/shop.entity';
+import { ListAllDto } from './query-dto/list-all.dto';
 import { ShopAdvantageEntity } from './shop-advantages/entities/shop-advantage.entity';
 
 @Injectable()
@@ -69,7 +69,9 @@ export class ShopsService {
       relations: {
         advantages: true,
         city: true,
-        images: true,
+        images: {
+          file: true,
+        },
       },
     });
 
@@ -95,13 +97,19 @@ export class ShopsService {
   }
 
   async findById(id: number) {
+    return await this.shopRepository.findOneByOrFail({ id });
+  }
+
+  async findInfoById(id: number) {
     const shop = await this.shopRepository.findOneOrFail({
       where: {
         id,
       },
       relations: {
         city: true,
-        images: true,
+        images: {
+          file: true,
+        },
         advantages: true,
       },
     });

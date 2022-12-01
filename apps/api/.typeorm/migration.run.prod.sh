@@ -4,4 +4,4 @@
 npx typeorm-ts-node-commonjs \
   $1 \
   "-d" \
-  "./.typeorm/config/db.config.ts"
+  "./.typeorm/config/data.source.ts"

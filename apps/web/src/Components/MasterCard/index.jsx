@@ -14,13 +14,18 @@ function MasterCard({
   pathImg,
   specialization,
   description,
+  textBtn,
+  colorTextBtnRecord,
+  colorBkgBtnRecord,
+  linkTo
 }) {
   const dispatch = useDispatch();
 
   const callbacks = {
     onSetIdActiveMaster: useCallback((e) => {
       let masterId = e.currentTarget.closest('.masters-page__wrapp-master-card').dataset.masterId;
-      dispatch(setIdActiveMasterAction(masterId));
+      let salonId = e.currentTarget.closest('.masters-page__wrapp-master-card').dataset.salonId;
+      dispatch(setIdActiveMasterAction(masterId, salonId));
     })
   }
 
@@ -60,12 +65,12 @@ function MasterCard({
           </div>
           <div className="master-card__wrapp-button">
             <Button
-              background='#A40123'
-              colorText='#F5BFAB'
-              linkTo='/master'
+              colorText={colorTextBtnRecord}
+              background={colorBkgBtnRecord}
+              linkTo={linkTo}
               onClick={callbacks.onSetIdActiveMaster}
             >
-              Записаться
+              {textBtn}
             </Button>
           </div>
         </div>
@@ -83,6 +88,8 @@ MasterCard.propTypes = {
   pathImg: propTypes.string,
   specialization: propTypes.string,
   description: propTypes.string,
+  textBtn: propTypes.string,
+  linkTo: propTypes.string,
 }
 
 MasterCard.defaultProps = {

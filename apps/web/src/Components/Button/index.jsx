@@ -13,7 +13,6 @@ function Button({
 
   const handleClick = (e) => {
     onClick(e);
-    console.log("Button click")
   }
 
   return (
@@ -37,10 +36,12 @@ Button.propTypes = {
   background: propTypes.string.isRequired,
   colorText: propTypes.string.isRequired,
   children: propTypes.string.isRequired,
+  linkTo: propTypes.string,
   onClick: propTypes.func
 }
 
 Button.defaultProps = {
+  linkTo: '',
   onClick: () => { }
 }
 

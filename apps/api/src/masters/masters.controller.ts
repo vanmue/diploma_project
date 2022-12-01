@@ -9,14 +9,13 @@ import {
   Query,
   UseInterceptors,
 } from '@nestjs/common';
-import { AppointmentsService } from 'src/appointments/appointments.service';
 import { JsonObject } from 'src/libs/src/models/JsonObject';
 import { JsonService } from 'src/services/json/json.service';
-import { ListAllMastersDto } from './dto/list-all-masters.dto';
 import { CreateMasterEntity } from './entities/create-master.entity';
 import { MasterEntity } from './entities/master.entity';
 import { UpdateMasterEntity } from './entities/update-master.entity';
 import { MastersService } from './masters.service';
+import { ListAllMastersDto } from './query-dto/list-all-masters.dto';
 
 @Controller('masters')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -24,12 +23,11 @@ export class MastersController {
   constructor(
     private readonly mastersService: MastersService,
     private readonly jsonService: JsonService,
-    private readonly appointmentsService: AppointmentsService,
   ) {}
 
   @Get(':id')
   async getMaster(@Param('id') id: number) {
-    const data = await this.mastersService.findById(id);
+    const data = await this.mastersService.findReviewsByMaster(id);
     return this.jsonService.data(data);
   }
 

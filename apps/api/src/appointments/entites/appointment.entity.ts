@@ -5,13 +5,16 @@ import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity'
 import { MasterEntity } from 'src/masters/entities/master.entity';
 import { ReviewEntity } from 'src/reviews/entities/review.entity';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   Exclusion,
+  JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -37,15 +40,9 @@ export class AppointmentEntity {
   @ManyToOne(() => DeliverableEntity)
   deliverable: DeliverableEntity;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @Column({ type: 'varchar' })
-  name: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @Column({ type: 'varchar' })
-  phone: string;
+  @OneToOne(() => UserEntity)
+  @JoinColumn()
+  customer: UserEntity;
 
   @ApiProperty({ required: false })
   @Column({ type: 'text', nullable: true })

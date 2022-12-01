@@ -16,8 +16,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ShopImageEntity } from '../../shop-images/entities/shop-image.entity';
 import { ShopAdvantageEntity } from '../shop-advantages/entities/shop-advantage.entity';
-import { ShopImageEntity } from '../shop-images/entities/shop-image.entity';
 
 @Entity('shops')
 export class ShopEntity {
@@ -82,7 +82,7 @@ export class ShopEntity {
     isArray: true,
     required: false,
   })
-  images?: ShopImageEntity[];
+  images: ShopImageEntity[];
 
   @Column('float', {
     comment: 'долгота центра карты',
