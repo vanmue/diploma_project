@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
+import { FileEntity } from 'src/files/entities/file.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
@@ -29,9 +31,9 @@ export class UserEntity {
   @ApiProperty()
   surname: string;
 
-  @Column({ type: 'varchar', nullable: true })
-  @ApiProperty({ required: false })
-  avatar?: string;
+  @ApiProperty()
+  @ManyToOne(() => FileEntity, undefined, { eager: true })
+  avatar: FileEntity;
 
   @IsString()
   @IsNotEmpty()

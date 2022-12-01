@@ -6,7 +6,6 @@ import { ReviewsService } from 'src/reviews/reviews.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { ListByShopDto } from 'src/shops/query-dto/list-by-shop.dto';
 import { ShopsService } from 'src/shops/shops.service';
-import { UserEntity } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { In, Repository } from 'typeorm';
 import { CreateMasterEntity } from './entities/create-master.entity';
@@ -27,32 +26,7 @@ export class MastersService {
     private readonly usersService: UsersService,
   ) {}
   async create(dto: CreateMasterEntity) {
-    const { userId, shops, deliverables, fileId } = dto;
-
-    const user = new UserEntity();
-    user.id = userId;
-
-    const shopEntities = await this.shopsService.findByIds(shops);
-
-    const delivEntities = await this.deliverablesService.findByIds(
-      deliverables,
-    );
-
-    let values = {};
-    values = {
-      ...values,
-      ...dto,
-      user,
-      shops: shopEntities,
-      deliverables: delivEntities,
-    };
-
-    if (fileId) {
-      const img_file = await this.filesService.findById(fileId);
-      if (img_file) {
-        values = { ...values, img_file };
-      }
-    }
+    const values = await this.getValues(dto);
 
     return await this.masterRepository.save(values);
   }
@@ -196,35 +170,52 @@ export class MastersService {
 
   async update(id: number, dto: UpdateMasterEntity) {
     const master = await this.masterRepository.findOneByOrFail({ id });
+    let values = await this.getValues(dto);
+    values = { ...master, ...values };
+    return await this.masterRepository.save(values);
+  }
 
+  async remove(id: number) {
+    const master = await this.masterRepository.findOneOrFail({
+      where: { id },
+      relations: ['img_file'],
+    });
+    const toRemove = { ...master };
+    const fileId = master.img_file.id;
+    await this.masterRepository.remove(master);
+    await this.filesService.remove(fileId);
+    return toRemove;
+  }
+  private async getValues(dto: CreateMasterEntity | UpdateMasterEntity) {
+    let values = {};
     const keys = ['profession', 'description'];
     keys.forEach((key) => {
       if (dto[key]) {
-        master[key] = dto[key];
+        values = { ...values, [key]: dto[key] };
       }
     });
 
     if (dto.userId) {
-      master.user = await this.usersService.findById(dto.userId);
+      const user = await this.usersService.findById(dto.userId);
+      values = { ...values, user };
     }
 
     if (dto.fileId) {
       const img_file = await this.filesService.findById(dto.fileId);
-      if (img_file) {
-        master.img_file = img_file;
-      }
+      values = { ...values, img_file };
     }
 
     if (dto.deliverables) {
-      master.deliverables = await this.deliverablesService.findByIds(
+      const deliverables = await this.deliverablesService.findByIds(
         dto.deliverables,
       );
+      values = { ...values, deliverables };
     }
 
     if (dto.shops) {
-      master.shops = await this.shopsService.findByIds(dto.shops);
+      const shops = await this.shopsService.findByIds(dto.shops);
+      values = { ...values, shops };
     }
-
-    return await this.masterRepository.save(master);
+    return values;
   }
 }
