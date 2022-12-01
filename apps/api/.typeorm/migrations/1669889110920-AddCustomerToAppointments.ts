@@ -4,17 +4,21 @@ import {
   TableColumn,
   TableForeignKey,
 } from 'typeorm';
-import dataSource from '../config/data.source';
 
-export class AddUserToAppointments1669752055330 implements MigrationInterface {
+const fieldName = 'customerId';
+const fkName = 'FK_APPOINTMENT_CUSTOMER';
+
+export class AddCustomerToAppointments1669889110920
+  implements MigrationInterface
+{
   public async up(queryRunner: QueryRunner): Promise<void> {
-    const users = await dataSource.query('SELECT * FROM users LIMIT 1');
+    const users = await queryRunner.query('SELECT * FROM users LIMIT 1');
     const { id } = users[0];
 
     await queryRunner.addColumn(
       'appointments',
       new TableColumn({
-        name: 'userId',
+        name: fieldName,
         type: 'integer',
         default: id,
       }),
@@ -22,9 +26,9 @@ export class AddUserToAppointments1669752055330 implements MigrationInterface {
 
     await queryRunner.changeColumn(
       'appointments',
-      'userId',
+      fieldName,
       new TableColumn({
-        name: 'userId',
+        name: fieldName,
         type: 'integer',
       }),
     );
@@ -32,8 +36,8 @@ export class AddUserToAppointments1669752055330 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'appointments',
       new TableForeignKey({
-        name: 'FK_APPOINTMENT_USER',
-        columnNames: ['userId'],
+        name: fkName,
+        columnNames: [fieldName],
         referencedTableName: 'users',
         referencedColumnNames: ['id'],
         onDelete: 'RESTRICT',
@@ -42,7 +46,7 @@ export class AddUserToAppointments1669752055330 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('appointments', 'FK_APPOINTMENT_USER');
-    await queryRunner.dropColumn('appointments', 'userId');
+    await queryRunner.dropForeignKey('appointments', fkName);
+    await queryRunner.dropColumn('appointments', fieldName);
   }
 }

@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { DeliverablesService } from 'src/deliverables/deliverables.service';
 import { CreateMasterEntity } from 'src/masters/entities/create-master.entity';
 import { MastersService } from 'src/masters/masters.service';
+import { CreateShopImageEntity } from 'src/shop-images/entities/create-shop-image.entity';
+import { ShopImagesService } from 'src/shop-images/shop-images.service';
 import { CreateShopEntity } from 'src/shops/entities/create-shop.entity';
-import { CreateShopImageEntity } from 'src/shops/shop-images/entities/create-shop-image.entity';
-import { ShopImagesService } from 'src/shops/shop-images/shop-images.service';
 import { ShopsService } from 'src/shops/shops.service';
 import { CreateUserEntity } from 'src/users/entities/create-user.entity';
 import { UsersService } from 'src/users/users.service';
@@ -121,8 +121,8 @@ export class FakerService {
       for (let iImage = 0; iImage < lack; iImage++) {
         p = p.then(() => {
           const image = new CreateShopImageEntity();
-          image.img = images[iImage].img;
-          image.shopId = shop.id;
+          // image.img = images[iImage].img;
+          // image.shopId = shop.id;
           // return this.shopImagesService.create(image);
         });
       }

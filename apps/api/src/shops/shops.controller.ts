@@ -12,10 +12,10 @@ import { ApiResponse } from '@nestjs/swagger';
 import { JsonObject } from 'src/libs/src/models/JsonObject';
 import { MastersService } from 'src/masters/masters.service';
 import { JsonService } from 'src/services/json/json.service';
-import { ListAllDto } from './dto/list-all.dto';
-import { ListByShopDto } from './dto/list-by-shop.dto';
 import { CreateShopEntity } from './entities/create-shop.entity';
 import { ShopEntity } from './entities/shop.entity';
+import { ListAllDto } from './query-dto/list-all.dto';
+import { ListByShopDto } from './query-dto/list-by-shop.dto';
 import { ShopsService } from './shops.service';
 
 @Controller('shops')
@@ -36,7 +36,7 @@ export class ShopsController {
   @Get(':id')
   @ApiResponse({ type: ShopEntity })
   async getById(@Param('id') id: number) {
-    const data = await this.shopsService.findById(id);
+    const data = await this.shopsService.findInfoById(id);
     return this.jsonService.data(data);
   }
 
@@ -47,6 +47,7 @@ export class ShopsController {
   }
 
   @Post()
+  @ApiResponse({ type: ShopEntity })
   async create(@Body() dto: CreateShopEntity): Promise<JsonObject<ShopEntity>> {
     const data = await this.shopsService.create(dto);
     return this.jsonService.data(data);
