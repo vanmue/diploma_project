@@ -115,6 +115,7 @@ export class MastersService {
       .createQueryBuilder('master')
       .leftJoinAndSelect('master.img_file', 'img_file')
       .leftJoinAndSelect('master.user', 'user')
+      .leftJoinAndSelect('user.avatar', 'avatar')
       .leftJoinAndSelect('master.shops', 'shop')
       .leftJoinAndSelect('master.deliverables', 'deliverable')
       .leftJoinAndSelect('deliverable.deliverable_group', 'deliverable_group')
