@@ -47,10 +47,9 @@ export class ShopImagesService {
     }
     let values = await this.getValues(dto);
     values = { ...shopImage, ...values };
-    console.log('values', values);
     const updated = await this.shopImageRepository.save(values);
     if (previousFileId) {
-      this.filesService.remove(previousFileId);
+      await this.filesService.remove(previousFileId);
     }
     return updated;
   }

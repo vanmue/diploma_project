@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -47,6 +48,12 @@ export class MastersController {
   @Patch(':id')
   async update(@Param('id') id: number, @Body() dto: UpdateMasterEntity) {
     const data = await this.mastersService.update(id, dto);
+    return this.jsonService.data(data);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: number) {
+    const data = await this.mastersService.remove(id);
     return this.jsonService.data(data);
   }
 }

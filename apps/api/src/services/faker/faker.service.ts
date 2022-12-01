@@ -48,7 +48,7 @@ export class FakerService {
         const user = new CreateUserEntity();
         user.name = faker.name.firstName();
         user.surname = faker.name.lastName();
-        user.avatar = avatars[getIndex(avatars.length)];
+        // user.avatar = avatars[getIndex(avatars.length)];
         console.log('user', user);
         return this.usersService.create(user);
       });
