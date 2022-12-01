@@ -108,7 +108,6 @@ function MastersPage() {
                     textBtn={'Записаться'}
                     colorTextBtnRecord={'#F5BFAB'}
                     colorBkgBtnRecord={'#A40123'}
-                    // linkTo={'/master'}
                     linkTo={'/master'}
                   />
                 </li>
