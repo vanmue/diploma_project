@@ -7,22 +7,18 @@ import {
 import { Response } from 'express';
 
 @Catch()
-export class HttpExceptionFilter<T> implements ExceptionFilter {
-  catch(exception: T, host: ArgumentsHost) {
-    const error = exception as Error;
-
+export class HttpExceptionFilter implements ExceptionFilter {
+  catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse<Response>();
 
-    const { name, message } = error;
+    const { name, message } = exception;
     switch (name) {
       case 'BadRequestException':
         const exc = exception as BadRequestException;
-        const obj = exc.getResponse() as Record<string, unknown>;
-        const errors = obj.errors as Record<string, unknown>;
-        res.status(400).json(errors);
+        return res.status(exc.getStatus()).json(exc.getResponse());
       default:
-        res.status(500).json({
+        return res.status(500).json({
           errors: {
             [name]: message,
           },
