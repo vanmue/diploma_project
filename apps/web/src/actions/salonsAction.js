@@ -1,4 +1,3 @@
-export const GET_GROUPS_SERVICES = '@@salons/GET_GROUPS_SERVICES';
 export const GET_ALL_SALONS = '@@salons/GET_ALL_SALONS';
 export const GET_ACTIVE_SALON_BY_ID = '@@salons/GET_ACTIVE_SALON_BY_ID';
 export const GET_MASTERS_OF_ACTIVE_SALON = '@@salons/GET_MASTERS_OF_ACTIVE_SALON';
@@ -13,7 +12,7 @@ export const POST_IMAGE_FOR_SALON = '@@salons/POST_IMAGE_FOR_SALON';
 // export const CHANGE_ARRAY_PAGINATION = '@@salons/CHANGE_ARRAY_PAGINATION';
 
 /**
- * Создание салона
+ * @param {{}} date - данные нового салона
 */
 export const postNewSalonAction = (date) => ({
   type: POST_NEW_SALON,
@@ -21,6 +20,7 @@ export const postNewSalonAction = (date) => ({
 });
 /** 
  * Запрос на создание нового салона
+ * @param {{}} date - данные нового салона
 */
 export const postNewSalonThunk = (data) => async (dispatch, getState) => {
 
@@ -33,15 +33,15 @@ export const postNewSalonThunk = (data) => async (dispatch, getState) => {
   })
     .then(req => req.json())
     .then(res => {
-      console.log('postNewSalonThunk res:', res);
-      // dispatch(postNewSalonAction(res));
+      // console.log('postNewSalonThunk res:', res);
+      dispatch(postNewSalonAction(res.data));
     })
-  // .catch(console.log('postNewSalonThunk: ', 'Что-то не получилось'));
+    .catch(err => console.log('postNewSalonThunk: ', err));
 }
 
 
 /**
- * Картинка для салона
+ * @param {number} date - картинка
 */
 export const postImageForSalonAction = (date) => ({
   type: POST_IMAGE_FOR_SALON,
@@ -49,6 +49,7 @@ export const postImageForSalonAction = (date) => ({
 });
 /** 
  * Отправка картинки для салона в поле images
+ * @param {{}} date - картинка
 */
 export const postImageForSalonThunk = (data) => async (dispatch, getState) => {
 
@@ -85,7 +86,7 @@ export const postImageForSalonThunk = (data) => async (dispatch, getState) => {
 
 
 /**
- * Получение всех салонов
+ * @param {[{}]} date - салоны
 */
 export const getAllSalonsAction = (date) => ({
   type: GET_ALL_SALONS,
@@ -102,11 +103,11 @@ export const getAllSalonsThunk = () => async (dispatch, getState) => {
       // console.log('getAllSalonsThunk res:', res.data);
       dispatch(getAllSalonsAction(res.data));
     })
-  // .catch(console.log('getFilteringSalonsThunk: ', 'Что-то не получилось'));
+    .catch(err => console.log('getFilteringSalonsThunk: ', err));
 }
 
 /**
- * Отфильтрованные салоны или все салоны
+ * @param {[{}]} date - салоны
 */
 export const getSalonsAction = (date) => ({
   type: GET_FILTERING_SALONS,
@@ -137,11 +138,11 @@ export const getFilteringSalonsThunk = (cityId = null, serviceId = null, page = 
     .then(res => {
       dispatch(getSalonsAction(res.data));
     })
-  // .catch(console.log('getFilteringSalonsThunk: ', 'Что-то не получилось'));
+    .catch(err => console.log('getFilteringSalonsThunk: ', err));
 }
 
 /**
- * Инфа о салоне по id
+ * @param {object} date - Инфа о салоне
 */
 export const getAciveSalonByIdAction = (date) => ({
   type: GET_ACTIVE_SALON_BY_ID,
@@ -149,24 +150,22 @@ export const getAciveSalonByIdAction = (date) => ({
 });
 /** 
  * Запрос на получение информации о салоне по id
+ * @param {number} salonId - id салона
 */
 export const getAciveSalonByIdThunk = (salonId) => async (dispatch, getState) => {
-  try {
-    fetch(`/api/v1/shops/${salonId}`)
-      .then(req => req.json())
-      .then(res => {
-        // console.log('getAciveSalonByIdThunk res: ', res)
-        dispatch(getAciveSalonByIdAction(res.data));
-      })
-  }
-  catch {
-    console.log('getAciveSalonByIdThunk: ', 'Что-то не получилось')
-  }
+  fetch(`/api/v1/shops/${salonId}`)
+    .then(req => req.json())
+    .then(res => {
+      // console.log('getAciveSalonByIdThunk res: ', res)
+      dispatch(getAciveSalonByIdAction(res.data));
+    })
+    .catch(err => console.log('getAciveSalonByIdThunk: ', err))
 }
 
 /**
  * Устанавливаем id  активного салона 
  * (страница которого открыта на данный момент)
+ * @param {number} date - id салона
 */
 export const setActiveSalonIdAction = (date) => ({
   type: SET_ACTIVE_SALON_ID,

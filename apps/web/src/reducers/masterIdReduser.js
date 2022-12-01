@@ -5,6 +5,7 @@ import {
 
 const initialStore = {
   id: 7,
+  salonId: null,
   dataMaster: null
 }
 
@@ -20,7 +21,8 @@ export default function masterIdReducer(store = initialStore, action) {
     case SET_ACTIVE_MASTER_ID: {
       return {
         ...store,
-        id: action.payload
+        id: action.payload.masterId,
+        salonId: action.payload.salonId,
       }
     }
     default:

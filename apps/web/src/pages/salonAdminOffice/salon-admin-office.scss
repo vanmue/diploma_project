@@ -1,9 +1,10 @@
 @import '../../assets/styles/mixins.scss';
+@import '../../assets/styles/colors.scss';
 
 .salon-admine-office {
   position: relative;
   height: 100%;
-  background: #410935;
+  background: $darkViolet;
   padding-top: 40px;
 
   &__flex {
@@ -24,13 +25,21 @@
     margin-bottom: 50px;
   }
 
+  &__wrapp-master-card {
+    margin-bottom: 40px;
+  }
+
+  &__wrapp-pagination {
+    display: flex;
+  }
+
   &__masters {
     &-title {
       @include inter(700, normal);
       font-size: 14px;
       line-height: 17px;
       text-transform: uppercase;
-      color: #F5BFAB;
+      color: $beige;
       margin-bottom: 50px;
     }
   }
@@ -42,16 +51,15 @@
     padding: 40px 40px 47px 50px;
     position: absolute;
     width: 900px;
-    // max-width: 900px;
     height: auto;
-    background: #FFFFFF;
+    background: $white;
     z-index: 1;
 
     &-close {
       position: absolute;
       width: 20px;
       height: 20px;
-      background: #410935;
+      background: $darkViolet;
       top: 10px;
       right: 10px;
     }
@@ -72,30 +80,27 @@
       @include inter(700, normal);
       font-size: 14px;
       line-height: 17px;
-      color: #410935;
-      // margin-right: 30px;
+      color: $darkViolet;
     }
 
     & input {
       @include inter(400, normal);
       font-size: 14px;
       line-height: 17px;
-      color: #410935;
+      color: $darkViolet;
 
       flex: 1 1 auto;
-      border: 1px solid #410935;
+      border: 1px solid $darkViolet;
       border-radius: 5px;
     }
   }
-
-  &__editing-salon-name-label {}
 
   &__editing-salon-name-input {
     @include inter(700, normal);
     font-size: 24px;
     line-height: 29px;
     text-transform: uppercase;
-    color: #410935;
+    color: $darkViolet;
   }
 
   &__wrapp-drpdn-add-salon {

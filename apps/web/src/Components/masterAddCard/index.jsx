@@ -33,12 +33,12 @@ function MasterAddCard({
 
   // }, []);
   useEffect(() => {
-    console.log('MasterAddCard select.deliverables:', select.deliverables)
-    console.log('MasterAddCard fromImgForMaster:', fromImgForMaster)
+    // console.log('MasterAddCard select.deliverables:', select.deliverables)
+    // console.log('MasterAddCard fromImgForMaster:', fromImgForMaster)
   }, [fromImgForMaster]);
   const handleChangeUploadImg = (e) => {
-    setFromImgForMaster({ ...fromImgForMaster, file: e.currentTarget.value })
-    // setFromImgForMaster({ ...fromImgForMaster, file: e.currentTarget.files[0] })
+    // setFromImgForMaster({ ...fromImgForMaster, file: e.currentTarget.value })
+    setFromImgForMaster({ ...fromImgForMaster, file: e.currentTarget.files[0] })
   }
 
   const callbacks = {

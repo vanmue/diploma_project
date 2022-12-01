@@ -1,4 +1,5 @@
 @import '../../assets/styles/mixins.scss';
+@import '../../assets/styles/colors.scss';
 
 .salons-page {
   background: #410935;
@@ -8,15 +9,13 @@
     padding-top: 40px;
   }
 
-  &__search {}
-
   &__h1 {
-    padding-bottom: 40px;
     @include inter(400, normal);
     font-size: 24px;
     line-height: 29px;
     text-transform: uppercase;
-    color: #F5BFAB;
+    color: $beige;
+    padding-bottom: 40px;
   }
 
   &__search-dropdowns {

@@ -1,11 +1,5 @@
-import React, {
-  useState,
-  useEffect
-} from 'react';
-import {
-  useSelector,
-  useDispatch
-} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   changeActivePageForPaginationAction,
   incrementActivePagePaginationAction,
@@ -16,16 +10,22 @@ import './pagination.scss';
 function Pagination({
   onClick
 }) {
-  // const activePage = useSelector((store) => store.salonsReducer.activePage);
+
   const [activePage, setActivePage] = useState(1);
   const [arrayPagination, setArrayPagination] = useState([]);
+  const [prevPage, setPrevPage] = useState();
   const dispatch = useDispatch();
 
   const count = 122;
   const limit = 10; // Число элементов на странице
-  
+
   const indent = 2; // Число цифр показываемых с лева и права от активной
   const ee = 13;  // Количество страниц
+
+  // useEffect(() => {
+  //   const pageNumberOne = document.querySelector('.pagination__list-item')
+  //   console.log('Pagination pageNumberOne :', pageNumberOne)
+  // }, []);
 
   useEffect(() => {
     let items = [];
@@ -96,8 +96,8 @@ function Pagination({
           className="pagination__arrow-prev"
           onClick={onClickHandlerArrowPrev}
         >
-          <svg width="10" height="12" viewBox="0 0 7 12" fill="none">
-            <path d="M5.64645 11.3536C5.84171 11.5488 6.15829 11.5488 6.35355 11.3536C6.54882 11.1583 6.54882 10.8417 6.35355 10.6464L5.64645 11.3536ZM1 6L0.646447 5.64645C0.451184 5.84171 0.451184 6.15829 0.646447 6.35355L1 6ZM6.35355 1.35355C6.54882 1.15829 6.54882 0.841709 6.35355 0.646447C6.15829 0.451184 5.84171 0.451184 5.64645 0.646447L6.35355 1.35355ZM6.35355 10.6464L1.35355 5.64645L0.646447 6.35355L5.64645 11.3536L6.35355 10.6464ZM1.35355 6.35355L6.35355 1.35355L5.64645 0.646447L0.646447 5.64645L1.35355 6.35355Z" fill="#F5BFAB" />
+          <svg width="15" height="27" viewBox="0 0 15 27" fill="none">
+            <path d="M12.7929 26.7071C13.1834 27.0976 13.8166 27.0976 14.2071 26.7071C14.5976 26.3166 14.5976 25.6834 14.2071 25.2929L12.7929 26.7071ZM1 13.5L0.292893 12.7929C-0.0976315 13.1834 -0.0976315 13.8166 0.292893 14.2071L1 13.5ZM14.2071 1.70711C14.5976 1.31658 14.5976 0.683417 14.2071 0.292893C13.8166 -0.0976311 13.1834 -0.0976311 12.7929 0.292893L14.2071 1.70711ZM14.2071 25.2929L1.70711 12.7929L0.292893 14.2071L12.7929 26.7071L14.2071 25.2929ZM1.70711 14.2071L14.2071 1.70711L12.7929 0.292893L0.292893 12.7929L1.70711 14.2071Z" fill="#F5BFAB" />
           </svg>
         </li>
         {arrayPagination.map((item, index) => (item) ?
@@ -105,6 +105,7 @@ function Pagination({
             className="pagination__list-item"
             onClick={onClickHandlerNumber}
             key={index}
+          // style={{ transform: 'scale(1)' }}
           >
             <p className="pagination__list-item-number"> {item}</p>
             <span>{(item === ee) ? '' : ','}</span>
@@ -120,8 +121,8 @@ function Pagination({
           className="pagination__arrow-next"
           onClick={onClickHandlerArrowNext}
         >
-          <svg width="7" height="12" viewBox="0 0 7 12" fill="none">
-            <path d="M1.35355 0.646446C1.15829 0.451184 0.841709 0.451184 0.646447 0.646446C0.451184 0.841709 0.451184 1.15829 0.646447 1.35355L1.35355 0.646446ZM6 6L6.35355 6.35355C6.54882 6.15829 6.54882 5.84171 6.35355 5.64645L6 6ZM0.646447 10.6464C0.451184 10.8417 0.451184 11.1583 0.646447 11.3536C0.841709 11.5488 1.15829 11.5488 1.35355 11.3536L0.646447 10.6464ZM0.646447 1.35355L5.64645 6.35355L6.35355 5.64645L1.35355 0.646446L0.646447 1.35355ZM5.64645 5.64645L0.646447 10.6464L1.35355 11.3536L6.35355 6.35355L5.64645 5.64645Z" fill="#F5BFAB" />
+          <svg width="15" height="27" viewBox="0 0 15 27" fill="none">
+            <path d="M2.20711 0.292892C1.81658 -0.0976315 1.18342 -0.0976315 0.792893 0.292892C0.402369 0.683418 0.402369 1.31658 0.792893 1.70711L2.20711 0.292892ZM14 13.5L14.7071 14.2071C15.0976 13.8166 15.0976 13.1834 14.7071 12.7929L14 13.5ZM0.792893 25.2929C0.402369 25.6834 0.402369 26.3166 0.792893 26.7071C1.18342 27.0976 1.81658 27.0976 2.20711 26.7071L0.792893 25.2929ZM0.792893 1.70711L13.2929 14.2071L14.7071 12.7929L2.20711 0.292892L0.792893 1.70711ZM13.2929 12.7929L0.792893 25.2929L2.20711 26.7071L14.7071 14.2071L13.2929 12.7929Z" fill="#F5BFAB" />
           </svg>
         </li>
       </ul>
