@@ -13,7 +13,7 @@ function Pagination({
 
   const [activePage, setActivePage] = useState(1);
   const [arrayPagination, setArrayPagination] = useState([]);
-  const [prevPage, setPrevPage] = useState();
+  const [prevPageNode, setPrevPageNode] = useState(null);
   const dispatch = useDispatch();
 
   const count = 122;
@@ -77,6 +77,16 @@ function Pagination({
     console.log('Pagination onClickHandlerNumber  page: ', page)
     // dispatch(changeActivePageForPaginationAction(page));
     onClick(page);
+
+
+    // e.currentTarget.style.transform = 'scale(2)';
+    // let prevNode = e.currentTarget;
+    // // prevNode.style.transform = 'scale(2)';
+    // if (prevPageNode != null) prevPageNode.style.transform = 'scale(1)';
+
+    // console.log('Pagination onClickHandlerNumber  prevNode: ', prevNode)
+    // setPrevPageNode(prevNode);
+    // console.log('Pagination onClickHandlerNumber  prevPageNode: ', prevPageNode)
   }
 
   const onClickHandlerArrowPrev = (e) => {
@@ -105,7 +115,7 @@ function Pagination({
             className="pagination__list-item"
             onClick={onClickHandlerNumber}
             key={index}
-          // style={{ transform: 'scale(1)' }}
+          // style={{ transform: 'scale(2)' }}
           >
             <p className="pagination__list-item-number"> {item}</p>
             <span>{(item === ee) ? '' : ','}</span>

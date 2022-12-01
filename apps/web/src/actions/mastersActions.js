@@ -18,26 +18,17 @@ export const postImageForMasterAction = (date) => ({
 */
 export const postImageFormMasterThunk = (data) => async (dispatch, getState) => {
 
-  // let formData = new formData();
-  // formData.append('file', data.file);
+  let formData = new FormData();
+  formData.append("file", data);
 
-  fetch('/api/v1/files', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      // 'Content-Type': 'multipart/form-data;boundary="boundary"'
-      // 'Content-Type': 'application/json;'
-      // 'Content-Type': 'application/json;charset=utf-8'
-
-      // 'Content-Disposition': 'form-data; name="is_preview"; name="shopId"'
-    },
-    // body: formData
-    body: JSON.stringify(data)
+  fetch("/api/v1/files", {
+    method: "POST",
+    body: formData
   })
     .then(req => req.json())
     .then(res => {
-      console.log('postImageFormMasterThunk res:', res);
-      // dispatch(postImageForMasterAction(res));
+      // console.log('postImageFormMasterThunk res:', res.data.id);
+      dispatch(postImageForMasterAction(res.data.id));
     })
     .catch(err => console.log('postNewSalonThunk: ', err));
 }
