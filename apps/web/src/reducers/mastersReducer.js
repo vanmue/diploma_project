@@ -6,19 +6,20 @@ import {
 } from "../actions/mastersActions";
 
 const initialStore = {
-  masters: [],
-  activePageMasters: 1,
-  mastersActiveSalon: null,
-  activePageMastersActiveSalon: 1,
-  imageIdForAddMaster: null
+  masters: [],                      // {[]} - все мастера
+  activePageMasters: 1,             // {number} - страница пагинации мастеров на странице мастеров
+  mastersActiveSalon: null,         // {[{}]} - мастера активного салона
+  activePageMastersActiveSalon: 1,  // {number} - страница пагинации для мастеров в активном салоне
+  imgForFaceMasterId: null,         // {number} - id картинки для лица мастера
 }
 
 export default function mastersReducer(store = initialStore, action) {
   switch (action.type) {
     case POST_IMAGE_FOR_MASTER: {
+      console.log('POST_IMAGE_FOR_MASTER action.payload', action.payload)
       return {
         ...store,
-        imageIdForAddMaster: action.payload
+        imgForFaceMasterId: action.payload
       }
     }
     case GET_FILTERING_MASTERS: {
