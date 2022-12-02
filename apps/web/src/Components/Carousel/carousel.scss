@@ -19,8 +19,23 @@
     position: relative;
     display: flex;
     margin: 0 auto;
+    animation-name: sliderLine;
+    animation-duration: 10s;
     // width: 1280px;
   }
+
+  // @keyframes sliderLine {
+  //   from {
+  //     margin-left: 100%;
+  //     width: 300%;
+  //   }
+
+  //   to {
+  //     margin-left: 0%;
+  //     width: 100%;
+  //   }
+  // }
+
 
   &__img {
     border-radius: 10px;

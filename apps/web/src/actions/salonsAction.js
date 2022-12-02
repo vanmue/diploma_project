@@ -9,6 +9,7 @@ export const INCREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/INCREMENT_ACTIVE_PAGE_
 export const DECREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/DECREMENT_ACTIVE_PAGE_PAGINATION';
 export const POST_NEW_SALON = '@@salons/POST_NEW_SALON';
 export const POST_IMAGE_FOR_SALON = '@@salons/POST_IMAGE_FOR_SALON';
+export const UPLOAD_IMAGE_FOR_SALON = '@@salons/UPLOAD_IMAGE_FOR_SALON';
 // export const CHANGE_ARRAY_PAGINATION = '@@salons/CHANGE_ARRAY_PAGINATION';
 
 /**
@@ -40,6 +41,37 @@ export const postNewSalonThunk = (data) => async (dispatch, getState) => {
 }
 
 
+
+/**
+ * @param {number} date - id картинки
+*/
+export const uploadImageForSalonAction = (date) => ({
+  type: UPLOAD_IMAGE_FOR_SALON,
+  payload: date
+});
+/** 
+ * Загрузка картинки для салона в поле images
+ * с ЦЕЛЬЮ получения её id
+ * @param {object} date - картинка
+*/
+export const uploadImageForSalonThunk = (data) => async (dispatch, getState) => {
+
+  let formData = new FormData;
+  formData.append('file', data.file);
+
+  fetch('/api/v1/files', {
+    method: 'POST',
+    body: formData
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('uploadImageForSalonThunk res:', res.data.id);
+      dispatch(uploadImageForSalonAction(res.data.id));
+    })
+    .catch(console.log('uploadImageForSalonThunk: ', 'Что-то не получилось'));
+}
+
+
 /**
  * @param {number} date - картинка
 */
@@ -52,36 +84,21 @@ export const postImageForSalonAction = (date) => ({
  * @param {{}} date - картинка
 */
 export const postImageForSalonThunk = (data) => async (dispatch, getState) => {
-
-  let formData = new FormData;
-  formData.append('img', data.img);
-  formData.append('is_preview', data.is_preview);
-  formData.append('shopId', data.shopId);
+  // console.log('postImageForSalonThunk res:', data);
 
   fetch('/api/v1/shop-images', {
     method: 'POST',
     headers: {
-      'Content-Type': 'multipart/form-data',
-      // 'Content-Type': 'multipart/form-data;boundary',
-      'Content-Disposition': 'form-data; name="img"',
-      'Content-Disposition': 'form-data; name="is_preview"',
-      'Content-Disposition': 'form-data; name="shopId"',
-      // 'Content-Type': 'multipart/form-data;boundary="boundary"'
-      // 'Content-Type': 'application/json;'
-      // 'Content-Type': 'application/json;charset=utf-8'
-
-      // 'Content-Disposition': 'form-data; name="is_preview"; name="shopId"'
+      'Content-Type': 'application/json;charset=utf-8'
     },
-    body: formData
-    // body: new FormData(data)
-    // body: JSON.stringify(data)
+    body: JSON.stringify(data)
   })
     .then(req => req.json())
     .then(res => {
       console.log('postImageForSalonThunk res:', res);
       // dispatch(postImageForSalonAction(res));
     })
-  // .catch(console.log('postNewSalonThunk: ', 'Что-то не получилось'));
+    .catch(console.log('postImageForSalonThunk: ', 'Что-то не получилось'));
 }
 
 

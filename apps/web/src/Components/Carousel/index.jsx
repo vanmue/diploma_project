@@ -15,15 +15,24 @@ function Carousel({
   onChange
 }) {
   const [offset, setOffset] = useState(0);
+  const [countItems, setCountItems] = useState(isEdited ? images?.length + 1 : images?.length);
   const carouselLineRef = useRef(null);
 
   const handleClickPrev = () => {
-    offset == 0 ? setOffset(-1320 * (Math.ceil(images?.length / 3) - 1)) : setOffset(prevOffset => prevOffset + 1320);
+    offset == 0 ? setOffset(-1320 * (Math.ceil(countItems / 3) - 1)) : setOffset(prevOffset => prevOffset + 1320);
   }
 
   const handleClickNext = () => {
-    Math.abs(offset) == 1320 * (Math.ceil(images?.length / 3) - 1) ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
+    Math.abs(offset) == 1320 * (Math.ceil(countItems / 3) - 1) ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
   }
+
+  // const handleClickPrev = () => {
+  //   offset == 0 ? setOffset(-1320 * (Math.ceil(images?.length / 3) - 1)) : setOffset(prevOffset => prevOffset + 1320);
+  // }
+
+  // const handleClickNext = () => {
+  //   Math.abs(offset) == 1320 * (Math.ceil(images?.length / 3) - 1) ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
+  // }
 
   const onChangeInputUploadImageForSalon = () => {
     onChange();
@@ -54,7 +63,12 @@ function Carousel({
           ref={carouselLineRef}
         >
           {images?.map((item, index) => {
-            return <img className="carousel__img" src={item.img} key={index} alt="Фото салона" />
+            return <img className="carousel__img"
+              src={item.file.path}
+              data-carousel-img-id={item.id}
+              key={item.id}
+              alt="Фото салона"
+            />
           })}
           {isEdited ? <div className="carousel__add-img">
             <div className="carousel__add-img-pic">
@@ -70,7 +84,6 @@ function Carousel({
             </div>
             <input
               className="carousel__add-img-input"
-              // type="multipart/form-data"
               type="file"
               accept=".png,.jpg"
               alt="Загрузка фото"
