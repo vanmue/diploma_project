@@ -66,14 +66,69 @@ function SalonPage() {
           </div>
           <div className="salon-page__wrapp-carousel">
             <Carousel
-              images={activeSalon?.images}
+              images={[
+                {
+                  "id": 5,
+                  "is_preview": true,
+                  "file": {
+                    "id": 4,
+                    "originalname": "shop_image_1.png",
+                    "path": "/uploads/shops/7a405c54-64c1-4525-a2bf-31a82442e167.png"
+                  }
+                },
+                {
+                  "id": 6,
+                  "is_preview": false,
+                  "file": {
+                    "id": 5,
+                    "originalname": "shop_image_2.png",
+                    "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
+                  }
+                },
+                {
+                  "id": 7,
+                  "is_preview": false,
+                  "file": {
+                    "id": 6,
+                    "originalname": "shop_image_3.png",
+                    "path": "/uploads/shops/bd02f81a-6a98-415f-bf75-fc98b0ebcbad.png"
+                  }
+                },
+                {
+                  "id": 6,
+                  "is_preview": false,
+                  "file": {
+                    "id": 5,
+                    "originalname": "shop_image_2.png",
+                    "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
+                  }
+                },
+                {
+                  "id": 6,
+                  "is_preview": false,
+                  "file": {
+                    "id": 5,
+                    "originalname": "shop_image_2.png",
+                    "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
+                  }
+                },
+                {
+                  "id": 6,
+                  "is_preview": false,
+                  "file": {
+                    "id": 5,
+                    "originalname": "shop_image_2.png",
+                    "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
+                  }
+                },
+              ]}
             />
             {/* <Carousel
-              images={[img1, img1, img1, img2, img2, img2, img3, img3, img3]}
+              images={activeSalon?.images}
             /> */}
           </div>
           {mastersActiveSalon?.map((el) => (
-            <div className="salon-page__wrapp-master-card" key={el.id}>
+            <div className="salon-page__wrapp-master-card" data-master-id={el.id} data-salon-id={el.shops.id} key={el.id}>
               <MasterCard
                 name={el.user.name}
                 surname={el.user.surname}
@@ -82,7 +137,9 @@ function SalonPage() {
                 specialization={el.profession}
                 salon={activeSalon?.name}
                 description={el.description}
-                colorTextBtn={'#F5BFAB'}
+                textBtn={'Записаться'}
+                colorTextBtnRecord={'#F5BFAB'}
+                colorBkgBtnRecord={'#A40123'}
               />
             </div>
           ))}
