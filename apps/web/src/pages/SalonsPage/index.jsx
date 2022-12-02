@@ -114,7 +114,7 @@ function SalonsPage() {
                   parking={item.advantages[0]?.name}
                   textLink={'Подробная информация о салоне'}
                   deliverableGgroups={item.deliverable_groups}
-                  img={imgPreview != '' ? imgPreview.img : ''}
+                  img={imgPreview != '' ? imgPreview.file.path : ''}
                   bckCallBtn={'#410935'}
                   colorTextCallBtn={'#F5BFAB'}
                   bkgRecordBtn={'#A40123'}
