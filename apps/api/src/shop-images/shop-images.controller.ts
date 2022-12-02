@@ -33,7 +33,6 @@ export class ShopImagesController {
   @Post()
   @ApiResponse({ type: ShopImageEntity })
   async create(
-    @Param('id') id: number,
     @Body() dto: CreateShopImageEntity,
   ): Promise<JsonObject<ShopImageEntity>> {
     const data = await this.shopImagesService.create(dto);

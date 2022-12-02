@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CustomersService } from 'src/customers/customers.service';
 import { DeliverablesService } from 'src/deliverables/deliverables.service';
 import { MastersService } from 'src/masters/masters.service';
+import { ProfilesService } from 'src/profiles/profiles.service';
 import { ShopsService } from 'src/shops/shops.service';
 import { Raw, Repository } from 'typeorm';
 import { AppointmentEntity } from './entites/appointment.entity';
@@ -15,17 +15,18 @@ export class AppointmentsService {
     @InjectRepository(AppointmentEntity)
     private readonly appointmentRepository: Repository<AppointmentEntity>,
     private readonly deliverablesService: DeliverablesService,
-    private readonly customersService: CustomersService,
     private readonly mastersService: MastersService,
+    private readonly profilesService: ProfilesService,
     private readonly shopsService: ShopsService,
   ) {}
 
   async create(dto: CreateAppointmentEntity) {
-    const values = await this.getValues(dto);
-    return await this.appointmentRepository.save(values);
+    return await this.saveValues(dto, new AppointmentEntity());
   }
   async findAll() {
-    return await this.appointmentRepository.find();
+    return await this.appointmentRepository.find({
+      relations: ['profile.user'],
+    });
   }
 
   async findById(id: number) {
@@ -46,7 +47,7 @@ export class AppointmentsService {
 
     return await this.appointmentRepository.find({
       where,
-      relations: ['customer'],
+      relations: ['profile.user'],
     });
   }
 
@@ -60,40 +61,36 @@ export class AppointmentsService {
     const appointment = await this.appointmentRepository.findOneByOrFail({
       id,
     });
-    let values = await this.getValues(dto);
-    values = { ...appointment, ...values };
-    return await this.appointmentRepository.save(values);
+    return await this.saveValues(dto, appointment);
   }
-  private async getValues(
+
+  private async saveValues(
     dto: CreateAppointmentEntity | UpdateAppointmentEntity,
+    appointment: AppointmentEntity,
   ) {
-    let values = {};
     const scalars = ['comments', 'from', 'to'];
     scalars.forEach((s) => {
       if (dto[s]) {
-        values = { ...values, [s]: dto[s] };
+        appointment[s] = dto[s];
       }
     });
 
-    const { deliverableId, customerId, masterId, shopId } = dto;
+    const { deliverableId, profileId, masterId, shopId } = dto;
     if (deliverableId) {
-      const deliverable = await this.deliverablesService.findById(
+      appointment.deliverable = await this.deliverablesService.findById(
         deliverableId,
       );
-      values = { ...values, deliverable };
-    }
-    if (customerId) {
-      const customer = await this.customersService.findById(customerId);
-      values = { ...values, customer };
     }
     if (masterId) {
-      const master = await this.mastersService.findById(masterId);
-      values = { ...values, master };
+      appointment.master = await this.mastersService.findById(masterId);
     }
     if (shopId) {
-      const shop = await this.shopsService.findById(shopId);
-      values = { ...values, shop };
+      appointment.shop = await this.shopsService.findById(shopId);
     }
-    return values;
+    if (profileId) {
+      const profile = await this.profilesService.findById(dto.profileId);
+      appointment.profile = profile;
+    }
+    return this.appointmentRepository.save(appointment);
   }
 }

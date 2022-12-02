@@ -17,7 +17,7 @@ export class FileEntity {
 
   @IsNotEmpty()
   @IsString()
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', select: false })
   @ApiProperty()
   originalname: string;
 
@@ -29,16 +29,14 @@ export class FileEntity {
 
   @IsNotEmpty()
   @IsString()
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', select: false })
   @ApiProperty()
-  @Exclude()
   mimetype: string;
 
   @IsNotEmpty()
   @IsString()
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', select: false })
   @ApiProperty()
-  @Exclude()
   size: number;
 
   @Exclude()
