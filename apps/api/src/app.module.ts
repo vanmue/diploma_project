@@ -7,12 +7,12 @@ import { join } from 'path';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { AuthModule } from './auth/auth.module';
 import { CitiesModule } from './cities/cities.module';
-import { CustomersModule } from './customers/customers.module';
 import { DeliverablesModule } from './deliverables/deliverables.module';
 import { DeliverableGroupsModule } from './deliverables/groups/deliverable-groups.module';
 import { FilesModule } from './files/files.module';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { MastersModule } from './masters/masters.module';
+import { ProfilesModule } from './profiles/profiles.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { DecimalService } from './services/decimal/decimal.service';
 import { FakerService } from './services/faker/faker.service';
@@ -58,11 +58,11 @@ import { UsersModule } from './users/users.module';
     ImagesByShopModule,
     MastersModule,
     ReviewsModule,
+    ProfilesModule,
     ShopAdvantagesModule,
     ShopImagesModule,
     ShopsModule,
     UsersModule,
-    CustomersModule,
   ],
   controllers: [],
   providers: [

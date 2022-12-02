@@ -9,11 +9,12 @@ import {
   ValidateIf,
 } from 'class-validator';
 import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { ProfileEntity } from 'src/profiles/entities/profile.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -24,8 +25,14 @@ export class ReviewEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => UserEntity)
-  author: UserEntity;
+  @ApiProperty()
+  @ManyToOne(() => ProfileEntity, undefined, {
+    onDelete: 'RESTRICT',
+    cascade: true,
+    eager: true,
+  })
+  @JoinColumn({ name: 'profileId' })
+  profile: ProfileEntity;
 
   @ManyToOne(() => AppointmentEntity)
   appointment: AppointmentEntity;

@@ -3,18 +3,16 @@ import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
 import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity';
 import { MasterEntity } from 'src/masters/entities/master.entity';
+import { ProfileEntity } from 'src/profiles/entities/profile.entity';
 import { ReviewEntity } from 'src/reviews/entities/review.entity';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
-import { UserEntity } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   Exclusion,
-  JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -40,9 +38,13 @@ export class AppointmentEntity {
   @ManyToOne(() => DeliverableEntity)
   deliverable: DeliverableEntity;
 
-  @OneToOne(() => UserEntity)
-  @JoinColumn()
-  customer: UserEntity;
+  @ApiProperty()
+  @ManyToOne(() => ProfileEntity, undefined, {
+    onDelete: 'RESTRICT',
+    cascade: true,
+    eager: true,
+  })
+  profile: ProfileEntity;
 
   @ApiProperty({ required: false })
   @Column({ type: 'text', nullable: true })

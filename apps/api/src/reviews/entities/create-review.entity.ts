@@ -1,16 +1,15 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty } from 'class-validator';
 import { ReviewEntity } from './review.entity';
 
-export class CreateReviewEntity extends OmitType(ReviewEntity, [
-  'id' as const,
-  'author' as const,
-  'appointment' as const,
+export class CreateReviewEntity extends PickType(ReviewEntity, [
+  'review' as const,
+  'score' as const,
 ]) {
   @IsNotEmpty()
   @IsInt()
   @ApiProperty()
-  authorId: number;
+  profileId: number;
 
   @IsNotEmpty()
   @IsInt()

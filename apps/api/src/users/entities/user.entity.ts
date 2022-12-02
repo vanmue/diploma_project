@@ -2,11 +2,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { FileEntity } from 'src/files/entities/file.entity';
+import { ProfileEntity } from 'src/profiles/entities/profile.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
@@ -46,6 +48,9 @@ export class UserEntity {
   @Column({ type: 'varchar', select: false })
   @ApiProperty({ required: true })
   password: string;
+
+  @OneToMany(() => ProfileEntity, (profile) => profile.user)
+  profiles: ProfileEntity[];
 
   @Exclude()
   @CreateDateColumn({ type: 'timestamp' })

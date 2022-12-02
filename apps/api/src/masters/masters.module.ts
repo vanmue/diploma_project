@@ -3,11 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppointmentsModule } from 'src/appointments/appointments.module';
 import { DeliverablesModule } from 'src/deliverables/deliverables.module';
 import { FilesModule } from 'src/files/files.module';
+import { ProfilesModule } from 'src/profiles/profiles.module';
 import { ReviewsModule } from 'src/reviews/reviews.module';
 import { JsonService } from 'src/services/json/json.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { ShopsModule } from 'src/shops/shops.module';
-import { UsersModule } from 'src/users/users.module';
 import { MasterEntity } from './entities/master.entity';
 import { MastersController } from './masters.controller';
 import { MastersService } from './masters.service';
@@ -21,9 +21,9 @@ import { AppointmentsByMasterController } from './shops/appointments/appointment
     forwardRef(() => AppointmentsModule),
     DeliverablesModule,
     FilesModule,
+    ProfilesModule,
     ReviewsModule,
     forwardRef(() => ShopsModule),
-    UsersModule,
   ],
   exports: [MastersService],
 })
