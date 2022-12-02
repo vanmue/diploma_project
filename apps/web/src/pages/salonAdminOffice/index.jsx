@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SalonCard from '../../Components/SalonCard';
 import YandexMap from '../../Components/YandexMap';
@@ -14,7 +14,8 @@ import { getAllMasterForActiveSalonThunk } from '../../actions/mastersActions';
 import {
   postNewSalonThunk,
   postImageForSalonThunk,
-  getAciveSalonByIdThunk
+  getAciveSalonByIdThunk,
+  uploadImageForSalonThunk
 } from '../../actions/salonsAction';
 import {
   changeNavigationColorAction,
@@ -32,14 +33,15 @@ function SalonAdminOffice() {
     advantages: store.advantagesReducer.advantages,
     activeSalonId: store.salonsReducer.activeSalonId,
     activeSalon: store.salonsReducer.activeSalon,
+    imgForCarouselId: store.salonsReducer.imgForCarouselId,
     mastersActiveSalon: store.mastersReducer.mastersActiveSalon,
   }))
 
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [imageForSalon, setImageForSalon] = useState({
-    img: "",
-    is_preview: "true",
-    shopId: 4
+    shopId: 4,          // {number} - id салона
+    fileId: null,       // {number} - id изображения 42
+    is_preview: "false", // {string} - флаг картинки
   });
   const [formNewSalon, setFormNewSalon] = useState({
     name: null,
@@ -83,11 +85,9 @@ function SalonAdminOffice() {
     dispatch(getAciveSalonByIdThunk(select.activeSalonId));
     dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId));
   }, []);
-  // useEffect(() => {
-  //   console.log('SalonAdminOffice useEffect select.activeSalon: ', select.activeSalon)
-  //   // console.log('SalonAdminOffice useEffect select.advantages: ', select.advantages)
-  //   // console.log('SalonAdminOffice useEffect formNewSalon: ', formNewSalon)
-  // }, [select.activeSalon]);
+  useEffect(() => {
+    setImageForSalon({ ...imageForSalon, fileId: select.imgForCarouselId });
+  }, [select.imgForCarouselId]);
 
   const handleChangeTextareaModalNewSalon = (e) => {
     console.log('handleChangeTextareaModalNewSalon e: ', e.currentTarget.getAttribute("id"))
@@ -152,15 +152,15 @@ function SalonAdminOffice() {
       dispatch(postNewSalonThunk(formNewSalon));
     }),
     onPostImageForSalon: useCallback(() => {
-      // console.log('onPostImageForSalon imageForSalon:', imageForSalon);
+      console.log('onPostImageForSalon imageForSalon:', imageForSalon);
       dispatch(postImageForSalonThunk(imageForSalon));
     }),
     onChangeUploadImageForSalon: useCallback(() => {
       let inputFile = document.querySelector('.carousel__add-img-input').files[0]
 
       console.log('onChangeUploadImageForSalon .files[0]', inputFile);
-      // console.log('document.querySelector inputFile :', inputFile);
-      setImageForSalon({ ...imageForSalon, img: inputFile });
+      dispatch(uploadImageForSalonThunk({ file: inputFile }));
+      // setImageForSalon({ ...imageForSalon, fileId: inputFile });
     }),
     onGetActivePagePagination: useCallback((page) => {
     }),
@@ -199,10 +199,68 @@ function SalonAdminOffice() {
           </div>
           <div className="salon-admine-office__wrapp-carousel">
             <Carousel
-              images={[{ img: img1 }, { img: img2 },]}
-              isEdited
-              onClick={callbacks.onPostImageForSalon}
+              // images={
+              //   [
+              //     {
+              //       "id": 5,
+              //       "is_preview": true,
+              //       "file": {
+              //         "id": 4,
+              //         "originalname": "shop_image_1.png",
+              //         "path": "/uploads/shops/7a405c54-64c1-4525-a2bf-31a82442e167.png"
+              //       }
+              //     },
+              //     {
+              //       "id": 6,
+              //       "is_preview": false,
+              //       "file": {
+              //         "id": 5,
+              //         "originalname": "shop_image_2.png",
+              //         "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
+              //       }
+              //     },
+              //     {
+              //       "id": 7,
+              //       "is_preview": false,
+              //       "file": {
+              //         "id": 6,
+              //         "originalname": "shop_image_3.png",
+              //         "path": "/uploads/shops/bd02f81a-6a98-415f-bf75-fc98b0ebcbad.png"
+              //       }
+              //     },
+              //     {
+              //       "id": 8,
+              //       "is_preview": false,
+              //       "file": {
+              //         "id": 5,
+              //         "originalname": "shop_image_2.png",
+              //         "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
+              //       }
+              //     },
+              //     {
+              //       "id": 9,
+              //       "is_preview": false,
+              //       "file": {
+              //         "id": 5,
+              //         "originalname": "shop_image_2.png",
+              //         "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
+              //       }
+              //     },
+              //     {
+              //       "id": 10,
+              //       "is_preview": false,
+              //       "file": {
+              //         "id": 5,
+              //         "originalname": "shop_image_2.png",
+              //         "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
+              //       }
+              //     },
+              //   ]
+              // }
+              images={select.activeSalon?.images}
+              isEdited={true}
               onChange={callbacks.onChangeUploadImageForSalon}
+              onClick={callbacks.onPostImageForSalon}
             />
           </div>
           <div className="salon-admine-office__wrapp-master-add-card">

@@ -39,7 +39,8 @@ function MasterAddCard({
   }, []);
 
   useEffect(() => {
-    console.log('MasterAddCard formForAddMasterInSalon', formForAddMasterInSalon);
+    // console.log('MasterAddCard formForAddMasterInSalon', formForAddMasterInSalon);
+
     // setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: select.imgForFaceMasterId });
     // console.log('MasterAddCard formForAddMasterInSalon', formForAddMasterInSalon)
   }, [formForAddMasterInSalon]);

@@ -89,6 +89,8 @@ MasterCard.propTypes = {
   specialization: propTypes.string,
   description: propTypes.string,
   textBtn: propTypes.string,
+  colorText: propTypes.string,
+  background: propTypes.string,
   linkTo: propTypes.string,
 }
 
