@@ -31,7 +31,6 @@ export class MasterEntity {
   @ManyToOne(() => ProfileEntity, undefined, {
     onDelete: 'RESTRICT',
     cascade: true,
-    eager: true,
   })
   profile: ProfileEntity;
 
