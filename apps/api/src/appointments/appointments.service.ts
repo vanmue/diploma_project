@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeliverablesService } from 'src/deliverables/deliverables.service';
-import { MastersService } from 'src/masters/masters.service';
+import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity';
+import { MasterEntity } from 'src/masters/entities/master.entity';
 import { ProfilesService } from 'src/profiles/profiles.service';
-import { ShopsService } from 'src/shops/shops.service';
+import { ShopEntity } from 'src/shops/entities/shop.entity';
+import { copyKeys } from 'src/utils/copy-keys';
 import { Raw, Repository } from 'typeorm';
 import { AppointmentEntity } from './entites/appointment.entity';
 import { CreateAppointmentEntity } from './entites/create-appointment.entity';
@@ -14,10 +15,7 @@ export class AppointmentsService {
   constructor(
     @InjectRepository(AppointmentEntity)
     private readonly appointmentRepository: Repository<AppointmentEntity>,
-    private readonly deliverablesService: DeliverablesService,
-    private readonly mastersService: MastersService,
     private readonly profilesService: ProfilesService,
-    private readonly shopsService: ShopsService,
   ) {}
 
   async create(dto: CreateAppointmentEntity) {
@@ -68,24 +66,23 @@ export class AppointmentsService {
     dto: CreateAppointmentEntity | UpdateAppointmentEntity,
     appointment: AppointmentEntity,
   ) {
-    const scalars = ['comments', 'from', 'to'];
-    scalars.forEach((s) => {
-      if (dto[s]) {
-        appointment[s] = dto[s];
-      }
-    });
+    appointment = copyKeys(['comments', 'from', 'to'], dto, appointment);
 
     const { deliverableId, userId, masterId, shopId } = dto;
     if (deliverableId) {
-      appointment.deliverable = await this.deliverablesService.findById(
-        deliverableId,
-      );
+      const deliverable = new DeliverableEntity();
+      deliverable.id = deliverableId;
+      appointment.deliverable = deliverable;
     }
     if (masterId) {
-      appointment.master = await this.mastersService.findById(masterId);
+      const master = new MasterEntity();
+      master.id = masterId;
+      appointment.master = master;
     }
     if (shopId) {
-      appointment.shop = await this.shopsService.findById(shopId);
+      const shop = new ShopEntity();
+      shop.id = shopId;
+      appointment.shop = shop;
     }
     if (userId) {
       appointment.profile = await this.profilesService.findCustomer(userId);

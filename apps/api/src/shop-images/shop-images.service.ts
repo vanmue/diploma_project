@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FileEntity } from 'src/files/entities/file.entity';
 import { FilesService } from 'src/files/files.service';
-import { ShopsService } from 'src/shops/shops.service';
+import { ShopEntity } from 'src/shops/entities/shop.entity';
+import { copyKeys } from 'src/utils/copy-keys';
 import { Repository } from 'typeorm';
 import { CreateShopImageEntity } from './entities/create-shop-image.entity';
 import { ShopImageEntity } from './entities/shop-image.entity';
@@ -13,11 +15,9 @@ export class ShopImagesService {
     @InjectRepository(ShopImageEntity)
     private readonly shopImageRepository: Repository<ShopImageEntity>,
     private readonly filesService: FilesService,
-    private readonly shopsService: ShopsService,
   ) {}
   async create(dto: CreateShopImageEntity) {
-    const values = await this.getValues(dto);
-    return await this.shopImageRepository.save(values);
+    return await this.saveValues(dto, new ShopImageEntity());
   }
   async findAll() {
     return await this.shopImageRepository.find({ relations: ['file'] });
@@ -45,28 +45,28 @@ export class ShopImagesService {
     if (dto.fileId && dto.fileId != shopImage.file.id) {
       previousFileId = shopImage.file.id;
     }
-    let values = await this.getValues(dto);
-    values = { ...shopImage, ...values };
-    const updated = await this.shopImageRepository.save(values);
+    const updated = await this.saveValues(dto, shopImage);
     if (previousFileId) {
       await this.filesService.remove(previousFileId);
     }
     return updated;
   }
-  private async getValues(dto: CreateShopImageEntity | UpdateShopImageEntity) {
-    let values = {};
-    const { shopId, fileId, is_preview } = dto;
+  private async saveValues(
+    dto: CreateShopImageEntity | UpdateShopImageEntity,
+    image: ShopImageEntity,
+  ) {
+    image = copyKeys(['is_preview'], dto, image);
+    const { shopId, fileId } = dto;
     if (shopId) {
-      const shop = await this.shopsService.findById(shopId);
-      values = { ...values, shop };
+      const shop = new ShopEntity();
+      shop.id = shopId;
+      image.shop = shop;
     }
     if (fileId) {
-      const file = await this.filesService.findById(fileId);
-      values = { ...values, file };
+      const file = new FileEntity();
+      file.id = fileId;
+      image.file = file;
     }
-    if (is_preview) {
-      values = { ...values, is_preview };
-    }
-    return values;
+    return await this.shopImageRepository.save(image);
   }
 }

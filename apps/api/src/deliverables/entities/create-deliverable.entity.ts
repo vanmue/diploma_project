@@ -1,11 +1,10 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty } from 'class-validator';
 import { DeliverableEntity } from './deliverable.entity';
 
-export class CreateDeliverableEntity extends OmitType(DeliverableEntity, [
-  'id' as const,
-  'masters' as const,
-  'deliverable_group' as const,
+export class CreateDeliverableEntity extends PickType(DeliverableEntity, [
+  'name' as const,
+  'price' as const,
 ]) {
   @IsNotEmpty()
   @IsInt()

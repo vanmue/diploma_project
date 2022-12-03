@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeliverablesService } from 'src/deliverables/deliverables.service';
+import { FileEntity } from 'src/files/entities/file.entity';
 import { FilesService } from 'src/files/files.service';
 import { ProfilesService } from 'src/profiles/profiles.service';
 import { ReviewsService } from 'src/reviews/reviews.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
+import { ShopEntity } from 'src/shops/entities/shop.entity';
 import { ListByShopDto } from 'src/shops/query-dto/list-by-shop.dto';
-import { ShopsService } from 'src/shops/shops.service';
+import { copyKeys } from 'src/utils/copy-keys';
 import { In, Repository } from 'typeorm';
 import { CreateMasterEntity } from './entities/create-master.entity';
 import { MasterEntity } from './entities/master.entity';
@@ -23,7 +25,6 @@ export class MastersService {
     private readonly filesService: FilesService,
     private readonly profilesService: ProfilesService,
     private readonly reviewsService: ReviewsService,
-    private readonly shopsService: ShopsService,
   ) {}
   async create(dto: CreateMasterEntity) {
     return await this.saveValues(dto, new MasterEntity());
@@ -162,7 +163,7 @@ export class MastersService {
   async findReviewsByMaster(id: number) {
     const master = await this.masterRepository.findOneOrFail({
       where: { id },
-      relations: ['deliverables'],
+      relations: ['deliverables', 'profile.user'],
     });
 
     master.reviews = await this.reviewsService.findByMaster(master.id);
@@ -193,16 +194,14 @@ export class MastersService {
     master: MasterEntity,
   ) {
     const keys = ['profession', 'description'];
-    keys.forEach((key) => {
-      if (dto[key]) {
-        master[key] = dto[key];
-      }
-    });
+    master = copyKeys(keys, dto, master);
 
     const { fileId, deliverables, shops, userId } = dto;
 
     if (fileId) {
-      master.img_file = await this.filesService.findById(fileId);
+      const file = new FileEntity();
+      file.id = fileId;
+      master.img_file = file;
     }
 
     if (deliverables) {
@@ -212,7 +211,12 @@ export class MastersService {
     }
 
     if (shops) {
-      master.shops = await this.shopsService.findByIds(shops);
+      const shopEntities = shops.map((id) => {
+        const shop = new ShopEntity();
+        shop.id = id;
+        return shop;
+      });
+      master.shops = shopEntities;
     }
 
     if (userId) {
