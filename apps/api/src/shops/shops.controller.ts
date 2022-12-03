@@ -2,8 +2,10 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   UseInterceptors,
@@ -14,6 +16,7 @@ import { MastersService } from 'src/masters/masters.service';
 import { JsonService } from 'src/services/json/json.service';
 import { CreateShopEntity } from './entities/create-shop.entity';
 import { ShopEntity } from './entities/shop.entity';
+import { UpdateShopEntity } from './entities/update-shop.entity';
 import { ListAllDto } from './query-dto/list-all.dto';
 import { ListByShopDto } from './query-dto/list-by-shop.dto';
 import { ShopsService } from './shops.service';
@@ -50,6 +53,20 @@ export class ShopsController {
   @ApiResponse({ type: ShopEntity })
   async create(@Body() dto: CreateShopEntity): Promise<JsonObject<ShopEntity>> {
     const data = await this.shopsService.create(dto);
+    return this.jsonService.data(data);
+  }
+
+  @Delete(':id')
+  @ApiResponse({ type: ShopEntity })
+  async remove(@Param('id') id: number) {
+    const data = await this.shopsService.remove(id);
+    return this.jsonService.data(data);
+  }
+
+  @Patch(':id')
+  @ApiResponse({ type: ShopEntity })
+  async update(@Param('id') id: number, @Body() dto: UpdateShopEntity) {
+    const data = await this.shopsService.update(id, dto);
     return this.jsonService.data(data);
   }
 }

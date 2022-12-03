@@ -30,6 +30,14 @@ export class ShopImagesController {
     const data = await this.shopImagesService.findAll();
     return this.jsonService.data(data);
   }
+
+  @Get(':id')
+  @ApiResponse({ type: ShopImageEntity, isArray: true })
+  async getById(@Param('id') id: number) {
+    const data = await this.shopImagesService.findById(id);
+    return this.jsonService.data(data);
+  }
+
   @Post()
   @ApiResponse({ type: ShopImageEntity })
   async create(

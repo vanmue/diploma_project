@@ -7,7 +7,6 @@ import { ProfilesModule } from 'src/profiles/profiles.module';
 import { ReviewsModule } from 'src/reviews/reviews.module';
 import { JsonService } from 'src/services/json/json.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
-import { ShopsModule } from 'src/shops/shops.module';
 import { MasterEntity } from './entities/master.entity';
 import { MastersController } from './masters.controller';
 import { MastersService } from './masters.service';
@@ -23,7 +22,6 @@ import { AppointmentsByMasterController } from './shops/appointments/appointment
     FilesModule,
     ProfilesModule,
     ReviewsModule,
-    forwardRef(() => ShopsModule),
   ],
   exports: [MastersService],
 })

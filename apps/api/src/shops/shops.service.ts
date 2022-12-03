@@ -3,9 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CityEntity } from 'src/cities/entities/city.entity';
 import { DeliverableGroupsService } from 'src/deliverables/groups/deliverable-groups.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
+import { copyKeys } from 'src/utils/copy-keys';
 import { In, Repository } from 'typeorm';
 import { CreateShopEntity } from './entities/create-shop.entity';
 import { ShopEntity } from './entities/shop.entity';
+import { UpdateShopEntity } from './entities/update-shop.entity';
 import { ListAllDto } from './query-dto/list-all.dto';
 import { ShopAdvantageEntity } from './shop-advantages/entities/shop-advantage.entity';
 
@@ -18,18 +20,7 @@ export class ShopsService {
     private readonly paginationService: PaginationService,
   ) {}
   async create(dto: CreateShopEntity) {
-    const { cityId, advantages } = dto;
-
-    const city = new CityEntity();
-    city.id = cityId;
-
-    const advs = advantages?.map((id) => {
-      const adv = new ShopAdvantageEntity();
-      adv.id = id;
-      return adv;
-    });
-
-    return await this.shopRepository.save({ ...dto, city, advantages: advs });
+    return await this.saveValues(dto, new ShopEntity());
   }
   async findAllPaginated(query?: ListAllDto) {
     const { city_id, deliverable_group_id, limit, page } = query;
@@ -122,5 +113,51 @@ export class ShopsService {
 
   async findByIds(ids: number[]) {
     return await this.shopRepository.findBy({ id: In(ids) });
+  }
+
+  async remove(id: number) {
+    const shop = await this.findById(id);
+    const toRemove = { ...shop };
+    await this.shopRepository.remove(shop);
+    return toRemove;
+  }
+
+  async update(id: number, dto: UpdateShopEntity) {
+    const shop = await this.findById(id);
+    return await this.saveValues(dto, shop);
+  }
+
+  private async saveValues(
+    dto: CreateShopEntity | UpdateShopEntity,
+    shop: ShopEntity,
+  ) {
+    const keys = [
+      'name',
+      'address',
+      'working_time',
+      'working_start',
+      'working_end',
+      'phone',
+      'center_longtitude',
+      'center_latitude',
+      'label_longtitude',
+      'label_latitude',
+      'zoom',
+    ];
+    shop = copyKeys(keys, dto, shop);
+    const { cityId, advantages } = dto;
+    if (cityId) {
+      const city = new CityEntity();
+      city.id = cityId;
+      shop.city = city;
+    }
+    if (advantages) {
+      shop.advantages = advantages.map((id) => {
+        const adv = new ShopAdvantageEntity();
+        adv.id = id;
+        return adv;
+      });
+    }
+    return await this.shopRepository.save(shop);
   }
 }

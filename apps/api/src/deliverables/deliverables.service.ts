@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { copyKeys } from 'src/utils/copy-keys';
 import { In, Repository } from 'typeorm';
 import { CreateDeliverableEntity } from './entities/create-deliverable.entity';
 import { DeliverableEntity } from './entities/deliverable.entity';
+import { UpdateDeliverableEntity } from './entities/update-deliverable.entity';
 import { DeliverableGroupEntity } from './groups/entities/deliverable-group.entity';
 
 @Injectable()
@@ -13,12 +15,7 @@ export class DeliverablesService {
   ) {}
 
   async create(dto: CreateDeliverableEntity) {
-    const { deliverableGroupId } = dto;
-
-    const deliverable_group = new DeliverableGroupEntity();
-    deliverable_group.id = deliverableGroupId;
-
-    return await this.deliverableRepository.save({ ...dto, deliverable_group });
+    return await this.saveValues(dto, new DeliverableEntity());
   }
 
   async findAll() {
@@ -33,5 +30,32 @@ export class DeliverablesService {
 
   async findByIds(ids: number[]) {
     return this.deliverableRepository.findBy({ id: In(ids) });
+  }
+
+  async remove(id: number) {
+    const deliverable = await this.findById(id);
+    const toRemove = { ...deliverable };
+    await this.deliverableRepository.remove(deliverable);
+    return toRemove;
+  }
+
+  async update(id: number, dto: UpdateDeliverableEntity) {
+    const deliverable = await this.findById(id);
+    return await this.saveValues(dto, deliverable);
+  }
+
+  private async saveValues(
+    dto: CreateDeliverableEntity | UpdateDeliverableEntity,
+    deliverable: DeliverableEntity,
+  ) {
+    const keys = ['name', 'price'];
+    deliverable = copyKeys(keys, dto, deliverable);
+    const { deliverableGroupId } = dto;
+    if (deliverableGroupId) {
+      const group = new DeliverableGroupEntity();
+      group.id = deliverableGroupId;
+      deliverable.deliverable_group = group;
+    }
+    return await this.deliverableRepository.save(deliverable);
   }
 }

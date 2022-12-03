@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { rm } from 'fs/promises';
+import { copyKeys } from 'src/utils/copy-keys';
 import { Repository } from 'typeorm';
 import { FileEntity } from './entities/file.entity';
 
@@ -57,9 +58,7 @@ export class FilesService {
   }
   private async saveValues(file: Express.Multer.File, dto: FileEntity) {
     const keys = ['originalname', 'path', 'mimetype', 'size'];
-    keys.forEach((key) => {
-      dto[key] = file[key];
-    });
+    dto = copyKeys(keys, file, dto);
     return await this.fileRepository.save(dto);
   }
 }
