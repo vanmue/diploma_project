@@ -10,7 +10,6 @@ const initialStore = {
 }
 
 export default function masterIdReducer(store = initialStore, action) {
-  console.log(action)
   switch (action.type) {
 
     case GET_MASTER_ID: {

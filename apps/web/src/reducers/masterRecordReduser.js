@@ -7,7 +7,6 @@ const initialStore = {
 export default function masterRecordReducer(store = initialStore, action) {
     switch (action.type) {
         case MASTER_RECORD: {
-            console.log(action)
             return {
                 ...store,
                 record: action.payload

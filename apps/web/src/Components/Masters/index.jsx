@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Calendar from './Calendar'
 import Price from './Price'
@@ -6,59 +6,35 @@ import Reviews from "./Reviews";
 import "./master.scss"
 import Rating from '../Rating'
 import { getMasterIdActionThunk } from '../../actions/masterIdAction'
-import { getMasterRecordThunk } from '../../actions/masterRecordAction'
 import { getAciveSalonByIdThunk } from '../../actions/salonsAction'
 
 function Master() {
-  const masterRecord = useSelector(store => store.masterRecordReducer);
-  const masterId = /* useSelector(store => store.masterIdReducer.id); */2
-  const salonId = /* useSelector(store => store.masterIdReducer.salonId); */2
+  let masterId = useSelector(store => store.masterIdReducer.id);
+  let salonId = useSelector(store => store.masterIdReducer.salonId);
   const data = useSelector(store => store.masterIdReducer.dataMaster);
   const salon = useSelector(store => store.salonsReducer.activeSalon);
+  const arrReting = []
 
-  const [record, setRecord] = useState(null);
-  const [day, setDay] = useState('');
+  const ret = () => {
+    data?.reviews.map(reviev => {
+      if (reviev.score) {
+        arrReting.push(reviev.score)
+      }
+    })
+    return arrReting.reduce((a, b) => a + b, 0) / arrReting.length
+  }
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMasterIdActionThunk(masterId));
     dispatch(getAciveSalonByIdThunk(salonId));
-    dispatch(getMasterRecordThunk(masterId))
   }, [])
 
-  //console.log(masterRecord)
-  console.log(data)
-
-  function getDay(day1) {
-    setDay(day1)
+  if (masterId && salonId) {
+    localStorage.setItem("masterId&salonId", JSON.stringify({ masterId: masterId, salonId: salonId }))
   }
-
-  // localStorage.setItem("myKey", JSON.stringify({ masterId: masterId, salonId: salonId }))
-
-  // const arr = JSON.parse(localStorage.getItem("myKey"))
-  // console.log(arr)
-  // masterId = JSON.parse(localStorage.getItem("myKey")).masterId
-
-  // useEffect(() => {
-
-  //   fetch(`/api/v1/masters/${masterId}/shops/${shopID}/appointments/?date=${day}`)
-  //     .then((req) => req.json())
-  //     .then((res) => {
-  //       if (res.data[0]) {
-  //         console.log(res.data[0].shops[0].appointments)
-  //         //console.log(res.data?.filter(master => master.id === masterId)[0])
-  //         setRecord(res.data[0])
-  //       }
-  //     })
-  //     .catch(error => console.log(error))
-
-  // }, [day])
-
-  // useEffect(() => {
-  //   setRecord(dispatch(getMasterIdActionThunk(`date=${day}&master_id=${masterId}`)))
-  // }, [day])
-  //console.log(record)
-
+  masterId = JSON.parse(localStorage.getItem("masterId&salonId")).masterId
+  salonId = JSON.parse(localStorage.getItem("masterId&salonId")).salonId
 
   return <>
     <div className='main-page'>
@@ -68,9 +44,9 @@ function Master() {
             <img src={data?.img_file.path} alt="foto" />
           </div>
           <div className="master__info-block">
-            <h2 className="master__name">{data?.user.name} {data?.user.surname} - {data?.profession}</h2>
+            <h2 className="master__name">{data?.profile.user.name} {data?.profile.user.surname} - {data?.profession}</h2>
             <div className="master-card__wrapp-rating">
-              <Rating />
+              <Rating rating={ret()} />
             </div>
 
             <p className="master__work">Работает в салоне: {salon?.name}</p>
@@ -79,9 +55,9 @@ function Master() {
             </div>
           </div>
         </div>
-        <Calendar dataMaster={data} record={record} getDay={getDay} salonId={salonId} />
-        <Price price={record} />
-        <Reviews record={record} />
+        <Calendar dataMaster={data} salonId={salonId} />
+        <Price />
+        <Reviews />
       </div>
     </div>
 
