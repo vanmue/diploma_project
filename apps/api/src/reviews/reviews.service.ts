@@ -47,6 +47,7 @@ export class ReviewsService {
       .leftJoin('appointment.master', 'master')
       .leftJoinAndSelect('review.profile', 'profile')
       .leftJoinAndSelect('profile.user', 'user')
+      .leftJoinAndSelect('user.avatar', 'avatar')
       .where('master.id = :masterId', { masterId })
       .andWhere('review.score IS NOT NULL OR review.review IS NOT NULL')
       .getMany();
