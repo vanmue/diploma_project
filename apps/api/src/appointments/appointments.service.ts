@@ -59,7 +59,7 @@ export class AppointmentsService {
           },
         },
       },
-      relations: ['master', 'shop', 'deliverable', 'review'],
+      relations: ['master.profile.user', 'shop', 'deliverable', 'review'],
       order: {
         to: 'DESC',
       },
