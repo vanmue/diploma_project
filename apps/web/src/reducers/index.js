@@ -7,7 +7,7 @@ import mastersReducer from "./mastersReducer";
 import servicesReducer from "./servicesReducer";
 import masterRecordReducer from './masterRecordReduser';
 import advantagesReducer from "./advantagesReducer";
-import userInfoReducer from "./userInfoReduser"
+import deliverablesReducer from "./deliverablesReducer"
 
 export default combineReducers({
   citiesReducer,
@@ -18,5 +18,5 @@ export default combineReducers({
   masterIdReducer,
   masterRecordReducer,
   advantagesReducer,
-  userInfoReducer
+  deliverablesReducer
 });

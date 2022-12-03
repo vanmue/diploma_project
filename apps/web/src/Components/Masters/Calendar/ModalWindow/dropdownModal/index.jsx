@@ -5,9 +5,8 @@ import './dropdownModal.scss';
 function DropdownModal({
     dropdownTitle,
     items,
-    setChoice
+    setChoiceService
 }) {
-    //console.log(items)
     const [value, setValue] = useState(dropdownTitle)
     const [btnActive, setBtnActive] = useState(false);
 
@@ -17,7 +16,7 @@ function DropdownModal({
     const handleClickListItem = (e, id) => {
         setValue(e.currentTarget.innerHTML)
         setBtnActive(!btnActive)
-        setChoice({ value: e.currentTarget.innerHTML, id: id })
+        setChoiceService({ value: e.currentTarget.innerHTML, id: id })
 
     }
 

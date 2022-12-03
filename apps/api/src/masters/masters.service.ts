@@ -1,19 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ListAllAppointmentsDto } from 'src/appointments/list-all-appointments.dto';
 import { DeliverablesService } from 'src/deliverables/deliverables.service';
 import { FilesService } from 'src/files/files.service';
 import { ReviewsService } from 'src/reviews/reviews.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
-import { ListByShopDto } from 'src/shops/dto/list-by-shop.dto';
+import { ListByShopDto } from 'src/shops/query-dto/list-by-shop.dto';
 import { ShopsService } from 'src/shops/shops.service';
-import { UserEntity } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { In, Raw, Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateMasterEntity } from './entities/create-master.entity';
 import { MasterEntity } from './entities/master.entity';
 import { UpdateMasterEntity } from './entities/update-master.entity';
-import { ListAllMastersDto } from './list-all-masters-dto';
+import { ListAllMastersDto } from './query-dto/list-all-masters.dto';
 
 @Injectable()
 export class MastersService {
@@ -21,39 +19,14 @@ export class MastersService {
     @InjectRepository(MasterEntity)
     private readonly masterRepository: Repository<MasterEntity>,
     private readonly paginationService: PaginationService,
+    private readonly deliverablesService: DeliverablesService,
+    private readonly filesService: FilesService,
     private readonly reviewsService: ReviewsService,
     private readonly shopsService: ShopsService,
-    private readonly deliverablesService: DeliverablesService,
     private readonly usersService: UsersService,
-    private readonly filesService: FilesService,
   ) {}
   async create(dto: CreateMasterEntity) {
-    const { userId, shops, deliverables, fileId } = dto;
-
-    const user = new UserEntity();
-    user.id = userId;
-
-    const shopEntities = await this.shopsService.findByIds(shops);
-
-    const delivEntities = await this.deliverablesService.findByIds(
-      deliverables,
-    );
-
-    let values = {};
-    values = {
-      ...values,
-      ...dto,
-      user,
-      shops: shopEntities,
-      deliverables: delivEntities,
-    };
-
-    if (fileId) {
-      const img_file = await this.filesService.findById(fileId);
-      if (img_file) {
-        values = { ...values, img_file };
-      }
-    }
+    const values = await this.getValues(dto);
 
     return await this.masterRepository.save(values);
   }
@@ -142,6 +115,7 @@ export class MastersService {
       .createQueryBuilder('master')
       .leftJoinAndSelect('master.img_file', 'img_file')
       .leftJoinAndSelect('master.user', 'user')
+      .leftJoinAndSelect('user.avatar', 'avatar')
       .leftJoinAndSelect('master.shops', 'shop')
       .leftJoinAndSelect('master.deliverables', 'deliverable')
       .leftJoinAndSelect('deliverable.deliverable_group', 'deliverable_group')
@@ -177,88 +151,72 @@ export class MastersService {
       page,
     );
   }
-  async findAppointments(query?: ListAllAppointmentsDto) {
-    const { master_id, date, shop_id } = query;
 
-    let where = {};
-    if (date) {
-      where = {
-        ...where,
-        shops: {
-          appointments: {
-            from: Raw((alias) => `date_trunc('day', ${alias}) = :dt`, {
-              dt: date,
-            }),
-          },
-        },
-      };
-    }
-    if (shop_id) {
-      where = {
-        ...where,
-        shops: {
-          id: shop_id,
-        },
-      };
-    }
+  async findById(id: number) {
+    return await this.masterRepository.findOneOrFail({
+      where: { id },
+    });
+  }
 
-    if (master_id) {
-      where = { ...where, id: master_id };
-    }
-
-    const masters = await this.masterRepository.find({
-      where,
-      relations: {
-        shops: {
-          appointments: true,
-        },
-        deliverables: true,
-        img_file: true,
-      },
+  async findReviewsByMaster(id: number) {
+    const master = await this.masterRepository.findOneOrFail({
+      where: { id },
+      relations: ['deliverables'],
     });
 
-    let p = Promise.resolve(null);
-    masters.forEach((master) => {
-      p = p.then(() =>
-        this.reviewsService.findByMaster(master.id).then((reviews) => {
-          master.reviews = reviews;
-        }),
-      );
-    });
-    return p.then(() => masters);
+    master.reviews = await this.reviewsService.findByMaster(master.id);
+
+    return master;
   }
 
   async update(id: number, dto: UpdateMasterEntity) {
     const master = await this.masterRepository.findOneByOrFail({ id });
+    let values = await this.getValues(dto);
+    values = { ...master, ...values };
+    return await this.masterRepository.save(values);
+  }
 
+  async remove(id: number) {
+    const master = await this.masterRepository.findOneOrFail({
+      where: { id },
+      relations: ['img_file'],
+    });
+    const toRemove = { ...master };
+    const fileId = master.img_file.id;
+    await this.masterRepository.remove(master);
+    await this.filesService.remove(fileId);
+    return toRemove;
+  }
+  private async getValues(dto: CreateMasterEntity | UpdateMasterEntity) {
+    let values = {};
     const keys = ['profession', 'description'];
     keys.forEach((key) => {
       if (dto[key]) {
-        master[key] = dto[key];
+        values = { ...values, [key]: dto[key] };
       }
     });
 
     if (dto.userId) {
-      master.user = await this.usersService.findById(dto.userId);
+      const user = await this.usersService.findById(dto.userId);
+      values = { ...values, user };
     }
 
     if (dto.fileId) {
       const img_file = await this.filesService.findById(dto.fileId);
-      if (img_file) {
-        master.img_file = img_file;
-      }
+      values = { ...values, img_file };
     }
 
     if (dto.deliverables) {
-      master.deliverables = await this.deliverablesService.findByIds(
+      const deliverables = await this.deliverablesService.findByIds(
         dto.deliverables,
       );
+      values = { ...values, deliverables };
     }
 
     if (dto.shops) {
-      master.shops = await this.shopsService.findByIds(dto.shops);
+      const shops = await this.shopsService.findByIds(dto.shops);
+      values = { ...values, shops };
     }
-
-    return await this.masterRepository.save(master);
+    return values;
   }
 }

@@ -1,4 +1,4 @@
-import { ListAllMastersDto } from './list-all-masters-dto';
+import { ListAllMastersDto } from './list-all-masters.dto';
 
 describe('ListAllMastersDto', () => {
   it('should be defined', () => {

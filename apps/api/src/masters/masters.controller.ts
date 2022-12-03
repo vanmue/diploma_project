@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -14,8 +15,8 @@ import { JsonService } from 'src/services/json/json.service';
 import { CreateMasterEntity } from './entities/create-master.entity';
 import { MasterEntity } from './entities/master.entity';
 import { UpdateMasterEntity } from './entities/update-master.entity';
-import { ListAllMastersDto } from './list-all-masters-dto';
 import { MastersService } from './masters.service';
+import { ListAllMastersDto } from './query-dto/list-all-masters.dto';
 
 @Controller('masters')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -24,6 +25,12 @@ export class MastersController {
     private readonly mastersService: MastersService,
     private readonly jsonService: JsonService,
   ) {}
+
+  @Get(':id')
+  async getMaster(@Param('id') id: number) {
+    const data = await this.mastersService.findReviewsByMaster(id);
+    return this.jsonService.data(data);
+  }
 
   @Get()
   async getAll(@Query() query: ListAllMastersDto) {
@@ -41,6 +48,12 @@ export class MastersController {
   @Patch(':id')
   async update(@Param('id') id: number, @Body() dto: UpdateMasterEntity) {
     const data = await this.mastersService.update(id, dto);
+    return this.jsonService.data(data);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: number) {
+    const data = await this.mastersService.remove(id);
     return this.jsonService.data(data);
   }
 }

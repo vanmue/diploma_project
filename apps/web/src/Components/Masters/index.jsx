@@ -7,27 +7,38 @@ import "./master.scss"
 import Rating from '../Rating'
 import { getMasterIdActionThunk } from '../../actions/masterIdAction'
 import { getMasterRecordThunk } from '../../actions/masterRecordAction'
+import { getAciveSalonByIdThunk } from '../../actions/salonsAction'
 
 function Master() {
   const masterRecord = useSelector(store => store.masterRecordReducer);
-  const masterId = useSelector(store => store.masterIdReducer.salon);
-  const data = useSelector(store => store.masterIdReducer);
+  const masterId = /* useSelector(store => store.masterIdReducer.id); */2
+  const salonId = /* useSelector(store => store.masterIdReducer.salonId); */2
+  const data = useSelector(store => store.masterIdReducer.dataMaster);
+  const salon = useSelector(store => store.salonsReducer.activeSalon);
 
-  const [record, setRecord] = useState(null)
-  const [day, setDay] = useState('')
+  const [record, setRecord] = useState(null);
+  const [day, setDay] = useState('');
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getMasterIdActionThunk(masterId))
-  }, [masterId])
+    dispatch(getMasterIdActionThunk(masterId));
+    dispatch(getAciveSalonByIdThunk(salonId));
+    dispatch(getMasterRecordThunk(masterId))
+  }, [])
 
-
-
+  //console.log(masterRecord)
   console.log(data)
 
   function getDay(day1) {
     setDay(day1)
   }
+
+  // localStorage.setItem("myKey", JSON.stringify({ masterId: masterId, salonId: salonId }))
+
+  // const arr = JSON.parse(localStorage.getItem("myKey"))
+  // console.log(arr)
+  // masterId = JSON.parse(localStorage.getItem("myKey")).masterId
+
   // useEffect(() => {
 
   //   fetch(`/api/v1/masters/${masterId}/shops/${shopID}/appointments/?date=${day}`)
@@ -48,7 +59,6 @@ function Master() {
   // }, [day])
   //console.log(record)
 
-  //console.log(day)
 
   return <>
     <div className='main-page'>
@@ -63,13 +73,13 @@ function Master() {
               <Rating />
             </div>
 
-            <p className="master__work">Работает в салоне: {data?.shops[0].name}</p>
+            <p className="master__work">Работает в салоне: {salon?.name}</p>
             <div className="master__info">
               <p> {data?.description} </p>
             </div>
           </div>
         </div>
-        <Calendar dataMaster={data} record={record} getDay={getDay} />
+        <Calendar dataMaster={data} record={record} getDay={getDay} salonId={salonId} />
         <Price price={record} />
         <Reviews record={record} />
       </div>

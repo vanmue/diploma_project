@@ -27,6 +27,10 @@ export class DeliverablesService {
     });
   }
 
+  async findById(id: number) {
+    return this.deliverableRepository.findOneByOrFail({ id });
+  }
+
   async findByIds(ids: number[]) {
     return this.deliverableRepository.findBy({ id: In(ids) });
   }

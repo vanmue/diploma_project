@@ -4,7 +4,7 @@ import DropdownModal from './dropdownModal'
 import moment from 'moment'
 import './modalWindow.scss'
 
-function ModalWindow({ modalActive, choiceDay, data, dataMaster, record, changeModalActive }) {
+function ModalWindow({ modalActive, choiceDay, data, dataMaster, record, changeModalActive, salonId }) {
     let cell = ['10-00', '11-00', '12-00', '13-00', '14-00', '15-00', '16-00', '17-00', '18-00']
 
     const [tel, setTel] = useState('');
@@ -12,10 +12,10 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record, changeM
     const [text, setText] = useState('');
     const [time, setTime] = useState(null);
     const [choose, setChoose] = useState(true)
-    const [choice, setChoice] = useState({})
+    const [choiceService, setChoiceService] = useState({})
     const [form, setForm] = useState(null)
-    //const[cellRender,setCellRender]=useState(cell)
 
+    console.log(salonId)
     function chooseTime(e) {
 
         if (choose) {
@@ -30,43 +30,40 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record, changeM
     function handleSubmit(e) {
         e.preventDefault()
         changeModalActive()
-        if (choice === null) {
+        if (choiceService === null) {
+
             alert('выбирите услугу')
         } else if (!time) {
             alert('выбирите время')
-        } else if (!name) {
-            alert('напишите имя ')
-        } else if (!tel) {
-            alert('напишите телефон ')
         }
-
+        console.log(salonId)
         setForm({
             masterId: dataMaster.id,
-            shopId: dataMaster.shops[0].id,
-            deliverableId: choice?.id,
-            comments: e.target[2].value ? e.target[2].value : '',
+            shopId: +salonId,
+            deliverableId: choiceService?.id,
+            comments: e.target[0].value ? e.target[0].value : '',
             from: moment(choiceDay).add(time.slice(0, -3), 'hours').toISOString(),
-            name: e.target[0].value,
-            phone: e.target[1].value,
+            customerId: 1,
             to: moment(choiceDay).add((time.slice(0, -3) + 1), 'hours').toISOString(),
         })
+        if (form) {
+
+            console.log(form)
+            fetch(`/api/v1/appointments`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(form)
+            })
+                .then(res => res.json())
+                .then(res => console.log(res))
+        }
 
     }
 
-    if (form) {
 
-        console.log(form)
-        fetch(`/api/v1/appointments`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(form)
-        })
-            .then(res => res.json())
-            .then(res => console.log(res))
-    }
 
     if (record?.shops[0].appointments) {
         console.log(record?.shops[0].appointments)
@@ -80,10 +77,10 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record, changeM
                 <div className="modal_container">
                     <div className="modal__master-block">
                         <div className="modal__master-foto">
-                            <img src={dataMaster?.user.avatar} alt="" />
+                            <img src={dataMaster?.user.avatar.path} alt="" />
                         </div>
                         <div className="modal__master-text">
-                            <h2 className="modal__master-name">{dataMaster?.user.name}</h2>
+                            <h2 className="modal__master-name">{dataMaster?.user.name} {dataMaster?.user.surname}</h2>
                             <p className="modal__master-specialization">{dataMaster?.profession}</p>
                             <p>рейтинг</p>
                         </div>
@@ -92,7 +89,7 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record, changeM
                         <DropdownModal
                             dropdownTitle={'Выберите услугу'}
                             items={data}
-                            setChoice={setChoice}
+                            setChoiceService={setChoiceService}
                         />
                         <div className="modal__master-time">
                             <h2>Время доступное для записи</h2>
@@ -113,14 +110,14 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, record, changeM
                     <form onSubmit={e => handleSubmit(e)} >
                         <div className="modal__form">
 
-                            <div >
+                            {/* <div >
                                 <label  >Имя:</label>
                                 <input type="text" value={name} onChange={e => setName(e.target.value)} />
-                            </div>
-                            <div>
+                            </div> */}
+                            {/*  <div>
                                 <label >Телефон:</label>
                                 <input type="tel" value={tel} onChange={e => setTel(e.target.value)} />
-                            </div>
+                            </div> */}
                             <div >
                                 <label  >Комментарий к записи:</label>
                                 <input type="text" value={text} onChange={e => setText(e.target.value)} />

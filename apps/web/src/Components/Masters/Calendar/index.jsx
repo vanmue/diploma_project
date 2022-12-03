@@ -9,7 +9,7 @@ import ModalWindow from "./ModalWindow/index.jsx";
 
 
 
-function Calendar({ dataMaster, record, getDay }) {
+function Calendar({ dataMaster, record, getDay, salonId }) {
 
     const data = [dataMaster?.deliverables]
     moment.updateLocale('es', { week: { dow: 1 } })
@@ -56,7 +56,7 @@ function Calendar({ dataMaster, record, getDay }) {
             <h2 className='calendar__text'>Выбрать дату и время для записи:</h2>
             <CalendarMonth itemday={itemday} monthSubtract={monthSubtract} monthAdd={monthAdd} />
             <CalendarGrid startDay={startDay} today={today} cellClick={cellClick} getDay={getDay} />
-            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} data={data} dataMaster={dataMaster} record={record} changeModalActive={changeModalActive} />
+            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} data={data} dataMaster={dataMaster} record={record} changeModalActive={changeModalActive} salonId={salonId} />
         </div>
     );
 }

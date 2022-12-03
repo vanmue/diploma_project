@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeNavigationColorAction, changingLabelInHeaderAction, changeHeaderBackgroundAction } from '../../actions/stylesActions';
 import SalonCard from '../../Components/SalonCard';
 import YandexMap from '../../Components/YandexMap';
 import Button from '../../Components/Button';
@@ -8,17 +7,34 @@ import Carousel from '../../Components/Carousel';
 import MasterAddCard from '../../Components/masterAddCard';
 import Pagination from '../../Components/Pagination';
 import DrpdnForAddSalons from '../../Components/DrpdnForAddSalons';
+import MasterCard from '../../Components/MasterCard';
 import { getCitiesThunk } from '../../actions/citiesActions';
 import { getAllAdvantagesThunk } from '../../actions/advantagesActions';
-import { postNewSalonThunk } from '../../actions/salonsAction';
-import { postImageForSalonThunk } from '../../actions/salonsAction';
+import { getAllMasterForActiveSalonThunk } from '../../actions/mastersActions';
+import {
+  postNewSalonThunk,
+  postImageForSalonThunk,
+  getAciveSalonByIdThunk
+} from '../../actions/salonsAction';
+import {
+  changeNavigationColorAction,
+  changingLabelInHeaderAction,
+  changeHeaderBackgroundAction,
+} from '../../actions/stylesActions';
 import img1 from '../../Components/Carousel/img/carusel-img-1.jpg';
 import img2 from '../../Components/Carousel/img/carusel-img-2.jpg';
-import img3 from '../../Components/Carousel/img/carusel-img-3.jpg';
 import './salon-admin-office.scss';
 
 function SalonAdminOffice() {
-  const dispatch = useDispatch();
+
+  const select = useSelector(store => ({
+    cities: store.citiesReducer.cities,
+    advantages: store.advantagesReducer.advantages,
+    activeSalonId: store.salonsReducer.activeSalonId,
+    activeSalon: store.salonsReducer.activeSalon,
+    mastersActiveSalon: store.mastersReducer.mastersActiveSalon,
+  }))
+
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [imageForSalon, setImageForSalon] = useState({
     img: "",
@@ -27,26 +43,21 @@ function SalonAdminOffice() {
   });
   const [formNewSalon, setFormNewSalon] = useState({
     name: null,
+    cityId: 0,
     address: null,
     working_time: null,
     working_start: 0,
     working_end: 0,
+    advantages: [],
     phone: null,
-    images: [
-      null
-    ],
-    center_longtitude: 0,
     center_latitude: 0,
-    label_longtitude: 0,
+    center_longtitude: 0,
     label_latitude: 0,
+    label_longtitude: 0,
     zoom: 0,
-    cityId: 0,
-    advantages: [
-
-    ]
   });
   const formNewSalonTest = {
-    name: "NewSalon-1",
+    name: "NewSalon-2",
     address: "Семфтропольская улица",
     working_time: "начало в 10 до 20",
     working_start: 10,
@@ -57,17 +68,10 @@ function SalonAdminOffice() {
     label_longtitude: 59.93069550217494,
     label_latitude: 30.295617482627414,
     zoom: 10,
-    cityId: 1,
-    advantages: [
-      1
-    ]
+    cityId: 3,
+    advantages: [1]
   }
-
-
-  const select = {
-    cities: useSelector((store => store.citiesReducer.cities)),
-    advantages: useSelector((store => store.advantagesReducer.advantages)),
-  }
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(changingLabelInHeaderAction(false));
@@ -76,11 +80,14 @@ function SalonAdminOffice() {
 
     dispatch(getCitiesThunk());
     dispatch(getAllAdvantagesThunk());
+    dispatch(getAciveSalonByIdThunk(select.activeSalonId));
+    dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId));
   }, []);
-  useEffect(() => {
-    console.log('SalonAdminOffice useEffect formNewSalon: ', formNewSalon)
-    // console.log('SalonAdminOffice useEffect select.advantages: ', select.advantages)
-  }, [formNewSalon, select.advantages]);
+  // useEffect(() => {
+  //   console.log('SalonAdminOffice useEffect select.activeSalon: ', select.activeSalon)
+  //   // console.log('SalonAdminOffice useEffect select.advantages: ', select.advantages)
+  //   // console.log('SalonAdminOffice useEffect formNewSalon: ', formNewSalon)
+  // }, [select.activeSalon]);
 
   const handleChangeTextareaModalNewSalon = (e) => {
     console.log('handleChangeTextareaModalNewSalon e: ', e.currentTarget.getAttribute("id"))
@@ -127,40 +134,38 @@ function SalonAdminOffice() {
     setIsActiveModal(prevIsActiveModal => !prevIsActiveModal);
   }
 
-  // const handleClickBtnPostNewSalon = () => {
-  //   console.log('handleClickBtnPostNewSalon')
-  // }
-
   const callbacks = {
     onSetIsActiveEditingSalonModal: useCallback(() => {
       setIsActiveModal(prevIsActiveModal => !prevIsActiveModal);
     }),
     onSetCitiesId: useCallback((id) => {
       setFormNewSalon({ ...formNewSalon, cityId: Number(id) })
-      // console.log('SalonAdminOffice id: ', id)
     }),
     onSetАdvantagesId: useCallback((id) => {
       let arrAdv = formNewSalon.advantages;
       arrAdv.push(id);
       setFormNewSalon({ ...formNewSalon, advantages: arrAdv })
-      // console.log('SalonAdminOffice id: ', id)
     }),
     onPostNewSalon: useCallback((id) => {
       console.log('handleClickBtnPostNewSalon');
+      // dispatch(postNewSalonThunk(formNewSalonTest));
       dispatch(postNewSalonThunk(formNewSalon));
     }),
     onPostImageForSalon: useCallback(() => {
+      // console.log('onPostImageForSalon imageForSalon:', imageForSalon);
       dispatch(postImageForSalonThunk(imageForSalon));
-      console.log('onPostImageForSalon imageForSalon:', imageForSalon);
     }),
     onChangeUploadImageForSalon: useCallback(() => {
       let inputFile = document.querySelector('.carousel__add-img-input').files[0]
-      console.log('onChangeUploadImageForSalon');
+
+      console.log('onChangeUploadImageForSalon .files[0]', inputFile);
       // console.log('document.querySelector inputFile :', inputFile);
       setImageForSalon({ ...imageForSalon, img: inputFile });
     }),
+    onGetActivePagePagination: useCallback((page) => {
+    }),
   }
-  // carousel__add-img-input
+
   const renders = {
     yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
       zoom={12} items={[[53.21624037527426, 50.13260255066459]]} />
@@ -171,22 +176,16 @@ function SalonAdminOffice() {
       <div className="container">
         <div className="salon-admine-office__flex">
           <div className="salon-admine-office__wrapp-salon-card">
-            <SalonCard
-              salonTitle={"Салон-красоты «Версаль»"}
-              city={{ name: "Москва" }}
-              address={"ул. Костина, 6/1, 3 этаж (м. Красносельская)"}
+            {select.activeSalon ? <SalonCard
+              salonTitle={select.activeSalon.name}
+              city={select.activeSalon.city}
+              address={select.activeSalon.address}
               colorTitle={"#F5BFAB"}
               bkgInfo={"#410935"}
-              workinghours={"с 10:00 до 20:00 без выходных"}
-              parking={"Бесплатная гостевая парковка"}
-              telephone={"(495) 123-45-67"}
-              deliverableGgroups={[
-                { name: "Косметология" },
-                { name: "Парикмахерские услуги" },
-                { name: "Макияж / брови / ресницы" },
-                { name: "Педикюр" },
-                { name: "Маникюр" },
-              ]}
+              workinghours={select.activeSalon.working_time}
+              parking={select.activeSalon.advantages[0].name}
+              telephone={select.activeSalon.phone}
+              deliverableGgroups={select.activeSalon.deliverable_groups}
               isEdited={true}
               // textLink,
               // bckCallBtn,
@@ -194,28 +193,46 @@ function SalonAdminOffice() {
               // bkgRecordBtn,
               // colorTextRecordBtn,
               // img,
-              map={renders.yandexMap}
+              // map={renders.yandexMap}
               onClickEditing={callbacks.onSetIsActiveEditingSalonModal}
-            // onClick
-            />
+            /> : ''}
           </div>
           <div className="salon-admine-office__wrapp-carousel">
             <Carousel
-              images={[{ img: img1 }, { img: img2 },]} //{ img: img3 }, { img: img1 }
+              images={[{ img: img1 }, { img: img2 },]}
               isEdited
               onClick={callbacks.onPostImageForSalon}
               onChange={callbacks.onChangeUploadImageForSalon}
             />
           </div>
           <div className="salon-admine-office__wrapp-master-add-card">
-            <MasterAddCard />
+            <MasterAddCard
+            />
           </div>
 
           <div className="salon-admine-office__masters">
             <p className="salon-admine-office__masters-title">Мастера салона:</p>
-            <div className="salon-admine-office__wrapp-master-card"></div>
+            {select.mastersActiveSalon?.map((el, index) => {
+              return <div className="salon-admine-office__wrapp-master-card" key={el.id}>
+                <MasterCard
+                  name={el.user.name}
+                  surname={el.user.surname}
+                  rating={el.reviews_scores_count}
+                  salon={el.shops[0].name}
+                  pathImg={el.img_file.path}
+                  specialization={el.profession}
+                  description={el.description}
+                  textBtn={'Удалить мастера'}
+                  colorTextBtnRecord={'#FFFFFF'}
+                  colorBkgBtnRecord={'#410935'}
+                //  linkTo
+                />
+              </div>
+            })}
             <div className="salon-admine-office__wrapp-pagination">
-              <Pagination />
+              <Pagination
+                onClick={callbacks.onGetActivePagePagination}
+              />
             </div>
           </div>
 

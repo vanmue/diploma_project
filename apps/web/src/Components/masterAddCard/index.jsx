@@ -1,10 +1,104 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import propTypes from 'prop-types';
+import { getAllDeliverablesThunk } from '../../actions/deliverablesActions';
+import { postImageFormMasterThunk } from '../../actions/mastersActions';
 import Button from '../Button';
 import imgCam from './img/camera.png';
 import './master-add-card.scss';
 
-function MasterAddCard() {
+function MasterAddCard({
+  onClick
+}) {
+  const select = useSelector((store) => ({
+    deliverables: store.deliverablesReducer.deliverables,
+    imgForFaceMasterId: store.mastersReducer.imgForFaceMasterId,
+  }));
+  const [formImgForMaster, setFormImgForMaster] = useState(null);
+  const [formForAddMasterInSalon, setFormForAddMasterInSalon] = useState({
+    fileId: null,                           // {number} - id картинки для лица мастера
+    userId: null,                           // {number} - id пользователя
+    profession: null,                       // {string} - название профессии
+    description: null,                      // {string} - описание мастера
+    shops: [4],                              // {[number]} - id салона
+    deliverables: [],                       // {[number]} - id услуг
+  });
+  const inputRef = useRef(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllDeliverablesThunk());
+  }, []);
+
+  useEffect(() => {
+    console.log('MasterAddCard formForAddMasterInSalon', formForAddMasterInSalon);
+    // setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: select.imgForFaceMasterId });
+    // console.log('MasterAddCard formForAddMasterInSalon', formForAddMasterInSalon)
+  }, [formForAddMasterInSalon]);
+
+  const handleChangeUploadImg = (e) => {
+    setFormImgForMaster(e.currentTarget.files[0]);
+  }
+
+  const handleChangeServicesCheckbox = (e) => {
+
+    let id = e.currentTarget.dataset.serviceId;
+    let servicesList = [...formForAddMasterInSalon.deliverables];
+    let index = servicesList.indexOf(id, 0);
+
+    if (index == -1) {
+
+      setFormForAddMasterInSalon({
+        ...formForAddMasterInSalon,
+        deliverables: [
+          ...formForAddMasterInSalon.deliverables,
+          id
+        ]
+      });
+    } else {
+
+      servicesList.splice(index, 1);
+      setFormForAddMasterInSalon({
+        ...formForAddMasterInSalon,
+        deliverables: [
+          ...servicesList
+        ]
+      });
+    }
+  }
+
+  const handleChangeInputText = (e) => {
+    let current = e.currentTarget.id;
+    let currentValue = e.currentTarget.value;
+    switch (current) {
+      case "master-id":
+        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, userId: currentValue });
+        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: select.imgForFaceMasterId });
+        break;
+      case "master-profession":
+        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, profession: currentValue })
+        break;
+      case "master-desk":
+        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, description: currentValue })
+        break;
+      default:
+        break;
+    }
+  }
+
+  const callbacks = {
+    onGetAllDeliverables: useCallback(() => {
+    }),
+    onPostImageForMaster: useCallback(() => {
+      dispatch(postImageFormMasterThunk(formImgForMaster));
+    }),
+    onPostNewMaster: useCallback(() => {
+      // let delivList = document.querySelector('.master-add-card__info-services-list').querySelectorAll('input');
+      // let delivListChecked
+      // console.log('MasterAddCard onPostNewMaster delivList: ', delivList)
+      // console.log('MasterAddCard onPostNewMaster: ', formForAddMasterInSalon)
+    }),
+  }
 
   return (
     <div className="master-add-card">
@@ -18,38 +112,58 @@ function MasterAddCard() {
             <img className="master-add-card__img-upload-pic-pic" src={imgCam} alt="Фотоаппарат" />
             <p className="master-add-card__img-upload-desc">Добавить фото</p>
           </div>
-
-          <input className="master-add-card__img-upload-input" src="" type="file" alt="Загрузка фото" />
+          <div
+            className="master-add-card__img-upload-wrapp-button"
+            style={{ position: "absolute", left: '8px', bottom: '10px', zIndex: '2' }}
+          >
+            <Button
+              background={"#410935"}
+              colorText={"#FFFFFF"}
+              onClick={callbacks.onPostImageForMaster}
+            >Отправить</Button>
+          </div>
+          <input
+            className="master-add-card__img-upload-input"
+            type="file"
+            accept="image/*"
+            name='file'
+            // accept="image/png, image/jpeg"
+            onChange={handleChangeUploadImg}
+          />
         </div>
 
         <div className="master-add-card__info">
-          <div className="master-add-card__info-name master-add-card__info-item">
+          <div className="master-add-card__info-id master-add-card__info-item">
             <label
-              className="master-add-card__info-name-label"
+              className="master-add-card__info-id-label"
               htmlFor="master-name"
             >
-              Имя:
+              Идентификатор:
             </label>
             <input
-              id="master-name"
-              className="master-add-card__info-name-input"
-              name="name"
+              id="master-id"
+              className="master-add-card__info-id-input"
+              name="master-id"
               type="text"
+              placeholder='Введите идентификатор пользователя'
+              onChange={handleChangeInputText}
             />
           </div>
 
-          <div className="master-add-card__info-surname master-add-card__info-item">
+          <div className="master-add-card__info-profession master-add-card__info-item">
             <label
-              className="master-add-card__info-surname-label"
-              htmlFor="master-surname"
+              className="master-add-card__info-profession-label"
+              htmlFor="master-profession"
             >
-              Фамилия:
+              Профессия:
             </label>
             <input
-              id="master-surname"
-              className="master-add-card__info-surname-input"
-              name="surname"
+              id="master-profession"
+              className="master-add-card__info-profession-input"
+              name="master-profession"
               type="text"
+              placeholder='мастер парикмахер'
+              onChange={handleChangeInputText}
             />
           </div>
 
@@ -63,58 +177,33 @@ function MasterAddCard() {
             <textarea
               id="master-desk"
               className="master-add-card__info-desk-textarea"
-              // rows="5"
-              // cols="33"
               name="desk"
+              placeholder='Не много информации о себе'
+              onChange={handleChangeInputText}
             />
           </div>
 
           <div className="master-add-card__info-services master-add-card__info-item">
             <div
               className="master-add-card__info-services-label"
-            // htmlFor="master-service"
             >
               Услуги мастера:
             </div>
             <div
-              // id="master-services"
-              className="master-add-card__info-services-flex"
-              name="services"
+              className="master-add-card__info-services-list"
+              ref={inputRef}
             >
-              <div className="master-add-card__info-services-services ">
-                <input
-                  id="master-service-1"
-                  className="master-add-card__info-services-service"
-                  type="text" />
-                <input
-                  id="master-service-2"
-                  className="master-add-card__info-services-service"
-                  type="text" />
-                <input
-                  id="master-service-3"
-                  className="master-add-card__info-services-service"
-                  type="text" />
-              </div>
-              <div className="master-add-card__info-services-prices">
-                <div className="master-add-card__info-services-prices-title">
-                  Стоимость:
-                </div>
-                <div className="master-add-card__info-services-prices-prices">
+              {select.deliverables?.map((el) => {
+                return <label htmlFor={`service-${el.id}`} key={el.id}>
                   <input
-                    id="master-service-price-1"
-                    className="master-add-card__info-services-prices-input"
-                    type="text" />
-                  <input
-                    id="master-service-price-2"
-                    className="master-add-card__info-services-prices-input"
-                    type="text" />
-                  <input
-                    id="master-service-price-3"
-                    className="master-add-card__info-services-prices-input"
-                    type="text" />
-
-                </div>
-              </div>
+                    id={`service-${el.id}`}
+                    data-service-id={el.id}
+                    type="checkbox"
+                    onChange={handleChangeServicesCheckbox}
+                  />
+                  {el.name}
+                </label>
+              })}
             </div>
           </div>
 
@@ -125,6 +214,7 @@ function MasterAddCard() {
         <Button
           background={"#410935"}
           colorText={"#FFFFFF"}
+          onClick={callbacks.onPostNewMaster}
         >Сохранить</Button>
       </div>
 
@@ -133,11 +223,11 @@ function MasterAddCard() {
 }
 
 MasterAddCard.propTypes = {
-
+  onClick: propTypes.func
 }
 
 MasterAddCard.defaultProps = {
-
+  onClick: () => { }
 }
 
 export default React.memo(MasterAddCard);

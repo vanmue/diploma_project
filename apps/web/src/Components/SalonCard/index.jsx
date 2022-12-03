@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import propTypes from 'prop-types';
 import ServicesList from '../ServicesList';
 import Button from '../Button';
+import { setActiveSalonIdAction } from '../../actions/salonsAction';
 import './salon-card.scss';
 
 function SalonCard({
@@ -26,10 +28,9 @@ function SalonCard({
   onClick,
   onClickEditing
 }) {
+  const dispatch = useDispatch();
 
   const handleClickLink = (e) => {
-    // console.log("e.currentTarget.closest('.salons-page__wrapp-salon-card'):", e.currentTarget.closest('.salons-page__wrapp-salon-card').dataset.salonId)
-    // console.log('onClick :', typeof onClick)
     if (typeof onClick == 'function') {
       let id = e.currentTarget.closest('.salons-page__wrapp-salon-card').dataset.salonId;
       onClick(id);
@@ -40,11 +41,16 @@ function SalonCard({
     onClickEditing();
   }
 
+  const callbacks = {
+    onSetActiveSalonId: useCallback((e) => {
+      let salonId = e.currentTarget.closest('.salons-page__wrapp-salon-card').dataset.salonId;
+      dispatch(setActiveSalonIdAction(salonId));
+    }),
+  }
+
   return (
     <div className="salon-card">
       <div className="salon-card__img">
-        {/* <img src={img} alt="Фото салона" /> */}
-        {/* {img ? <img src={img} alt="Фото салона" /> : "map опять  не передалось"} */}
         {img ? <img src={img} alt="Фото салона" /> : map ? map : ""}
         {/* {img ? <img src={img} alt="Фото салона" /> : map } */}
       </div>
@@ -69,7 +75,6 @@ function SalonCard({
             </div>
             <div className="salon-card__working-hours">
               <p>Время работы: {workinghours}</p>
-              {/* <p>Время работы: c <span>10:00</span> до <span>20:00</span> <span>без выходных</span></p> */}
             </div>
             <div className="salon-card__parking">
               {parking}
@@ -78,7 +83,6 @@ function SalonCard({
               style={{ marginBottom: textLink ? "20px" : "57px" }}
             >
               Телефон: {telephone}
-              {/* <div>Телефон: <span>(495) 123-45-67</span></div> */}
             </div>
             {textLink ? (<div className="salon-card__salon-page-link" style={{ marginBottom: "20px" }} onClick={handleClickLink}>
               <Link to="/salon">{textLink}</Link>
@@ -91,7 +95,6 @@ function SalonCard({
                   <Button
                     colorText={colorTextCallBtn}
                     background={bckCallBtn}
-                    onClick={() => { }}
                   >
                     Позвонить
                   </Button>
@@ -100,7 +103,8 @@ function SalonCard({
                   <Button
                     colorText={colorTextRecordBtn}
                     background={bkgRecordBtn}
-                    onClick={() => { }}
+                    linkTo={'/salon'}
+                    onClick={callbacks.onSetActiveSalonId}
                   >
                     Записаться
                   </Button>
@@ -127,13 +131,18 @@ function SalonCard({
 SalonCard.propTypes = {
   salonTitle: propTypes.string,
   city: propTypes.object,
+  colorTitle: propTypes.string,
   bkgInfo: propTypes.string,
   address: propTypes.string,
   workinghours: propTypes.string,
   telephone: propTypes.string,
+  parking: propTypes.string,
+  textLink: propTypes.string,
   deliverableGgroups: propTypes.arrayOf(propTypes.object),
-  // parking: propTypes.array,
-  // parking: propTypes.string,
+  bckCallBtn: propTypes.string,
+  colorTextCallBtn: propTypes.string,
+  bkgRecordBtn: propTypes.string,
+  colorTextRecordBtn: propTypes.string,
   img: propTypes.string,
   map: propTypes.element,
   isEdited: propTypes.bool,

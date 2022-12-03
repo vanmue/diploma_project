@@ -18,5 +18,5 @@ export const getAllAdvantagesThunk = () => async (dispatch, getState) => {
       // console.log("getAllAdvantagesThunk res.data: ", res.data)
       dispatch(getAllAdvantagesAction(res.data));
     })
-  // .catch(console.log('getAllAdvantagesThunk: ', 'Что-то не получилось'));
+    .catch(err => console.log('getAllAdvantagesThunk: ', err));
 }

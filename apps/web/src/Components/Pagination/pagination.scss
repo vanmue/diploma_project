@@ -1,8 +1,8 @@
  @import '../../assets/styles/mixins.scss';
+ @import '../../assets/styles/colors.scss';
 
  .pagination {
    display: flex;
-   //  width: 100%;
    margin: 0 auto;
 
    &__list {
@@ -18,9 +18,9 @@
    &__list-item {
      display: flex;
      @include inter(400, normal);
-     font-size: 14px;
-     line-height: 17px;
-     color: #F5BFAB;
+     font-size: 24px;
+     line-height: 29px;
+     color: $beige;
      cursor: pointer;
    }
 
