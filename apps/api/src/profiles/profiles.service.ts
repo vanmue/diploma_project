@@ -23,15 +23,11 @@ export class ProfilesService {
   async findById(id: number) {
     return await this.profileRepository.findOneByOrFail({ id });
   }
-  async findProfile(userId: number, type: ProfileType) {
-    return await this.profileRepository.findOne({
-      where: {
-        user: {
-          id: userId,
-        },
-        profile_type: type,
-      },
-    });
+  async findMaster(userId: number) {
+    return await this.findProfile(userId, ProfileType.Master);
+  }
+  async findCustomer(userId: number) {
+    return await this.findProfile(userId, ProfileType.Customer);
   }
   async getTypes() {
     return Object.values(ProfileType);
@@ -46,16 +42,31 @@ export class ProfilesService {
     const profile = await this.profileRepository.findOneByOrFail({ id });
     return await this.saveValues(dto, profile);
   }
+  private async findProfile(userId: number, type: ProfileType) {
+    const where = {
+      user: {
+        id: userId,
+      },
+      profile_type: type,
+    };
+    let profile = await this.profileRepository.findOne({ where });
+    if (profile == null) {
+      where.profile_type = ProfileType.Root;
+      profile = await this.profileRepository.findOneOrFail({ where });
+    }
+    return profile;
+  }
   private async saveValues(
     dto: CreateProfileEntity | UpdateProfileEntity,
-    values: ProfileEntity,
+    profile: ProfileEntity,
   ) {
-    if (dto.profile_type) {
-      values.profile_type = dto.profile_type;
+    const { profile_type, userId } = dto;
+    if (profile_type) {
+      profile.profile_type = profile_type;
     }
-    if (dto.userId) {
-      values.user = await this.usersService.findById(dto.userId);
+    if (userId) {
+      profile.user = await this.usersService.findById(userId);
     }
-    return await this.profileRepository.save(values);
+    return await this.profileRepository.save(profile);
   }
 }

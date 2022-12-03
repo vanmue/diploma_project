@@ -9,7 +9,7 @@ export class CreateMasterEntity extends PickType(MasterEntity, [
   @IsNotEmpty()
   @IsInt()
   @ApiProperty()
-  profileId: number;
+  userId: number;
 
   @ArrayNotEmpty()
   @ApiProperty({ type: Number, isArray: true })
