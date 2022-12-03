@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersService } from 'src/users/users.service';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { copyKeys } from 'src/utils/copy-keys';
 import { Repository } from 'typeorm';
 import { CreateProfileEntity } from './entities/create-profile.entity';
 import { ProfileEntity } from './entities/profile.entity';
@@ -12,7 +13,6 @@ export class ProfilesService {
   constructor(
     @InjectRepository(ProfileEntity)
     private readonly profileRepository: Repository<ProfileEntity>,
-    private readonly usersService: UsersService,
   ) {}
   async create(dto: CreateProfileEntity) {
     return this.saveValues(dto, new ProfileEntity());
@@ -60,12 +60,13 @@ export class ProfilesService {
     dto: CreateProfileEntity | UpdateProfileEntity,
     profile: ProfileEntity,
   ) {
-    const { profile_type, userId } = dto;
-    if (profile_type) {
-      profile.profile_type = profile_type;
-    }
+    profile = copyKeys(['profile_type'], dto, profile);
+
+    const { userId } = dto;
     if (userId) {
-      profile.user = await this.usersService.findById(userId);
+      const user = new UserEntity();
+      user.id = userId;
+      profile.user = user;
     }
     return await this.profileRepository.save(profile);
   }

@@ -2,9 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
 import { ProfilesService } from 'src/profiles/profiles.service';
+import { copyKeys } from 'src/utils/copy-keys';
 import { Repository } from 'typeorm';
 import { CreateReviewEntity } from './entities/create-review.entity';
 import { ReviewEntity } from './entities/review.entity';
+import { UpdateReviewEntity } from './entities/update-review.entity';
 
 @Injectable()
 export class ReviewsService {
@@ -34,6 +36,10 @@ export class ReviewsService {
       .getRawOne();
   }
 
+  async findById(id: number) {
+    return await this.reviewRepository.findOneByOrFail({ id });
+  }
+
   async findByMaster(masterId: number) {
     return await this.reviewRepository
       .createQueryBuilder('review')
@@ -45,13 +51,25 @@ export class ReviewsService {
       .andWhere('review.score IS NOT NULL OR review.review IS NOT NULL')
       .getMany();
   }
-  private async saveValues(dto: CreateReviewEntity, review: ReviewEntity) {
+
+  async remove(id: number) {
+    const review = await this.findById(id);
+    const toRemove = { ...review };
+    await this.reviewRepository.remove(review);
+    return toRemove;
+  }
+
+  async update(id: number, dto: UpdateReviewEntity) {
+    const review = await this.findById(id);
+    return await this.saveValues(dto, review);
+  }
+
+  private async saveValues(
+    dto: CreateReviewEntity | UpdateReviewEntity,
+    review: ReviewEntity,
+  ) {
     const keys = ['score', 'review'];
-    keys.forEach((key) => {
-      if (dto[key]) {
-        review[key] = dto[key];
-      }
-    });
+    review = copyKeys(keys, dto, review);
     const { userId, appointmentId } = dto;
     if (userId) {
       review.profile = await this.profilesService.findCustomer(userId);

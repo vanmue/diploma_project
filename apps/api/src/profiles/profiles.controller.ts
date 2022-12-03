@@ -38,6 +38,13 @@ export class ProfilesController {
     return this.jsonService.data(data);
   }
 
+  @Get(':id')
+  @ApiResponse({ type: ProfileEntity, isArray: true })
+  async getById(@Param('id') id: number) {
+    const data = await this.profilesService.findById(id);
+    return this.jsonService.data(data);
+  }
+
   @Post()
   @ApiResponse({ type: ProfileEntity })
   async create(

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { rm } from 'fs/promises';
+import { copyKeys } from 'src/utils/copy-keys';
 import { Repository } from 'typeorm';
-import { CreateFileEntity } from './entities/create-file.entity';
 import { FileEntity } from './entities/file.entity';
 
 @Injectable()
@@ -12,13 +12,7 @@ export class FilesService {
     private readonly fileRepository: Repository<FileEntity>,
   ) {}
   async create(file: Express.Multer.File) {
-    const dto: CreateFileEntity = {
-      originalname: file.originalname,
-      path: file.path,
-      mimetype: file.mimetype,
-      size: file.size,
-    };
-    return await this.fileRepository.save(dto);
+    return await this.saveValues(file, new FileEntity());
   }
 
   async findAll() {
@@ -36,6 +30,7 @@ export class FilesService {
 
   async remove(id: number) {
     const file = await this.fileRepository.findOneByOrFail({ id });
+    const toRemove = { ...file };
     try {
       await this.fileRepository.remove(file);
     } catch (e) {
@@ -47,10 +42,23 @@ export class FilesService {
       return null;
     }
     await this.deleteFile(file.path);
-    return file;
+    return toRemove;
+  }
+
+  async update(id: number, file: Express.Multer.File) {
+    const existing = await this.fileRepository.findOneByOrFail({ id });
+    const { path } = existing;
+    const updated = await this.saveValues(file, existing);
+    await this.deleteFile(path);
+    return updated;
   }
 
   private async deleteFile(path: string) {
     await rm(path);
+  }
+  private async saveValues(file: Express.Multer.File, dto: FileEntity) {
+    const keys = ['originalname', 'path', 'mimetype', 'size'];
+    dto = copyKeys(keys, file, dto);
+    return await this.fileRepository.save(dto);
   }
 }

@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hash } from 'bcrypt';
+import { FileEntity } from 'src/files/entities/file.entity';
 import { FilesService } from 'src/files/files.service';
+import { copyKeys } from 'src/utils/copy-keys';
 import { Repository } from 'typeorm';
 import { CreateUserEntity } from './entities/create-user.entity';
 import { UpdateUserEntity } from './entities/update-user.entity';
@@ -15,8 +17,7 @@ export class UsersService {
     private readonly filesService: FilesService,
   ) {}
   async create(dto: CreateUserEntity) {
-    const values = await this.getValues(dto);
-    return await this.userRepository.save(values);
+    return await this.saveValues(dto, new UserEntity());
   }
   async findAll() {
     return await this.userRepository.find({ relations: ['profiles'] });
@@ -50,31 +51,27 @@ export class UsersService {
     if (dto.avatarId && dto.avatarId != user.avatar.id) {
       previousFileId = user.avatar.id;
     }
-    let values = await this.getValues(dto);
-    values = { ...user, ...values };
-    const updated = await this.userRepository.save(values);
+    const updated = await this.saveValues(dto, user);
     if (previousFileId) {
       await this.filesService.remove(previousFileId);
     }
     return updated;
   }
-  private async getValues(dto: CreateUserEntity | UpdateUserEntity) {
-    let values = {};
-    const scalars = ['name', 'surname', 'email', 'password'];
-    scalars.forEach((s) => {
-      if (dto[s]) {
-        values = { ...values, [s]: dto[s] };
-      }
-    });
+  private async saveValues(
+    dto: CreateUserEntity | UpdateUserEntity,
+    user: UserEntity,
+  ) {
+    const scalars = ['name', 'surname', 'email'];
+    user = copyKeys(scalars, dto, user);
     const { password, avatarId } = dto;
     if (password) {
-      const hashed = await hash(password, 10);
-      values = { ...values, password: hashed };
+      user.password = await hash(password, 10);
     }
     if (avatarId) {
-      const file = await this.filesService.findById(avatarId);
-      values = { ...values, avatar: file };
+      const file = new FileEntity();
+      file.id = avatarId;
+      user.avatar = file;
     }
-    return values;
+    return await this.userRepository.save(user);
   }
 }

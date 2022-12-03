@@ -1,7 +1,6 @@
-import { OmitType } from '@nestjs/swagger';
+import { PickType } from '@nestjs/swagger';
 import { ShopAdvantageEntity } from './shop-advantage.entity';
 
-export class CreateShopAdvantageEntity extends OmitType(ShopAdvantageEntity, [
-  'id' as const,
-  'shops' as const,
+export class CreateShopAdvantageEntity extends PickType(ShopAdvantageEntity, [
+  'name' as const,
 ]) {}
