@@ -1,5 +1,6 @@
 export enum ProfileType {
-  Master = 'master',
   Customer = 'customer',
+  Master = 'master',
   Root = 'root',
+  ShopManager = 'shop_manager',
 }

@@ -44,6 +44,11 @@ export class UserEntity {
   email: string;
 
   @IsString()
+  @Column({ type: 'varchar', select: false })
+  @ApiProperty()
+  phone: string;
+
+  @IsString()
   @IsNotEmpty()
   @Column({ type: 'varchar', select: false })
   @ApiProperty({ required: true })

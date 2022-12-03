@@ -20,6 +20,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: any) {
     const id = payload.sub;
     // Объект user для добавления к request
-    return await this.usersService.findById(id);
+    return await this.usersService.findMe(id);
   }
 }

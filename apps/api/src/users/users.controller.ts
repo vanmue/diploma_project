@@ -35,7 +35,7 @@ export class UsersController {
   @Get(':id')
   @ApiResponse({ type: UserEntity, isArray: true })
   async getById(@Param('id') id: number) {
-    const data = await this.usersServie.findById(id);
+    const data = await this.usersServie.findMe(id);
     return this.jsonService.data(data);
   }
 
