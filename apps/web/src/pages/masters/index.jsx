@@ -98,8 +98,8 @@ function MastersPage() {
 
                 return <li className="masters-page__wrapp-master-card" data-master-id={el.id} data-salon-id={el.shops[0].id} key={el.id}>
                   <MasterCard
-                    name={el.user.name}
-                    surname={el.user.surname}
+                    name={el.profile.user.name}
+                    surname={el.profile.user.surname}
                     specialization={el.profession}
                     description={el.description}
                     salon={el.shops[0].name}
