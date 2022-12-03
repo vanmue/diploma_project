@@ -3,13 +3,13 @@ import moment from 'moment'
 import { CalendarGrid } from './Grid'
 import { CalendarMonth } from './CalendarMonth'
 import './calendar.scss'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ModalWindow from "./ModalWindow/index.jsx";
 
 
 
 
-function Calendar({ dataMaster, record, getDay }) {
+function Calendar({ dataMaster, salonId }) {
 
     const data = [dataMaster?.deliverables]
     moment.updateLocale('es', { week: { dow: 1 } })
@@ -24,10 +24,12 @@ function Calendar({ dataMaster, record, getDay }) {
     const [itemday, setItemDay] = useState(today.clone())
     const [modalActive, setModalActive] = useState(false);
     const [choiceDay, setChoiceDay] = useState('')
+    const [day, setDay] = useState('');
 
     function changeModalActive() {
         setModalActive(false)
     }
+
 
     function cellClick(e) {
         e.stopPropagation()
@@ -40,6 +42,11 @@ function Calendar({ dataMaster, record, getDay }) {
     function modalClose() {
         setModalActive(false)
     }
+
+    function getDay(day1) {
+        setDay(day1)
+    }
+
 
     const startDay = itemday.clone().startOf('month').startOf('week')
 
@@ -56,7 +63,16 @@ function Calendar({ dataMaster, record, getDay }) {
             <h2 className='calendar__text'>Выбрать дату и время для записи:</h2>
             <CalendarMonth itemday={itemday} monthSubtract={monthSubtract} monthAdd={monthAdd} />
             <CalendarGrid startDay={startDay} today={today} cellClick={cellClick} getDay={getDay} />
-            <ModalWindow modalActive={modalActive} choiceDay={choiceDay} data={data} dataMaster={dataMaster} record={record} changeModalActive={changeModalActive} />
+            {/* modalActive */
+                /* ? */ <ModalWindow
+                    modalActive={modalActive}
+                    choiceDay={choiceDay}
+                    data={data}
+                    dataMaster={dataMaster}
+                    changeModalActive={changeModalActive}
+                    salonId={salonId} />
+               /*  : null */}
+
         </div>
     );
 }

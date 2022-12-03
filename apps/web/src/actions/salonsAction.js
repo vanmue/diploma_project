@@ -173,7 +173,7 @@ export const getAciveSalonByIdThunk = (salonId) => async (dispatch, getState) =>
   fetch(`/api/v1/shops/${salonId}`)
     .then(req => req.json())
     .then(res => {
-      // console.log('getAciveSalonByIdThunk res: ', res)
+      //console.log('getAciveSalonByIdThunk res: ', res)
       dispatch(getAciveSalonByIdAction(res.data));
     })
     .catch(err => console.log('getAciveSalonByIdThunk: ', err))
