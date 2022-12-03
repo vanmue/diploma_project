@@ -72,9 +72,9 @@ function Pagination({
 
   const onClickHandlerNumber = (e) => {
     let page = e.currentTarget.querySelector('.pagination__list-item-number').innerHTML;
-    console.log('Pagination onClickHandlerNumber prev page: ', page)
+    // console.log('Pagination onClickHandlerNumber prev page: ', page)
     setActivePage(page);
-    console.log('Pagination onClickHandlerNumber  page: ', page)
+    // console.log('Pagination onClickHandlerNumber  page: ', page)
     // dispatch(changeActivePageForPaginationAction(page));
     onClick(page);
 

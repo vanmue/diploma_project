@@ -95,7 +95,7 @@ function SalonPage() {
                   }
                 },
                 {
-                  "id": 6,
+                  "id": 8,
                   "is_preview": false,
                   "file": {
                     "id": 5,
@@ -104,7 +104,7 @@ function SalonPage() {
                   }
                 },
                 {
-                  "id": 6,
+                  "id": 9,
                   "is_preview": false,
                   "file": {
                     "id": 5,
@@ -113,7 +113,7 @@ function SalonPage() {
                   }
                 },
                 {
-                  "id": 6,
+                  "id": 10,
                   "is_preview": false,
                   "file": {
                     "id": 5,
@@ -128,14 +128,14 @@ function SalonPage() {
             /> */}
           </div>
           {mastersActiveSalon?.map((el) => (
-            <div className="salon-page__wrapp-master-card" data-master-id={el.id} data-salon-id={el.shops.id} key={el.id}>
+            <div className="salon-page__wrapp-master-card" data-master-id={el.id} data-salon-id={el.shops[0].name} key={el.id}>
               <MasterCard
-                name={el.user.name}
-                surname={el.user.surname}
+                name={el.profile.user.name}
+                surname={el.profile.user.surname}
                 pathImg={el.img_file.path}
                 rating={el.reviews_scores_count}
                 specialization={el.profession}
-                salon={activeSalon?.name}
+                salon={el.shops[0].name}
                 description={el.description}
                 textBtn={'Записаться'}
                 colorTextBtnRecord={'#F5BFAB'}

@@ -39,7 +39,7 @@ function SalonAdminOffice() {
 
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [imageForSalon, setImageForSalon] = useState({
-    shopId: 4,          // {number} - id салона
+    shopId: 3,          // {number} - id салона
     fileId: null,       // {number} - id изображения 42
     is_preview: "false", // {string} - флаг картинки
   });
@@ -273,8 +273,8 @@ function SalonAdminOffice() {
             {select.mastersActiveSalon?.map((el, index) => {
               return <div className="salon-admine-office__wrapp-master-card" key={el.id}>
                 <MasterCard
-                  name={el.user.name}
-                  surname={el.user.surname}
+                  name={el.profile.user.name}
+                  surname={el.profile.user.surname}
                   rating={el.reviews_scores_count}
                   salon={el.shops[0].name}
                   pathImg={el.img_file.path}
