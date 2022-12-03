@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Calendar from './Calendar'
 import Price from './Price'
@@ -6,59 +6,58 @@ import Reviews from "./Reviews";
 import "./master.scss"
 import Rating from '../Rating'
 import { getMasterIdActionThunk } from '../../actions/masterIdAction'
+import { getAciveSalonByIdThunk } from '../../actions/salonsAction'
 
 function Master() {
-  const masterRecord = useSelector(store => store.masterRecoredReducer);
-  const masterId = useSelector(store => store.masterIdReducer.id);
-  const data = useSelector(store => store.masterIdReducer.dataMaster)
+  let masterId = useSelector(store => store.masterIdReducer.id);
+  let salonId = useSelector(store => store.masterIdReducer.salonId);
+  const data = useSelector(store => store.masterIdReducer.dataMaster);
+  const salon = useSelector(store => store.salonsReducer.activeSalon);
+  const arrReting = []
+
+  const ret = () => {
+    data?.reviews.map(reviev => {
+      if (reviev.score) {
+        arrReting.push(reviev.score)
+      }
+    })
+    return arrReting.reduce((a, b) => a + b, 0) / arrReting.length
+  }
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getMasterIdActionThunk(masterId))
+    dispatch(getMasterIdActionThunk(masterId));
+    dispatch(getAciveSalonByIdThunk(salonId));
   }, [])
 
-  const [record, setRecord] = useState(masterRecord)
-  const [day, setDay] = useState('')
-
-  function getDay(day1) {
-    setDay(day1)
+  if (masterId && salonId) {
+    localStorage.setItem("masterId&salonId", JSON.stringify({ masterId: masterId, salonId: salonId }))
   }
-  useEffect(() => {
+  masterId = JSON.parse(localStorage.getItem("masterId&salonId")).masterId
+  salonId = JSON.parse(localStorage.getItem("masterId&salonId")).salonId
 
-    fetch(`/api/v1/appointments/?date=${day}&master_id=${masterId}`)
-      .then((req) => req.json())
-      .then((res) => {
-        console.log(res)
-        console.log(res.data?.filter(master => master.id === masterId)[0])
-        setRecord(res.data?.filter(master => master.id === masterId)[0])
-
-      })
-      .catch(error => console.log(error))
-  }, [day])
-
-  console.log(record)
   return <>
     <div className='main-page'>
       <div className="container">
         <div className="master__item-block">
           <div className="master__item-img">
-            <img src={data?.img} alt="foto" />
+            <img src={data?.img_file.path} alt="foto" />
           </div>
           <div className="master__info-block">
-            <h2 className="master__name">{data?.user.name} {data?.user.surname} - {data?.profession}</h2>
+            <h2 className="master__name">{data?.profile.user.name} {data?.profile.user.surname} - {data?.profession}</h2>
             <div className="master-card__wrapp-rating">
-              <Rating />
+              <Rating rating={ret()} />
             </div>
 
-            <p className="master__work">Работает в салоне: {data?.shops[0].name}</p>
+            <p className="master__work">Работает в салоне: {salon?.name}</p>
             <div className="master__info">
               <p> {data?.description} </p>
             </div>
           </div>
         </div>
-        <Calendar dataMaster={data} record={record} getDay={getDay} />
-        <Price price={record} />
-        <Reviews record={record} />
+        <Calendar dataMaster={data} salonId={salonId} />
+        <Price />
+        <Reviews />
       </div>
     </div>
 

@@ -1,9 +1,40 @@
 export const GET_ALL_MASTERS = '@@masters/GET_ALL_MASTERS';
 export const GET_FILTERING_MASTERS = '@@masters/GET_FILTERING_MASTERS';
 export const GET_ALL_MASTERS_FOR_ACTIVE_SALON = '@@masters/GET_ALL_MASTERS_FOR_ACTIVE_SALON';
-export const POST_IMAGE_FOR_MASTER = '@@salons/POST_IMAGE_FOR_MASTER';
-export const POST_NEW_MASTER = '@@salons/POST_NEW_MASTER';
+export const POST_IMAGE_FOR_MASTER = '@@masters/POST_IMAGE_FOR_MASTER';
+export const POST_NEW_MASTER = '@@masters/POST_NEW_MASTER';
+export const POST_SET_ROLE_MASTER = '@@masters/POST_SET_ROLE_MASTER';
 // export const DECREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/DECREMENT_ACTIVE_PAGE_PAGINATION';
+
+
+/**
+ * 
+*/
+export const postSetRoleMasterAction = (date) => ({
+  type: POST_SET_ROLE_MASTER,
+  payload: date
+});
+/** 
+ * POST запрос. Устанавливаем роль
+ * @param {{}} date - 
+*/
+export const postSetRoleThunk = (data) => async (dispatch, getState) => {
+
+  fetch("/api/v1/profiles", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('postSetRoleThunk res:', res);
+      if (data.profile_type == 'master') dispatch(postSetRoleMasterAction(res.data));
+
+    })
+    .catch(err => console.log('postSetRoleThunk: ', err));
+}
 
 
 /**

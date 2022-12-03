@@ -1,12 +1,15 @@
 import { MASTER_RECORD } from '../actions/masterRecordAction';
 
-const initialStore = {}
+const initialStore = {
+    record: null
+}
 
-export default function masterRecoredReducer(store = initialStore, action) {
+export default function masterRecordReducer(store = initialStore, action) {
     switch (action.type) {
         case MASTER_RECORD: {
             return {
-                ...store, action
+                ...store,
+                record: action.payload
             }
         }
         default:

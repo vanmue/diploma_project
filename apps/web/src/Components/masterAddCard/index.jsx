@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import propTypes from 'prop-types';
 import { getAllDeliverablesThunk } from '../../actions/deliverablesActions';
-import { postImageFormMasterThunk, postNewMasterThunk } from '../../actions/mastersActions';
+import { postImageFormMasterThunk, postNewMasterThunk, postSetRoleThunk } from '../../actions/mastersActions';
 import Button from '../Button';
 import imgCam from './img/camera.png';
 import './master-add-card.scss';
@@ -13,42 +13,37 @@ function MasterAddCard({
   const select = useSelector((store) => ({
     deliverables: store.deliverablesReducer.deliverables,
     imgForFaceMasterId: store.mastersReducer.imgForFaceMasterId,
+    responsePostSetRoleMaster: store.mastersReducer.responsePostSetRoleMaster,
   }));
+
   const [formImgForMaster, setFormImgForMaster] = useState(null);
   const [formForAddMasterInSalon, setFormForAddMasterInSalon] = useState({
     fileId: null,                         // {number} - id картинки для лица мастера
-    userId: 49,                           // {number} - id пользователя
+    userId: 91,                           // {number} - id пользователя
     profession: 'profession',             // {string} - название профессии
     description: 'description',           // {string} - описание мастера
-    shops: [4],                           // {[number]} - id салона
+    shops: [3],                           // {[number]} - id салона
     deliverables: [1, 3],                 // {[number]} - id услуг
   });
-  // {
-  //   fileId: null,                       // {number} - id картинки для лица мастера
-  //   userId: 48,                         // {number} - id пользователя
-  //   profession: null,                   // {string} - название профессии
-  //   description: null,                  // {string} - описание мастера
-  //   shops: [4],                         // {[number]} - id салона
-  //   deliverables: [],                   // {[number]} - id услуг
-  // }
+  const [formSetRoleMaster, setFormSetRoleMaster] = useState({
+    profile_type: "master",               // {string} - роль
+    userId: 91                            // {number} - id ьастера
+  });
   const inputRef = useRef(null);
   const dispatch = useDispatch();
 
+  useEffect(() => { dispatch(getAllDeliverablesThunk()); }, []);
   useEffect(() => {
-    dispatch(getAllDeliverablesThunk());
-  }, []);
-
-  useEffect(() => {
-    // console.log('MasterAddCard formForAddMasterInSalon', formForAddMasterInSalon);
-
-    // setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: select.imgForFaceMasterId });
-    // console.log('MasterAddCard formForAddMasterInSalon', formForAddMasterInSalon)
-  }, [formForAddMasterInSalon]);
+    if (select.responsePostSetRoleMaster != null) {
+      dispatch(postNewMasterThunk(formForAddMasterInSalon));
+    }
+  }, [select.responsePostSetRoleMaster]);
 
   const handleChangeUploadImg = (e) => {
     setFormImgForMaster(e.currentTarget.files[0]);
   }
 
+  //Добавление услуг к создаваемому мастеру
   const handleChangeServicesCheckbox = (e) => {
 
     let id = e.currentTarget.dataset.serviceId;
@@ -76,6 +71,8 @@ function MasterAddCard({
     }
   }
 
+  //Обработка onChange при заполнении полей мастера
+  //id,profession,desk
   const handleChangeInputText = (e) => {
     let current = e.currentTarget.id;
     let currentValue = e.currentTarget.value;
@@ -104,12 +101,8 @@ function MasterAddCard({
     onPostImageForMaster: useCallback(() => {
       dispatch(postImageFormMasterThunk(formImgForMaster));
     }),
-    onPostNewMaster: useCallback(() => {
-      dispatch(postNewMasterThunk(formForAddMasterInSalon));
-      // let delivList = document.querySelector('.master-add-card__info-services-list').querySelectorAll('input');
-      // let delivListChecked
-      // console.log('MasterAddCard onPostNewMaster delivList: ', delivList)
-      // console.log('MasterAddCard onPostNewMaster: ', formForAddMasterInSalon)
+    onSetRoleMaster: useCallback(() => {
+      dispatch(postSetRoleThunk(formSetRoleMaster));
     }),
   }
 
@@ -140,7 +133,6 @@ function MasterAddCard({
             type="file"
             accept="image/*"
             name='file'
-            // accept="image/png, image/jpeg"
             onChange={handleChangeUploadImg}
           />
         </div>
@@ -227,7 +219,7 @@ function MasterAddCard({
         <Button
           background={"#410935"}
           colorText={"#FFFFFF"}
-          onClick={callbacks.onPostNewMaster}
+          onClick={callbacks.onSetRoleMaster}
         >Сохранить</Button>
       </div>
 

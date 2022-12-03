@@ -9,6 +9,7 @@ import Error from './Error';
 import Master from './Masters';
 import UserOffice from './UserOffiсe';
 import SalonAdminOffice from '../pages/salonAdminOffice';
+import MasterOffice from '../pages/masterOffice'
 
 function Router() {
   return (
@@ -21,6 +22,7 @@ function Router() {
         <Route path="master" element={<Master />} />
         <Route path="user-office" element={<UserOffice />} />
         <Route path="salon-admine-office" element={<SalonAdminOffice />} />
+        <Route path="master-office" element={<MasterOffice />} />
         <Route path="*" element={< Error />} />
       </Route>
     </Routes>
