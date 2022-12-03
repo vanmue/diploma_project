@@ -12,7 +12,7 @@ import {
   Entity,
   Exclusion,
   ManyToOne,
-  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -32,8 +32,8 @@ export class AppointmentEntity {
   @ManyToOne(() => MasterEntity)
   master: MasterEntity;
 
-  @OneToMany(() => ReviewEntity, (review) => review.appointment)
-  reviews: ReviewEntity[];
+  @OneToOne(() => ReviewEntity, (review) => review.appointment)
+  review: ReviewEntity;
 
   @ManyToOne(() => DeliverableEntity)
   deliverable: DeliverableEntity;

@@ -16,6 +16,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -34,7 +35,8 @@ export class ReviewEntity {
   @JoinColumn({ name: 'profileId' })
   profile: ProfileEntity;
 
-  @ManyToOne(() => AppointmentEntity)
+  @OneToOne(() => AppointmentEntity)
+  @JoinColumn()
   appointment: AppointmentEntity;
 
   @IsOptional()

@@ -31,6 +31,19 @@ export class UsersService {
   async findById(id: number) {
     return await this.userRepository.findOneByOrFail({ id });
   }
+  async findMe(id: number) {
+    return await this.userRepository.findOneOrFail({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        surname: true,
+        email: true,
+        phone: true,
+      },
+      relations: ['avatar', 'profiles'],
+    });
+  }
   async remove(id: number) {
     const user = await this.userRepository.findOneOrFail({
       where: { id },
@@ -61,7 +74,7 @@ export class UsersService {
     dto: CreateUserEntity | UpdateUserEntity,
     user: UserEntity,
   ) {
-    const scalars = ['name', 'surname', 'email'];
+    const scalars = ['name', 'surname', 'email', 'phone'];
     user = copyKeys(scalars, dto, user);
     const { password, avatarId } = dto;
     if (password) {

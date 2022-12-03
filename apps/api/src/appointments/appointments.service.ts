@@ -49,6 +49,23 @@ export class AppointmentsService {
     });
   }
 
+  async findByCustomer(userId: number) {
+    console.log('userId', userId);
+    return await this.appointmentRepository.find({
+      where: {
+        profile: {
+          user: {
+            id: userId,
+          },
+        },
+      },
+      relations: ['master', 'shop', 'deliverable', 'review'],
+      order: {
+        to: 'DESC',
+      },
+    });
+  }
+
   async remove(id: number) {
     const appointment = await this.appointmentRepository.findOneByOrFail({
       id,
