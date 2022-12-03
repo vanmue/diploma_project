@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import propTypes from 'prop-types';
 import Button from '../Button';
 import imgAddFoto from './img/add-foto-pic.png';
@@ -15,24 +15,20 @@ function Carousel({
   onChange
 }) {
   const [offset, setOffset] = useState(0);
-  const [countItems, setCountItems] = useState(isEdited ? images?.length + 1 : images?.length);
+  const [numberOfScrolls, setNumberOfScrolls] = useState(0);
   const carouselLineRef = useRef(null);
 
+  useEffect(() => {
+    setNumberOfScrolls(Math.ceil((isEdited ? images?.length + 1 : images?.length) / 3) - 1);
+  }, [images]);
+
   const handleClickPrev = () => {
-    offset == 0 ? setOffset(-1320 * (Math.ceil(countItems / 3) - 1)) : setOffset(prevOffset => prevOffset + 1320);
+    offset == 0 ? setOffset(-1320 * numberOfScrolls) : setOffset(prevOffset => prevOffset + 1320);
   }
 
   const handleClickNext = () => {
-    Math.abs(offset) == 1320 * (Math.ceil(countItems / 3) - 1) ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
+    Math.abs(offset) == 1320 * numberOfScrolls ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
   }
-
-  // const handleClickPrev = () => {
-  //   offset == 0 ? setOffset(-1320 * (Math.ceil(images?.length / 3) - 1)) : setOffset(prevOffset => prevOffset + 1320);
-  // }
-
-  // const handleClickNext = () => {
-  //   Math.abs(offset) == 1320 * (Math.ceil(images?.length / 3) - 1) ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
-  // }
 
   const onChangeInputUploadImageForSalon = () => {
     onChange();
