@@ -35,13 +35,14 @@ function SalonAdminOffice() {
     activeSalon: store.salonsReducer.activeSalon,
     imgForCarouselId: store.salonsReducer.imgForCarouselId,
     mastersActiveSalon: store.mastersReducer.mastersActiveSalon,
+    activePageMastersActiveSalon: store.mastersReducer.activePageMastersActiveSalon,
   }))
 
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [imageForSalon, setImageForSalon] = useState({
-    shopId: 3,          // {number} - id салона
-    fileId: null,       // {number} - id изображения 42
-    is_preview: "false", // {string} - флаг картинки
+    shopId: 3,                // {number} - id салона
+    fileId: null,             // {number} - id изображения 42
+    is_preview: "false",      // {string} - флаг картинки
   });
   const [formNewSalon, setFormNewSalon] = useState({
     name: null,
@@ -163,6 +164,7 @@ function SalonAdminOffice() {
       // setImageForSalon({ ...imageForSalon, fileId: inputFile });
     }),
     onGetActivePagePagination: useCallback((page) => {
+      // activePageMastersActiveSalon
     }),
   }
 
