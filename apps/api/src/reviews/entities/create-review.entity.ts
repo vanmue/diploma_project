@@ -9,7 +9,7 @@ export class CreateReviewEntity extends PickType(ReviewEntity, [
   @IsNotEmpty()
   @IsInt()
   @ApiProperty()
-  profileId: number;
+  userId: number;
 
   @IsNotEmpty()
   @IsInt()

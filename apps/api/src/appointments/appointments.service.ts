@@ -75,7 +75,7 @@ export class AppointmentsService {
       }
     });
 
-    const { deliverableId, profileId, masterId, shopId } = dto;
+    const { deliverableId, userId, masterId, shopId } = dto;
     if (deliverableId) {
       appointment.deliverable = await this.deliverablesService.findById(
         deliverableId,
@@ -87,9 +87,8 @@ export class AppointmentsService {
     if (shopId) {
       appointment.shop = await this.shopsService.findById(shopId);
     }
-    if (profileId) {
-      const profile = await this.profilesService.findById(dto.profileId);
-      appointment.profile = profile;
+    if (userId) {
+      appointment.profile = await this.profilesService.findCustomer(userId);
     }
     return this.appointmentRepository.save(appointment);
   }

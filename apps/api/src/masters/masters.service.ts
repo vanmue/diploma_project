@@ -187,6 +187,7 @@ export class MastersService {
     await this.filesService.remove(toRemove.img_file.id);
     return toRemove;
   }
+
   private async saveValues(
     dto: CreateMasterEntity | UpdateMasterEntity,
     master: MasterEntity,
@@ -198,23 +199,24 @@ export class MastersService {
       }
     });
 
-    if (dto.fileId) {
-      master.img_file = await this.filesService.findById(dto.fileId);
+    const { fileId, deliverables, shops, userId } = dto;
+
+    if (fileId) {
+      master.img_file = await this.filesService.findById(fileId);
     }
 
-    if (dto.deliverables) {
+    if (deliverables) {
       master.deliverables = await this.deliverablesService.findByIds(
-        dto.deliverables,
+        deliverables,
       );
     }
 
-    if (dto.shops) {
-      master.shops = await this.shopsService.findByIds(dto.shops);
+    if (shops) {
+      master.shops = await this.shopsService.findByIds(shops);
     }
 
-    if (dto.profileId) {
-      const profile = await this.profilesService.findById(dto.profileId);
-      master.profile = profile;
+    if (userId) {
+      master.profile = await this.profilesService.findMaster(userId);
     }
 
     return this.masterRepository.save(master);
