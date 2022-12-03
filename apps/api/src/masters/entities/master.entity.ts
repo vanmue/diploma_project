@@ -5,9 +5,9 @@ import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
 import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity';
 import { DeliverableGroupEntity } from 'src/deliverables/groups/entities/deliverable-group.entity';
 import { FileEntity } from 'src/files/entities/file.entity';
+import { ProfileEntity } from 'src/profiles/entities/profile.entity';
 import { ReviewEntity } from 'src/reviews/entities/review.entity';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
-import { UserEntity } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -17,7 +17,6 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -28,15 +27,13 @@ export class MasterEntity {
   @ApiProperty()
   id: number;
 
-  @IsNotEmpty()
-  @OneToOne(() => UserEntity, undefined, {
+  @ApiProperty()
+  @ManyToOne(() => ProfileEntity, undefined, {
     onDelete: 'RESTRICT',
     cascade: true,
     eager: true,
   })
-  @JoinColumn()
-  @ApiProperty()
-  user: UserEntity;
+  profile: ProfileEntity;
 
   @IsNotEmpty()
   @Column({ type: 'varchar' })

@@ -54,7 +54,7 @@ export class FakerService {
       });
       p = p.then((user) => {
         const master = new CreateMasterEntity();
-        master.userId = user.id;
+        // master.userId = user.id;
         master.profession = professions[getIndex(professions.length)];
         master.description = faker.lorem.sentences();
 

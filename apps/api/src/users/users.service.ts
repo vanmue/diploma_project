@@ -19,7 +19,7 @@ export class UsersService {
     return await this.userRepository.save(values);
   }
   async findAll() {
-    return await this.userRepository.find();
+    return await this.userRepository.find({ relations: ['profiles'] });
   }
   async findByEmail(email: string) {
     return await this.userRepository.findOneOrFail({

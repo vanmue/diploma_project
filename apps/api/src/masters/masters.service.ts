@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeliverablesService } from 'src/deliverables/deliverables.service';
 import { FilesService } from 'src/files/files.service';
+import { ProfilesService } from 'src/profiles/profiles.service';
 import { ReviewsService } from 'src/reviews/reviews.service';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { ListByShopDto } from 'src/shops/query-dto/list-by-shop.dto';
 import { ShopsService } from 'src/shops/shops.service';
-import { UsersService } from 'src/users/users.service';
 import { In, Repository } from 'typeorm';
 import { CreateMasterEntity } from './entities/create-master.entity';
 import { MasterEntity } from './entities/master.entity';
@@ -21,14 +21,12 @@ export class MastersService {
     private readonly paginationService: PaginationService,
     private readonly deliverablesService: DeliverablesService,
     private readonly filesService: FilesService,
+    private readonly profilesService: ProfilesService,
     private readonly reviewsService: ReviewsService,
     private readonly shopsService: ShopsService,
-    private readonly usersService: UsersService,
   ) {}
   async create(dto: CreateMasterEntity) {
-    const values = await this.getValues(dto);
-
-    return await this.masterRepository.save(values);
+    return await this.saveValues(dto, new MasterEntity());
   }
 
   async findByShopIdPaginated(shopId: number, query: ListByShopDto) {
@@ -46,7 +44,9 @@ export class MastersService {
       ...paginationOptions,
       order: { id: 'ASC' },
       relations: {
-        user: true,
+        profile: {
+          user: true,
+        },
         shops: true,
         img_file: true,
       },
@@ -114,7 +114,8 @@ export class MastersService {
     const masters = await this.masterRepository
       .createQueryBuilder('master')
       .leftJoinAndSelect('master.img_file', 'img_file')
-      .leftJoinAndSelect('master.user', 'user')
+      .leftJoinAndSelect('master.profile', 'profile')
+      .leftJoinAndSelect('profile.user', 'user')
       .leftJoinAndSelect('user.avatar', 'avatar')
       .leftJoinAndSelect('master.shops', 'shop')
       .leftJoinAndSelect('master.deliverables', 'deliverable')
@@ -171,9 +172,7 @@ export class MastersService {
 
   async update(id: number, dto: UpdateMasterEntity) {
     const master = await this.masterRepository.findOneByOrFail({ id });
-    let values = await this.getValues(dto);
-    values = { ...master, ...values };
-    return await this.masterRepository.save(values);
+    return await this.saveValues(dto, master);
   }
 
   async remove(id: number) {
@@ -181,42 +180,45 @@ export class MastersService {
       where: { id },
       relations: ['img_file'],
     });
+
     const toRemove = { ...master };
-    const fileId = master.img_file.id;
+
     await this.masterRepository.remove(master);
-    await this.filesService.remove(fileId);
+    await this.filesService.remove(toRemove.img_file.id);
     return toRemove;
   }
-  private async getValues(dto: CreateMasterEntity | UpdateMasterEntity) {
-    let values = {};
+
+  private async saveValues(
+    dto: CreateMasterEntity | UpdateMasterEntity,
+    master: MasterEntity,
+  ) {
     const keys = ['profession', 'description'];
     keys.forEach((key) => {
       if (dto[key]) {
-        values = { ...values, [key]: dto[key] };
+        master[key] = dto[key];
       }
     });
 
-    if (dto.userId) {
-      const user = await this.usersService.findById(dto.userId);
-      values = { ...values, user };
+    const { fileId, deliverables, shops, userId } = dto;
+
+    if (fileId) {
+      master.img_file = await this.filesService.findById(fileId);
     }
 
-    if (dto.fileId) {
-      const img_file = await this.filesService.findById(dto.fileId);
-      values = { ...values, img_file };
-    }
-
-    if (dto.deliverables) {
-      const deliverables = await this.deliverablesService.findByIds(
-        dto.deliverables,
+    if (deliverables) {
+      master.deliverables = await this.deliverablesService.findByIds(
+        deliverables,
       );
-      values = { ...values, deliverables };
     }
 
-    if (dto.shops) {
-      const shops = await this.shopsService.findByIds(dto.shops);
-      values = { ...values, shops };
+    if (shops) {
+      master.shops = await this.shopsService.findByIds(shops);
     }
-    return values;
+
+    if (userId) {
+      master.profile = await this.profilesService.findMaster(userId);
+    }
+
+    return this.masterRepository.save(master);
   }
 }

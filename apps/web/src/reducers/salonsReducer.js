@@ -4,6 +4,7 @@ import {
   GET_FILTERING_SALONS,
   POST_NEW_SALON,
   SET_ACTIVE_SALON_ID,
+  UPLOAD_IMAGE_FOR_SALON,
   // CHANGE_ACTIVE_PAGE_FOR_PAGINATION,
   // INCREMENT_ACTIVE_PAGE_PAGINATION,
   // DECREMENT_ACTIVE_PAGE_PAGINATION,
@@ -11,14 +12,21 @@ import {
 
 const initialStore = {
   salons: [],
-  activeSalonId: 4,
+  activeSalonId: 3,
   // activeSalonId: null,
   activeSalon: null,
   activePage: 1,
+  imgForCarouselId: null,
 }
 
 export default function salonsReducer(store = initialStore, action) {
   switch (action.type) {
+    case UPLOAD_IMAGE_FOR_SALON: {
+      return {
+        ...store,
+        imgForCarouselId: action.payload
+      }
+    }
     case POST_NEW_SALON: {
       return {
         ...store,

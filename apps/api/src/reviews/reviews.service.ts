@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { ProfilesService } from 'src/profiles/profiles.service';
 import { Repository } from 'typeorm';
 import { CreateReviewEntity } from './entities/create-review.entity';
 import { ReviewEntity } from './entities/review.entity';
@@ -10,22 +10,11 @@ import { ReviewEntity } from './entities/review.entity';
 export class ReviewsService {
   constructor(
     @InjectRepository(ReviewEntity)
-    private readonly reviewRepository: Repository<ReviewEntity>,
+    private readonly reviewRepository: Repository<ReviewEntity>, // private readonly profilesService: ProfilesService, // private readonly appointmentsService: AppointmentsService,
+    private readonly profilesService: ProfilesService,
   ) {}
   async create(dto: CreateReviewEntity) {
-    const { authorId, appointmentId } = dto;
-
-    const user = new UserEntity();
-    user.id = authorId;
-
-    const appointment = new AppointmentEntity();
-    appointment.id = appointmentId;
-
-    return await this.reviewRepository.save({
-      ...dto,
-      author: user,
-      appointment,
-    });
+    return await this.saveValues(dto, new ReviewEntity());
   }
 
   async findAll() {
@@ -50,9 +39,27 @@ export class ReviewsService {
       .createQueryBuilder('review')
       .leftJoin('review.appointment', 'appointment')
       .leftJoin('appointment.master', 'master')
-      .leftJoinAndSelect('review.author', 'user')
+      .leftJoinAndSelect('review.profile', 'profile')
+      .leftJoinAndSelect('profile.user', 'user')
       .where('master.id = :masterId', { masterId })
       .andWhere('review.score IS NOT NULL OR review.review IS NOT NULL')
       .getMany();
+  }
+  private async saveValues(dto: CreateReviewEntity, review: ReviewEntity) {
+    const keys = ['score', 'review'];
+    keys.forEach((key) => {
+      if (dto[key]) {
+        review[key] = dto[key];
+      }
+    });
+    const { userId, appointmentId } = dto;
+    if (userId) {
+      review.profile = await this.profilesService.findCustomer(userId);
+    }
+    if (appointmentId) {
+      review.appointment = new AppointmentEntity();
+      review.appointment.id = appointmentId;
+    }
+    return await this.reviewRepository.save(review);
   }
 }

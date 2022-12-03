@@ -25,5 +25,5 @@ export class CreateAppointmentEntity extends PickType(AppointmentEntity, [
   @ApiProperty()
   @IsNotEmpty()
   @IsInt()
-  customerId: number;
+  userId: number;
 }

@@ -22,11 +22,12 @@ export class FilesService {
   }
 
   async findAll() {
-    return await this.fileRepository.find({
-      order: {
-        id: 'ASC',
-      },
-    });
+    return await this.fileRepository
+      .createQueryBuilder('file')
+      .addSelect('file.originalname')
+      .addSelect('file.mimetype')
+      .addSelect('file.size')
+      .getMany();
   }
 
   async findById(id: number) {

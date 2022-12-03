@@ -12,9 +12,7 @@ RUN npm prune --production
 
 FROM node:16-alpine as production-stage
 
-# ENV NODE_ENV=production
-# Для отладки разработки
-ENV NODE_ENV=development 
+ENV NODE_ENV=production
 
 WORKDIR /app
 
