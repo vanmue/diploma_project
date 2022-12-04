@@ -120,15 +120,18 @@ export const getAllSalonsThunk = () => async (dispatch, getState) => {
       // console.log('getAllSalonsThunk res:', res.data);
       dispatch(getAllSalonsAction(res.data));
     })
-    .catch(err => console.log('getFilteringSalonsThunk: ', err));
+    .catch(err => console.log('getAllSalonsThunk: ', err));
 }
 
 /**
  * @param {[{}]} date - салоны
 */
-export const getSalonsAction = (date) => ({
+export const getSalonsAction = (date, pagination) => ({
   type: GET_FILTERING_SALONS,
-  payload: date
+  payload: {
+    date,
+    pagination
+  }
 });
 /** 
  * Запрос на получение выборки салонов
@@ -153,7 +156,7 @@ export const getFilteringSalonsThunk = (cityId = null, serviceId = null, page = 
   fetch(address)
     .then(req => req.json())
     .then(res => {
-      dispatch(getSalonsAction(res.data));
+      dispatch(getSalonsAction(res.data, res.pagination));
     })
     .catch(err => console.log('getFilteringSalonsThunk: ', err));
 }

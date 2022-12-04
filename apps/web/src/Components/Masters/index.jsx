@@ -15,10 +15,11 @@ function Master() {
   const salon = useSelector(store => store.salonsReducer.activeSalon);
   const arrReting = []
 
+
   const ret = () => {
-    data?.reviews.map(reviev => {
-      if (reviev.score) {
-        arrReting.push(reviev.score)
+    data?.reviews.map(review => {
+      if (review.score) {
+        arrReting.push(review.score)
       }
     })
     return arrReting.reduce((a, b) => a + b, 0) / arrReting.length
@@ -56,8 +57,8 @@ function Master() {
           </div>
         </div>
         <Calendar dataMaster={data} salonId={salonId} />
-        <Price />
-        <Reviews />
+        <Price price={data?.deliverables} />
+        <Reviews reviews={data?.reviews} />
       </div>
     </div>
 
