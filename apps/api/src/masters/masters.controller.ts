@@ -28,7 +28,7 @@ export class MastersController {
 
   @Get(':id')
   async getMaster(@Param('id') id: number) {
-    const data = await this.mastersService.findReviewsByMaster(id);
+    const data = await this.mastersService.findCard(id);
     return this.jsonService.data(data);
   }
 
