@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/users/entities/user.entity';
-import { copyKeys } from 'src/utils/copy-keys';
+import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { Repository } from 'typeorm';
 import { CreateProfileEntity } from './entities/create-profile.entity';
 import { ProfileEntity } from './entities/profile.entity';

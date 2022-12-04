@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { JsonService } from 'src/services/json/json.service';
+import { JsonService } from 'src/utils/services/json/json.service';
 import { FilesService } from './files.service';
 
 @Controller('files')

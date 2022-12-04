@@ -8,7 +8,7 @@ import {
 import { ApiResponse } from '@nestjs/swagger';
 import { AppointmentsService } from 'src/appointments/appointments.service';
 import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
-import { JsonService } from 'src/services/json/json.service';
+import { JsonService } from 'src/utils/services/json/json.service';
 
 @Controller('users/:userId/appointments')
 @UseInterceptors(ClassSerializerInterceptor)

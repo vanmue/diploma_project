@@ -9,7 +9,7 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { JsonService } from 'src/services/json/json.service';
+import { JsonService } from 'src/utils/services/json/json.service';
 import { CreateShopAdvantageEntity } from './entities/create-shop-advantage.entity';
 import { UpdateShopAdvantageEntity } from './entities/update-shop-advantage.entity';
 import { ShopAdvantagesService } from './shop-advantages.service';

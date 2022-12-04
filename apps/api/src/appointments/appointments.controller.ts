@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { JsonObject } from 'src/libs/src/models/JsonObject';
-import { JsonService } from 'src/services/json/json.service';
+import { JsonService } from 'src/utils/services/json/json.service';
 import { MasterEntity } from '../masters/entities/master.entity';
 import { AppointmentsService } from './appointments.service';
 import { AppointmentEntity } from './entites/appointment.entity';

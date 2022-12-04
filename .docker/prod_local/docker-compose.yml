@@ -19,6 +19,7 @@ services:
       dockerfile: .docker/prod/Dockerfile
     volumes:
       - ./storage/app/public/uploads:/uploads
+      - ./apps/api/.typeorm:/app/.typeorm
     env_file:
       - apps/api/.docker/prod/.env
     restart: unless-stopped
