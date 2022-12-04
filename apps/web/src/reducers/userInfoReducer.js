@@ -1,12 +1,11 @@
 import { USER_INFO } from '../actions/userInfoActions'
 
 const initialStore = {
-    userId: 7,
+    userId: null,
     dataUser: null
 }
 
 export default function userInfoReducer(store = initialStore, action) {
-
     switch (action.type) {
         case USER_INFO: {
             return {

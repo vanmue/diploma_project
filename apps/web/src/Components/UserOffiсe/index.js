@@ -1,62 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserThunk } from '../../actions/userInfoActions'
+import { getUserRecordThunk } from '../../actions/userRecordActions'
+import moment from 'moment'
+
 import './user-office.scss'
 
-import userFoto from './img/Ellipse.png'
 
 function UserOffice() {
-
-    const userInfo = useSelector(store => store.userInfoReducer)
-
+    const userId = 1
+    const gridColumns = ['Дата', 'Время', 'Салон', 'Мастер', 'Услуга', 'Стоимость']
     const dispatch = useDispatch();
+    const userInfo = useSelector(store => store.userInfoReducer.dataUser)
+    const userRecord = useSelector(store => store.userRecordReducer)
+
     useEffect(() => {
-        dispatch(getUserThunk(6))
+        dispatch(getUserThunk(userId))
+        dispatch(getUserRecordThunk(userId))
     }, [])
 
-    console.log(userInfo.dataUser.user)
-    const gridColumns = ['Дата', 'Время', 'Салон', 'Мастер', 'Услуга', 'Стоимость']
+    const local = moment().local().toISOString();
 
-    const gridInfoActual = [
-        {
-            date: '25.11.2022',
-            time: '15:00',
-            salon: 'Салон-красоты Версаль',
-            master: 'Светлана Иванова',
-            service: 'Стрижка женская (до 25 см)',
-            price: 1000,
-            rating: 'rating'
-        },
-        {
-            date: '29.11.2022',
-            time: '12:00',
-            salon: 'Салон-красоты Лето',
-            master: 'Мария Светлова',
-            service: 'Маникюр со снятием и покрытием',
-            price: 1500,
-            rating: 'rating'
-        },
-    ]
-    const gridInfoarchive = [
-        {
-            date: '10.10.2022',
-            time: '11:00',
-            salon: 'Салон-красоты Версаль',
-            master: 'Светлана Иванова',
-            service: 'Стрижка женская (до 25 см)',
-            price: 1000,
-            rating: 'rating'
-        },
-        {
-            date: '15.10.2022',
-            time: '18:00',
-            salon: 'Салон-красоты Лето',
-            master: 'Мария Светлова',
-            service: 'Маникюр со снятием и покрытием',
-            price: 1500,
-            rating: 'rating'
-        },
-    ]
+    let gridInfoActual
+    let gridInfoArchive
+
+    if (userRecord.record) {
+        const infoArchive = userRecord?.record.filter(record => moment(record.from).isSameOrBefore(local) === true)
+        const infoActual = userRecord?.record.filter(record => moment(record.from).isAfter(local) === true)
+
+        function add(item) {
+            return {
+                date: moment(item.from).format('DD.MM.YYYY'),
+                time: moment(item.from).format('HH:mm'),
+                salon: item.shop.name,
+                master: item.master.profile.user.name,
+                service: item.deliverable.name,
+                price: item.deliverable.price,
+                rating: 'rating'
+            }
+        }
+        gridInfoActual = infoActual.map((item) => add(item))
+        gridInfoArchive = infoArchive.map((item) => add(item))
+    }
+
+
     const gridInfo = (item, index) => {
         return (
             <div key={item.date + index} className="user-record__grid">
@@ -71,15 +58,16 @@ function UserOffice() {
         )
     }
 
+
     return (
         <div className='main-page'>
             <div className="container">
                 <div className="user-page">
                     <div className="user-info">
-                        <img src={userFoto} alt="foto" />
+                        <img src={userInfo?.avatar.path} alt="foto" />
                         <div className="user-info__block">
-                            <h2>Мария Александрова</h2>
-                            <p> <span style={{ marginRight: '36px' }}>Телефон: +7-920-123-45-67</span><span>Телефон: +7-920-123-45-67</span> </p>
+                            <h2>{userInfo?.name} {userInfo?.surname}</h2>
+                            <p> <span style={{ marginRight: '36px' }}>Телефон: {userInfo?.phone}</span></p>
                             <p style={{ textDecorationLine: 'underline' }}>Изменить данные</p>
                         </div>
                     </div>
@@ -89,7 +77,7 @@ function UserOffice() {
                         {gridColumns.map((column) => <span key={column}>{column}</span>
                         )}
                     </div>
-                    {gridInfoActual.map((item, index) =>
+                    {gridInfoActual?.map((item, index) =>
                         gridInfo(item, index)
                     )}
                     <h2 style={{ marginTop: '45px', marginBottom: '45px' }} >Архивные записи:</h2>
@@ -97,7 +85,7 @@ function UserOffice() {
                         {gridColumns.map((column) => <span key={column}>{column}</span>
                         )}
                     </div>
-                    {gridInfoarchive.map((item, index) =>
+                    {gridInfoArchive?.map((item, index) =>
                         gridInfo(item, index)
                     )}
                 </div>

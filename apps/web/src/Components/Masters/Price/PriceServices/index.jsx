@@ -6,7 +6,7 @@ import './priceServices.scss'
 function PriceServices({ price }) {
     //console.log(price?.deliverables)
     return <div>{
-        price?.deliverables.map((item) =>
+        price?.map((item) =>
             <li key={item.name} className='price__link'><span>{item.name}</span><span>{item.price}</span></li>
         )
     }
