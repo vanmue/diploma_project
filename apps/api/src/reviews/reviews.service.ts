@@ -41,16 +41,17 @@ export class ReviewsService {
   }
 
   async findByMaster(masterId: number) {
-    return await this.reviewRepository
+    const query = this.reviewRepository
       .createQueryBuilder('review')
-      .leftJoin('review.appointment', 'appointment')
-      .leftJoin('appointment.master', 'master')
+      .innerJoin('review.appointment', 'appointment')
+      .innerJoin('appointment.master', 'master')
       .leftJoinAndSelect('review.profile', 'profile')
       .leftJoinAndSelect('profile.user', 'user')
       .leftJoinAndSelect('user.avatar', 'avatar')
       .where('master.id = :masterId', { masterId })
-      .andWhere('review.score IS NOT NULL OR review.review IS NOT NULL')
-      .getMany();
+      .andWhere('(review.score IS NOT NULL OR review.review IS NOT NULL)');
+
+    return await query.getMany();
   }
 
   async remove(id: number) {
