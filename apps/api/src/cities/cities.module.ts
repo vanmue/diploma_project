@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JsonService } from 'src/services/json/json.service';
+import { JsonService } from 'src/utils/services/json/json.service';
 import { CitiesController } from './cities.controller';
 import { CitiesService } from './cities.service';
 import { CityEntity } from './entities/city.entity';

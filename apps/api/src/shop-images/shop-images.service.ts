@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FileEntity } from 'src/files/entities/file.entity';
 import { FilesService } from 'src/files/files.service';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
-import { copyKeys } from 'src/utils/copy-keys';
+import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { Repository } from 'typeorm';
 import { CreateShopImageEntity } from './entities/create-shop-image.entity';
 import { ShopImageEntity } from './entities/shop-image.entity';

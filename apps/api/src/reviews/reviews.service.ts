@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
 import { ProfilesService } from 'src/profiles/profiles.service';
-import { copyKeys } from 'src/utils/copy-keys';
+import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { Repository } from 'typeorm';
 import { CreateReviewEntity } from './entities/create-review.entity';
 import { ReviewEntity } from './entities/review.entity';

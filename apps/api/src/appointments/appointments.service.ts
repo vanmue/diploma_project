@@ -4,7 +4,7 @@ import { DeliverableEntity } from 'src/deliverables/entities/deliverable.entity'
 import { MasterEntity } from 'src/masters/entities/master.entity';
 import { ProfilesService } from 'src/profiles/profiles.service';
 import { ShopEntity } from 'src/shops/entities/shop.entity';
-import { copyKeys } from 'src/utils/copy-keys';
+import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { Raw, Repository } from 'typeorm';
 import { AppointmentEntity } from './entites/appointment.entity';
 import { CreateAppointmentEntity } from './entites/create-appointment.entity';

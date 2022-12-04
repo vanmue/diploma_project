@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { copyKeys } from 'src/utils/copy-keys';
+import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { In, Repository } from 'typeorm';
 import { CreateDeliverableEntity } from './entities/create-deliverable.entity';
 import { DeliverableEntity } from './entities/deliverable.entity';

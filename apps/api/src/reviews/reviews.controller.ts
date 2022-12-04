@@ -10,7 +10,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { JsonObject } from 'src/libs/src/models/JsonObject';
-import { JsonService } from 'src/services/json/json.service';
+import { JsonService } from 'src/utils/services/json/json.service';
 import { CreateReviewEntity } from './entities/create-review.entity';
 import { ReviewEntity } from './entities/review.entity';
 import { UpdateReviewEntity } from './entities/update-review.entity';

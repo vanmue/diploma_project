@@ -17,11 +17,11 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 COPY --from=build-stage /app/node_modules ./node_modules
-COPY --from=build-stage /app/dist/ ./
+COPY --from=build-stage /app/dist/ ./dist/
 
 # Для выполнения миграций
 COPY --from=build-stage /app/.typeorm/ ./.typeorm
 COPY --from=build-stage /app/.typeorm/ ./.docker
 
-CMD ["node", "main.js"]
+CMD ["node", "dist/main.js"]
 
