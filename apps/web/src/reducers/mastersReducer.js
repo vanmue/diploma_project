@@ -13,6 +13,7 @@ const initialStore = {
   activePageMastersActiveSalon: 1,  // {number} - страница пагинации для мастеров в активном салоне
   imgForFaceMasterId: null,         // {number} - id картинки для лица мастера
   responsePostSetRoleMaster: null,  // {object} - ответ на POST запрос установки роли master для user
+  pagination: null,
 }
 
 export default function mastersReducer(store = initialStore, action) {
@@ -30,9 +31,12 @@ export default function mastersReducer(store = initialStore, action) {
       }
     }
     case GET_FILTERING_MASTERS: {
+      // console.log("GET_FILTERING_MASTERS action.payload.date", action.payload.date)
+      // console.log("GET_FILTERING_MASTERS action.payload.pagination", action.payload.pagination)
       return {
         ...store,
-        masters: action.payload
+        masters: action.payload.date,
+        pagination: action.payload.pagination,
       }
     }
     case GET_ALL_MASTERS_FOR_ACTIVE_SALON: {

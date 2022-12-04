@@ -16,7 +16,7 @@ export const postSetRoleMasterAction = (date) => ({
 });
 /** 
  * POST запрос. Устанавливаем роль
- * @param {{}} date - 
+ * @param {{}} date -  {profile_type: "master", userId: 91 }
 */
 export const postSetRoleThunk = (data) => async (dispatch, getState) => {
 
@@ -146,9 +146,12 @@ export const getAllMasterForActiveSalonThunk = (activeSalonId, page = 1) => asyn
 /**
  * @param {[{}]} date - отфильтрованные мастера
 */
-export const getFilteringMastersAction = (date) => ({
+export const getFilteringMastersAction = (date, pagination) => ({
   type: GET_FILTERING_MASTERS,
-  payload: date
+  payload: {
+    date,
+    pagination
+  }
 });
 /**
  * Get запрос на получение отфильтрованных мастеров
@@ -156,18 +159,19 @@ export const getFilteringMastersAction = (date) => ({
  *  @param {number || null} serviceId - id услуги
  *  @param {number || null} salonId - id салона
 */
-export const getFilteringMastersThunk = (cityId = null, serviceId = null, salonId = null) => async (dispatch, getState) => {
+export const getFilteringMastersThunk = (cityId = null, serviceId = null, salonId = null, activePage = 1) => async (dispatch, getState) => {
 
   let city = cityId != null ? `city_id=${cityId}` : '';
   let service = serviceId != null ? `&deliverable_group_id=${serviceId}` : '';
   let salon = salonId != null ? `&shop_id=${salonId}` : '';
-  // const limit = 10;
+  const limit = '&limit=5';
+  const page = `&page=${activePage}`;
 
-  fetch(`/api/v1/masters/?${city}${service}${salon}`)
+  fetch(`/api/v1/masters/?${city}${service}${salon}${limit}${page}`)
     .then(req => req.json())
     .then(res => {
       // console.log('getFilteringMasterThunk: ', res.data)
-      dispatch(getFilteringMastersAction(res.data));
+      dispatch(getFilteringMastersAction(res.data, res.pagination));
     })
-    .catch(err => console.log('getAllMasterForActiveSalonThunk: ', err));
+    .catch(err => console.log('getFilteringMastersThunk: ', err));
 }

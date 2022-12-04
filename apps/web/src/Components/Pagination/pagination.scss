@@ -22,6 +22,11 @@
      line-height: 29px;
      color: $beige;
      cursor: pointer;
+
+     &--active {
+       transform: scale(1.5);
+       color: #A40123;
+     }
    }
 
    &__arrow-next {
