@@ -160,8 +160,8 @@ SalonCard.defaultProps = {
   isEdited: false,
   onClick: () => { },
   onClickEditing: () => { },
-  // img: '',
-  // map: '-',
+  img: '',
+  map: <></>,
 }
 
 export default React.memo(SalonCard);

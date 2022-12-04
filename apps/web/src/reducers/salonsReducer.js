@@ -12,6 +12,7 @@ import {
 
 const initialStore = {
   salons: [],
+  pagination: null,
   activeSalonId: 3,
   // activeSalonId: null,
   activeSalon: null,
@@ -40,9 +41,12 @@ export default function salonsReducer(store = initialStore, action) {
       }
     }
     case GET_FILTERING_SALONS: {
+      // console.log("GET_FILTERING_SALONS action.payload.date", action.payload.date)
+      // console.log("GET_FILTERING_SALONS action.payload.pagination", action.payload.pagination)
       return {
         ...store,
-        salons: action.payload
+        salons: action.payload.date,
+        pagination: action.payload.pagination,
       }
     }
     case SET_ACTIVE_SALON_ID: {

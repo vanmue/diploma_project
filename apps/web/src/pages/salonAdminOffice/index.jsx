@@ -84,11 +84,14 @@ function SalonAdminOffice() {
     dispatch(getCitiesThunk());
     dispatch(getAllAdvantagesThunk());
     dispatch(getAciveSalonByIdThunk(select.activeSalonId));
-    dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId));
+    dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId, 1));
   }, []);
   useEffect(() => {
     setImageForSalon({ ...imageForSalon, fileId: select.imgForCarouselId });
   }, [select.imgForCarouselId]);
+  // useEffect(() => {
+  //   dispatch(getAllMasterForActiveSalonThunk());
+  // }, [select.activePageMastersActiveSalon]);
 
   const handleChangeTextareaModalNewSalon = (e) => {
     console.log('handleChangeTextareaModalNewSalon e: ', e.currentTarget.getAttribute("id"))
@@ -159,12 +162,12 @@ function SalonAdminOffice() {
     onChangeUploadImageForSalon: useCallback(() => {
       let inputFile = document.querySelector('.carousel__add-img-input').files[0]
 
-      console.log('onChangeUploadImageForSalon .files[0]', inputFile);
+      // console.log('onChangeUploadImageForSalon .files[0]', inputFile);
       dispatch(uploadImageForSalonThunk({ file: inputFile }));
       // setImageForSalon({ ...imageForSalon, fileId: inputFile });
     }),
     onGetActivePagePagination: useCallback((page) => {
-      // activePageMastersActiveSalon
+      dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId, +page));
     }),
   }
 
@@ -185,7 +188,7 @@ function SalonAdminOffice() {
               colorTitle={"#F5BFAB"}
               bkgInfo={"#410935"}
               workinghours={select.activeSalon.working_time}
-              parking={select.activeSalon.advantages[0].name}
+              parking={select.activeSalon?.advantages[0]?.name}
               telephone={select.activeSalon.phone}
               deliverableGgroups={select.activeSalon.deliverable_groups}
               isEdited={true}
@@ -194,7 +197,7 @@ function SalonAdminOffice() {
               // colorTextCallBtn,
               // bkgRecordBtn,
               // colorTextRecordBtn,
-              // img,
+              img={select.activeSalon.images.length > 0 ? select.activeSalon.images.find(el => el.is_preview == true)?.file.path : ''}
               // map={renders.yandexMap}
               onClickEditing={callbacks.onSetIsActiveEditingSalonModal}
             /> : ''}
@@ -277,6 +280,7 @@ function SalonAdminOffice() {
                 <MasterCard
                   name={el.profile.user.name}
                   surname={el.profile.user.surname}
+                  // rating={3.5}
                   rating={el.reviews_scores_count}
                   salon={el.shops[0].name}
                   pathImg={el.img_file.path}
