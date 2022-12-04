@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JsonService } from 'src/services/json/json.service';
 import { ShopImagesModule } from 'src/shop-images/shop-images.module';
+import { JsonService } from 'src/utils/services/json/json.service';
 import { ShopImageEntity } from '../../shop-images/entities/shop-image.entity';
 import { ImagesByShopController } from './images-by-shop.controller';
 

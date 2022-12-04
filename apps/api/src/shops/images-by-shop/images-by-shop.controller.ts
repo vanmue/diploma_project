@@ -4,8 +4,8 @@ import {
   Get,
   UseInterceptors,
 } from '@nestjs/common';
-import { JsonService } from 'src/services/json/json.service';
 import { ShopImagesService } from 'src/shop-images/shop-images.service';
+import { JsonService } from 'src/utils/services/json/json.service';
 
 @Controller('shops/:id/images')
 @UseInterceptors(ClassSerializerInterceptor)

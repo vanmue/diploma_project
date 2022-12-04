@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileEntity } from 'src/files/entities/file.entity';
 import { FilesService } from 'src/files/files.service';
-import { copyKeys } from 'src/utils/copy-keys';
+import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { Repository } from 'typeorm';
 import { CreateDeliverableGroupEntity } from './entities/create-deliverable-group.entity';
 import { DeliverableGroupEntity } from './entities/deliverable-group.entity';

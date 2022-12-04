@@ -10,20 +10,20 @@ import { CitiesModule } from './cities/cities.module';
 import { DeliverablesModule } from './deliverables/deliverables.module';
 import { DeliverableGroupsModule } from './deliverables/groups/deliverable-groups.module';
 import { FilesModule } from './files/files.module';
-import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { MastersModule } from './masters/masters.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { ReviewsModule } from './reviews/reviews.module';
-import { DecimalService } from './services/decimal/decimal.service';
-import { FakerService } from './services/faker/faker.service';
-import { JsonService } from './services/json/json.service';
-import { PaginationService } from './services/pagination/pagination.service';
 import { ShopImagesModule } from './shop-images/shop-images.module';
 import { ImagesByShopModule } from './shops/images-by-shop/images-by-shop.module';
 import { ShopAdvantagesModule } from './shops/shop-advantages/shop-advantages.module';
 import { ShopsModule } from './shops/shops.module';
 import { TestResponseModule } from './test-response/test-response.module';
 import { UsersModule } from './users/users.module';
+import { HttpExceptionFilter } from './utils/filters/exception/http-exception.filter';
+import { DecimalService } from './utils/services/decimal/decimal.service';
+import { FakerService } from './utils/services/faker/faker.service';
+import { JsonService } from './utils/services/json/json.service';
+import { PaginationService } from './utils/services/pagination/pagination.service';
 
 @Module({
   imports: [

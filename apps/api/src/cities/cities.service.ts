@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { copyKeys } from 'src/utils/copy-keys';
+import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { Repository } from 'typeorm';
 import { CityEntity } from './entities/city.entity';
 import { CreateCityEntity } from './entities/create-city.entity';

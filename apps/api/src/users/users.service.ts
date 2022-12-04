@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { hash } from 'bcrypt';
 import { FileEntity } from 'src/files/entities/file.entity';
 import { FilesService } from 'src/files/files.service';
-import { copyKeys } from 'src/utils/copy-keys';
+import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { Repository } from 'typeorm';
 import { CreateUserEntity } from './entities/create-user.entity';
 import { UpdateUserEntity } from './entities/update-user.entity';

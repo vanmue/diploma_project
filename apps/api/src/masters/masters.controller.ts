@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { JsonObject } from 'src/libs/src/models/JsonObject';
-import { JsonService } from 'src/services/json/json.service';
+import { JsonService } from 'src/utils/services/json/json.service';
 import { CreateMasterEntity } from './entities/create-master.entity';
 import { MasterEntity } from './entities/master.entity';
 import { UpdateMasterEntity } from './entities/update-master.entity';
