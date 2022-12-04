@@ -8,7 +8,6 @@ export const getMasterRecordThunk = (masterId, salonId, day) => async (dispatch,
     fetch(`/api/v1/masters/${masterId}/shops/${salonId}/appointments/?date=${day}`)
         .then(req => req.json())
         .then(res => {
-            console.log(res)
             dispatch(getMasterRecordAction(res.data));
         })
 }

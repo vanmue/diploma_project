@@ -63,15 +63,15 @@ function Calendar({ dataMaster, salonId }) {
             <h2 className='calendar__text'>Выбрать дату и время для записи:</h2>
             <CalendarMonth itemday={itemday} monthSubtract={monthSubtract} monthAdd={monthAdd} />
             <CalendarGrid startDay={startDay} today={today} cellClick={cellClick} getDay={getDay} />
-            {/* modalActive */
-                /* ? */ <ModalWindow
+            {modalActive
+                ? <ModalWindow
                     modalActive={modalActive}
                     choiceDay={choiceDay}
                     data={data}
                     dataMaster={dataMaster}
                     changeModalActive={changeModalActive}
                     salonId={salonId} />
-               /*  : null */}
+                : null}
 
         </div>
     );
