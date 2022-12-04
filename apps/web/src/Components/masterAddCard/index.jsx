@@ -19,15 +19,15 @@ function MasterAddCard({
   const [formImgForMaster, setFormImgForMaster] = useState(null);
   const [formForAddMasterInSalon, setFormForAddMasterInSalon] = useState({
     fileId: null,                         // {number} - id картинки для лица мастера
-    userId: 91,                           // {number} - id пользователя
+    userId: null,                         // {number} - id пользователя
     profession: 'profession',             // {string} - название профессии
     description: 'description',           // {string} - описание мастера
     shops: [3],                           // {[number]} - id салона
-    deliverables: [1, 3],                 // {[number]} - id услуг
+    deliverables: [],                     // {[number]} - id услуг
   });
   const [formSetRoleMaster, setFormSetRoleMaster] = useState({
     profile_type: "master",               // {string} - роль
-    userId: 91                            // {number} - id ьастера
+    userId: null                          // {number} - id ьастера
   });
   const inputRef = useRef(null);
   const dispatch = useDispatch();
@@ -35,9 +35,16 @@ function MasterAddCard({
   useEffect(() => { dispatch(getAllDeliverablesThunk()); }, []);
   useEffect(() => {
     if (select.responsePostSetRoleMaster != null) {
+      // console.log('formForAddMasterInSalon ', formForAddMasterInSalon)
       dispatch(postNewMasterThunk(formForAddMasterInSalon));
     }
   }, [select.responsePostSetRoleMaster]);
+  useEffect(() => {
+    setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: select.imgForFaceMasterId });
+  }, [select.imgForFaceMasterId]);
+  // useEffect(() => {
+  //   console.log('handleChangeServicesCheckbox', formForAddMasterInSalon.deliverables);
+  // }, [formForAddMasterInSalon.deliverables]);
 
   const handleChangeUploadImg = (e) => {
     setFormImgForMaster(e.currentTarget.files[0]);
@@ -46,7 +53,7 @@ function MasterAddCard({
   //Добавление услуг к создаваемому мастеру
   const handleChangeServicesCheckbox = (e) => {
 
-    let id = e.currentTarget.dataset.serviceId;
+    let id = +e.currentTarget.dataset.serviceId;
     let servicesList = [...formForAddMasterInSalon.deliverables];
     let index = servicesList.indexOf(id, 0);
 
@@ -69,6 +76,7 @@ function MasterAddCard({
         ]
       });
     }
+
   }
 
   //Обработка onChange при заполнении полей мастера
@@ -80,8 +88,11 @@ function MasterAddCard({
       case "master-id":
         setFormForAddMasterInSalon({
           ...formForAddMasterInSalon,
-          userId: +currentValue,
-          fileId: select.imgForFaceMasterId
+          userId: +currentValue
+        });
+        setFormSetRoleMaster({
+          ...formSetRoleMaster,
+          userId: +currentValue
         });
         break;
       case "master-profession":

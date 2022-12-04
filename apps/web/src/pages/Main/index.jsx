@@ -15,7 +15,7 @@ function MainPage() {
 
   const dispatch = useDispatch();
   const select = useSelector(store => ({
-    deliverables: store.deliverablesReducer.deliverables,
+    // deliverables: store.deliverablesReducer.deliverables,
     serviceGroups: store.deliverablesReducer.serviceGroups,
   }));
 
@@ -24,6 +24,7 @@ function MainPage() {
     dispatch(changeHeaderBackgroundAction('rgba(65, 9, 53, 0.7)'));
     dispatch(changeNavigationColorAction('#FFFFFF'));
     dispatch(getAllServiceGroupsThunk());
+    // dispatch(getAllServiceGroupsThunk());
   }, []);
 
   return (
@@ -57,12 +58,12 @@ function MainPage() {
               {select.serviceGroups?.map(item => {
                 return <div
                   className="main-page__wrapp-services-card"
-                  data-deliverables={item?.id}
+                  data-service-group={item?.id}
                   key={item?.id}
                 >
                   <ServicesCard
                     title={item?.name}
-                    pathImg={item?.image}
+                    pathImg={item?.image.path}
                   />
                 </div>
               })}

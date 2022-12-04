@@ -23,6 +23,7 @@ function MastersPage() {
     groupsServices: store.deliverablesReducer.serviceGroups,
     allSalons: store.salonsReducer.salons,
     masters: store.mastersReducer.masters,
+    pagination: store.mastersReducer.pagination,
   }));
 
   const [cityId, setCitiesId] = useState(null);
@@ -41,6 +42,11 @@ function MastersPage() {
     dispatch(getFilteringMastersThunk());
   }, []);
 
+  useEffect(() => {
+    console.log('masters', select.masters)
+    console.log('pagination', select.pagination)
+  }, [select.masters, select.pagination]);
+
   const callbacks = {
     onSetCitiesId: useCallback((id) => {
       setCitiesId(id);
@@ -53,6 +59,9 @@ function MastersPage() {
     }),
     onGetFilteringMasters: useCallback(() => {
       dispatch(getFilteringMastersThunk(cityId, serviceId, salonId));
+    }),
+    onGetMastersOnActivePage: useCallback((page) => {
+      dispatch(getFilteringMastersThunk(cityId, serviceId, salonId, page));
     })
   }
 
@@ -116,7 +125,10 @@ function MastersPage() {
 
           </section>
           <div className="masters-page__wrapp-pagination">
-            <Pagination />
+            <Pagination
+              length={select.pagination != null ? select.pagination?.pages_total : 10}
+              onClick={callbacks.onGetMastersOnActivePage}
+            />
           </div>
         </div>
       </div>

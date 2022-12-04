@@ -25,6 +25,7 @@ function SalonsPage() {
     cities: store.citiesReducer.cities,
     groupsServices: store.deliverablesReducer.serviceGroups,
     salons: store.salonsReducer.salons,
+    pagination: store.salonsReducer.pagination,
   }));
 
   const [cityId, setCitiesId] = useState(null);
@@ -126,6 +127,10 @@ function SalonsPage() {
           </ul>
           <div className="salons-page__wrapp-pagination">
             <Pagination
+              length={select.pagination != null ? select.pagination?.pages_total : 10}
+              // currentPage={select.pagination != null ? select.pagination?.current_page : 1}
+              // length={select.pagination?.items_total}
+              // currentPage={select.pagination?.current_page}
               onClick={callbacks.onGetActivePageForSalons}
             />
           </div>
