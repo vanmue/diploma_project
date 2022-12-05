@@ -126,25 +126,15 @@ export class MastersService {
       .orderBy('master.id', 'ASC')
       .getMany();
 
-    const asyncForEach = async (
-      masters: MasterEntity[],
-      callback: (master: MasterEntity) => void,
-    ) => {
-      for (let iMaster = 0; iMaster < masters.length; iMaster++) {
-        await callback(masters[iMaster]);
-      }
-    };
-
-    await asyncForEach(masters, async (master: MasterEntity) =>
-      this.reviewsService
-        .countAndSumByMaster(master.id)
-        .then((reviewsScores) => {
-          const { quantity, total, avg } = reviewsScores;
-          master.reviews_scores_count = quantity;
-          master.reviews_scores_sum = total;
-          master.reviews_scores_avg = avg;
-        }),
-    );
+    let p = Promise.resolve(null);
+    for (let iMaster = 0; iMaster < masters.length; iMaster++) {
+      p = p
+        .then(() => this.addScores(masters[iMaster]))
+        .then((master) => {
+          masters[iMaster] = master;
+        });
+    }
+    await p;
 
     return this.paginationService.getJsonObject<MasterEntity[]>(
       masters,
@@ -160,13 +150,14 @@ export class MastersService {
     });
   }
 
-  async findReviewsByMaster(id: number) {
-    const master = await this.masterRepository.findOneOrFail({
+  async findCard(id: number) {
+    let master = await this.masterRepository.findOneOrFail({
       where: { id },
       relations: ['deliverables', 'profile.user'],
     });
 
     master.reviews = await this.reviewsService.findByMaster(master.id);
+    master = await this.addScores(master);
 
     return master;
   }
@@ -187,6 +178,18 @@ export class MastersService {
     await this.masterRepository.remove(master);
     await this.filesService.remove(toRemove.img_file.id);
     return toRemove;
+  }
+
+  private async addScores(master: MasterEntity) {
+    return this.reviewsService
+      .countAndSumByMaster(master.id)
+      .then((reviewsScores) => {
+        const { quantity, total, avg } = reviewsScores;
+        master.reviews_scores_count = quantity;
+        master.reviews_scores_sum = total;
+        master.reviews_scores_avg = avg;
+        return master;
+      });
   }
 
   private async saveValues(
