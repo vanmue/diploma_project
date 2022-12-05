@@ -20,7 +20,7 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, changeModalActi
 
     useEffect(() => {
         dispatch(getMasterRecordThunk(dataMaster?.id, salonId, moment(choiceDay).format('YYYY-MM-DD')))
-    }, [choiceDay])
+    }, [choiceDay, dataMaster?.id, salonId])
 
     function chooseTime(e) {
 
@@ -51,7 +51,7 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, changeModalActi
                 body: JSON.stringify({
                     masterId: dataMaster.id,
                     shopId: +salonId,
-                    deliverableId: choiceService?.id,
+                    deliverableId: +choiceService?.id,
                     comments: e.target[0].value ? e.target[0].value : null,
                     from: moment(choiceDay).add(time.slice(0, -3), 'hours').toISOString(),
                     userId: 1,
