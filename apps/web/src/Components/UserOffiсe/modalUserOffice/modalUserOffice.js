@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Rating from "../../Rating";
 import './modalUserOffice.scss'
 
@@ -12,8 +12,6 @@ function ModalUserOffice({ changeModal, appointmentId, userId }) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log(e.target[5].value)
-        console.log(score)
         changeModal()
         fetch(`/api/v1/reviews`, {
             method: 'POST',

@@ -5,6 +5,8 @@ import { getUserRecordThunk } from '../../actions/userRecordActions'
 import moment from 'moment';
 import Rating from '../Rating'
 import ModalUserOffice from "./modalUserOffice/modalUserOffice";
+import ModalChangeUserInfo from "./modalChangeUserInfo/index";
+
 
 import './user-office.scss'
 
@@ -17,21 +19,24 @@ function UserOffice() {
     const userRecord = useSelector(store => store.userRecordReducer)
 
 
-    console.log(userInfo)
-
+    const [activeChange, setActiveChange] = useState(false)
     const [active, setActive] = useState(false)
     const [appointmentId, setAppointmentId] = useState()
-    const [userForm, setUserForm] = useState()
+
 
     useEffect(() => {
         dispatch(getUserThunk(userId))
         dispatch(getUserRecordThunk(userId))
-    }, [])
+    }, [activeChange])
 
     const local = moment().local().toISOString();
 
-    function toChangeUser() {
-        dispatch(setUserThunk(userForm))
+    function toChangeUser(form) {
+        if (form.id) {
+            console.log(form)
+            dispatch(setUserThunk(form))
+        }
+        setActiveChange(!activeChange)
     }
 
     function clickReview(e) {
@@ -120,6 +125,7 @@ function UserOffice() {
                     )}
                 </div>
                 {active ? <ModalUserOffice changeModal={changeModal} appointmentId={appointmentId} userId={userId} /> : null}
+                {activeChange ? <ModalChangeUserInfo userInfo={userInfo} toChangeUser={toChangeUser} /> : null}
             </div>
         </div >
     )
