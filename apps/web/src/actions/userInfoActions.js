@@ -21,17 +21,19 @@ export const getUserThunk = (date) => async (dispatch, getState) => {
 }
 
 export const setUserThunk = (date) => async (dispatch, getState) => {
-    fetch(`/api/v1/users/${date}`, {
+    console.log(date)
+    fetch(`/api/v1/users/${date.id}`, {
         method: 'PATCH',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: "string",
-            surname: "string",
-            email: "string",
-            password: "string",
+            name: date.name,
+            surname: date.surname,
+            email: date.email,
+            phone: date.phone,
+            password: date?.password,
             avatarId: 0
         })
     })

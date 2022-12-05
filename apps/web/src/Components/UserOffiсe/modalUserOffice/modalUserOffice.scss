@@ -10,7 +10,7 @@
     transform: translate(-50%, -50%);
     color: #410935;
     @include inter(400, normal);
-    font-size: 14px;
+    font-size: 20px;
     margin-bottom: 10px;
 }
 
@@ -32,9 +32,10 @@
 }
 
 .modal-user__textarea {
-    display: block;
+    display: flex;
     margin: 0 auto;
-    margin-left: 50px
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
 .modal-user__btn {
@@ -44,4 +45,23 @@
     border-radius: 10px;
     padding: 4px 25px;
     margin: 25px auto;
+}
+
+.modal-user__input {
+
+    @include inter(400, normal);
+    width: 400px;
+    font-size: 24px;
+    border-bottom: 2px solid #410935;
+    background-color: #F0EFEF;
+}
+
+.modal-user__label {
+    width: 200px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.modal-user__block form {
+    padding: 50px;
 }
