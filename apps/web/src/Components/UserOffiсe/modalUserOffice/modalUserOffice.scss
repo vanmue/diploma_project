@@ -1,0 +1,47 @@
+@import '../../../assets/styles/mixins.scss';
+
+.modal-user__block {
+    width: 590px;
+    height: 400px;
+    background-color: #F0EFEF;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #410935;
+    @include inter(400, normal);
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.modal-user__rating {
+    display: flex;
+    margin: 50px;
+}
+
+.modal-user__rating p {
+    margin-right: 50px;
+}
+
+.modal-user__text {
+    width: 490px;
+    height: 175px;
+    border: 2px solid #410935;
+    border-radius: 10px;
+    margin: 10px auto;
+}
+
+.modal-user__textarea {
+    display: block;
+    margin: 0 auto;
+    margin-left: 50px
+}
+
+.modal-user__btn {
+    display: block;
+    background-color: #410935;
+    color: #FFFFFF;
+    border-radius: 10px;
+    padding: 4px 25px;
+    margin: 25px auto;
+}

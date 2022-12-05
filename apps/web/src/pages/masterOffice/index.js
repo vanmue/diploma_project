@@ -6,15 +6,17 @@ import Calendar from '../../Components/Masters/Calendar';
 import Price from '../../Components/Masters/Price'
 
 function MasterOffice() {
-
+    const masterId = 1
     const masterRecord = useSelector(store => store.masterRecoredReducer);
-    const masterId = useSelector(store => store.masterIdReducer.id);
+    //const masterId = useSelector(store => store.masterIdReducer.id);
     const data = useSelector(store => store.masterIdReducer.dataMaster)
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getMasterIdActionThunk(`master_id=${masterId}`))
+        dispatch(getMasterIdActionThunk(`${masterId}`))
     }, [])
+
+    console.log(masterRecord)
 
     return (
         <div className='main-page'>

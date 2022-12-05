@@ -15,7 +15,7 @@ function Master() {
   const salon = useSelector(store => store.salonsReducer.activeSalon);
   const arrReting = []
 
-
+  console.log(data)
   const ret = () => {
     data?.reviews.map(review => {
       if (review.score) {

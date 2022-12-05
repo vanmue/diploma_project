@@ -4,17 +4,23 @@ import './rating.scss'
 
 function Rating({
   isAcive,
-  rating
+  rating,
+  userRating
 }) {
   const [ratingActiveWidth, setRatingActiveWidth] = useState(70);
   // const [grade, setGrade] = useState(rating);
 
   useEffect(() => {
     setRatingActiveWidth(rating / 0.05);
+
   }, [rating])
   // const grade = 3.5;
   // console.log("rating :", rating)
+
   const handleFocusStar = (e) => {
+    if (userRating) {
+      userRating(e._targetInst.pendingProps.value)
+    }
     if (!isAcive) {
       return;
     }
@@ -37,6 +43,7 @@ function Rating({
 
   const handleRatingItemsMouseLeave = () => {
     setRatingActiveWidth(rating / 0.05);
+
     // setRatingActiveWidth(grade / 0.05);
   }
 

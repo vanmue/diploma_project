@@ -33,8 +33,14 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     margin-top: 20px;
+    padding-bottom: 20px;
     border-bottom: 5px solid #FFFFFF;
     grid-auto-rows: 45px;
     gap: 35px;
     line-height: 120%;
+}
+
+.user-record__grid div {
+    max-width: 154px;
+    word-wrap: break-word;
 }
