@@ -15,7 +15,6 @@ function MainPage() {
 
   const dispatch = useDispatch();
   const select = useSelector(store => ({
-    // deliverables: store.deliverablesReducer.deliverables,
     serviceGroups: store.deliverablesReducer.serviceGroups,
   }));
 
@@ -24,7 +23,6 @@ function MainPage() {
     dispatch(changeHeaderBackgroundAction('rgba(65, 9, 53, 0.7)'));
     dispatch(changeNavigationColorAction('#FFFFFF'));
     dispatch(getAllServiceGroupsThunk());
-    // dispatch(getAllServiceGroupsThunk());
   }, []);
 
   return (

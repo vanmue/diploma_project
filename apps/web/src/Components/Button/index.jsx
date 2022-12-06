@@ -12,6 +12,8 @@ function Button({
 }) {
 
   const handleClick = (e) => {
+    // e.preventDefault();
+    // e.stopPropagation();
     onClick(e);
   }
 
