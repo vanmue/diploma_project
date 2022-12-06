@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserThunk } from '../../actions/userInfoActions'
+import { getUserThunk, setUserThunk } from '../../actions/userInfoActions'
 import { getUserRecordThunk } from '../../actions/userRecordActions'
-import moment from 'moment'
+import moment from 'moment';
+import Rating from '../Rating'
+import ModalUserOffice from "./modalUserOffice/modalUserOffice";
+import ModalChangeUserInfo from "./modalChangeUserInfo/index";
+
 
 import './user-office.scss'
 
@@ -14,12 +18,36 @@ function UserOffice() {
     const userInfo = useSelector(store => store.userInfoReducer.dataUser)
     const userRecord = useSelector(store => store.userRecordReducer)
 
+
+    const [activeChange, setActiveChange] = useState(false)
+    const [active, setActive] = useState(false)
+    const [appointmentId, setAppointmentId] = useState()
+
+
     useEffect(() => {
         dispatch(getUserThunk(userId))
         dispatch(getUserRecordThunk(userId))
-    }, [])
+    }, [activeChange])
 
     const local = moment().local().toISOString();
+
+    function toChangeUser(form) {
+        if (form.id) {
+            console.log(form)
+            dispatch(setUserThunk(form))
+        }
+        setActiveChange(!activeChange)
+    }
+
+    function clickReview(e) {
+        e.stopPropagation()
+        setAppointmentId(e.target.id)
+        setActive(true)
+    }
+
+    function changeModal() {
+        setActive(false)
+    }
 
     let gridInfoActual
     let gridInfoArchive
@@ -36,7 +64,8 @@ function UserOffice() {
                 master: item.master.profile.user.name,
                 service: item.deliverable.name,
                 price: item.deliverable.price,
-                rating: 'rating'
+                rating: 'rating',
+                appointmentId: item.id
             }
         }
         gridInfoActual = infoActual.map((item) => add(item))
@@ -44,31 +73,37 @@ function UserOffice() {
     }
 
 
-    const gridInfo = (item, index) => {
+    const gridInfo = (item, active) => {
         return (
-            <div key={item.date + index} className="user-record__grid">
+            <div key={item.appointmentId} className="user-record__grid">
                 <div>{item.date}</div>
                 <div>{item.time}</div>
                 <div>{item.salon}</div>
                 <div>{item.master}</div>
                 <div>{item.service}</div>
                 <div>{item.price} рублей</div>
-                <div>{item.rating}<div style={{ textDecorationLine: 'underline' }}>написать отзыв</div></div>
+                {active ?
+                    <div>
+                        <Rating isAcive={true} />
+                        <div id={item.appointmentId} style={{ textDecorationLine: 'underline' }} onClick={(e) => clickReview(e)} >написать отзыв</div>
+
+                    </div>
+                    : null}
             </div>
         )
     }
 
 
     return (
-        <div className='main-page'>
+        <div onClick={changeModal} className='main-page'>
             <div className="container">
                 <div className="user-page">
                     <div className="user-info">
                         <img src={userInfo?.avatar.path} alt="foto" />
                         <div className="user-info__block">
                             <h2>{userInfo?.name} {userInfo?.surname}</h2>
-                            <p> <span style={{ marginRight: '36px' }}>Телефон: {userInfo?.phone}</span></p>
-                            <p style={{ textDecorationLine: 'underline' }}>Изменить данные</p>
+                            <p> <span style={{ marginRight: '36px' }}>Телефон: {userInfo?.phone}</span><span style={{ marginRight: '36px' }}>Mail: {userInfo?.email}</span></p>
+                            <p style={{ textDecorationLine: 'underline' }} onClick={toChangeUser}>Изменить данные</p>
                         </div>
                     </div>
                     <div className="user-info__record"></div>
@@ -77,18 +112,20 @@ function UserOffice() {
                         {gridColumns.map((column) => <span key={column}>{column}</span>
                         )}
                     </div>
-                    {gridInfoActual?.map((item, index) =>
-                        gridInfo(item, index)
+                    {gridInfoActual?.map((item) =>
+                        gridInfo(item, false)
                     )}
                     <h2 style={{ marginTop: '45px', marginBottom: '45px' }} >Архивные записи:</h2>
                     <div className="user-record__grid">
                         {gridColumns.map((column) => <span key={column}>{column}</span>
                         )}
                     </div>
-                    {gridInfoArchive?.map((item, index) =>
-                        gridInfo(item, index)
+                    {gridInfoArchive?.map((item) =>
+                        gridInfo(item, true)
                     )}
                 </div>
+                {active ? <ModalUserOffice changeModal={changeModal} appointmentId={appointmentId} userId={userId} /> : null}
+                {activeChange ? <ModalChangeUserInfo userInfo={userInfo} toChangeUser={toChangeUser} /> : null}
             </div>
         </div >
     )

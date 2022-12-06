@@ -47,9 +47,10 @@ function Pagination({
       // left = length - indent * 2;
     };
 
-    console.log('currentPage', currentPage)
-    console.log('left', left)
-    console.log('right', right)
+    // console.log('currentPage', currentPage)
+    // console.log('left', left)
+    // console.log('right', right)
+
     // Первая страница всегда нужна
     if (left > 1) {
       items.push(1);
@@ -84,10 +85,10 @@ function Pagination({
 
 
 
-    let prvNode = e.currentTarget.closest('.pagination__list').querySelector('.pagination__list-item--active')?.classList.remove('pagination__list-item--active');
+    // let prvNode = e.currentTarget.closest('.pagination__list').querySelector('.pagination__list-item--active')?.classList.remove('pagination__list-item--active');
 
-    let currentNode = e.currentTarget.querySelector('p');
-    currentNode.classList.add('pagination__list-item--active');
+    // let currentNode = e.currentTarget.querySelector('p');
+    // currentNode.classList.add('pagination__list-item--active');
 
     // console.log('Pagination onClickHandlerNumber  prevNode: ', currentNode)
     // setPrevPageNode(currentNode);

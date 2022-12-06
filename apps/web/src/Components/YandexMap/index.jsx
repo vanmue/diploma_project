@@ -14,10 +14,10 @@ function YandexMap({
   useEffect(() => {
     window.ymaps.ready(function init() {
 
-      if (document.querySelector('.yandex-map__body').children.length === 0) {
+      if (document.querySelector('.yandex-map__body')?.children.length === 0) {
         newYmaps(center, zoom);
-      } else if (document.querySelector('.yandex-map__body').children.length === 1) {
-        document.querySelector('.yandex-map__body').children[0].remove();
+      } else if (document.querySelector('.yandex-map__body')?.children.length === 1) {
+        document.querySelector('.yandex-map__body')?.children[0].remove();
         newYmaps(center, zoom);
       }
 
