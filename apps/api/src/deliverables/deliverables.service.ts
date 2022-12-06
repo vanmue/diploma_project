@@ -32,6 +32,27 @@ export class DeliverablesService {
     return this.deliverableRepository.findBy({ id: In(ids) });
   }
 
+  async findByMaster(id: number) {
+    return this.deliverableRepository.find({
+      where: {
+        masters: {
+          id,
+        },
+      },
+    });
+  }
+
+  async findByMasterAndDeliverable(masterId: number, deliverableId: number) {
+    return this.deliverableRepository.find({
+      where: {
+        id: deliverableId,
+        masters: {
+          id: masterId,
+        },
+      },
+    });
+  }
+
   async remove(id: number) {
     const deliverable = await this.findById(id);
     const toRemove = { ...deliverable };

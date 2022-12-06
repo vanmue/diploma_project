@@ -45,6 +45,16 @@ export class MasterEntity {
   description: string;
 
   @IsNotEmpty()
+  @Column('time')
+  @ApiProperty()
+  working_start: string;
+
+  @IsNotEmpty()
+  @Column('time')
+  @ApiProperty()
+  working_end: string;
+
+  @IsNotEmpty()
   @ManyToMany(() => DeliverableEntity, (deliverable) => deliverable.masters)
   @JoinTable()
   @ApiProperty({ isArray: true })

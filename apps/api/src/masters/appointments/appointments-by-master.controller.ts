@@ -9,7 +9,7 @@ import {
 import { AppointmentsService } from 'src/appointments/appointments.service';
 import { JsonService } from 'src/utils/services/json/json.service';
 
-@Controller('masters/:masterId/shops/:shopId/appointments')
+@Controller('masters/:masterId/appointments')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AppointmentsByMasterController {
   constructor(
@@ -17,16 +17,8 @@ export class AppointmentsByMasterController {
     private readonly jsonService: JsonService,
   ) {}
   @Get()
-  async getAppointments(
-    @Query('date') date: Date,
-    @Param('masterId') masterId: number,
-    @Param('shopId') shopId: number,
-  ) {
-    const data = await this.appointmentsService.findByMaster(
-      masterId,
-      shopId,
-      date,
-    );
+  async getAll(@Param('masterId') masterId: number, @Query('date') date: Date) {
+    const data = await this.appointmentsService.findByMaster(masterId, date);
     return this.jsonService.data(data);
   }
 }

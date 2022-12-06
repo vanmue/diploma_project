@@ -7,13 +7,20 @@ import { ProfilesModule } from 'src/profiles/profiles.module';
 import { ReviewsModule } from 'src/reviews/reviews.module';
 import { JsonService } from 'src/utils/services/json/json.service';
 import { PaginationService } from 'src/utils/services/pagination/pagination.service';
+import { AppointmentsByMasterController } from './appointments/appointments-by-master.controller';
+import { DeliverablesByMasterController } from './deliverables/deliverables-by-master.controller';
 import { MasterEntity } from './entities/master.entity';
 import { MastersController } from './masters.controller';
 import { MastersService } from './masters.service';
-import { AppointmentsByMasterController } from './shops/appointments/appointments-by-master.controller';
+import { AppointmentsByShopController } from './shops/appointments/appointments-by-shop.controller';
 
 @Module({
-  controllers: [MastersController, AppointmentsByMasterController],
+  controllers: [
+    MastersController,
+    AppointmentsByShopController,
+    AppointmentsByMasterController,
+    DeliverablesByMasterController,
+  ],
   providers: [MastersService, JsonService, PaginationService],
   imports: [
     TypeOrmModule.forFeature([MasterEntity]),

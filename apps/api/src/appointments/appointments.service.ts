@@ -31,7 +31,25 @@ export class AppointmentsService {
     return this.appointmentRepository.findOneByOrFail({ id });
   }
 
-  async findByMaster(masterId: number, shopId: number, date?: Date) {
+  async findByMaster(masterId: number, date?: Date) {
+    let where = {};
+    where = { ...where, master: { id: masterId } };
+    if (date) {
+      where = {
+        ...where,
+        from: Raw((alias) => `date_trunc('day', ${alias}) = :dt`, {
+          dt: date,
+        }),
+      };
+    }
+
+    return await this.appointmentRepository.find({
+      where,
+      relations: ['profile.user', 'shop'],
+    });
+  }
+
+  async findByMasterAndShop(masterId: number, shopId: number, date?: Date) {
     let where = {};
     where = { ...where, master: { id: masterId }, shop: { id: shopId } };
     if (date) {
