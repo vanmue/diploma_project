@@ -13,9 +13,6 @@ function SignIn({
   const handleClick = () => {
     onClick();
   }
-  // useEffect(() => {
-  //   console.log('SignIn location: ', location);
-  // });
 
   return (
     <button
@@ -26,7 +23,6 @@ function SignIn({
         end
         className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
         style={{ color: '#FFFFFF' }}
-        // to="/user-office"
         to={linkTo ? linkTo : location.pathname}
       // to="/salon-admine-office"
       >
@@ -36,7 +32,6 @@ function SignIn({
     </button>
   )
 }
-
 
 SignIn.propTypes = {
   onClick: propTypes.func,

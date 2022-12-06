@@ -10,6 +10,7 @@ import advantagesReducer from "./advantagesReducer";
 import deliverablesReducer from "./deliverablesReducer";
 import userInfoReducer from "./userInfoReducer";
 import userRecordReducer from "./userRecordReducer";
+import authorizationReducer from "./authorizationReducer";
 
 export default combineReducers({
   citiesReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   advantagesReducer,
   deliverablesReducer,
   userInfoReducer,
-  userRecordReducer
+  userRecordReducer,
+  authorizationReducer
 });

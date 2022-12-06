@@ -1,4 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import propTypes from 'prop-types';
+import { postNewUserThunk, postloginThunk, getAuthThunk, isLoginAction } from "../../actions/authorizationActions";
 import Button from "../Button";
 import './sign-in-modal.scss';
 
@@ -6,6 +9,12 @@ function SignInModal({
   isActive,
   onClick
 }) {
+
+  const select = useSelector(store => ({
+    isLogin: store.authorizationReducer.isLogin,
+    userStructure: store.authorizationReducer.userStructure,
+  }));
+
   const [formRegistrationIsActive, setFormRegistrationIsActive] = useState(false);
   const [formSignIn, setFormSignIn] = useState({
     email: "",
@@ -18,6 +27,15 @@ function SignInModal({
     password: "",
     avatarId: 1
   });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('select.userStructure', select.userStructure);
+  }, [select.userStructure]);
+
+  // const isLoginCallback = useMemo(() => {
+  //   console.log('isLoginCallback localStorage', localStorage.getItem('access_token'));
+  // }, [select.isLogin]);
 
   const handleClickBtnClose = () => {
     onClick();
@@ -54,9 +72,11 @@ function SignInModal({
   const callbacks = {
     onSubmitFormSignIn: useCallback(() => {
       console.log('onSubmitFormSignIn :')
+      dispatch(postloginThunk(formSignIn));
     }),
     onSubmitFormRegistration: useCallback(() => {
       console.log('onSubmitFormRegistration :')
+      dispatch(postNewUserThunk(formRegistration));
     }),
   }
 
@@ -102,8 +122,8 @@ function SignInModal({
         <Button
           colorText='#FFFFFF'
           background='#A40123'
-          // linkTo={}
-          onClick={formRegistrationIsActive ? callbacks.onSubmitFormRegistration : callbacks.onSubmitFormSignIn}
+          onClick={callbacks.onSubmitFormSignIn}
+        // onClick={formRegistrationIsActive ? callbacks.onSubmitFormRegistration : callbacks.onSubmitFormSignIn}
         >
           {formRegistrationIsActive ? 'Зарегестрироваться' : 'Войти'}
         </Button>
@@ -115,6 +135,15 @@ function SignInModal({
       </div>
     </div >
   )
+}
+
+SignInModal.propTypes = {
+  linkTo: propTypes.string,
+  onClick: propTypes.func,
+}
+
+SignInModal.defaultProps = {
+  onClick: () => { }
 }
 
 export default React.memo(SignInModal);
