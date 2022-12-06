@@ -5,6 +5,8 @@ import { MasterEntity } from './master.entity';
 export class CreateMasterEntity extends PickType(MasterEntity, [
   'profession' as const,
   'description' as const,
+  'working_start' as const,
+  'working_end' as const,
 ]) {
   @IsNotEmpty()
   @IsInt()

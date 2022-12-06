@@ -23,12 +23,25 @@ import { ListAllMastersDto } from './query-dto/list-all-masters.dto';
 export class MastersController {
   constructor(
     private readonly mastersService: MastersService,
+
     private readonly jsonService: JsonService,
   ) {}
 
   @Get(':id/card')
   async getMaster(@Param('id') id: number) {
     const data = await this.mastersService.findCard(id);
+    return this.jsonService.data(data);
+  }
+
+  @Get(':id/lk')
+  async getLkData(@Param('id') id: number) {
+    const data = await this.mastersService.findLkData(id);
+    return this.jsonService.data(data);
+  }
+
+  @Get(':id')
+  async getOne(@Param('id') id: number) {
+    const data = await this.mastersService.findById(id);
     return this.jsonService.data(data);
   }
 

@@ -26,6 +26,18 @@ export class MastersService {
     private readonly profilesService: ProfilesService,
     private readonly reviewsService: ReviewsService,
   ) {}
+
+  async addDeliverable(masterId: number, deliverableId: number) {
+    const deliverable = await this.deliverablesService.findById(deliverableId);
+    console.log('addDeliverable', masterId, deliverableId);
+    await this.masterRepository
+      .createQueryBuilder()
+      .relation(MasterEntity, 'deliverables')
+      .of(masterId)
+      .add(deliverableId);
+    return deliverable;
+  }
+
   async create(dto: CreateMasterEntity) {
     return await this.saveValues(dto, new MasterEntity());
   }
@@ -162,6 +174,18 @@ export class MastersService {
     return master;
   }
 
+  async findLkData(id: number) {
+    let master = await this.masterRepository.findOneOrFail({
+      where: {
+        id,
+      },
+      relations: ['shops', 'profile.user'],
+    });
+    master = await this.addScores(master);
+
+    return master;
+  }
+
   async update(id: number, dto: UpdateMasterEntity) {
     const master = await this.masterRepository.findOneByOrFail({ id });
     return await this.saveValues(dto, master);
@@ -180,6 +204,16 @@ export class MastersService {
     return toRemove;
   }
 
+  async removeDeliverable(masterId: number, deliverableId: number) {
+    const deliverable = await this.deliverablesService.findById(deliverableId);
+    await this.masterRepository
+      .createQueryBuilder()
+      .relation(MasterEntity, 'deliverables')
+      .of(masterId)
+      .remove(deliverableId);
+    return deliverable;
+  }
+
   private async addScores(master: MasterEntity) {
     return this.reviewsService
       .countAndSumByMaster(master.id)
@@ -196,7 +230,7 @@ export class MastersService {
     dto: CreateMasterEntity | UpdateMasterEntity,
     master: MasterEntity,
   ) {
-    const keys = ['profession', 'description'];
+    const keys = ['profession', 'description', 'working_start', 'working_end'];
     master = copyKeys(keys, dto, master);
 
     const { fileId, deliverables, shops, userId } = dto;
