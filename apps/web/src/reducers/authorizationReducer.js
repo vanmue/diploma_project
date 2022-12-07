@@ -28,12 +28,12 @@ export default function authorizationReducer(store = initialStore, action) {
         accessToken: action.payload
       }
     }
-    case IS_LOGIN: {
-      return {
-        ...store,
-        userData: action.payload
-      }
-    }
+    // case IS_LOGIN: {
+    //   return {
+    //     ...store,
+    //     userData: action.payload
+    //   }
+    // }
     case GET_AUTH: {
       return {
         ...store,

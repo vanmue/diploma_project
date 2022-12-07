@@ -2,8 +2,13 @@ export const POST_NEW_USER = '@@authorization/POST_NEW_USER';
 export const POST_LOGIN = '@@authorization/POST_LOGIN';
 export const GET_AUTH = '@@authorization/GET_AUTH';
 export const IS_LOGIN = '@@authorization/IS_LOGIN';
+export const POST_SET_ROLE_CUSTOMER = 'POST_SET_ROLE_CUSTOMER';
 
 
+/**
+ * Создание пользователя  
+*/
+/******************************************************************/
 /**
  * @param {{}} date - данные вновь созданного user-а  
 */
@@ -34,10 +39,49 @@ export const postNewUserThunk = (data) => async (dispatch, getState) => {
     .then(req => req.json())
     .then(res => {
       console.log('postNewUserThunk res: ', res);
+
+      dispatch(postSetRoleCustomerThunk(res.data.id));
       // dispatch(postNewUserAction(res.data));
     })
     .catch(err => console.log('postNewUserThunk ERROR: ', err));
 }
+
+/**
+ * Установка роли customer новому зарегестрированному пользователю
+*/
+/******************************************************************/
+/**
+ * @param {string} date - роль вновь созданного user-а  
+*/
+export const postSetRoleCustomerAction = (date) => ({
+  type: POST_SET_ROLE_CUSTOMER,
+  payload: date
+});
+
+/**
+ * Post запрос установки роли новому пользователю
+ * @param {} date - id только что зарегестрированного user-a
+*/
+export const postSetRoleCustomerThunk = (data) => async (dispatch, getState) => {
+
+  fetch('/api/v1/profiles', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify({ profile_type: "customer", userId: +data })
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('postSetRoleCustomerThunk res: ', res);
+      // dispatch(postSetRoleCustomerAction());
+    })
+    .catch(err => console.log('postSetRoleCustomerThunk ERROR: ', err));
+}
+
+/**
+ * Получение  JWT токена  
+*/
 /******************************************************************/
 /**
  * @param {{}} date -  access_token
@@ -63,7 +107,6 @@ export const isLoginAction = (date) => ({
  * }} date - email и password user-а 
 */
 export const postloginThunk = (data) => async (dispatch, getState) => {
-  // console.log('getState ', getState().authorizationReducer.isLogin)
   fetch('/api/v1/auth/login/', {
     method: "POST",
     headers: {
@@ -72,8 +115,7 @@ export const postloginThunk = (data) => async (dispatch, getState) => {
     body: JSON.stringify(data)
   })
     .then(res => {
-      console.log('postloginThunk res res.status: ', res.ok);
-      // if (res.ok == true) dispatch(isLoginAction(!getState().authorizationReducer.isLogin));
+      // console.log('postloginThunk res res.status: ', res.ok);
       return res.json();
     })
     .then(res => {
@@ -85,6 +127,10 @@ export const postloginThunk = (data) => async (dispatch, getState) => {
     })
     .catch(err => console.log('postloginThunk ERROR: ', err));
 }
+
+/**
+ * Получение структуры пользователя 
+*/
 /******************************************************************/
 /**
  * @param {{}} date -  структура данныч пользователя

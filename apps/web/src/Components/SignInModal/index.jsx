@@ -122,8 +122,8 @@ function SignInModal({
         <Button
           colorText='#FFFFFF'
           background='#A40123'
-          onClick={callbacks.onSubmitFormSignIn}
-        // onClick={formRegistrationIsActive ? callbacks.onSubmitFormRegistration : callbacks.onSubmitFormSignIn}
+          // onClick={callbacks.onSubmitFormSignIn}
+          onClick={formRegistrationIsActive ? callbacks.onSubmitFormRegistration : callbacks.onSubmitFormSignIn}
         >
           {formRegistrationIsActive ? 'Зарегестрироваться' : 'Войти'}
         </Button>
