@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import ServicesCard from '../../Components/ServicesCard';
 import Select from '../../Components/Select';
 import YandexMap from '../../Components/YandexMap';
@@ -14,6 +15,10 @@ import './main-page.scss';
 function MainPage() {
 
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  console.log('location', location)
+
   const select = useSelector(store => ({
     serviceGroups: store.deliverablesReducer.serviceGroups,
   }));
