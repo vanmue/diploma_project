@@ -42,7 +42,8 @@ export default function mastersReducer(store = initialStore, action) {
     case GET_ALL_MASTERS_FOR_ACTIVE_SALON: {
       return {
         ...store,
-        mastersActiveSalon: action.payload
+        mastersActiveSalon: action.payload.data,
+        pagination: action.payload.pagination,
       }
     }
     default:

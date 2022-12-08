@@ -11,8 +11,8 @@ function SignInModal({
 }) {
 
   const select = useSelector(store => ({
-    isLogin: store.authorizationReducer.isLogin,
-    userStructure: store.authorizationReducer.userStructure,
+    // isLogin: store.authorizationReducer.isLogin,
+    // userStructure: store.authorizationReducer.userStructure,
   }));
 
   const [formRegistrationIsActive, setFormRegistrationIsActive] = useState(false);
@@ -29,9 +29,9 @@ function SignInModal({
   });
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log('select.userStructure', select.userStructure);
-  }, [select.userStructure]);
+  // useEffect(() => {
+  //   console.log('select.userStructure', select.userStructure);
+  // }, [select.userStructure]);
 
   // const isLoginCallback = useMemo(() => {
   //   console.log('isLoginCallback localStorage', localStorage.getItem('access_token'));
