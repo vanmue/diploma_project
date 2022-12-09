@@ -182,7 +182,8 @@ export const getAuthThunk = (data) => async (dispatch, getState) => {
 
   dispatch(getAuthStartAction());
 
-  fetch('/api/v1/auth/me/', {
+  // fetch('/api/v1/auth/me/', {
+  fetch('/api/v1/me', {
     method: "GET",
     headers: {
       'Authorization': `Bearer ${data}`

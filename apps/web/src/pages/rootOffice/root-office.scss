@@ -1,0 +1,66 @@
+@import "../../assets/styles/mixins.scss";
+@import "../../assets/styles/colors.scss";
+
+.root-office {
+  height: 100%;
+  background: #e9e9e9;
+}
+
+.salon-admine-office__editing-salon {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 40px 47px 50px;
+  position: absolute;
+  width: 900px;
+  height: auto;
+  background: $white;
+  z-index: 1;
+
+  &-close {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: $darkViolet;
+    top: 10px;
+    right: 10px;
+  }
+
+  &-wrapp-button {
+    margin: 0 auto;
+  }
+}
+
+.salon-admine-office__editing-salon-item {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 20px;
+
+  & label {
+    display: block;
+    width: 156px;
+    @include inter(700, normal);
+    font-size: 14px;
+    line-height: 17px;
+    color: $darkViolet;
+  }
+
+  & input {
+    @include inter(400, normal);
+    font-size: 14px;
+    line-height: 17px;
+    color: $darkViolet;
+
+    flex: 1 1 auto;
+    border: 1px solid $darkViolet;
+    border-radius: 5px;
+  }
+}
+
+.salon-admine-office__editing-salon-name-input {
+  @include inter(700, normal);
+  font-size: 24px;
+  line-height: 29px;
+  text-transform: uppercase;
+  color: $darkViolet;
+}
