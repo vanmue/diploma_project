@@ -22,4 +22,7 @@ export class CreateShopEntity extends PickType(ShopEntity, [
 
   @ApiProperty({ type: 'number', isArray: true })
   advantages: number[];
+
+  @ApiProperty({ type: 'number', isArray: true })
+  managers: number[];
 }

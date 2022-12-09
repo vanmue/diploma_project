@@ -23,14 +23,21 @@ export class ProfilesService {
   async findById(id: number) {
     return await this.profileRepository.findOneByOrFail({ id });
   }
+  async findByUserAndProfileType(userId: number, profileType: ProfileType) {
+    return await this.profileRepository.findOne({
+      where: {
+        user: {
+          id: userId,
+        },
+        profile_type: profileType,
+      },
+    });
+  }
   async findMaster(userId: number) {
     return await this.findProfile(userId, ProfileType.Master);
   }
   async findCustomer(userId: number) {
     return await this.findProfile(userId, ProfileType.Customer);
-  }
-  async getTypes() {
-    return Object.values(ProfileType);
   }
   async remove(id: number) {
     const profile = await this.profileRepository.findOneByOrFail({ id });

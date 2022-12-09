@@ -31,12 +31,12 @@ export class ProfilesController {
     return this.jsonService.data(data);
   }
 
-  @Get('types')
-  @ApiResponse({ type: 'array' })
-  async getTypes() {
-    const data = await this.profilesService.getTypes();
-    return this.jsonService.data(data);
-  }
+  // @Get('types')
+  // @ApiResponse({ type: 'array' })
+  // async getTypes() {
+  //   const data = await this.profilesService.getTypes();
+  //   return this.jsonService.data(data);
+  // }
 
   @Get(':id')
   @ApiResponse({ type: ProfileEntity, isArray: true })

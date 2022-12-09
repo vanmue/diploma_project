@@ -162,10 +162,27 @@ export class MastersService {
     });
   }
 
+  async findMeProfilesByUser(userId: number) {
+    const masters = await this.masterRepository.find({
+      where: {
+        profile: {
+          user: {
+            id: userId,
+          },
+        },
+      },
+      select: {
+        id: true,
+      },
+      relations: ['profile'],
+    });
+    return masters;
+  }
+
   async findCard(id: number) {
     let master = await this.masterRepository.findOneOrFail({
       where: { id },
-      relations: ['deliverables', 'profile.user'],
+      relations: ['deliverables', 'profile.user', 'img_file'],
     });
 
     master.reviews = await this.reviewsService.findByMaster(master.id);
@@ -179,7 +196,7 @@ export class MastersService {
       where: {
         id,
       },
-      relations: ['shops', 'profile.user'],
+      relations: ['shops', 'profile.user', 'img_file'],
     });
     master = await this.addScores(master);
 

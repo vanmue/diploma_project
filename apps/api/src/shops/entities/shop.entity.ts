@@ -5,6 +5,7 @@ import { AppointmentEntity } from 'src/appointments/entites/appointment.entity';
 import { CityEntity } from 'src/cities/entities/city.entity';
 import { DeliverableGroupEntity } from 'src/deliverables/groups/entities/deliverable-group.entity';
 import { MasterEntity } from 'src/masters/entities/master.entity';
+import { ProfileEntity } from 'src/profiles/entities/profile.entity';
 import {
   Column,
   CreateDateColumn,
@@ -69,6 +70,10 @@ export class ShopEntity {
   @ManyToMany(() => MasterEntity, (master) => master.shops)
   @ApiProperty({ isArray: true })
   masters: MasterEntity[];
+
+  @ManyToMany(() => ProfileEntity)
+  @JoinTable()
+  manager_profiles: ProfileEntity[];
 
   @OneToMany(() => AppointmentEntity, (appointment) => appointment.shop)
   @ApiProperty({ isArray: true })
