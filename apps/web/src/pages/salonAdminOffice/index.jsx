@@ -36,6 +36,7 @@ function SalonAdminOffice() {
     imgForCarouselId: store.salonsReducer.imgForCarouselId,
     mastersActiveSalon: store.mastersReducer.mastersActiveSalon,
     activePageMastersActiveSalon: store.mastersReducer.activePageMastersActiveSalon,
+    pagination: store.mastersReducer.pagination,
   }))
 
   const [isActiveModal, setIsActiveModal] = useState(false);
@@ -204,64 +205,6 @@ function SalonAdminOffice() {
           </div>
           <div className="salon-admine-office__wrapp-carousel">
             <Carousel
-              // images={
-              //   [
-              //     {
-              //       "id": 5,
-              //       "is_preview": true,
-              //       "file": {
-              //         "id": 4,
-              //         "originalname": "shop_image_1.png",
-              //         "path": "/uploads/shops/7a405c54-64c1-4525-a2bf-31a82442e167.png"
-              //       }
-              //     },
-              //     {
-              //       "id": 6,
-              //       "is_preview": false,
-              //       "file": {
-              //         "id": 5,
-              //         "originalname": "shop_image_2.png",
-              //         "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
-              //       }
-              //     },
-              //     {
-              //       "id": 7,
-              //       "is_preview": false,
-              //       "file": {
-              //         "id": 6,
-              //         "originalname": "shop_image_3.png",
-              //         "path": "/uploads/shops/bd02f81a-6a98-415f-bf75-fc98b0ebcbad.png"
-              //       }
-              //     },
-              //     {
-              //       "id": 8,
-              //       "is_preview": false,
-              //       "file": {
-              //         "id": 5,
-              //         "originalname": "shop_image_2.png",
-              //         "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
-              //       }
-              //     },
-              //     {
-              //       "id": 9,
-              //       "is_preview": false,
-              //       "file": {
-              //         "id": 5,
-              //         "originalname": "shop_image_2.png",
-              //         "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
-              //       }
-              //     },
-              //     {
-              //       "id": 10,
-              //       "is_preview": false,
-              //       "file": {
-              //         "id": 5,
-              //         "originalname": "shop_image_2.png",
-              //         "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
-              //       }
-              //     },
-              //   ]
-              // }
               images={select.activeSalon?.images}
               isEdited={true}
               onChange={callbacks.onChangeUploadImageForSalon}
@@ -295,6 +238,7 @@ function SalonAdminOffice() {
             })}
             <div className="salon-admine-office__wrapp-pagination">
               <Pagination
+                length={select.pagination ? select.pagination.pages_total : 1}
                 onClick={callbacks.onGetActivePagePagination}
               />
             </div>

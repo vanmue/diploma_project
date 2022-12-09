@@ -3,12 +3,14 @@ import { useSelector } from "react-redux";
 import Navigation from "../Navigation";
 import SignIn from "../SignIn";
 import SignInModal from "../SignInModal";
+import ListProfiles from "../ListProfiles";
 import './header.scss';
 
 function Header() {
   const select = useSelector(store => ({
     isMain: store.stylesReducer.header.isMain,
-    headerBackground: store.stylesReducer.header.background
+    headerBackground: store.stylesReducer.header.background,
+    userStructure: store.authorizationReducer.authData.userStructure,
   }));
 
   const [modalIsActive, setModalIsActive] = useState(false);
@@ -37,19 +39,42 @@ function Header() {
             <div className="header__wrapp-navigation">
               <Navigation />
             </div>
-            <div className="header__wrapp-sign-in">
+
+            <div className="header__profile">
+              <div className="header__wrapp-sign-in">
+                <SignIn
+                  onClick={callbacks.onSetIsActiveModal}
+                // linkTo="/salon-admine-office"
+                >
+                  {localStorage.getItem("access_token") ? "Профиль" : "Войти"}
+                </SignIn>
+              </div>
+
+              <div className="header__wrapp-profile-list">
+                <ListProfiles
+                  struct={select.userStructure}
+                />
+              </div>
+            </div>
+
+            {/* <div className="header__wrapp-sign-in">
               <SignIn
                 onClick={callbacks.onSetIsActiveModal}
               // linkTo="/salon-admine-office"
-              />
+              >
+                {localStorage.getItem("access_token") ? "Профиль" : "Войти"}
+              </SignIn>
             </div>
+
+            <div className="header__wrapp-profile-list">
+              <ProfileList />
+            </div> */}
+
           </div>
-          {/* <div className="header__wrapp-sign-in-modal"> */}
           <SignInModal
             isActive={modalIsActive}
             onClick={callbacks.onSetIsActiveModal}
           />
-          {/* </div> */}
         </div>
       </div>
     </header>

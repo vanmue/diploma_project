@@ -121,9 +121,9 @@ export const getMastersThunk = () => async (dispatch, getState) => {
 /**
  *  @param {[{}]} date - мастера конкретного салона
 */
-export const getAllMasterForActiveSalonAction = (date) => ({
+export const getAllMasterForActiveSalonAction = (data) => ({
   type: GET_ALL_MASTERS_FOR_ACTIVE_SALON,
-  payload: date
+  payload: data
 });
 /**
  * Get запрос на получение всеч мастеров для конкретного салона
@@ -132,13 +132,13 @@ export const getAllMasterForActiveSalonAction = (date) => ({
 */
 export const getAllMasterForActiveSalonThunk = (activeSalonId, page = 1) => async (dispatch, getState) => {
 
-  const limit = 3;
+  const limit = 5;
 
   fetch(`/api/v1/shops/${activeSalonId}/masters/?limit=${limit}&page=${page}`)
     .then(req => req.json())
     .then(res => {
-      // console.log('getAllMasterForActiveSalonThunk: ', res)
-      dispatch(getAllMasterForActiveSalonAction(res.data));
+      console.log('getAllMasterForActiveSalonThunk: ', res)
+      dispatch(getAllMasterForActiveSalonAction(res));
     })
     .catch(err => console.log('getAllMasterForActiveSalonThunk: ', err))
 }
