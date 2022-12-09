@@ -11,8 +11,8 @@ import { UsersService } from './users.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity]),
-    FilesModule,
     AppointmentsModule,
+    FilesModule,
   ],
   providers: [UsersService, JsonService],
   controllers: [UsersController, UserAppointmentsController],

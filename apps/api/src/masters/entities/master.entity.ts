@@ -70,7 +70,7 @@ export class MasterEntity {
   @ApiProperty({ isArray: true })
   appointments: AppointmentEntity[];
 
-  @ManyToOne(() => FileEntity, undefined, { eager: true })
+  @ManyToOne(() => FileEntity)
   @JoinColumn({ name: 'imgId', referencedColumnName: 'id' })
   @ApiProperty()
   img_file: FileEntity;

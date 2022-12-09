@@ -24,6 +24,10 @@ import { DecimalService } from './utils/services/decimal/decimal.service';
 import { FakerService } from './utils/services/faker/faker.service';
 import { JsonService } from './utils/services/json/json.service';
 import { PaginationService } from './utils/services/pagination/pagination.service';
+import { ProfileTypesModule } from './profile-types/profile-types.module';
+import { MeModule } from './me/me.module';
+import { CustomersModule } from './customers/customers.module';
+import { ShopManagersModule } from './shop-managers/shop-managers.module';
 
 @Module({
   imports: [
@@ -63,6 +67,10 @@ import { PaginationService } from './utils/services/pagination/pagination.servic
     ShopImagesModule,
     ShopsModule,
     UsersModule,
+    ProfileTypesModule,
+    MeModule,
+    CustomersModule,
+    ShopManagersModule,
   ],
   controllers: [],
   providers: [

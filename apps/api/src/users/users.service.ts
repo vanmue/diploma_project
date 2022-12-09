@@ -44,6 +44,15 @@ export class UsersService {
       relations: ['avatar', 'profiles'],
     });
   }
+  async findByProfileType(profile_type: string) {
+    return await this.userRepository.find({
+      where: {
+        profiles: {
+          profile_type,
+        },
+      },
+    });
+  }
   async remove(id: number) {
     const user = await this.userRepository.findOneOrFail({
       where: { id },

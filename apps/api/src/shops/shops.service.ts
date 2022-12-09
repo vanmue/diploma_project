@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CityEntity } from 'src/cities/entities/city.entity';
 import { DeliverableGroupsService } from 'src/deliverables/groups/deliverable-groups.service';
+import { ProfileType } from 'src/profiles/profile.type';
+import { ProfilesService } from 'src/profiles/profiles.service';
 import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { PaginationService } from 'src/utils/services/pagination/pagination.service';
 import { In, Repository } from 'typeorm';
@@ -18,6 +20,7 @@ export class ShopsService {
     private readonly shopRepository: Repository<ShopEntity>,
     private readonly deliverableGroupsService: DeliverableGroupsService,
     private readonly paginationService: PaginationService,
+    private readonly profilesService: ProfilesService,
   ) {}
   async create(dto: CreateShopEntity) {
     return await this.saveValues(dto, new ShopEntity());
@@ -102,6 +105,9 @@ export class ShopsService {
           file: true,
         },
         advantages: true,
+        manager_profiles: {
+          user: true,
+        },
       },
     });
 
@@ -145,7 +151,7 @@ export class ShopsService {
       'zoom',
     ];
     shop = copyKeys(keys, dto, shop);
-    const { cityId, advantages } = dto;
+    const { cityId, advantages, managers } = dto;
     if (cityId) {
       const city = new CityEntity();
       city.id = cityId;
@@ -157,6 +163,30 @@ export class ShopsService {
         adv.id = id;
         return adv;
       });
+    }
+    if (managers) {
+      const profiles = [];
+      let p = Promise.resolve(null);
+      managers.forEach((userId) => {
+        p = p.then(() =>
+          this.profilesService
+            .findByUserAndProfileType(userId, ProfileType.ShopManager)
+            .then((profile) => {
+              console.log('profile', profile);
+              if (profile) {
+                profiles.push(profile);
+              } else {
+                throw new BadRequestException({
+                  errors: {
+                    shop_manager: `shop manager for userId = ${userId} not found`,
+                  },
+                });
+              }
+            }),
+        );
+      });
+      await p;
+      shop.manager_profiles = profiles;
     }
     return await this.shopRepository.save(shop);
   }
