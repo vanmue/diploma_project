@@ -5,7 +5,8 @@ import './sign-in.scss'
 
 function SignIn({
   linkTo,
-  onClick
+  children,
+  onClick,
 }) {
 
   const location = useLocation();
@@ -26,7 +27,7 @@ function SignIn({
         to={linkTo ? linkTo : location.pathname}
       // to="/salon-admine-office"
       >
-        <span>Личный кабинет</span>
+        <span>{children}</span>
       </NavLink>
 
     </button>
@@ -34,8 +35,9 @@ function SignIn({
 }
 
 SignIn.propTypes = {
+  linkTo: propTypes.string,
+  children: propTypes.string,
   onClick: propTypes.func,
-  linkTo: propTypes.string
 }
 
 SignIn.defaultProps = {
