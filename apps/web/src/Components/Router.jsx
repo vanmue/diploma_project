@@ -9,7 +9,8 @@ import Error from './Error';
 import Master from './Masters';
 import UserOffice from './UserOffiсe';
 import SalonAdminOffice from '../pages/salonAdminOffice';
-import MasterOffice from '../pages/masterOffice'
+import MasterOffice from '../pages/masterOffice';
+import RootOffice from '../pages/rootOffice';
 
 function Router() {
   return (
@@ -23,6 +24,7 @@ function Router() {
         <Route path="user-office" element={<UserOffice />} />
         <Route path="salon-admine-office" element={<SalonAdminOffice />} />
         <Route path="master-office" element={<MasterOffice />} />
+        <Route path="root-office" element={<RootOffice />} />
         <Route path="*" element={< Error />} />
       </Route>
     </Routes>

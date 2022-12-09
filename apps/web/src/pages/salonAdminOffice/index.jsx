@@ -244,7 +244,7 @@ function SalonAdminOffice() {
             </div>
           </div>
 
-          {isActiveModal ? <div className="salon-admine-office__editing-salon">
+          {/* {isActiveModal ? <div className="salon-admine-office__editing-salon">
             <div
               className="salon-admine-office__editing-salon-close"
               onClick={handleClickBtnCloseModal}
@@ -346,20 +346,6 @@ function SalonAdminOffice() {
                 />
               </div>
             </div>
-            {/* <div className="salon-admine-office__editing-salon-advantages salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-advantages-label"
-                htmlFor="salon-advantages">
-                Преимущества:
-              </label>
-              <input
-                id="salon-advantages"
-                className="salon-admine-office__editing-salon-advantages-input"
-                name="advantages"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div> */}
 
 
             <div className="salon-admine-office__editing-salon-telephone salon-admine-office__editing-salon-item">
@@ -453,7 +439,7 @@ function SalonAdminOffice() {
                 onClick={callbacks.onPostNewSalon}
               >Сохранить</Button>
             </div>
-          </div> : ""}
+          </div> : ""} */}
         </div>
       </div>
     </div>

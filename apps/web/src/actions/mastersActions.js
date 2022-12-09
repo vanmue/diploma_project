@@ -91,7 +91,7 @@ export const postImageFormMasterThunk = (data) => async (dispatch, getState) => 
   })
     .then(req => req.json())
     .then(res => {
-      // console.log('postImageFormMasterThunk res:', res.data.id);
+      console.log('postImageFormMasterThunk res:', res);
       dispatch(postImageForMasterAction(res.data.id));
     })
     .catch(err => console.log('postNewSalonThunk: ', err));
