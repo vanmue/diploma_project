@@ -116,6 +116,55 @@
       }
     }
 
+    &-working-time {
+      display: flex;
+      align-items: flex-end;
+
+      &-label {
+        width: 148px;
+        @include inter(400, normal);
+        font-size: 14px;
+        line-height: 17px;
+        color: $darkViolet;
+      }
+
+      &-inputs {}
+
+      &-input {
+        @include inter(400, normal);
+        font-size: 14px;
+        line-height: 18px;
+        color: $darkViolet;
+        flex: 1 1 auto;
+        background: $beige;
+        border: 1px solid $darkViolet;
+        border-radius: 5px;
+      }
+
+    }
+
+    &-working-start-input {
+      @include inter(400, normal);
+      font-size: 14px;
+      line-height: 18px;
+      color: $darkViolet;
+      flex: 1 1 auto;
+      background: $beige;
+      border: 1px solid $darkViolet;
+      border-radius: 5px;
+    }
+
+    &-working-end-input {
+      @include inter(400, normal);
+      font-size: 14px;
+      line-height: 18px;
+      color: $darkViolet;
+      flex: 1 1 auto;
+      background: $beige;
+      border: 1px solid $darkViolet;
+      border-radius: 5px;
+    }
+
     &-desk {
       display: flex;
       align-items: flex-end;

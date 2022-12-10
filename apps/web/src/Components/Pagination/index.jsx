@@ -42,7 +42,7 @@ function Pagination({
 
     // Корректировка когда страница в конце
     if (currentPage >= length - indent) {
-      console.log("Корректировка")
+      // console.log("Корректировка")
       left = Math.max(length - indent * 2, 1);
       // left = length - indent * 2;
     };
