@@ -2,10 +2,6 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import propTypes from 'prop-types';
 import Button from '../Button';
 import imgAddFoto from './img/add-foto-pic.png';
-// import prev from './img/arrow-prev.svg';
-// import next from './img/arrow-next.svg';
-// import prev from './img/arrow-prev.png';
-// import next from './img/arrow-next.png';
 import './carousel.scss';
 
 function Carousel({

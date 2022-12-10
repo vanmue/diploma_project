@@ -1,13 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import SalonCard from '../../Components/SalonCard';
-import YandexMap from '../../Components/YandexMap';
-import Button from '../../Components/Button';
-import Carousel from '../../Components/Carousel';
-import MasterAddCard from '../../Components/masterAddCard';
-import Pagination from '../../Components/Pagination';
-import DrpdnForAddSalons from '../../Components/DrpdnForAddSalons';
-import MasterCard from '../../Components/MasterCard';
 import { getCitiesThunk } from '../../actions/citiesActions';
 import { getAllAdvantagesThunk } from '../../actions/advantagesActions';
 import { getAllMasterForActiveSalonThunk } from '../../actions/mastersActions';
@@ -22,6 +14,15 @@ import {
   changingLabelInHeaderAction,
   changeHeaderBackgroundAction,
 } from '../../actions/stylesActions';
+import FormForSalon from '../../Components/FormForSalon';
+import SalonCard from '../../Components/SalonCard';
+import YandexMap from '../../Components/YandexMap';
+import Button from '../../Components/Button';
+import Carousel from '../../Components/Carousel';
+import MasterAddCard from '../../Components/masterAddCard';
+import Pagination from '../../Components/Pagination';
+import DrpdnForAddSalons from '../../Components/DrpdnForAddSalons';
+import MasterCard from '../../Components/MasterCard';
 import img1 from '../../Components/Carousel/img/carusel-img-1.jpg';
 import img2 from '../../Components/Carousel/img/carusel-img-2.jpg';
 import './salon-admin-office.scss';
@@ -39,7 +40,7 @@ function SalonAdminOffice() {
     pagination: store.mastersReducer.pagination,
   }))
 
-  const [isActiveModal, setIsActiveModal] = useState(false);
+  const [isActiveFormForSalon, setIsActiveFormForSalon] = useState(false);
   const [imageForSalon, setImageForSalon] = useState({
     shopId: 3,                // {number} - id салона
     fileId: null,             // {number} - id изображения 42
@@ -61,11 +62,11 @@ function SalonAdminOffice() {
     zoom: 0,
   });
   const formNewSalonTest = {
-    name: "NewSalon-2",
+    name: "NewSalon-r",
     address: "Семфтропольская улица",
     working_time: "начало в 10 до 20",
-    working_start: 10,
-    working_end: 20,
+    working_start: "10:00",
+    working_end: "20:00",
     phone: "1234567890",
     center_longtitude: 59.91796593897841,
     center_latitude: 30.304908500000003,
@@ -90,82 +91,27 @@ function SalonAdminOffice() {
   useEffect(() => {
     setImageForSalon({ ...imageForSalon, fileId: select.imgForCarouselId });
   }, [select.imgForCarouselId]);
+
   // useEffect(() => {
   //   dispatch(getAllMasterForActiveSalonThunk());
   // }, [select.activePageMastersActiveSalon]);
 
-  const handleChangeTextareaModalNewSalon = (e) => {
-    console.log('handleChangeTextareaModalNewSalon e: ', e.currentTarget.getAttribute("id"))
-    switch (e.currentTarget.getAttribute("id")) {
-      case 'salon-name':
-        setFormNewSalon({ ...formNewSalon, name: e.currentTarget.value });
-        break;
-      case 'salon-address':
-        setFormNewSalon({ ...formNewSalon, address: e.currentTarget.value });
-        break;
-      case 'salon-working-hours':
-        setFormNewSalon({ ...formNewSalon, working_time: e.currentTarget.value });
-        break;
-      case 'salon-working-start':
-        setFormNewSalon({ ...formNewSalon, working_start: e.currentTarget.value });
-        break;
-      case 'salon-working-end':
-        setFormNewSalon({ ...formNewSalon, working_end: e.currentTarget.value });
-        break;
-      case 'salon-telephone':
-        setFormNewSalon({ ...formNewSalon, phone: e.currentTarget.value });
-        break;
-      case 'salon-latitude-center':
-        setFormNewSalon({ ...formNewSalon, center_latitude: e.currentTarget.value });
-        break;
-      case 'salon-longtitude-center':
-        setFormNewSalon({ ...formNewSalon, center_longtitude: e.currentTarget.value });
-        break;
-      case 'salon-latitude-placemark':
-        setFormNewSalon({ ...formNewSalon, label_latitude: e.currentTarget.value });
-        break;
-      case 'salon-longitude-placemark':
-        setFormNewSalon({ ...formNewSalon, label_longtitude: e.currentTarget.value });
-        break;
-      case 'salon-zoom':
-        setFormNewSalon({ ...formNewSalon, zoom: e.currentTarget.value });
-        break;
-      default:
-
-    }
-  }
-
-  const handleClickBtnCloseModal = () => {
-    setIsActiveModal(prevIsActiveModal => !prevIsActiveModal);
-  }
-
   const callbacks = {
-    onSetIsActiveEditingSalonModal: useCallback(() => {
-      setIsActiveModal(prevIsActiveModal => !prevIsActiveModal);
+    onSetIsActiveFormForSalon: useCallback(() => {
+      setIsActiveFormForSalon(prevIsActive => !prevIsActive);
     }),
-    onSetCitiesId: useCallback((id) => {
-      setFormNewSalon({ ...formNewSalon, cityId: Number(id) })
-    }),
-    onSetАdvantagesId: useCallback((id) => {
-      let arrAdv = formNewSalon.advantages;
-      arrAdv.push(id);
-      setFormNewSalon({ ...formNewSalon, advantages: arrAdv })
-    }),
-    onPostNewSalon: useCallback((id) => {
-      console.log('handleClickBtnPostNewSalon');
-      // dispatch(postNewSalonThunk(formNewSalonTest));
-      dispatch(postNewSalonThunk(formNewSalon));
-    }),
+    // onPostNewSalon: useCallback((id) => {
+    //   console.log('handleClickBtnPostNewSalon');
+    //   // dispatch(postNewSalonThunk(formNewSalonTest));
+    //   dispatch(postNewSalonThunk(formNewSalon));
+    // }),
     onPostImageForSalon: useCallback(() => {
       console.log('onPostImageForSalon imageForSalon:', imageForSalon);
       dispatch(postImageForSalonThunk(imageForSalon));
     }),
     onChangeUploadImageForSalon: useCallback(() => {
       let inputFile = document.querySelector('.carousel__add-img-input').files[0]
-
-      // console.log('onChangeUploadImageForSalon .files[0]', inputFile);
       dispatch(uploadImageForSalonThunk({ file: inputFile }));
-      // setImageForSalon({ ...imageForSalon, fileId: inputFile });
     }),
     onGetActivePagePagination: useCallback((page) => {
       dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId, +page));
@@ -193,14 +139,9 @@ function SalonAdminOffice() {
               telephone={select.activeSalon.phone}
               deliverableGgroups={select.activeSalon.deliverable_groups}
               isEdited={true}
-              // textLink,
-              // bckCallBtn,
-              // colorTextCallBtn,
-              // bkgRecordBtn,
-              // colorTextRecordBtn,
-              img={select.activeSalon.images.length > 0 ? select.activeSalon.images.find(el => el.is_preview == true)?.file.path : ''}
+              img={select.activeSalon?.images?.length > 0 ? select.activeSalon.images.find(el => el.is_preview == true)?.file.path : ''}
               // map={renders.yandexMap}
-              onClickEditing={callbacks.onSetIsActiveEditingSalonModal}
+              onClickEditing={callbacks.onSetIsActiveFormForSalon}
             /> : ''}
           </div>
           <div className="salon-admine-office__wrapp-carousel">
@@ -243,203 +184,16 @@ function SalonAdminOffice() {
               />
             </div>
           </div>
-
-          {/* {isActiveModal ? <div className="salon-admine-office__editing-salon">
-            <div
-              className="salon-admine-office__editing-salon-close"
-              onClick={handleClickBtnCloseModal}
-            ></div>
-            <div className="salon-admine-office__editing-salon-name salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-name-label"
-                htmlFor="salon-name">
-                Название салона:
-              </label>
-              <input
-                id="salon-name"
-                className="salon-admine-office__editing-salon-name-input"
-                name="name"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
+          {isActiveFormForSalon &&
+            <div className="salon-admine-office__wrapp-form-for-salon">
+              <FormForSalon
+                req="PATCH"
+                onClickClose={callbacks.onSetIsActiveFormForSalon}
               />
             </div>
-
-            <div className="salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-city-label">
-                Город:
-              </label>
-              <div className="salon-admine-office__wrapp-drpdn-add-salon">
-                <DrpdnForAddSalons
-                  items={select.cities}
-                  onChange={callbacks.onSetCitiesId}
-                />
-              </div>
-            </div>
-
-            <div className="salon-admine-office__editing-salon-address salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-address-label"
-                htmlFor="salon-address">
-                Адрес:
-              </label>
-              <input
-                id="salon-address"
-                className="salon-admine-office__editing-salon-address-input"
-                name="address"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div>
-            <div className="salon-admine-office__editing-salon-working-hours salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-working-hours-label"
-                htmlFor="salon-working-hours">
-                Время работы:
-              </label>
-              <input
-                id="salon-working-hours"
-                className="salon-admine-office__editing-salon-working-hours-input"
-                name="working-hours"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div>
-            <div className="salon-admine-office__editing-salon-working-start salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-working-start-label"
-                htmlFor="salon-working-start">
-                Начало работы:
-              </label>
-              <input
-                id="salon-working-start"
-                className="salon-admine-office__editing-salon-working-start-input"
-                name="working-start"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div>
-            <div className="salon-admine-office__editing-salon-working-end salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-working-end-label"
-                htmlFor="salon-working-end">
-                Конец работы:
-              </label>
-              <input
-                id="salon-working-end"
-                className="salon-admine-office__editing-salon-working-end-input"
-                name="working-end"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div>
-
-            <div className="salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-advantages-label">
-                Преимущества:
-              </label>
-              <div className="salon-admine-office__wrapp-drpdn-add-salon">
-                <DrpdnForAddSalons
-                  items={select.advantages}
-                  onChange={callbacks.onSetАdvantagesId}
-                />
-              </div>
-            </div>
+          }
 
 
-            <div className="salon-admine-office__editing-salon-telephone salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-telephone-label"
-                htmlFor="salon-telephone">
-                Телефон:
-              </label>
-              <input
-                id="salon-telephone"
-                className="salon-admine-office__editing-salon-telephone-input"
-                name="telephone"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div>
-            <div className="salon-admine-office__editing-salon-latitude-center salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-latitude-center-label"
-                htmlFor="salon-latitude-center">
-                Геог-кая широта центра карты:
-              </label>
-              <input
-                id="salon-latitude-center"
-                className="salon-admine-office__editing-salon-latitude-center-input"
-                name="latitude-center"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div>
-            <div className="salon-admine-office__editing-salon-longtitude-center salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-longtitude-center-label"
-                htmlFor="salon-longtitude-center">
-                Геог-кая долгота центра карты:
-              </label>
-              <input
-                id="salon-longtitude-center"
-                className="salon-admine-office__editing-salon-longtitude-center-input"
-                name="longtitude-center"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div>
-            <div className="salon-admine-office__editing-salon-latitude-placemark salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-latitude-placemark-label"
-                htmlFor="salon-latitude-placemark">
-                Геог-кая широта метки:
-              </label>
-              <input
-                id="salon-latitude-placemark"
-                className="salon-admine-office__editing-salon-latitude-placemark-input"
-                name="latitude-placemark"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div>
-            <div className="salon-admine-office__editing-salon-longitude-placemark salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-longitude-placemark-label"
-                htmlFor="salon-longitude-placemark">
-                Геог-кая долгота метки:
-              </label>
-              <input
-                id="salon-longitude-placemark"
-                className="salon-admine-office__editing-salon-longitude-placemark-input"
-                name="longitude-placemark"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div>
-            <div className="salon-admine-office__editing-salon-zoom salon-admine-office__editing-salon-item">
-              <label
-                className="salon-admine-office__editing-salon-zoom-label"
-                htmlFor="salon-zoom">
-                Масштаб:
-              </label>
-              <input
-                id="salon-zoom"
-                className="salon-admine-office__editing-salon-zoom-input"
-                name="zoom"
-                type="text"
-                onChange={handleChangeTextareaModalNewSalon}
-              />
-            </div>
-            <div className="salon-admine-office__editing-salon-wrapp-button">
-              <Button
-                background={"#410935"}
-                colorText={"#FFFFFF"}
-                onClick={callbacks.onPostNewSalon}
-              >Сохранить</Button>
-            </div>
-          </div> : ""} */}
         </div>
       </div>
     </div>
