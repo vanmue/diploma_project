@@ -37,7 +37,6 @@ function MasterAddCard({
   useEffect(() => { dispatch(getAllDeliverablesThunk()); }, []);
   useEffect(() => {
     if (select.responsePostSetRoleMaster != null) {
-      // console.log('formForAddMasterInSalon ', formForAddMasterInSalon)
       dispatch(postNewMasterThunk(formForAddMasterInSalon));
     }
   }, [select.responsePostSetRoleMaster]);
@@ -45,11 +44,9 @@ function MasterAddCard({
   useEffect(() => {
     setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: +select.imgForFaceMasterId });
   }, [select.imgForFaceMasterId]);
-  // useEffect(() => {
-  //   console.log('handleChangeServicesCheckbox', formForAddMasterInSalon.deliverables);
-  // }, [formForAddMasterInSalon.deliverables]);
 
   const handleChangeUploadImg = (e) => {
+    console.log("handleChangeUploadImg e.currentTarget.files: ", e.currentTarget.files)
     setFormImgForMaster(e.currentTarget.files[0]);
   }
 
@@ -83,7 +80,6 @@ function MasterAddCard({
   }
 
   //Обработка onChange при заполнении полей мастера
-  //id,profession,desk
   const handleChangeInputText = (e) => {
     let current = e.currentTarget.id;
     let currentValue = e.currentTarget.value;

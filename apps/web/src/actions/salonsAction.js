@@ -8,6 +8,7 @@ export const CHANGE_ACTIVE_PAGE_FOR_PAGINATION = '@@salons/CHANGE_ACTIVE_PAGE_FO
 export const INCREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/INCREMENT_ACTIVE_PAGE_PAGINATION';
 export const DECREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/DECREMENT_ACTIVE_PAGE_PAGINATION';
 export const POST_NEW_SALON = '@@salons/POST_NEW_SALON';
+export const PATCH_SALON = '@@salons/PATCH_SALON';
 export const POST_IMAGE_FOR_SALON = '@@salons/POST_IMAGE_FOR_SALON';
 export const UPLOAD_IMAGE_FOR_SALON = '@@salons/UPLOAD_IMAGE_FOR_SALON';
 // export const CHANGE_ARRAY_PAGINATION = '@@salons/CHANGE_ARRAY_PAGINATION';
@@ -34,10 +35,39 @@ export const postNewSalonThunk = (data) => async (dispatch, getState) => {
   })
     .then(req => req.json())
     .then(res => {
-      // console.log('postNewSalonThunk res:', res);
+      console.log('postNewSalonThunk res:', res);
       dispatch(postNewSalonAction(res.data));
     })
     .catch(err => console.log('postNewSalonThunk: ', err));
+}
+
+
+/**
+ * @param {{}} date - 
+*/
+export const patchSalonAction = (date) => ({
+  type: PATCH_SALON,
+  payload: date
+});
+/** 
+ * Запрос на создание нового салона
+ * @param {{}} date - данные нового салона
+*/
+export const patchSalonThunk = (data) => async (dispatch, getState) => {
+
+  fetch('/api/v1/shops', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('patchSalonThunk res:', res);
+      // dispatch(patchSalonAction(res.data));
+    })
+    .catch(err => console.log('patchSalonThunk: ', err));
 }
 
 

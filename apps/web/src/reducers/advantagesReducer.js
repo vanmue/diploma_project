@@ -3,7 +3,7 @@ import {
 } from '../actions/advantagesActions';
 
 const initialStore = {
-  advantages: []
+  advantages: null
 }
 
 export default function advantagesReducer(store = initialStore, action) {
