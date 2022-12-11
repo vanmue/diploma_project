@@ -13,7 +13,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const res = ctx.getResponse<Response>();
 
     if (exception instanceof HttpException) {
-      return res.status(exception.getStatus()).json(exception.getResponse());
+      return res.status(exception.getStatus()).json({
+        errors: {
+          [exception.name]: exception.message,
+        },
+      });
     } else {
       console.log('exception', exception);
       const { name, message } = exception;

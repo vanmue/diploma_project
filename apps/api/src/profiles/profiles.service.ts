@@ -3,10 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { Repository } from 'typeorm';
+import { ProfileType } from '../profile-types/profile.type';
 import { CreateProfileEntity } from './entities/create-profile.entity';
 import { ProfileEntity } from './entities/profile.entity';
 import { UpdateProfileEntity } from './entities/update-profile.entity';
-import { ProfileType } from './profile.type';
 
 @Injectable()
 export class ProfilesService {
@@ -22,6 +22,12 @@ export class ProfilesService {
   }
   async findById(id: number) {
     return await this.profileRepository.findOneByOrFail({ id });
+  }
+  async findByUser(userId: number) {
+    return await this.profileRepository
+      .createQueryBuilder()
+      .where('"userId" = :userId', { userId })
+      .getMany();
   }
   async findByUserAndProfileType(userId: number, profileType: ProfileType) {
     return await this.profileRepository.findOne({

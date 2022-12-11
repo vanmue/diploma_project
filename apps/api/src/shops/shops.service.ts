@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CityEntity } from 'src/cities/entities/city.entity';
 import { DeliverableGroupsService } from 'src/deliverables/groups/deliverable-groups.service';
-import { ProfileType } from 'src/profiles/profile.type';
+import { ProfileType } from 'src/profile-types/profile.type';
 import { ProfilesService } from 'src/profiles/profiles.service';
 import { copyKeys } from 'src/utils/helpers/copy-keys';
 import { PaginationService } from 'src/utils/services/pagination/pagination.service';
