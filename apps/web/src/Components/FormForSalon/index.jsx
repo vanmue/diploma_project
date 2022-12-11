@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import propTypes from 'prop-types';
-import { postNewSalonThunk, patchSalonThunk } from "../../actions/salonsAction";
+import { postNewSalonThunk, patchDataSalonThunk } from "../../actions/salonsAction";
 import { getCitiesThunk } from "../../actions/citiesActions";
 import { getAllAdvantagesThunk } from "../../actions/advantagesActions";
 import DrpdnForAddSalons from "../../Components/DrpdnForAddSalons";
@@ -9,6 +9,8 @@ import Button from "../../Components/Button";
 import './form-for-salon.scss'
 
 function FormForSalon({
+  salonId,
+  salon,
   req,
   onClickClose
 }) {
@@ -20,7 +22,7 @@ function FormForSalon({
 
   const [formNewSalon, setFormNewSalon] = useState(req == "POST" ?
     {
-      id: null,
+      managers: [107],
       name: null,
       address: null,
       cityId: 0,
@@ -36,19 +38,19 @@ function FormForSalon({
       zoom: null,
     } :
     {
-      name: null,
-      address: null,
+      name: salon.name,
+      address: salon.address,
       cityId: 0,
-      phone: null,
-      working_time: null,
-      working_start: null,
-      working_end: null,
+      phone: salon.phone,
+      working_time: salon.working_time,
+      working_start: salon.working_start,
+      working_end: salon.working_end,
       advantages: [],
-      center_latitude: 0,
-      center_longtitude: 0,
-      label_latitude: 0,
-      label_longtitude: 0,
-      zoom: null,
+      center_latitude: salon.center_latitude,
+      center_longtitude: salon.center_longtitude,
+      label_latitude: salon.label_latitude,
+      label_longtitude: salon.label_longtitude,
+      zoom: salon.zoom,
     }
   );
   const dispatch = useDispatch();
@@ -58,6 +60,10 @@ function FormForSalon({
     dispatch(getAllAdvantagesThunk());
   }, []);
 
+  useEffect(() => {
+    console.log("FormForSalon salon:", salon)
+  }, [salon]);
+
   const handleCkickClose = () => {
     onClickClose();
   }
@@ -66,7 +72,13 @@ function FormForSalon({
     console.log("onPostNewSalon formNewSalon: ", formNewSalon);
     switch (e.currentTarget.getAttribute("id")) {
       case 'salon-admin':
-        setFormNewSalon({ ...formNewSalon, id: +e.currentTarget.value });
+        setFormNewSalon({
+          ...formNewSalon,
+          managers: [
+            ...formNewSalon.managers,
+            +e.currentTarget.value
+          ]
+        });
         break;
       case 'salon-name':
         setFormNewSalon({ ...formNewSalon, name: e.currentTarget.value });
@@ -110,7 +122,7 @@ function FormForSalon({
     onPostNewSalon: useCallback(() => {
       console.log("onPostNewSalon formNewSalon: ", formNewSalon);
       if (req == "POST") dispatch(postNewSalonThunk(formNewSalon));
-      if (req == "PATCH") dispatch(patchSalonThunk(formNewSalon));
+      if (req == "PATCH") dispatch(patchDataSalonThunk({ salon: formNewSalon, salonId: +salonId }));
     }),
     onSetАdvantagesId: useCallback((id) => {
       let arrAdv = formNewSalon.advantages;
@@ -128,6 +140,17 @@ function FormForSalon({
       let inputId = `salon-${name}`;
       let inputClass = `form-for-salon__editing-salon-${name}-input`;
       let inputName = `salon-${name}`;
+      let salonInputValue = (name == "name") ? formNewSalon.name :
+        (name == "address") ? formNewSalon.address :
+          name == "working-hours" ? formNewSalon.working_time :
+            name == "working-start" ? formNewSalon.working_start :
+              name == "working-end" ? formNewSalon.working_end :
+                name == "telephone" ? formNewSalon.phone :
+                  name == "latitude-center" ? formNewSalon.center_latitude :
+                    name == "longtitude-center" ? formNewSalon.center_longtitude :
+                      name == "latitude-placemark" ? formNewSalon.label_latitude :
+                        name == "longitude-placemark" ? formNewSalon.label_longtitude :
+                          name == "zoom" ? formNewSalon.zoom : ""
 
       return <div className={headClass}>
         <label
@@ -140,6 +163,7 @@ function FormForSalon({
           id={inputId}
           className={inputClass}
           name={inputName}
+          value={salonInputValue ? salonInputValue : ""}
           type="text"
           onChange={handleChangeInput}
         />
@@ -415,11 +439,13 @@ function FormForSalon({
 }
 
 FormForSalon.propTypes = {
+  salon: propTypes.object,
   req: propTypes.string.isRequired,
   onClickClose: propTypes.func
 }
 
 FormForSalon.defaultProps = {
+  salon: null,
   req: "",
   onClickClose: () => { }
 }

@@ -11,8 +11,142 @@ export const POST_NEW_SALON = '@@salons/POST_NEW_SALON';
 export const PATCH_SALON = '@@salons/PATCH_SALON';
 export const POST_IMAGE_FOR_SALON = '@@salons/POST_IMAGE_FOR_SALON';
 export const UPLOAD_IMAGE_FOR_SALON = '@@salons/UPLOAD_IMAGE_FOR_SALON';
+
+export const POST_SET_ROLE_SHOP_MANAGER_START = '@@salons/POST_SET_ROLE_SHOP_MANAGER_START';
+export const POST_SET_ROLE_SHOP_MANAGER_SUCCESS = '@@salons/POST_SET_ROLE_SHOP_MANAGER_SUCCESS';
+export const POST_SET_ROLE_SHOP_MANAGER_FAILURE = '@@salons/POST_SET_ROLE_SHOP_MANAGER_FAILURE';
+
+export const PATCH_DATA_SALON_START = '@@salons/PATCH_DATA_SALON_START';
+export const PATCH_DATA_SALON_SUCCESS = '@@salons/PATCH_DATA_SALON_SUCCESS';
+export const PATCH_DATA_SALON_FAILURE = '@@salons/PATCH_DATA_SALON_FAILURE';
 // export const CHANGE_ARRAY_PAGINATION = '@@salons/CHANGE_ARRAY_PAGINATION';
 
+/**
+ * PATCH запрос на изменение информации о салоне
+*/
+/******************************************************************/
+/**
+ * Начало PATCH запроса
+*/
+export const patchDataSalonStartAction = (date) => ({
+  type: PATCH_DATA_SALON_START,
+  payload: date
+});
+/**
+ * Успешное выполнение PATCH запроса
+*/
+export const patchDataSalonSuccessAction = (date) => ({
+  type: PATCH_DATA_SALON_SUCCESS,
+  payload: date
+});
+/**
+ * Завершение с ошибкой PATCH
+*/
+export const patchDataSalonFailureAction = (date) => ({
+  type: PATCH_DATA_SALON_FAILURE,
+  payload: date
+});
+
+/** 
+ * PATCH запрос. Измением информацио о салоне
+ * @param {{
+ * name: {string},
+ * address: {string},
+ * cityId: {number},
+ * phone: {string},
+ * working_time: {string},
+ * working_start: {number},
+ * working_end: {number},
+ * advantages: [{number}],
+ * center_latitude: {number},
+ * center_longtitude: {number},
+ * label_latitude: {number},
+ * label_longtitude: {number},
+ * zoom: {number},
+ * }} date -  объект салона
+*/
+export const patchDataSalonThunk = (data) => async (dispatch, getState) => {
+
+  dispatch(patchDataSalonStartAction());
+
+  fetch(`/api/v1/shops/${data.salonId}`, {
+    method: "PATCH",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data.salon)
+    // body: JSON.stringify({ userId: +data, profile_type: "shop_manager" })
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('patchDataSalonThunk res:', res);
+      dispatch(patchDataSalonSuccessAction(res.data));
+
+    })
+    .catch(err => {
+      console.log('patchDataSalonThunk: ', err);
+      dispatch(patchDataSalonFailureAction(err));
+    });
+}
+
+/**
+ * POST запрос на установку user-у роли "shop_manager"
+*/
+/******************************************************************/
+/**
+ * Начало POST запроса на установку роли "shop_manager"
+*/
+export const postSetRoleShopManagerStartAction = (date) => ({
+  type: POST_SET_ROLE_SHOP_MANAGER_START,
+  payload: date
+});
+/**
+ * Успешное выполнение POST запроса на установку роли "shop_manager"
+*/
+export const postSetRoleShopManagerSuccessAction = (date) => ({
+  type: POST_SET_ROLE_SHOP_MANAGER_SUCCESS,
+  payload: date
+});
+/**
+ * Завершение с ошибкой POST запроса на установку роли "shop_manager"
+*/
+export const postSetRoleShopManagerFailureAction = (date) => ({
+  type: POST_SET_ROLE_SHOP_MANAGER_FAILURE,
+  payload: date
+});
+
+/** 
+ * POST запрос. Устанавливаем роль
+ * @param {{}} date -  {profile_type: "master", userId: 91 }
+*/
+export const postSetRoleShopManagerThunk = (data) => async (dispatch, getState) => {
+
+  dispatch(postSetRoleShopManagerStartAction());
+
+  fetch("/api/v1/profiles", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+    // body: JSON.stringify({ userId: +data, profile_type: "shop_manager" })
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('postSetRoleShopManagerSuccessAction res:', res);
+      dispatch(postSetRoleShopManagerSuccessAction(res.data));
+
+    })
+    .catch(err => {
+      console.log('postSetRoleShopManagerFailureAction: ', err);
+      dispatch(postSetRoleShopManagerFailureAction(err));
+    });
+}
+
+/**
+ * Создание салоан
+*/
+/******************************************************************/
 /**
  * @param {{}} date - данные нового салона
 */
@@ -21,7 +155,7 @@ export const postNewSalonAction = (date) => ({
   payload: date
 });
 /** 
- * Запрос на создание нового салона
+ * POST запрос на создание нового салона
  * @param {{}} date - данные нового салона
 */
 export const postNewSalonThunk = (data) => async (dispatch, getState) => {
@@ -42,36 +176,64 @@ export const postNewSalonThunk = (data) => async (dispatch, getState) => {
 }
 
 
+
+
+
+
+
+
+
+
+/******************************************************************/
+// /**
+//  * @param {{}} date - 
+// */
+// export const patchSalonAction = (date) => ({
+//   type: PATCH_SALON,
+//   payload: date
+// });
+// /** 
+//  * Запрос на создание нового салона
+//  * @param {{}} date - данные нового салона
+// */
+// export const patchSalonThunk = (data) => async (dispatch, getState) => {
+
+//   fetch('/api/v1/shops', {
+//     method: 'PATCH',
+//     headers: {
+//       'Content-Type': 'application/json;charset=utf-8'
+//     },
+//     body: JSON.stringify(data)
+//   })
+//     .then(req => req.json())
+//     .then(res => {
+//       console.log('patchSalonThunk res:', res);
+//       // dispatch(patchSalonAction(res.data));
+//     })
+//     .catch(err => console.log('patchSalonThunk: ', err));
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
- * @param {{}} date - 
+ * Загрузка картинки для салона,
+ * получение id файла
 */
-export const patchSalonAction = (date) => ({
-  type: PATCH_SALON,
-  payload: date
-});
-/** 
- * Запрос на создание нового салона
- * @param {{}} date - данные нового салона
-*/
-export const patchSalonThunk = (data) => async (dispatch, getState) => {
-
-  fetch('/api/v1/shops', {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify(data)
-  })
-    .then(req => req.json())
-    .then(res => {
-      console.log('patchSalonThunk res:', res);
-      // dispatch(patchSalonAction(res.data));
-    })
-    .catch(err => console.log('patchSalonThunk: ', err));
-}
-
-
-
+/******************************************************************/
 /**
  * @param {number} date - id картинки
 */
@@ -101,7 +263,10 @@ export const uploadImageForSalonThunk = (data) => async (dispatch, getState) => 
     .catch(console.log('uploadImageForSalonThunk: ', 'Что-то не получилось'));
 }
 
-
+/**
+ * Отправка объекта с id добавляемой картинки
+*/
+/******************************************************************/
 /**
  * @param {number} date - картинка
 */
@@ -131,7 +296,10 @@ export const postImageForSalonThunk = (data) => async (dispatch, getState) => {
     .catch(console.log('postImageForSalonThunk: ', 'Что-то не получилось'));
 }
 
-
+/**
+ * Получение массива всех салонов
+*/
+/******************************************************************/
 /**
  * @param {[{}]} date - салоны
 */
@@ -153,6 +321,10 @@ export const getAllSalonsThunk = () => async (dispatch, getState) => {
     .catch(err => console.log('getAllSalonsThunk: ', err));
 }
 
+/**
+ * Получение массива отфильрованных салонов
+*/
+/******************************************************************/
 /**
  * @param {[{}]} date - салоны
 */
@@ -192,6 +364,10 @@ export const getFilteringSalonsThunk = (cityId = null, serviceId = null, page = 
 }
 
 /**
+ * Получение информации о салоне по его id
+*/
+/******************************************************************/
+/**
  * @param {object} date - Инфа о салоне
 */
 export const getAciveSalonByIdAction = (date) => ({
@@ -212,6 +388,7 @@ export const getAciveSalonByIdThunk = (salonId) => async (dispatch, getState) =>
     .catch(err => console.log('getAciveSalonByIdThunk: ', err))
 }
 
+/******************************************************************/
 /**
  * Устанавливаем id  активного салона 
  * (страница которого открыта на данный момент)
@@ -222,6 +399,7 @@ export const setActiveSalonIdAction = (date) => ({
   payload: date
 });
 
+/******************************************************************/
 export const changeActivePageForPaginationAction = (page) => ({
   type: CHANGE_ACTIVE_PAGE_FOR_PAGINATION,
   payload: page

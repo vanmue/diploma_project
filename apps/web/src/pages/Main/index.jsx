@@ -16,8 +16,8 @@ function MainPage() {
 
   const dispatch = useDispatch();
 
-  // const location = useLocation();
-  // console.log('location', location)
+  const location = useLocation();
+  console.log('location', location)
 
   const select = useSelector(store => ({
     serviceGroups: store.deliverablesReducer.serviceGroups,
