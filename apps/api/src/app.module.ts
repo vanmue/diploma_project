@@ -7,13 +7,17 @@ import { join } from 'path';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { AuthModule } from './auth/auth.module';
 import { CitiesModule } from './cities/cities.module';
+import { CustomersModule } from './customers/customers.module';
 import { DeliverablesModule } from './deliverables/deliverables.module';
 import { DeliverableGroupsModule } from './deliverables/groups/deliverable-groups.module';
 import { FilesModule } from './files/files.module';
 import { MastersModule } from './masters/masters.module';
+import { MeModule } from './me/me.module';
+import { ProfileTypesModule } from './profile-types/profile-types.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { ShopImagesModule } from './shop-images/shop-images.module';
+import { ShopManagersModule } from './shop-managers/shop-managers.module';
 import { ImagesByShopModule } from './shops/images-by-shop/images-by-shop.module';
 import { ShopAdvantagesModule } from './shops/shop-advantages/shop-advantages.module';
 import { ShopsModule } from './shops/shops.module';
@@ -24,10 +28,6 @@ import { DecimalService } from './utils/services/decimal/decimal.service';
 import { FakerService } from './utils/services/faker/faker.service';
 import { JsonService } from './utils/services/json/json.service';
 import { PaginationService } from './utils/services/pagination/pagination.service';
-import { ProfileTypesModule } from './profile-types/profile-types.module';
-import { MeModule } from './me/me.module';
-import { CustomersModule } from './customers/customers.module';
-import { ShopManagersModule } from './shop-managers/shop-managers.module';
 
 @Module({
   imports: [

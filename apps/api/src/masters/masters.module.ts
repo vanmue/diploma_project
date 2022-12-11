@@ -13,6 +13,7 @@ import { MasterEntity } from './entities/master.entity';
 import { MastersController } from './masters.controller';
 import { MastersService } from './masters.service';
 import { AppointmentsByShopController } from './shops/appointments/appointments-by-shop.controller';
+import { MasterWeekendsModule } from './weekends/master-weekends.module';
 
 @Module({
   controllers: [
@@ -29,6 +30,7 @@ import { AppointmentsByShopController } from './shops/appointments/appointments-
     FilesModule,
     ProfilesModule,
     ReviewsModule,
+    MasterWeekendsModule,
   ],
   exports: [MastersService],
 })

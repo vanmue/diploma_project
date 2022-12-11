@@ -2,4 +2,4 @@
 
 npx typeorm-ts-node-commonjs \
   "migration:create" \
-  "./.typeorm/migrations/"$1
+  "./.typeorm/migrations/$1"

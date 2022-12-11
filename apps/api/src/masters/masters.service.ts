@@ -14,6 +14,7 @@ import { CreateMasterEntity } from './entities/create-master.entity';
 import { MasterEntity } from './entities/master.entity';
 import { UpdateMasterEntity } from './entities/update-master.entity';
 import { ListAllMastersDto } from './query-dto/list-all-masters.dto';
+import { MasterWeekendEntity } from './weekends/entities/master-weekend.entity';
 
 @Injectable()
 export class MastersService {
@@ -196,7 +197,7 @@ export class MastersService {
       where: {
         id,
       },
-      relations: ['shops', 'profile.user', 'img_file'],
+      relations: ['img_file', 'profile.user', 'weekends', 'shops'],
     });
     master = await this.addScores(master);
 
@@ -250,7 +251,7 @@ export class MastersService {
     const keys = ['profession', 'description', 'working_start', 'working_end'];
     master = copyKeys(keys, dto, master);
 
-    const { fileId, deliverables, shops, userId } = dto;
+    const { fileId, deliverables, shops, userId, weekends } = dto;
 
     if (fileId) {
       const file = new FileEntity();
@@ -275,6 +276,14 @@ export class MastersService {
 
     if (userId) {
       master.profile = await this.profilesService.findMaster(userId);
+    }
+
+    if (weekends) {
+      master.weekends = weekends.map((weekday) => {
+        const masterWeekend = new MasterWeekendEntity();
+        masterWeekend.weekday = weekday;
+        return masterWeekend;
+      });
     }
 
     return this.masterRepository.save(master);

@@ -23,7 +23,6 @@ import { ListAllMastersDto } from './query-dto/list-all-masters.dto';
 export class MastersController {
   constructor(
     private readonly mastersService: MastersService,
-
     private readonly jsonService: JsonService,
   ) {}
 
