@@ -32,21 +32,25 @@ export class AppointmentsService {
   }
 
   async findByMaster(masterId: number, date?: Date) {
-    let where = {};
-    where = { ...where, master: { id: masterId } };
+    let query = this.appointmentRepository
+      .createQueryBuilder('appointment')
+      .innerJoin('appointment.master', 'master')
+      .where('master.id = :masterId', { masterId })
+      .leftJoinAndSelect('appointment.profile', 'profile')
+      .leftJoinAndSelect('profile.user', 'user')
+      .addSelect('user.phone')
+      .leftJoin('appointment.shop', 'shop')
+      .addSelect('shop.id')
+      .addSelect('shop.name')
+      .leftJoinAndSelect('appointment.deliverable', 'deliverable');
+
     if (date) {
-      where = {
-        ...where,
-        from: Raw((alias) => `date_trunc('day', ${alias}) = :dt`, {
-          dt: date,
-        }),
-      };
+      query = query.andWhere(`date_trunc('day', appointment.from) = :date `, {
+        date,
+      });
     }
 
-    return await this.appointmentRepository.find({
-      where,
-      relations: ['profile.user', 'shop'],
-    });
+    return await query.getMany();
   }
 
   async findByMasterAndShop(masterId: number, shopId: number, date?: Date) {
