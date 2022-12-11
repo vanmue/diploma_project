@@ -24,19 +24,6 @@
     // width: 1280px;
   }
 
-  // @keyframes sliderLine {
-  //   from {
-  //     margin-left: 100%;
-  //     width: 300%;
-  //   }
-
-  //   to {
-  //     margin-left: 0%;
-  //     width: 100%;
-  //   }
-  // }
-
-
   &__img {
     border-radius: 10px;
     width: 400px;
@@ -97,12 +84,14 @@
 
   &__btn-prev {
     position: absolute;
+    background: #410935;
     left: 0px;
     top: 115px;
   }
 
   &__btn-next {
     position: absolute;
+    background: #410935;
     right: 0px;
     top: 115px;
   }

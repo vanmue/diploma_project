@@ -20,10 +20,12 @@ function MasterAddCard({
   const [formForAddMasterInSalon, setFormForAddMasterInSalon] = useState({
     fileId: null,                         // {number} - id картинки для лица мастера
     userId: null,                         // {number} - id пользователя
-    profession: 'profession',             // {string} - название профессии
-    description: 'description',           // {string} - описание мастера
+    profession: null,                     // {string} - название профессии
+    description: null,                    // {string} - описание мастера
     shops: [3],                           // {[number]} - id салона
     deliverables: [],                     // {[number]} - id услуг
+    working_start: null,                  // {string} - начало работы мастера
+    working_end: null,                    // {string} - окончание работы мастера
   });
   const [formSetRoleMaster, setFormSetRoleMaster] = useState({
     profile_type: "master",               // {string} - роль
@@ -35,18 +37,16 @@ function MasterAddCard({
   useEffect(() => { dispatch(getAllDeliverablesThunk()); }, []);
   useEffect(() => {
     if (select.responsePostSetRoleMaster != null) {
-      // console.log('formForAddMasterInSalon ', formForAddMasterInSalon)
       dispatch(postNewMasterThunk(formForAddMasterInSalon));
     }
   }, [select.responsePostSetRoleMaster]);
+
   useEffect(() => {
-    setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: select.imgForFaceMasterId });
+    setFormForAddMasterInSalon({ ...formForAddMasterInSalon, fileId: +select.imgForFaceMasterId });
   }, [select.imgForFaceMasterId]);
-  // useEffect(() => {
-  //   console.log('handleChangeServicesCheckbox', formForAddMasterInSalon.deliverables);
-  // }, [formForAddMasterInSalon.deliverables]);
 
   const handleChangeUploadImg = (e) => {
+    console.log("handleChangeUploadImg e.currentTarget.files: ", e.currentTarget.files)
     setFormImgForMaster(e.currentTarget.files[0]);
   }
 
@@ -80,7 +80,6 @@ function MasterAddCard({
   }
 
   //Обработка onChange при заполнении полей мастера
-  //id,profession,desk
   const handleChangeInputText = (e) => {
     let current = e.currentTarget.id;
     let currentValue = e.currentTarget.value;
@@ -97,6 +96,12 @@ function MasterAddCard({
         break;
       case "master-profession":
         setFormForAddMasterInSalon({ ...formForAddMasterInSalon, profession: currentValue })
+        break;
+      case "master-working-start":
+        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, working_start: currentValue })
+        break;
+      case "master-working-end":
+        setFormForAddMasterInSalon({ ...formForAddMasterInSalon, working_end: currentValue })
         break;
       case "master-desk":
         setFormForAddMasterInSalon({ ...formForAddMasterInSalon, description: currentValue })
@@ -181,6 +186,34 @@ function MasterAddCard({
               placeholder='мастер парикмахер'
               onChange={handleChangeInputText}
             />
+          </div>
+
+          <div className="master-add-card__info-working-time master-add-card__info-item">
+            <label
+              className="master-add-card__info-working-time-label"
+            // htmlFor="master-profession"
+            >
+              Время работы:
+            </label>
+            <div className="master-add-card__info-working-time-inputs">
+              <input
+                id="master-working-start"
+                className="master-add-card__info-working-start-input"
+                name="master-working-start"
+                type="text"
+                placeholder='Начало работы'
+                onChange={handleChangeInputText}
+              />
+              <input
+                id="master-working-end"
+                className="master-add-card__info-working-end-input"
+                name="master-working-end"
+                type="text"
+                placeholder='Окончание работы'
+                onChange={handleChangeInputText}
+              />
+            </div>
+
           </div>
 
           <div className="master-add-card__info-desk master-add-card__info-item">
