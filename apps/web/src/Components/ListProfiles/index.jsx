@@ -16,7 +16,7 @@ function ListProfiles({
 
   const callbacks = {
     onRedirect: useCallback(() => {
-      navigate("/salon-admine-office", { state: { userStruct: struct } })
+      navigate("/", { state: { userStruct: struct } })
     })
   }
 

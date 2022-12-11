@@ -15,24 +15,24 @@ const initialStore = {
     error: null                 // {string || null} -  ошибка
   },
   authData: {
-    userStructure: {
-      avatar: {
-        id: 1,
-        path: "/uploads/e4acebbd-6fe0-451b-ba7d-8ad7a9d80d2e.png"
-      },
-      email: "2233445567890@mail.ru",
-      id: 98,
-      name: "name",
-      phone: null,
-      profiles: [
-        {
-          id: 213,
-          profile_type: 'customer'
-        }
-      ],
-      surname: "surname"
-    },
-    // userStructure: null,        // {object || null} - стуктура данных пользователя
+    // userStructure: {
+    //   avatar: {
+    //     id: 1,
+    //     path: "/uploads/e4acebbd-6fe0-451b-ba7d-8ad7a9d80d2e.png"
+    //   },
+    //   email: "2233445567890@mail.ru",
+    //   id: 98,
+    //   name: "name",
+    //   phone: null,
+    //   profiles: [
+    //     {
+    //       id: 213,
+    //       profile_type: 'customer'
+    //     }
+    //   ],
+    //   surname: "surname"
+    // },
+    userStructure: null,        // {object || null} - стуктура данных пользователя
     isLoading: false,           // {boolean} -  состояние запроса
     error: null                 // {string || null} -  ошибка
   },
