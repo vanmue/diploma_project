@@ -20,6 +20,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { MasterWeekendEntity } from '../weekends/entities/master-weekend.entity';
 
 @Entity('masters')
 export class MasterEntity {
@@ -74,6 +75,9 @@ export class MasterEntity {
   @JoinColumn({ name: 'imgId', referencedColumnName: 'id' })
   @ApiProperty()
   img_file: FileEntity;
+
+  @OneToMany(() => MasterWeekendEntity, (weekend) => weekend.master)
+  weekends: MasterWeekendEntity[];
 
   @ApiProperty()
   reviews_scores_count: number;

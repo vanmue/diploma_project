@@ -25,4 +25,7 @@ export class CreateMasterEntity extends PickType(MasterEntity, [
   @IsInt()
   @ApiProperty()
   fileId: number;
+
+  @ApiProperty({ type: 'number', isArray: true })
+  weekends: number[];
 }
