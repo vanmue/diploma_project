@@ -49,12 +49,13 @@ function Header() {
                   {localStorage.getItem("access_token") ? "Профиль" : "Войти"}
                 </SignIn>
               </div>
+              {select.userStructure &&
+                <div className="header__wrapp-profile-list">
+                  <ListProfiles
+                    struct={select.userStructure}
+                  />
+                </div>}
 
-              <div className="header__wrapp-profile-list">
-                <ListProfiles
-                  struct={select.userStructure}
-                />
-              </div>
             </div>
 
             {/* <div className="header__wrapp-sign-in">
