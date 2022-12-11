@@ -68,10 +68,10 @@ function SalonAdminOffice() {
     working_start: "10:00",
     working_end: "20:00",
     phone: "1234567890",
-    center_longtitude: 59.91796593897841,
     center_latitude: 30.304908500000003,
-    label_longtitude: 59.93069550217494,
+    center_longtitude: 59.91796593897841,
     label_latitude: 30.295617482627414,
+    label_longtitude: 59.93069550217494,
     zoom: 10,
     cityId: 3,
     advantages: [1]
@@ -187,13 +187,13 @@ function SalonAdminOffice() {
           {isActiveFormForSalon &&
             <div className="salon-admine-office__wrapp-form-for-salon">
               <FormForSalon
+                salonId={select.activeSalonId}
+                salon={select.activeSalon}
                 req="PATCH"
                 onClickClose={callbacks.onSetIsActiveFormForSalon}
               />
             </div>
           }
-
-
         </div>
       </div>
     </div>
