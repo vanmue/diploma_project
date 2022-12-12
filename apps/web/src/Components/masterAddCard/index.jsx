@@ -14,6 +14,7 @@ function MasterAddCard({
     deliverables: store.deliverablesReducer.deliverables,
     imgForFaceMasterId: store.mastersReducer.imgForFaceMasterId,
     responsePostSetRoleMaster: store.mastersReducer.responsePostSetRoleMaster,
+    activeSalonId: store.salonsReducer.activeSalonId,
   }));
 
   const [formImgForMaster, setFormImgForMaster] = useState(null);
@@ -22,7 +23,7 @@ function MasterAddCard({
     userId: null,                         // {number} - id пользователя
     profession: null,                     // {string} - название профессии
     description: null,                    // {string} - описание мастера
-    shops: [3],                           // {[number]} - id салона
+    shops: [],                           // {[number]} - id салона
     deliverables: [],                     // {[number]} - id услуг
     working_start: null,                  // {string} - начало работы мастера
     working_end: null,                    // {string} - окончание работы мастера
@@ -36,6 +37,10 @@ function MasterAddCard({
 
   useEffect(() => { dispatch(getAllDeliverablesThunk()); }, []);
   useEffect(() => {
+    setFormForAddMasterInSalon({ ...formForAddMasterInSalon, shops: [select.activeSalonId] });
+  }, [select.activeSalonId]);
+  useEffect(() => {
+    console.log("formForAddMasterInSalon:", formForAddMasterInSalon)
     if (select.responsePostSetRoleMaster != null) {
       dispatch(postNewMasterThunk(formForAddMasterInSalon));
     }

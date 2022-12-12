@@ -8,7 +8,21 @@ export const GET_AUTH_START = '@@authorization/GET_AUTH_START';
 export const GET_AUTH_SUCCESS = '@@authorization/GET_AUTH_SUCCESS';
 export const GET_AUTH_FAILURE = '@@authorization/GET_AUTH_FAILURE';
 
-export const POST_SET_ROLE_CUSTOMER = 'POST_SET_ROLE_CUSTOMER';
+export const POST_SET_ROLE_CUSTOMER = '@@authorization/POST_SET_ROLE_CUSTOMER';
+
+export const LOGOUT = '@@authorization/LOGOUT';
+
+
+/**
+ * Выход из профиля  
+*/
+/******************************************************************/
+/**
+ * Стираем JWT токен, стираем userStructure 
+*/
+export const logoutAction = () => ({
+  type: LOGOUT,
+});
 
 
 /**
