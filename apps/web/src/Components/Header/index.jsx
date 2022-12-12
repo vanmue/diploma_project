@@ -6,11 +6,13 @@ import SignInModal from "../SignInModal";
 import ListProfiles from "../ListProfiles";
 import './header.scss';
 
+// const userStructure = JSON.parse(localStorage.getItem("userStructure"));
+
 function Header() {
   const select = useSelector(store => ({
     isMain: store.stylesReducer.header.isMain,
     headerBackground: store.stylesReducer.header.background,
-    userStructure: store.authorizationReducer.authData.userStructure,
+    // userStructure: store.authorizationReducer.authData.userStructure,
   }));
 
   const [modalIsActive, setModalIsActive] = useState(false);
@@ -49,10 +51,10 @@ function Header() {
                   {localStorage.getItem("access_token") ? "Профиль" : "Войти"}
                 </SignIn>
               </div>
-              {select.userStructure &&
+              {JSON.parse(localStorage.getItem("userStructure")) &&
                 <div className="header__wrapp-profile-list">
                   <ListProfiles
-                    struct={select.userStructure}
+                  // userStructure={userStructure}
                   />
                 </div>}
 

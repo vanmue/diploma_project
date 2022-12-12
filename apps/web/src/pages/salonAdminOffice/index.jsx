@@ -7,7 +7,9 @@ import {
   postNewSalonThunk,
   postImageForSalonThunk,
   getAciveSalonByIdThunk,
-  uploadImageForSalonThunk
+  uploadImageForSalonThunk,
+  getMeProfilesThunk,
+  getMeProfilesSSSThunk
 } from '../../actions/salonsAction';
 import {
   changeNavigationColorAction,
@@ -38,11 +40,12 @@ function SalonAdminOffice() {
     mastersActiveSalon: store.mastersReducer.mastersActiveSalon,
     activePageMastersActiveSalon: store.mastersReducer.activePageMastersActiveSalon,
     pagination: store.mastersReducer.pagination,
+    // userStructure: store.authorizationReducer.authData.userStructure,
   }))
 
   const [isActiveFormForSalon, setIsActiveFormForSalon] = useState(false);
   const [imageForSalon, setImageForSalon] = useState({
-    shopId: 3,                // {number} - id салона
+    shopId: null,//JSON.parse(localStorage.getItem("userStructure")).profiles.find(el => el.profile_type == "shop_manager").entity_id,                // {number} - id салона
     fileId: null,             // {number} - id изображения 42
     is_preview: "false",      // {string} - флаг картинки
   });
@@ -83,12 +86,26 @@ function SalonAdminOffice() {
     dispatch(changeHeaderBackgroundAction('#F5BFAB'));
     dispatch(changeNavigationColorAction('#410935'));
 
+    dispatch(getMeProfilesThunk());
+
+    // dispatch(getMeProfilesSSSThunk());
+
     dispatch(getCitiesThunk());
     dispatch(getAllAdvantagesThunk());
-    dispatch(getAciveSalonByIdThunk(select.activeSalonId));
-    dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId, 1));
+    // if (select.activeSalonId) dispatch(getAciveSalonByIdThunk(select.activeSalonId));
+
+    // dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId, 1));
+
+    console.log("imageForSalon", imageForSalon)
   }, []);
   useEffect(() => {
+    console.log("salon-admine-office select.activeSalonId:", select.activeSalonId)
+    if (select.activeSalonId) dispatch(getAciveSalonByIdThunk(select.activeSalonId));
+    // if (select.activeSalonId) dispatch(getAciveSalonByIdThunk(select.activeSalonId));
+    dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId, 1));
+  }, [select.activeSalonId]);
+  useEffect(() => {
+    // console.log("salon-admine-offece userStructure: ", select.userStructure)
     setImageForSalon({ ...imageForSalon, fileId: select.imgForCarouselId });
   }, [select.imgForCarouselId]);
 

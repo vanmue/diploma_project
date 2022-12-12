@@ -6,6 +6,7 @@ import {
   GET_AUTH_START,
   GET_AUTH_SUCCESS,
   GET_AUTH_FAILURE,
+  LOGOUT,
 } from "../actions/authorizationActions";
 
 const initialStore = {
@@ -15,23 +16,6 @@ const initialStore = {
     error: null                 // {string || null} -  ошибка
   },
   authData: {
-    // userStructure: {
-    //   avatar: {
-    //     id: 1,
-    //     path: "/uploads/e4acebbd-6fe0-451b-ba7d-8ad7a9d80d2e.png"
-    //   },
-    //   email: "2233445567890@mail.ru",
-    //   id: 98,
-    //   name: "name",
-    //   phone: null,
-    //   profiles: [
-    //     {
-    //       id: 213,
-    //       profile_type: 'customer'
-    //     }
-    //   ],
-    //   surname: "surname"
-    // },
     userStructure: null,        // {object || null} - стуктура данных пользователя
     isLoading: false,           // {boolean} -  состояние запроса
     error: null                 // {string || null} -  ошибка
@@ -40,6 +24,14 @@ const initialStore = {
 
 export default function authorizationReducer(store = initialStore, action) {
   switch (action.type) {
+    case LOGOUT: {
+      localStorage.setItem("access_token", null);
+      localStorage.setItem("userStructure", null);
+      localStorage.setItem("activeSalonId", null);
+      return {
+        ...store,
+      }
+    }
     // case POST_NEW_USER: {
     //   return {
     //     ...store,
@@ -86,6 +78,8 @@ export default function authorizationReducer(store = initialStore, action) {
       }
     }
     case GET_AUTH_SUCCESS: {
+      localStorage.setItem("userStructure", JSON.stringify(action.payload));
+      // console.log("localStorage.getItem('111'):", localStorage.getItem('111'))
       return {
         ...store,
         authData: {
