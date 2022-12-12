@@ -5,7 +5,8 @@
   position: relative;
 
   &__btn {
-    position: relative;
+    // position: relative;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -13,7 +14,7 @@
     padding-left: 9px;
     background: $beige;
     border-radius: 10px 10px 10px 10px;
-    z-index: 1;
+    z-index: 5;
   }
 
   &__input {
@@ -38,7 +39,10 @@
   &__list {
     display: flex;
     flex-direction: column;
+
+    // position: relative;
     position: absolute;
+
     width: 100%;
     height: 108px;
     @include inter(400, normal);
@@ -46,7 +50,7 @@
     font-size: 14px;
     line-height: 17px;
     color: $darkViolet;
-    margin-top: -8px;
+    margin-top: -7px;
     padding: 15px 0 0 8px;
     overflow-y: scroll;
     border-bottom-right-radius: 10px;

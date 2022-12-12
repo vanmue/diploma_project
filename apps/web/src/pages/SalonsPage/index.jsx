@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import React, { useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DropdownSelect from '../../Components/DropdownSelect';
 import SalonCard from '../../Components/SalonCard';
@@ -30,6 +31,7 @@ function SalonsPage() {
 
   const [cityId, setCitiesId] = useState(null);
   const [serviceId, setServiceId] = useState(null);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,6 +59,7 @@ function SalonsPage() {
       setServiceId(id)
     }),
     onSetActiveSalonId: useCallback((id) => {
+      navigate("/salon", { state: { activeSalonId: id } });
       dispatch(setActiveSalonIdAction(id));
     }),
     onGetFilteringSalons: useCallback(() => {
@@ -103,6 +106,8 @@ function SalonsPage() {
           <ul className="salons-page__salons-list">
             {select.salons?.map((item) => {
               let imgPreview = item.images.length > 0 ? item.images.find(el => el.is_preview == true) : '';
+              // console.log("salonsPage imgPreview.file.path : ", imgPreview?.file?.path)
+              // console.log("salonsPage item.file.path : ", item.file.path)
               return <li className="salons-page__wrapp-salon-card" data-salon-id={item.id} key={item.id}>
                 <SalonCard
                   salonTitle={item.name}
@@ -115,7 +120,7 @@ function SalonsPage() {
                   parking={item.advantages[0]?.name}
                   textLink={'Подробная информация о салоне'}
                   deliverableGgroups={item.deliverable_groups}
-                  img={imgPreview != '' ? imgPreview.file.path : ''}
+                  img={imgPreview != undefined ? imgPreview?.file?.path : ''}
                   bckCallBtn={'#410935'}
                   colorTextCallBtn={'#F5BFAB'}
                   bkgRecordBtn={'#A40123'}
@@ -128,9 +133,6 @@ function SalonsPage() {
           <div className="salons-page__wrapp-pagination">
             <Pagination
               length={select.pagination != null ? select.pagination?.pages_total : 10}
-              // currentPage={select.pagination != null ? select.pagination?.current_page : 1}
-              // length={select.pagination?.items_total}
-              // currentPage={select.pagination?.current_page}
               onClick={callbacks.onGetActivePageForSalons}
             />
           </div>

@@ -23,8 +23,8 @@ function MasterCard({
 
   const callbacks = {
     onSetIdActiveMaster: useCallback((e) => {
-      let masterId = e.currentTarget.closest('.masters-page__wrapp-master-card').dataset.masterId;
-      let salonId = e.currentTarget.closest('.masters-page__wrapp-master-card').dataset.salonId;
+      let masterId = e.currentTarget.closest(".wrapp-master-card")?.dataset.masterId;
+      let salonId = e.currentTarget.closest(".wrapp-master-card")?.dataset.salonId;
       dispatch(setIdActiveMasterAction(masterId, salonId));
     })
   }
