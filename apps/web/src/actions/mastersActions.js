@@ -123,7 +123,10 @@ export const getMastersThunk = () => async (dispatch, getState) => {
 */
 export const getAllMasterForActiveSalonAction = (data) => ({
   type: GET_ALL_MASTERS_FOR_ACTIVE_SALON,
-  payload: data
+  payload: {
+    data: data.data,
+    pagination: data.pagination
+  }
 });
 /**
  * Get запрос на получение всеч мастеров для конкретного салона

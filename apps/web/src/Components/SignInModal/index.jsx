@@ -104,7 +104,7 @@ function SignInModal({
   return (
     <div
       className="sign-in-modal"
-      style={{ display: isActive ? 'block' : 'none' }}
+    // style={{ display: isActive ? 'block' : 'none' }}
     >
       <div className="sign-in-modal__user-data">
         {formRegistrationIsActive ?
@@ -118,6 +118,7 @@ function SignInModal({
       >
         {formRegistrationIsActive ? 'Войти' : 'Регестрация'}
       </button>
+
       <div className="sign-in-modal__wrapp-button-registration">
         <Button
           colorText='#FFFFFF'

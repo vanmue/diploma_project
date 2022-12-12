@@ -1,6 +1,5 @@
 @import '../../assets/styles/mixins.scss';
-
-@import '../../assets/styles/mixins.scss';
+@import '../../assets/styles/colors.scss';
 
 .drpdn-for-add-salons {
   position: relative;
@@ -11,7 +10,7 @@
     align-items: center;
     justify-content: space-between;
     height: 20px;
-    padding-left: 9px;
+    // padding-left: 9px;
     background: #FFFFFF;
     // border: 1px solid #410935;
     // border-radius: 5px;
@@ -52,6 +51,7 @@
     margin-top: -8px;
     padding: 15px 0 0 8px;
     overflow-y: scroll;
+    border: 1px solid $darkViolet;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
   }

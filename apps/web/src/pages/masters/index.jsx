@@ -43,8 +43,8 @@ function MastersPage() {
   }, []);
 
   useEffect(() => {
-    console.log('masters', select.masters)
-    console.log('pagination', select.pagination)
+    // console.log('masters', select.masters)
+    // console.log('pagination', select.pagination)
   }, [select.masters, select.pagination]);
 
   const callbacks = {
@@ -105,7 +105,7 @@ function MastersPage() {
             <ul className="masters-page__list">
               {select.masters?.map((el) => {
 
-                return <li className="masters-page__wrapp-master-card" data-master-id={el.id} data-salon-id={el.shops[0].id} key={el.id}>
+                return <li className="masters-page__wrapp-master-card wrapp-master-card" data-master-id={el.id} data-salon-id={el.shops[0].id} key={el.id}>
                   <MasterCard
                     name={el.profile.user.name}
                     surname={el.profile.user.surname}
