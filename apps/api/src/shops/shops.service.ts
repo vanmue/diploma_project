@@ -94,6 +94,17 @@ export class ShopsService {
     return await this.shopRepository.findOneByOrFail({ id });
   }
 
+  async findShopManagerMeByUser(userId: number) {
+    return this.shopRepository
+      .createQueryBuilder('shop')
+      .select('shop.id')
+      .innerJoin('shop.manager_profiles', 'profile')
+      .addSelect('profile.id')
+      .addSelect('profile.profile_type')
+      .where('profile.userId = :userId', { userId })
+      .getMany();
+  }
+
   async findInfoById(id: number) {
     const shop = await this.shopRepository.findOneOrFail({
       where: {
