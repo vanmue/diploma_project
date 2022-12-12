@@ -29,7 +29,26 @@ function DrpdnForAddSalons({
 
   // При клике показываем список вариантов
   const handleClickBtn = () => {
-    setBtnActive(!btnActive);
+    setBtnActive(prevBtnActive => !prevBtnActive);
+  }
+
+  // Обработчик input
+  const handleChangeInput = (e) => {
+
+    setValue(e.target.value);
+    sortByValue(e.target.value);
+    if (e.target.value.length == 0) onChange(null);
+    // console.log('DropdownSelect handleChangeInput e.target.value.length:', e.target.value.length);
+  }
+
+  // Обработчик выбора одного из вариантов
+  const handleClickListItem = (e) => {
+
+    setValue(e.currentTarget.innerHTML);
+    sortByValue(e.currentTarget.innerHTML);
+    onChange(e.currentTarget.dataset.drpdnItemId);
+    setBtnActive(prevBtnActive => !prevBtnActive);
+    inputRef.current.focus();
   }
 
   // Делаем выборку по значению с помощью ругулярного выражения
@@ -52,24 +71,6 @@ function DrpdnForAddSalons({
 
     setItemsSort(arr.concat(items));
     setSampleCounter(counter);
-  }
-
-  // Обработчик input
-  const handleChangeInput = (e) => {
-
-    setValue(e.target.value);
-    sortByValue(e.target.value);
-    if (e.target.value.length == 0) onChange(null);
-    // console.log('DropdownSelect handleChangeInput e.target.value.length:', e.target.value.length);
-  }
-
-  // Обработчик выбора одного из вариантов
-  const handleClickListItem = (e) => {
-
-    setValue(e.currentTarget.innerHTML);
-    sortByValue(e.currentTarget.innerHTML);
-    onChange(e.currentTarget.dataset.drpdnItemId);
-    inputRef.current.focus();
   }
 
   return (

@@ -6,6 +6,9 @@ import {
   GET_AUTH_START,
   GET_AUTH_SUCCESS,
   GET_AUTH_FAILURE,
+  GET_ME_PROFILES_START,
+  GET_ME_PROFILES_SUCCESS,
+  GET_ME_PROFILES_FAILURE,
   LOGOUT,
 } from "../actions/authorizationActions";
 
@@ -20,10 +23,47 @@ const initialStore = {
     isLoading: false,           // {boolean} -  состояние запроса
     error: null                 // {string || null} -  ошибка
   },
+  getMeProfilesData: {
+    response: null,             // {string || null} -  
+    isLoading: false,           // {boolean} -  состояние запроса
+    error: null                 // {string || null} -  ошибка
+  },
 }
 
 export default function authorizationReducer(store = initialStore, action) {
   switch (action.type) {
+    case GET_ME_PROFILES_START: {
+      return {
+        ...store,
+        getMeProfilesData: {
+          ...store.getMeProfilesData,
+          isLoading: true
+        }
+      }
+    }
+    case GET_ME_PROFILES_SUCCESS: {
+      let salonId = action.payload.find(el => el.profile_type == "shop_manager").entity_id;
+      localStorage.setItem("activeSalonId", JSON.stringify(salonId))
+      return {
+        ...store,
+        // activeSalonId: salonId,
+        getMeProfilesData: {
+          ...store.getMeProfilesData,
+          response: action.payload,
+          isLoading: false
+        }
+      }
+    }
+    case GET_ME_PROFILES_FAILURE: {
+      return {
+        ...store,
+        getMeProfilesData: {
+          ...store.getMeProfilesData,
+          isLoading: false,
+          error: action.payload
+        }
+      }
+    }
     case LOGOUT: {
       localStorage.setItem("access_token", null);
       localStorage.setItem("userStructure", null);

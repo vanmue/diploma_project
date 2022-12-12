@@ -32,4 +32,10 @@
   &__wrapp-profile-list {
     position: absolute;
   }
+
+  &__wrapp-sign-in-modal {
+    position: absolute;
+    left: calc(50% - 287px);
+    top: 25%;
+  }
 }

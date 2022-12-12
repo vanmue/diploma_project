@@ -72,7 +72,9 @@ function Carousel({
                 background={'#410935'}
                 colorText={'#FFFFFF'}
                 onClick={callbacks.onClickBtnUploadImageForSalon}
-              >Загрузить</Button>
+              >
+                Загрузить
+              </Button>
             </div>
             <input
               className="carousel__add-img-input"

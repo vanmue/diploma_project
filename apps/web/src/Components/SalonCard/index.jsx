@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import propTypes from 'prop-types';
 import ServicesList from '../ServicesList';
@@ -28,6 +28,7 @@ function SalonCard({
   onClick,
   onClickEditing
 }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleClickLink = (e) => {
@@ -44,6 +45,7 @@ function SalonCard({
   const callbacks = {
     onSetActiveSalonId: useCallback((e) => {
       let salonId = e.currentTarget.closest('.salons-page__wrapp-salon-card').dataset.salonId;
+      navigate("/salon", { state: { activeSalonId: salonId } })
       dispatch(setActiveSalonIdAction(salonId));
     }),
   }
@@ -103,7 +105,7 @@ function SalonCard({
                   <Button
                     colorText={colorTextRecordBtn}
                     background={bkgRecordBtn}
-                    linkTo={'/salon'}
+                    // linkTo={'/salon'}
                     onClick={callbacks.onSetActiveSalonId}
                   >
                     Записаться

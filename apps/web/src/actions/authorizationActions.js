@@ -10,8 +10,13 @@ export const GET_AUTH_FAILURE = '@@authorization/GET_AUTH_FAILURE';
 
 export const POST_SET_ROLE_CUSTOMER = '@@authorization/POST_SET_ROLE_CUSTOMER';
 
+export const GET_ME_PROFILES_START = '@@authorization/GET_ME_PROFILES_START';
+export const GET_ME_PROFILES_SUCCESS = '@@authorization/GET_ME_PROFILES_SUCCESS';
+export const GET_ME_PROFILES_FAILURE = '@@authorization/GET_ME_PROFILES_FAILURE';
+
 export const LOGOUT = '@@authorization/LOGOUT';
 
+let token = localStorage.getItem("access_token");
 
 /**
  * Выход из профиля  
@@ -208,6 +213,65 @@ export const getAuthThunk = (data) => async (dispatch, getState) => {
       console.log('getAuthThunk структура user res: ', res);
       dispatch(getAuthSuccessAction(res.data));
     })
+    .then(dispatch(getMeProfilesThunk()))
     .catch(err => dispatch(getAuthFailureAction(err)));
+}
+
+
+/**
+ * Получение списка всех типов профилей
+*/
+/******************************************************************/
+/**
+ * Начало GET запроса
+*/
+export const getMeProfilesStartAction = (date) => ({
+  type: GET_ME_PROFILES_START,
+  payload: date
+});
+/**
+ * Успешное выполнение GET запроса
+*/
+export const getMeProfilesSuccessAction = (date) => ({
+  type: GET_ME_PROFILES_SUCCESS,
+  payload: date
+});
+/**
+ * Завершение с ошибкой GET
+*/
+export const getMeProfilesFailureAction = (date) => ({
+  type: GET_ME_PROFILES_FAILURE,
+  payload: date
+});
+
+/** 
+ * GET запрос на получение списка всех типов профилей
+ * @param {} date -  
+*/
+export const getMeProfilesThunk = (data) => async (dispatch, getState) => {
+
+  // const headers = {
+
+  // }
+  dispatch(getMeProfilesStartAction());
+
+  fetch("/api/v1/me/profiles", {
+    method: "GET",
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+      // 'Authorization': `Bearer ${token}`
+    },
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('getMeProfilesThunk res:', res);
+      dispatch(getMeProfilesSuccessAction(res.data));
+
+    })
+    .catch(err => {
+      console.log('getMeProfilesThunk err: ', err);
+
+      dispatch(getMeProfilesFailureAction(err));
+    });
 }
 

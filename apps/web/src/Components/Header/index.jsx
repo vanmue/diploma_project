@@ -60,24 +60,20 @@ function Header() {
 
             </div>
 
-            {/* <div className="header__wrapp-sign-in">
-              <SignIn
-                onClick={callbacks.onSetIsActiveModal}
-              // linkTo="/salon-admine-office"
-              >
-                {localStorage.getItem("access_token") ? "Профиль" : "Войти"}
-              </SignIn>
-            </div>
-
-            <div className="header__wrapp-profile-list">
-              <ProfileList />
-            </div> */}
-
           </div>
-          <SignInModal
+          {modalIsActive &&
+            <div className="header__wrapp-sign-in-modal">
+              <SignInModal
+                // isActive={modalIsActive}
+                onClick={callbacks.onSetIsActiveModal}
+              />
+            </div>
+          }
+
+          {/* <SignInModal
             isActive={modalIsActive}
             onClick={callbacks.onSetIsActiveModal}
-          />
+          /> */}
         </div>
       </div>
     </header>

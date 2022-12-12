@@ -20,93 +20,68 @@ export const PATCH_DATA_SALON_START = '@@salons/PATCH_DATA_SALON_START';
 export const PATCH_DATA_SALON_SUCCESS = '@@salons/PATCH_DATA_SALON_SUCCESS';
 export const PATCH_DATA_SALON_FAILURE = '@@salons/PATCH_DATA_SALON_FAILURE';
 
-export const GET_ME_PROFILES_START = '@@salons/GET_ME_PROFILES_START';
-export const GET_ME_PROFILES_SUCCESS = '@@salons/GET_ME_PROFILES_SUCCESS';
-export const GET_ME_PROFILES_FAILURE = '@@salons/GET_ME_PROFILES_FAILURE';
-// export const CHANGE_ARRAY_PAGINATION = '@@salons/CHANGE_ARRAY_PAGINATION';
+// export const GET_ME_PROFILES_START = '@@salons/GET_ME_PROFILES_START';
+// export const GET_ME_PROFILES_SUCCESS = '@@salons/GET_ME_PROFILES_SUCCESS';
+// export const GET_ME_PROFILES_FAILURE = '@@salons/GET_ME_PROFILES_FAILURE';
+// // export const CHANGE_ARRAY_PAGINATION = '@@salons/CHANGE_ARRAY_PAGINATION';
 
 let token = localStorage.getItem("access_token");
 
-/**
- * Получение списка всех типов профилей
-*/
-/******************************************************************/
-/**
- * Начало GET запроса
-*/
-export const getMeProfilesStartAction = (date) => ({
-  type: GET_ME_PROFILES_START,
-  payload: date
-});
-/**
- * Успешное выполнение GET запроса
-*/
-export const getMeProfilesSuccessAction = (date) => ({
-  type: GET_ME_PROFILES_SUCCESS,
-  payload: date
-});
-/**
- * Завершение с ошибкой GET
-*/
-export const getMeProfilesFailureAction = (date) => ({
-  type: GET_ME_PROFILES_FAILURE,
-  payload: date
-});
+// /**
+//  * Получение списка всех типов профилей
+// */
+// /******************************************************************/
+// /**
+//  * Начало GET запроса
+// */
+// export const getMeProfilesStartAction = (date) => ({
+//   type: GET_ME_PROFILES_START,
+//   payload: date
+// });
+// /**
+//  * Успешное выполнение GET запроса
+// */
+// export const getMeProfilesSuccessAction = (date) => ({
+//   type: GET_ME_PROFILES_SUCCESS,
+//   payload: date
+// });
+// /**
+//  * Завершение с ошибкой GET
+// */
+// export const getMeProfilesFailureAction = (date) => ({
+//   type: GET_ME_PROFILES_FAILURE,
+//   payload: date
+// });
 
-/** 
- * GET запрос на получение списка всех типов профилей
- * @param {} date -  
-*/
-export const getMeProfilesThunk = (data) => async (dispatch, getState) => {
+// /** 
+//  * GET запрос на получение списка всех типов профилей
+//  * @param {} date -  
+// */
+// export const getMeProfilesThunk = (data) => async (dispatch, getState) => {
 
-  dispatch(getMeProfilesStartAction());
+//   dispatch(getMeProfilesStartAction());
 
-  fetch("/api/v1/me/profiles", {
-    method: "GET",
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-  })
-    .then(req => req.json())
-    .then(res => {
-      console.log('getMeProfilesThunk res:', res);
+//   fetch("/api/v1/me/profiles", {
+//     method: "GET",
+//     headers: {
+//       'Authorization': `Bearer ${token}`
+//     },
+//   })
+//     .then(req => req.json())
+//     .then(res => {
+//       console.log('getMeProfilesThunk res:', res);
 
-      // let profileSM = res.data.find(el => el.profile_type == "shop_manager").entity_id//el.entity_id
-      // console.log('getMeProfilesThunk profileSM:', profileSM);
-      dispatch(getMeProfilesSuccessAction(res.data));
+//       // let profileSM = res.data.find(el => el.profile_type == "shop_manager").entity_id//el.entity_id
+//       // console.log('getMeProfilesThunk profileSM:', profileSM);
+//       dispatch(getMeProfilesSuccessAction(res.data));
 
-    })
-    .catch(err => {
-      console.log('getMeProfilesThunk err: ', err);
+//     })
+//     .catch(err => {
+//       console.log('getMeProfilesThunk err: ', err);
 
-      dispatch(getMeProfilesFailureAction(err));
-    });
-}
-
-///////////////////////////////
-export const getMeProfilesSSSThunk = (data) => async (dispatch, getState) => {
-
-
-
-  fetch("/api/v1/shops/227", {
-    method: "GET",
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-  })
-    .then(req => req.json())
-    .then(res => {
-      console.log('getMeProfilesSSSThunk res:', res);
-
-      // dispatch(getMeProfilesSuccessAction(res.data));
-
-    })
-    .catch(err => {
-      // console.log('getMeProfilesThunk err: ', err);
-      // dispatch(getMeProfilesFailureAction(err));
-    });
-}
-//////////////////////////////
+//       dispatch(getMeProfilesFailureAction(err));
+//     });
+// }
 
 
 /**
