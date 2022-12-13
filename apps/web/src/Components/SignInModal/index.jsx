@@ -42,6 +42,18 @@ function SignInModal({
   }
 
   const handleClickToggleForm = () => {
+    // setFormSignIn({
+    //   ...formSignIn,
+    //   email: "",
+    //   password: ""
+    // });
+    // setFormRegistration({
+    //   ...formRegistration,
+    //   name: "",
+    //   surname: "",
+    //   email: "",
+    //   password: "",
+    // });
     setFormRegistrationIsActive(prevFormRegistrationIsActive => !prevFormRegistrationIsActive);
   }
 
@@ -51,6 +63,11 @@ function SignInModal({
     const value = e.currentTarget.value;
     switch (name) {
       case 'email':
+        // if (formRegistrationIsActive) {
+        //   setFormRegistration({ ...formRegistration, email: value })
+        // } else {
+        //   setFormSignIn({ ...formSignIn, email: value });
+        // }
         setFormSignIn({ ...formSignIn, email: value });
         setFormRegistration({ ...formRegistration, email: value });
         break;
@@ -94,6 +111,15 @@ function SignInModal({
         type="text"
         name={name}
         placeholder={placeholder}
+        // value={formRegistrationIsActive && el == "eamil" ? formRegistration.email :
+        //   formRegistrationIsActive && el == "password" ? formRegistration.password :
+        //     formRegistrationIsActive && el == "name" ? formRegistration.name :
+        //       formRegistrationIsActive && el == "surname" ? formRegistration.surname :
+
+        //         el == "eamil" ? formSignIn.eamil :
+        //           el == "password" ? formSignIn.password : ""
+
+        // }
         required
         key={index}
         onChange={handleChangeInput}

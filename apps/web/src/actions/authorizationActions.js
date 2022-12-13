@@ -14,6 +14,8 @@ export const GET_ME_PROFILES_START = '@@authorization/GET_ME_PROFILES_START';
 export const GET_ME_PROFILES_SUCCESS = '@@authorization/GET_ME_PROFILES_SUCCESS';
 export const GET_ME_PROFILES_FAILURE = '@@authorization/GET_ME_PROFILES_FAILURE';
 
+export const IS_ACTIVE_SIGNIN_MODAL = '@@authorization/IS_ACTIVE_SIGNIN_MODAL';
+
 export const LOGOUT = '@@authorization/LOGOUT';
 
 let token = localStorage.getItem("access_token");
@@ -274,4 +276,16 @@ export const getMeProfilesThunk = (data) => async (dispatch, getState) => {
       dispatch(getMeProfilesFailureAction(err));
     });
 }
+
+/**
+ * Активация модального окна регистрации/входа
+*/
+/******************************************************************/
+/**
+ * Показать/скрыть
+*/
+export const isActiveSignInModalAction = (data) => ({
+  type: IS_ACTIVE_SIGNIN_MODAL,
+  payload: data
+});
 

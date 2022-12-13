@@ -9,6 +9,7 @@ import {
   GET_ME_PROFILES_START,
   GET_ME_PROFILES_SUCCESS,
   GET_ME_PROFILES_FAILURE,
+  IS_ACTIVE_SIGNIN_MODAL,
   LOGOUT,
 } from "../actions/authorizationActions";
 
@@ -28,6 +29,7 @@ const initialStore = {
     isLoading: false,           // {boolean} -  состояние запроса
     error: null                 // {string || null} -  ошибка
   },
+  isActiveSignInModal: false     // {boolean} - показать/скрыть модальное окно signIn 
 }
 
 export default function authorizationReducer(store = initialStore, action) {
@@ -46,7 +48,6 @@ export default function authorizationReducer(store = initialStore, action) {
       localStorage.setItem("activeSalonId", JSON.stringify(salonId))
       return {
         ...store,
-        // activeSalonId: salonId,
         getMeProfilesData: {
           ...store.getMeProfilesData,
           response: action.payload,
@@ -137,6 +138,12 @@ export default function authorizationReducer(store = initialStore, action) {
           isLoading: false,
           error: action.payload
         }
+      }
+    }
+    case IS_ACTIVE_SIGNIN_MODAL: {
+      return {
+        ...store,
+        isActiveSignInModal: action.payload
       }
     }
     default:

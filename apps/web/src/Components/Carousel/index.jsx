@@ -26,13 +26,13 @@ function Carousel({
     Math.abs(offset) == 1320 * numberOfScrolls ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
   }
 
-  const onChangeInputUploadImageForSalon = () => {
-    onChange();
+  const onChangeInputUploadImageForSalon = (e) => {
+    onChange(e);
   }
 
   const callbacks = {
-    onClickBtnUploadImageForSalon: useCallback(() => {
-      console.log('Carousel onClickBtnUploadImageForSalon');
+    postImageForSalonThunk: useCallback(() => {
+      console.log('Carousel postImageForSalonThunk');
       onClick();
     }),
   }
@@ -71,7 +71,7 @@ function Carousel({
               <Button
                 background={'#410935'}
                 colorText={'#FFFFFF'}
-                onClick={callbacks.onClickBtnUploadImageForSalon}
+                onClick={callbacks.postImageForSalonThunk}
               >
                 Загрузить
               </Button>
