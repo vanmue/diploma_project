@@ -4,19 +4,39 @@
 .root-office {
   height: 100%;
   background: #e9e9e9;
+  padding: 30px 0 30px 0;
+
+  &__h2 {
+    @include inter(400, normal);
+    font-size: 20px;
+    // font-size: 14px;
+    line-height: 18px;
+    color: $black;
+    margin-bottom: 15px;
+  }
+
+  &__btn {
+    border: 1px solid $black;
+    border-radius: 2px;
+  }
 
   &__set-role {
     @include inter(400, normal);
     font-size: 14px;
     line-height: 18px;
     color: $black;
+    margin-bottom: 30px;
 
-    &-label {}
+    &-label {
+      margin-right: 10px;
+    }
 
-    &-input {}
+    &-input {
+      margin-right: 10px;
+    }
 
     &-apply {
-      border: 1px solid $black;
+      // border: 1px solid $black;
     }
   }
 
@@ -27,7 +47,31 @@
       line-height: 18px;
       color: $black;
     }
+
+    margin-bottom: 30px;
   }
 
   &__wrapp-form-for-salon {}
+
+  &__all-office-nav {
+    @include inter(400, normal);
+    font-size: 14px;
+    line-height: 18px;
+    color: $black;
+
+    &-item {
+      margin-bottom: 10px;
+    }
+
+    & label {
+      margin-right: 10px;
+    }
+
+    & input {
+      margin-right: 10px;
+    }
+  }
+
+
+
 }

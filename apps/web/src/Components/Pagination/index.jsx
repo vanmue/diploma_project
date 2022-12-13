@@ -47,10 +47,6 @@ function Pagination({
       // left = length - indent * 2;
     };
 
-    // console.log('currentPage', currentPage)
-    // console.log('left', left)
-    // console.log('right', right)
-
     // Первая страница всегда нужна
     if (left > 1) {
       items.push(1);
@@ -79,34 +75,14 @@ function Pagination({
   }, [activePage, length]);
 
   const onClickHandlerNumber = (e) => {
+
     let page = e.currentTarget.querySelector('.pagination__list-item-number').innerHTML;
+
     setActivePage(page);
     onClick(page);
 
-
-
-    // let prvNode = e.currentTarget.closest('.pagination__list').querySelector('.pagination__list-item--active')?.classList.remove('pagination__list-item--active');
-
-    // let currentNode = e.currentTarget.querySelector('p');
-    // currentNode.classList.add('pagination__list-item--active');
-
-    // console.log('Pagination onClickHandlerNumber  prevNode: ', currentNode)
-    // setPrevPageNode(currentNode);
-    // console.log('Pagination onClickHandlerNumber  prevPageNode: ', prevPageNode)
-
-
-    ////////////////////////////////////////////////////////////////
-    // let currentNode = e.currentTarget.querySelector('p');
-    // currentNode.style.color = '#A40123';
-    // currentNode.style.transform = 'scale(1.5)';
-    // if (prevPageNode != null && prevPageNode != currentNode) {
-    //   prevPageNode.style.color = '#F5BFAB'
-    //   prevPageNode.style.transform = 'scale(1)';
-    // };
-
-    // console.log('Pagination onClickHandlerNumber  prevNode: ', currentNode)
-    // setPrevPageNode(currentNode);
-    // console.log('Pagination onClickHandlerNumber  prevPageNode: ', prevPageNode)
+    let prevNode =
+      e.currentTarget.closest('.pagination__list').querySelector('.pagination__list-item--active')?.classList.remove('pagination__list-item--active');
   }
 
   const onClickHandlerArrowPrev = (e) => {
@@ -140,7 +116,8 @@ function Pagination({
             onClick={onClickHandlerNumber}
             key={index}
           >
-            <p className="pagination__list-item-number"> {item}</p>
+            <p className={item == activePage ? "pagination__list-item-number pagination__list-item--active" : "pagination__list-item-number"}> {item}</p>
+            {/* <p className="pagination__list-item-number"> {item}</p> */}
             <span>{(item == length) ? '' : ','}</span>
           </li> :
           <li

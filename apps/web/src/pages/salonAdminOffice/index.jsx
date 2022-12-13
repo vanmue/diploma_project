@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from "react-router-dom";
 import { getCitiesThunk } from '../../actions/citiesActions';
 import { getAllAdvantagesThunk } from '../../actions/advantagesActions';
 import { getAllMasterForActiveSalonThunk } from '../../actions/mastersActions';
 import {
-  postNewSalonThunk,
   postImageForSalonThunk,
   getAciveSalonByIdThunk,
   uploadImageForSalonThunk,
-  // getMeProfilesThunk,
-  getMeProfilesSSSThunk
 } from '../../actions/salonsAction';
 import {
   changeNavigationColorAction,
@@ -19,14 +17,10 @@ import {
 import FormForSalon from '../../Components/FormForSalon';
 import SalonCard from '../../Components/SalonCard';
 import YandexMap from '../../Components/YandexMap';
-import Button from '../../Components/Button';
 import Carousel from '../../Components/Carousel';
 import MasterAddCard from '../../Components/masterAddCard';
 import Pagination from '../../Components/Pagination';
-import DrpdnForAddSalons from '../../Components/DrpdnForAddSalons';
 import MasterCard from '../../Components/MasterCard';
-import img1 from '../../Components/Carousel/img/carusel-img-1.jpg';
-import img2 from '../../Components/Carousel/img/carusel-img-2.jpg';
 import './salon-admin-office.scss';
 
 function SalonAdminOffice() {
@@ -40,12 +34,24 @@ function SalonAdminOffice() {
     mastersActiveSalon: store.mastersReducer.mastersActiveSalon,
     activePageMastersActiveSalon: store.mastersReducer.activePageMastersActiveSalon,
     pagination: store.mastersReducer.pagination,
-    // userStructure: store.authorizationReducer.authData.userStructure,
   }))
 
+  const location = useLocation();
+
+  const id = location.state.salonId;
+  // location.state.salonId = 23;
+  // location.state.salonId = location.state.salonId;
+
+  console.log("salonAdmineOffice location: ", location)
+  console.log("salonAdmineOffice id: ", id)
+
+  const [activeSalonId, setActiveSalonId] = useState(JSON.parse(localStorage.getItem("activeSalonId")) ? +JSON.parse(localStorage.getItem("activeSalonId")) : id);
+  // const [activeSalonId, setActiveSalonId] = useState(JSON.parse(localStorage.getItem("activeSalonId")) ? +JSON.parse(localStorage.getItem("activeSalonId")) : +location.state.salonId);
   const [isActiveFormForSalon, setIsActiveFormForSalon] = useState(false);
+  // const [imgFile, setImgFile] = useState(null);
   const [imageForSalon, setImageForSalon] = useState({
-    shopId: +localStorage.getItem("activeSalonId"),// {number} - id салона
+    shopId: activeSalonId,// {number} - id салона
+    // shopId: +localStorage.getItem("activeSalonId"),// {number} - id салона
     fileId: null,             // {number} - id изображения 42
     is_preview: "false",      // {string} - флаг картинки
   });
@@ -79,9 +85,11 @@ function SalonAdminOffice() {
     cityId: 3,
     advantages: [1]
   }
+
   const dispatch = useDispatch();
 
   useEffect(() => {
+
     dispatch(changingLabelInHeaderAction(false));
     dispatch(changeHeaderBackgroundAction('#F5BFAB'));
     dispatch(changeNavigationColorAction('#410935'));
@@ -92,21 +100,16 @@ function SalonAdminOffice() {
 
     dispatch(getCitiesThunk());
     dispatch(getAllAdvantagesThunk());
-    dispatch(getAciveSalonByIdThunk(+localStorage.getItem("activeSalonId")));
+    dispatch(getAciveSalonByIdThunk(activeSalonId));
+    // dispatch(getAciveSalonByIdThunk(+localStorage.getItem("activeSalonId")));
     // if (select.activeSalonId) dispatch(getAciveSalonByIdThunk(select.activeSalonId));
 
-    dispatch(getAllMasterForActiveSalonThunk(+localStorage.getItem("activeSalonId"), 1));
+    dispatch(getAllMasterForActiveSalonThunk(activeSalonId, 1));
+
 
     console.log("imageForSalon", imageForSalon)
   }, []);
-  // useEffect(() => {
-  //   // console.log("salon-admine-office select.activeSalonId:", select.activeSalonId)
-  //    dispatch(getAciveSalonByIdThunk(select.activeSalonId));
-  //   // if (select.activeSalonId) dispatch(getAciveSalonByIdThunk(select.activeSalonId));
-  //   dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId, 1));
-  // }, [select.activeSalonId]);
   useEffect(() => {
-    // console.log("salon-admine-offece userStructure: ", select.userStructure)
     setImageForSalon({ ...imageForSalon, fileId: select.imgForCarouselId });
   }, [select.imgForCarouselId]);
 
@@ -118,28 +121,27 @@ function SalonAdminOffice() {
     onSetIsActiveFormForSalon: useCallback(() => {
       setIsActiveFormForSalon(prevIsActive => !prevIsActive);
     }),
-    // onPostNewSalon: useCallback((id) => {
-    //   console.log('handleClickBtnPostNewSalon');
-    //   // dispatch(postNewSalonThunk(formNewSalonTest));
-    //   dispatch(postNewSalonThunk(formNewSalon));
-    // }),
     onPostImageForSalon: useCallback(() => {
-      console.log('onPostImageForSalon imageForSalon:', imageForSalon);
       dispatch(postImageForSalonThunk(imageForSalon));
     }),
-    onChangeUploadImageForSalon: useCallback(() => {
-      let inputFile = document.querySelector('.carousel__add-img-input').files[0]
+    onChangeUploadImageForSalon: useCallback((e) => {
+      let inputFile = e.currentTarget.files[0];
       dispatch(uploadImageForSalonThunk({ file: inputFile }));
     }),
     onGetActivePagePagination: useCallback((page) => {
-      dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId, +page));
+      dispatch(getAllMasterForActiveSalonThunk(activeSalonId, +page));
     }),
   }
 
   const renders = {
-    yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
-      zoom={12} items={[[53.21624037527426, 50.13260255066459]]} />
+    yandexMap: <YandexMap center={[select.activeSalon?.center_latitude, select.activeSalon?.center_longtitude]}
+      zoom={select.activeSalon?.zoom} items={[[select.activeSalon?.label_latitude, select.activeSalon?.label_longtitude]]} />
   }
+
+  // const renders = {
+  //   yandexMap: <YandexMap center={[55.752224185598664, 37.60722283322144]}
+  //     zoom={17} items={[[55.75293212103374, 37.60711554486084]]} />
+  // }
 
   return (
     <div className='salon-admine-office'>
@@ -182,7 +184,6 @@ function SalonAdminOffice() {
                 <MasterCard
                   name={el.profile.user.name}
                   surname={el.profile.user.surname}
-                  // rating={3.5}
                   rating={el.reviews_scores_count}
                   salon={el.shops[0].name}
                   pathImg={el.img_file.path}
@@ -191,7 +192,6 @@ function SalonAdminOffice() {
                   textBtn={'Удалить мастера'}
                   colorTextBtnRecord={'#FFFFFF'}
                   colorBkgBtnRecord={'#410935'}
-                //  linkTo
                 />
               </div>
             })}
@@ -205,7 +205,7 @@ function SalonAdminOffice() {
           {isActiveFormForSalon &&
             <div className="salon-admine-office__wrapp-form-for-salon">
               <FormForSalon
-                salonId={select.activeSalonId}
+                salonId={activeSalonId}
                 salon={select.activeSalon}
                 req="PATCH"
                 onClickClose={callbacks.onSetIsActiveFormForSalon}
