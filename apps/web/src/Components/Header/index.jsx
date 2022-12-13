@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { isActiveSignInModalAction } from "../../actions/authorizationActions";
 import Navigation from "../Navigation";
 import SignIn from "../SignIn";
 import SignInModal from "../SignInModal";
@@ -12,14 +13,24 @@ function Header() {
   const select = useSelector(store => ({
     isMain: store.stylesReducer.header.isMain,
     headerBackground: store.stylesReducer.header.background,
+    isActiveSignInModal: store.authorizationReducer.isActiveSignInModal,
     // userStructure: store.authorizationReducer.authData.userStructure,
   }));
 
   const [modalIsActive, setModalIsActive] = useState(false);
+  const [profileListIsActive, setProfileListIsActive] = useState(false);
+  const dispatch = useDispatch();
+  // const handleMouseEnterWrappSignIn = () => {
+  //   setProfileListIsActive(prevProfileListIsActive => !prevProfileListIsActive);
+  // }
 
   const callbacks = {
     onSetIsActiveModal: useCallback(() => {
-      setModalIsActive(prevModalIsActive => !prevModalIsActive)
+      dispatch(isActiveSignInModalAction(!select.isActiveSignInModal));
+      // setModalIsActive(prevModalIsActive => !prevModalIsActive)
+    }),
+    onHoverBtnProfile: useCallback(() => {
+      setProfileListIsActive(prevProfileListIsActive => !prevProfileListIsActive);
     })
   }
 
@@ -43,16 +54,21 @@ function Header() {
             </div>
 
             <div className="header__profile">
-              <div className="header__wrapp-sign-in">
+              <div className="header__wrapp-sign-in"
+              // style={{ background: "transparent" }}
+              // onMouseEnter={handleMouseEnterWrappSignIn}
+              >
                 <SignIn
-                  onClick={callbacks.onSetIsActiveModal}
+                  onClick={JSON.parse(localStorage.getItem("userStructure")) ? callbacks.onHoverBtnProfile : callbacks.onSetIsActiveModal}
                 // linkTo="/salon-admine-office"
                 >
                   {localStorage.getItem("access_token") ? "Профиль" : "Войти"}
                 </SignIn>
               </div>
               {JSON.parse(localStorage.getItem("userStructure")) &&
-                <div className="header__wrapp-profile-list">
+                <div className="header__wrapp-profile-list"
+                  style={{ display: profileListIsActive ? "block" : "none" }}
+                >
                   <ListProfiles
                   // userStructure={userStructure}
                   />
@@ -61,7 +77,7 @@ function Header() {
             </div>
 
           </div>
-          {modalIsActive &&
+          {select.isActiveSignInModal &&
             <div className="header__wrapp-sign-in-modal">
               <SignInModal
                 // isActive={modalIsActive}
@@ -69,6 +85,14 @@ function Header() {
               />
             </div>
           }
+          {/* {modalIsActive &&
+            <div className="header__wrapp-sign-in-modal">
+              <SignInModal
+                // isActive={modalIsActive}
+                onClick={callbacks.onSetIsActiveModal}
+              />
+            </div>
+          } */}
 
           {/* <SignInModal
             isActive={modalIsActive}

@@ -23,7 +23,7 @@ function MasterAddCard({
     userId: null,                         // {number} - id пользователя
     profession: null,                     // {string} - название профессии
     description: null,                    // {string} - описание мастера
-    shops: [],                           // {[number]} - id салона
+    shops: [+localStorage.getItem("activeSalonId")],                           // {[number]} - id салона
     deliverables: [],                     // {[number]} - id услуг
     working_start: null,                  // {string} - начало работы мастера
     working_end: null,                    // {string} - окончание работы мастера

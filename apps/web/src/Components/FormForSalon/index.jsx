@@ -22,7 +22,7 @@ function FormForSalon({
 
   const [formNewSalon, setFormNewSalon] = useState(req == "POST" ?
     {
-      managers: [107],
+      managers: [],
       name: null,
       address: null,
       cityId: 0,
@@ -74,11 +74,15 @@ function FormForSalon({
       case 'salon-admin':
         setFormNewSalon({
           ...formNewSalon,
-          managers: [
-            ...formNewSalon.managers,
-            +e.currentTarget.value
-          ]
+          managers: [+e.currentTarget.value]
         });
+        // setFormNewSalon({
+        //   ...formNewSalon,
+        //   managers: [
+        //     ...formNewSalon.managers,
+        //     +e.currentTarget.value
+        //   ]
+        // });
         break;
       case 'salon-name':
         setFormNewSalon({ ...formNewSalon, name: e.currentTarget.value });
@@ -119,10 +123,13 @@ function FormForSalon({
 
   const callbacks = {
     onSetCitiesId: useCallback((id) => setFormNewSalon({ ...formNewSalon, cityId: Number(id) })),
-    onPostNewSalon: useCallback(() => {
+    onPostNewSalon: useCallback((e) => {
+
       console.log("onPostNewSalon formNewSalon: ", formNewSalon);
       if (req == "POST") dispatch(postNewSalonThunk(formNewSalon));
       if (req == "PATCH") dispatch(patchDataSalonThunk({ salon: formNewSalon, salonId: +salonId }));
+      e.preventDefault();
+      e.stopPropagation();
     }),
     onSetАdvantagesId: useCallback((id) => {
       let arrAdv = formNewSalon.advantages;
@@ -150,7 +157,8 @@ function FormForSalon({
                     name == "longtitude-center" ? formNewSalon.center_longtitude :
                       name == "latitude-placemark" ? formNewSalon.label_latitude :
                         name == "longitude-placemark" ? formNewSalon.label_longtitude :
-                          name == "zoom" ? formNewSalon.zoom : ""
+                          name == "zoom" ? formNewSalon.zoom :
+                            name == "admin" ? formNewSalon.managers : ""
 
       return <div className={headClass}>
         <label
@@ -215,223 +223,14 @@ function FormForSalon({
         {renders.formForSalonFormFields("longitude-placemark", "Г-ая долгота маркера")}
         {renders.formForSalonFormFields("zoom", "Zoom")}
 
-
-
-
-
-
-
-
-
-
-        <>
-          {/* {req == "POST" ? <div className="form-for-salon__editing-salon-admin form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-admin-label"
-            htmlFor="salon-admin">
-            id admin salon:
-          </label>
-          <input
-            id="salon-admin"
-            className="form-for-salon__editing-salon-admin-input"
-            name="salon-admin"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div> :
-          req == "PATCH" ? "" : ""}
-
-
-        <div className="form-for-salon__editing-salon-name form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-name-label"
-            htmlFor="salon-name">
-            Название салона:
-          </label>
-          <input
-            id="salon-name"
-            className="form-for-salon__editing-salon-name-input"
-            name="name"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div>
-
-        <div className="form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-city-label">
-            Город:
-          </label>
-          <div className="form-for-salon__wrapp-drpdn-add-salon">
-            <DrpdnForAddSalons
-              items={select.cities}
-              onChange={callbacks.onSetCitiesId}
-            />
-          </div>
-        </div>
-
-        <div className="form-for-salon__editing-salon-address form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-address-label"
-            htmlFor="salon-address">
-            Адрес:
-          </label>
-          <input
-            id="salon-address"
-            className="form-for-salon__editing-salon-address-input"
-            name="address"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="form-for-salon__editing-salon-working-hours form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-working-hours-label"
-            htmlFor="salon-working-hours">
-            Время работы:
-          </label>
-          <input
-            id="salon-working-hours"
-            className="form-for-salon__editing-salon-working-hours-input"
-            name="working-hours"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="form-for-salon__editing-salon-working-start form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-working-start-label"
-            htmlFor="salon-working-start">
-            Начало работы:
-          </label>
-          <input
-            id="salon-working-start"
-            className="form-for-salon__editing-salon-working-start-input"
-            name="working-start"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="form-for-salon__editing-salon-working-end form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-working-end-label"
-            htmlFor="salon-working-end">
-            Конец работы:
-          </label>
-          <input
-            id="salon-working-end"
-            className="form-for-salon__editing-salon-working-end-input"
-            name="working-end"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div>
-
-        <div className="form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-advantages-label">
-            Преимущества:
-          </label>
-          <div className="form-for-salon__wrapp-drpdn-add-salon">
-            <DrpdnForAddSalons
-              items={select.advantages}
-              onChange={callbacks.onSetАdvantagesId}
-            />
-          </div>
-        </div>
-
-
-        <div className="form-for-salon__editing-salon-telephone form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-telephone-label"
-            htmlFor="salon-telephone">
-            Телефон:
-          </label>
-          <input
-            id="salon-telephone"
-            className="form-for-salon__editing-salon-telephone-input"
-            name="telephone"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="form-for-salon__editing-salon-latitude-center form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-latitude-center-label"
-            htmlFor="salon-latitude-center">
-            Геог-кая широта центра карты:
-          </label>
-          <input
-            id="salon-latitude-center"
-            className="form-for-salon__editing-salon-latitude-center-input"
-            name="latitude-center"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="form-for-salon__editing-salon-longtitude-center form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-longtitude-center-label"
-            htmlFor="salon-longtitude-center">
-            Геог-кая долгота центра карты:
-          </label>
-          <input
-            id="salon-longtitude-center"
-            className="form-for-salon__editing-salon-longtitude-center-input"
-            name="longtitude-center"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="form-for-salon__editing-salon-latitude-placemark form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-latitude-placemark-label"
-            htmlFor="salon-latitude-placemark">
-            Геог-кая широта метки:
-          </label>
-          <input
-            id="salon-latitude-placemark"
-            className="form-for-salon__editing-salon-latitude-placemark-input"
-            name="latitude-placemark"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="form-for-salon__editing-salon-longitude-placemark form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-longitude-placemark-label"
-            htmlFor="salon-longitude-placemark">
-            Геог-кая долгота метки:
-          </label>
-          <input
-            id="salon-longitude-placemark"
-            className="form-for-salon__editing-salon-longitude-placemark-input"
-            name="longitude-placemark"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="form-for-salon__editing-salon-zoom form-for-salon__editing-salon-item">
-          <label
-            className="form-for-salon__editing-salon-zoom-label"
-            htmlFor="salon-zoom">
-            Масштаб:
-          </label>
-          <input
-            id="salon-zoom"
-            className="form-for-salon__editing-salon-zoom-input"
-            name="zoom"
-            type="text"
-            onChange={handleChangeInput}
-          />
-        </div> */}
-        </>
         <div className="form-for-salon__editing-salon-wrapp-button">
           <Button
             background={"#410935"}
             colorText={"#FFFFFF"}
             onClick={callbacks.onPostNewSalon}
-          >Сохранить</Button>
+          >
+            Сохранить
+          </Button>
         </div>
       </div>
     </div>
