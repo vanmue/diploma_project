@@ -1,3 +1,5 @@
+@import '../../../../assets/styles/mixins.scss';
+
 .grid_wrapper {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -12,6 +14,7 @@
     padding: 15px 10px;
     background: #F5BFAB;
     text-align: end;
+    position: relative;
 }
 
 .date {
@@ -23,5 +26,39 @@
     font-size: 24px;
     padding: 5px;
     text-align: center;
+    position: absolute;
+    right: 10px;
+}
 
+.record-count_text {
+    @include inter(400, normal);
+    position: absolute;
+    left: 20px;
+    color: #A40123;
+    font-size: 14px;
+    line-height: 200%
+}
+
+.record-count {
+    @include inter(700, normal);
+    left: 20px;
+    position: absolute;
+    color: #A40123;
+    font-size: 36px;
+    line-height: 200%
+}
+
+.color-red {
+    color: #A4011A
+}
+
+.color-black {
+    color: #410931
+}
+
+.today {
+    padding: 6;
+    color: #F5BFAB;
+    border-radius: 50%;
+    background: #410935
 }

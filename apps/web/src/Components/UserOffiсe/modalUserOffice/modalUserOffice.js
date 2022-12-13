@@ -5,8 +5,6 @@ import './modalUserOffice.scss'
 
 function ModalUserOffice({ changeModal, appointmentId, userId }) {
 
-    console.log('a' + appointmentId, 'u' + userId)
-
     const [score, setScore] = useState()
     const [text, setText] = useState('')
 

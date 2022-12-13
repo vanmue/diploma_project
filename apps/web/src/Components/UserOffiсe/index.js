@@ -6,17 +6,20 @@ import moment from 'moment';
 import Rating from '../Rating'
 import ModalUserOffice from "./modalUserOffice/modalUserOffice";
 import ModalChangeUserInfo from "./modalChangeUserInfo/index";
-
+import { useLocation } from 'react-router-dom'
 
 import './user-office.scss'
 
 
 function UserOffice() {
-    const userId = 1
+    const userId = 7
     const gridColumns = ['Дата', 'Время', 'Салон', 'Мастер', 'Услуга', 'Стоимость']
     const dispatch = useDispatch();
     const userInfo = useSelector(store => store.userInfoReducer.dataUser)
     const userRecord = useSelector(store => store.userRecordReducer)
+
+    const location = useLocation()
+    console.log(location)
 
 
     const [activeChange, setActiveChange] = useState(false)
