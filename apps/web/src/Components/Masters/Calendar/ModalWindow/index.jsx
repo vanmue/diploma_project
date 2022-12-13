@@ -11,6 +11,7 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, changeModalActi
 
     let cell = ['10-00', '11-00', '12-00', '13-00', '14-00', '15-00', '16-00', '17-00', '18-00']
 
+
     const [text, setText] = useState('');
     const [time, setTime] = useState(null);
     const [choose, setChoose] = useState(true);
@@ -19,8 +20,8 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, changeModalActi
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getMasterRecordThunk(dataMaster?.id, salonId, moment(choiceDay).format('YYYY-MM-DD')))
-    }, [choiceDay, dataMaster?.id, salonId])
+        dispatch(getMasterRecordThunk(dataMaster?.id, moment(choiceDay).format('YYYY-MM-DD')))
+    }, [choiceDay, dataMaster?.id])
 
     function chooseTime(e) {
 
@@ -119,4 +120,4 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, changeModalActi
         </div>
     </>
 }
-export default ModalWindow
+export default React.memo(ModalWindow)

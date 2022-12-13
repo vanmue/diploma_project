@@ -1,11 +1,11 @@
 import React from 'react'
 import PriceServices from './PriceServices'
 
-function Price({ price }) {
+function Price({ masterId }) {
     return <>
         <h2 className='calendar__text '>Стоимость услуг:</h2>
         <ul>
-            <PriceServices price={price} />
+            <PriceServices masterId={masterId} />
         </ul>
     </>
 }

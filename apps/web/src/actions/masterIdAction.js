@@ -1,5 +1,7 @@
-export const GET_MASTER_ID = 'GET_MASTER';
+export const GET_MASTER_ID_LK = 'GET_MASTER';
 export const SET_ACTIVE_MASTER_ID = '@@masterId/SET_ACTIVE_MASTER_ID';
+export const GET_MASTER_ID_CARD = 'GET_MASTER_ID_CARD';
+
 
 
 /**
@@ -18,15 +20,28 @@ export const setIdActiveMasterAction = (masterId, salonId) => ({
 
 //
 export const getMasterIdAction = (date) => ({
-  type: GET_MASTER_ID,
+  type: GET_MASTER_ID_LK,
   payload: date
 })
+
+export const getMasterIdCardAction = (date) => ({
+  type: GET_MASTER_ID_CARD,
+  payload: date
+})
+
 export const getMasterIdActionThunk = (data) => async (dispatch, getState) => {
-  fetch(`/api/v1/masters/${data}/card`)
+  fetch(`/api/v1/masters/${data}/lk`)
     .then(req => req.json())
     .then(res => {
       dispatch(getMasterIdAction(res.data));
     })
 }
 
+export const getMasterIdActionCardThunk = (data) => async (dispatch, getState) => {
+  fetch(`/api/v1/masters/${data}/card`)
+    .then(req => req.json())
+    .then(res => {
+      dispatch(getMasterIdCardAction(res.data));
+    })
+}
 

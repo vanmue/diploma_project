@@ -27,4 +27,4 @@ function Reviews({ reviews }) {
     </div>
 }
 
-export default Reviews
+export default React.memo(Reviews)

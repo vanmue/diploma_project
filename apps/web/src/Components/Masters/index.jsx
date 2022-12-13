@@ -7,29 +7,33 @@ import "./master.scss"
 import Rating from '../Rating'
 import { getMasterIdActionThunk } from '../../actions/masterIdAction'
 import { getAciveSalonByIdThunk } from '../../actions/salonsAction'
+import { useLocation } from 'react-router-dom'
 
 function Master() {
   let masterId = useSelector(store => store.masterIdReducer.id);
   let salonId = useSelector(store => store.masterIdReducer.salonId);
-  const data = useSelector(store => store.masterIdReducer.dataMaster);
+  const data = useSelector(store => store.masterIdReducer.dataMasterCard);
   const salon = useSelector(store => store.salonsReducer.activeSalon);
-  const arrReting = []
 
-  console.log(data)
-  const ret = () => {
-    data?.reviews.map(review => {
-      if (review.score) {
-        arrReting.push(review.score)
-      }
-    })
-    return arrReting.reduce((a, b) => a + b, 0) / arrReting.length
-  }
+  const location = useLocation()
+  console.log(location)
+
+  // let tokenIsPresent = str.search("access_token")
+  // if (tokenIsPresent != -1) {
+  //   let token = str.slice(tokenIsPresent + 13)
+  //   console.log(token)
+  // }
+  // else { console.log("token is not present") }
+
+  let token = localStorage.getItem("access_token")
+  console.log(token)
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getMasterIdActionThunk(masterId));
+    dispatch(getMasterIdActionThunk(`${masterId}`));
     dispatch(getAciveSalonByIdThunk(salonId));
   }, [])
+
 
   if (masterId && salonId) {
     localStorage.setItem("masterId&salonId", JSON.stringify({ masterId: masterId, salonId: salonId }))
@@ -47,7 +51,7 @@ function Master() {
           <div className="master__info-block">
             <h2 className="master__name">{data?.profile.user.name} {data?.profile.user.surname} - {data?.profession}</h2>
             <div className="master-card__wrapp-rating">
-              <Rating rating={ret()} />
+              <Rating rating={data?.reviews_scores_avg} />
             </div>
 
             <p className="master__work">Работает в салоне: {salon?.name}</p>
@@ -56,8 +60,8 @@ function Master() {
             </div>
           </div>
         </div>
-        <Calendar dataMaster={data} salonId={salonId} />
-        <Price price={data?.deliverables} />
+        <Calendar dataMaster={data} salonId={salonId} masterId={masterId} />
+        <Price masterId={masterId} />
         <Reviews reviews={data?.reviews} />
       </div>
     </div>
