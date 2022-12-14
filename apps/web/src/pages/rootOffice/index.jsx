@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import propTypes from 'prop-types';
@@ -67,16 +67,18 @@ function RootOffice({
 
     switch (dataset) {
       case "user": {
-        navigate("/user-office", { state: { userId: redirId.userId } });
+        localStorage.setItem("profilId", JSON.stringify({ userId: redirId.userId, masterId: null, salonId: null }));
+        navigate("/user-office", {})
         break;
       }
       case "master": {
-        navigate("/master", { state: { masterId: redirId.masterId } });
+        localStorage.setItem("profilId", JSON.stringify({ userId: null, masterId: redirId.masterId, salonId: null }));
+        navigate("/master-office", {});
         break;
       }
       case "admin": {
-        console.log("{ state: { salonId: redirId.salonId } }", redirId.salonId)
-        navigate("/salon-admine-office", { state: { salonId: redirId.salonId } });
+        localStorage.setItem("profilId", JSON.stringify({ userId: null, masterId: null, salonId: redirId.salonId }));
+        navigate("/salon-admine-office", {});
         break;
       }
       default:
@@ -176,78 +178,16 @@ function RootOffice({
           <h2 className="root-office__h2">Переходы в ЛК</h2>
 
           {renders.linksToProfiles}
-
-          <>
-            {/* <div className="root-office__redirect-user root-office__all-office-nav-item">
-            
-            <label
-              className="root-office__redirect-user-label"
-              htmlFor="user-input-id"
-            >
-              id:
-            </label>
-            <input
-              className="root-office__redirect-user-input"
-              name="user-input-id"
-              type="text"
-            />
-            <button
-              className="root-office__redirect-user-btn root-office__btn"
-            >
-              в ЛК customer
-            </button>
-          </div>
-
-          <div className="root-office__redirect-master root-office__all-office-nav-item">
-            <label
-              className="root-office__redirect-master-label"
-              htmlFor="master-input-id"
-            >
-              id:
-            </label>
-            <input
-              className="root-office__redirect-master-input"
-              name="master-input-id"
-              type="text"
-            />
-            <button
-              className="root-office__redirect-master-btn root-office__btn"
-            >
-              в ЛК master
-            </button>
-          </div>
-
-          <div className="root-office__redirect-admin root-office__all-office-nav-item">
-            <label
-              className="root-office__redirect-admin-label"
-              htmlFor="admin-input-id"
-            >
-              id:
-            </label>
-            <input
-              className="root-office__redirect-admin-input"
-              name="admin-input-id"
-              type="text"
-            />
-            <button
-              className="root-office__redirect-admin-btn root-office__btn"
-            >
-              в ЛК shop_manager
-            </button>
-          </div> */}
-          </>
-
-
         </div>
       </div>
     </div>
   )
 }
 
-RootOffice.propTypes = {
-}
+// RootOffice.propTypes = {
+// }
 
-RootOffice.defaultProps = {
-}
+// RootOffice.defaultProps = {
+// }
 
 export default React.memo(RootOffice);

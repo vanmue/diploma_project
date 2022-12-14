@@ -36,23 +36,13 @@ function SalonAdminOffice() {
     pagination: store.mastersReducer.pagination,
   }))
 
-  const location = useLocation();
-
-  const id = location.state.salonId;
-  // location.state.salonId = 23;
-  // location.state.salonId = location.state.salonId;
-
-  console.log("salonAdmineOffice location: ", location)
-  console.log("salonAdmineOffice id: ", id)
-
-  const [activeSalonId, setActiveSalonId] = useState(JSON.parse(localStorage.getItem("activeSalonId")) ? +JSON.parse(localStorage.getItem("activeSalonId")) : id);
-  // const [activeSalonId, setActiveSalonId] = useState(JSON.parse(localStorage.getItem("activeSalonId")) ? +JSON.parse(localStorage.getItem("activeSalonId")) : +location.state.salonId);
+  const [activeSalonId, setActiveSalonId] = useState(JSON.parse(localStorage.getItem("activeSalonId")) ? +JSON.parse(localStorage.getItem("activeSalonId")) :
+    JSON.parse(localStorage.getItem("profilId")).salonId);
   const [isActiveFormForSalon, setIsActiveFormForSalon] = useState(false);
   // const [imgFile, setImgFile] = useState(null);
   const [imageForSalon, setImageForSalon] = useState({
-    shopId: activeSalonId,// {number} - id салона
-    // shopId: +localStorage.getItem("activeSalonId"),// {number} - id салона
-    fileId: null,             // {number} - id изображения 42
+    shopId: activeSalonId,    // {number} - id салона
+    fileId: null,             // {number} - id изображения
     is_preview: "false",      // {string} - флаг картинки
   });
   const [formNewSalon, setFormNewSalon] = useState({
@@ -101,13 +91,7 @@ function SalonAdminOffice() {
     dispatch(getCitiesThunk());
     dispatch(getAllAdvantagesThunk());
     dispatch(getAciveSalonByIdThunk(activeSalonId));
-    // dispatch(getAciveSalonByIdThunk(+localStorage.getItem("activeSalonId")));
-    // if (select.activeSalonId) dispatch(getAciveSalonByIdThunk(select.activeSalonId));
-
     dispatch(getAllMasterForActiveSalonThunk(activeSalonId, 1));
-
-
-    console.log("imageForSalon", imageForSalon)
   }, []);
   useEffect(() => {
     setImageForSalon({ ...imageForSalon, fileId: select.imgForCarouselId });
@@ -137,11 +121,6 @@ function SalonAdminOffice() {
     yandexMap: <YandexMap center={[select.activeSalon?.center_latitude, select.activeSalon?.center_longtitude]}
       zoom={select.activeSalon?.zoom} items={[[select.activeSalon?.label_latitude, select.activeSalon?.label_longtitude]]} />
   }
-
-  // const renders = {
-  //   yandexMap: <YandexMap center={[55.752224185598664, 37.60722283322144]}
-  //     zoom={17} items={[[55.75293212103374, 37.60711554486084]]} />
-  // }
 
   return (
     <div className='salon-admine-office'>
