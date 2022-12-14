@@ -69,6 +69,7 @@ export default function authorizationReducer(store = initialStore, action) {
       localStorage.setItem("access_token", null);
       localStorage.setItem("userStructure", null);
       localStorage.setItem("activeSalonId", null);
+      localStorage.setItem("profilId", null);
       return {
         ...store,
       }

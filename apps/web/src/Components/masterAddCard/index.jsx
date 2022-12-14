@@ -17,6 +17,7 @@ function MasterAddCard({
     activeSalonId: store.salonsReducer.activeSalonId,
   }));
 
+  const [fileUrl, setFileUrl] = useState(null);
   const [formImgForMaster, setFormImgForMaster] = useState(null);
   const [formForAddMasterInSalon, setFormForAddMasterInSalon] = useState({
     fileId: null,                         // {number} - id картинки для лица мастера
@@ -51,7 +52,15 @@ function MasterAddCard({
   }, [select.imgForFaceMasterId]);
 
   const handleChangeUploadImg = (e) => {
-    console.log("handleChangeUploadImg e.currentTarget.files: ", e.currentTarget.files)
+    let inputFile = e.currentTarget.files[0];
+
+    let reader = new FileReader();
+    reader.readAsDataURL(inputFile);
+    reader.onload = function () {
+      console.log("reader.onload", reader.result)
+      setFileUrl(reader.result);
+    }
+
     setFormImgForMaster(e.currentTarget.files[0]);
   }
 
@@ -150,6 +159,7 @@ function MasterAddCard({
             >Отправить</Button>
           </div>
           <input
+            style={{ opacity: fileUrl != null ? 1 : 0, backgroundImage: fileUrl != null ? `url(${fileUrl})` : "" }}
             className="master-add-card__img-upload-input"
             type="file"
             accept="image/*"

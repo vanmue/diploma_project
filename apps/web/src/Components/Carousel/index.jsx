@@ -12,6 +12,7 @@ function Carousel({
 }) {
   const [offset, setOffset] = useState(0);
   const [numberOfScrolls, setNumberOfScrolls] = useState(0);
+  const [file, setFile] = useState(null);
   const carouselLineRef = useRef(null);
 
   useEffect(() => {
@@ -27,6 +28,14 @@ function Carousel({
   }
 
   const onChangeInputUploadImageForSalon = (e) => {
+    let inputFile = e.currentTarget.files[0];
+
+    let reader = new FileReader();
+    reader.readAsDataURL(inputFile);
+    reader.onload = function () {
+      console.log("reader.onload", reader.result)
+      setFile(reader.result);
+    }
     onChange(e);
   }
 
@@ -62,6 +71,7 @@ function Carousel({
               alt="Фото салона"
             />
           })}
+          {/* <img src={file} alt="" /> */}
           {isEdited ? <div className="carousel__add-img">
             <div className="carousel__add-img-pic">
               <img src={imgAddFoto} alt="Фотоаппарат" />
@@ -73,10 +83,11 @@ function Carousel({
                 colorText={'#FFFFFF'}
                 onClick={callbacks.postImageForSalonThunk}
               >
-                Загрузить
+                Отправить
               </Button>
             </div>
             <input
+              style={{ opacity: file != null ? 1 : 0, backgroundImage: file != null ? `url(${file})` : "" }}
               className="carousel__add-img-input"
               type="file"
               accept=".png,.jpg"
