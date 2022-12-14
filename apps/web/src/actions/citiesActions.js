@@ -1,6 +1,8 @@
 export const GET_ALL_CITIES = '@@cities/GET_ALL_CITIES';
 export const GET_ALL_CITIES_SUCCESS = '@@cities/GET_ALL_CITIES_SUCCESS';
 
+export const GE_CITIES_BY_ID = '@@cities/GE_CITIES_BY_ID';
+
 /**
  * Массив всех городов
  * @params {array} date - массив объектов  с городами
@@ -23,3 +25,26 @@ export const getCitiesThunk = () => async (dispatch, getState) => {
     .catch(err => console.log('getCitiesThunk ERROR: ', err));
 }
 
+
+/**
+ * Получение города по id
+ * @params {array} date -
+*/
+export const getCitiesByIdAction = (date) => ({
+  type: GE_CITIES_BY_ID,
+  payload: date
+});
+
+/**
+ * Get запрос на получение  всех городов
+*/
+export const getCitiesByIdThunk = (id) => async (dispatch, getState) => {
+
+  fetch(`/api/v1/cities/${id}`)
+    .then(req => req.json())
+    .then(res => {
+      console.log("getCitiesByIdThunk res.data:", res.data);
+      dispatch(getCitiesByIdAction(res.data));
+    })
+    .catch(err => console.log('getCitiesThunk ERROR: ', err));
+}
