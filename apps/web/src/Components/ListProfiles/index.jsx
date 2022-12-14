@@ -35,7 +35,7 @@ function ListProfiles({
           <Button
             linkTo={el.profile_type == "customer" ? "/user-office" :
               el.profile_type == "shop_manager" ? "/salon-admine-office" :
-                el.profile_type == "master" ? "/master" :
+                el.profile_type == "master" ? "/master-office" :
                   el.profile_type == "root" ? "/root-office" :
                     ""}
           // onClick={callbacks.onRedirect}

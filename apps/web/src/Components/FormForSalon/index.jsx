@@ -133,7 +133,7 @@ function FormForSalon({
     }),
     onSetАdvantagesId: useCallback((id) => {
       let arrAdv = formNewSalon.advantages;
-      arrAdv.push(id);
+      arrAdv.push(+id);
       setFormNewSalon({ ...formNewSalon, advantages: arrAdv })
     }),
   }
