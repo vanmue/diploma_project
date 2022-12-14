@@ -21,7 +21,7 @@ function YandexMap({
         newYmaps(center, zoom);
       }
 
-      items.forEach((item) => {
+      items?.forEach((item) => {
         myMap.geoObjects.add(new window.ymaps.Placemark(item), {}, {});
       })
     });

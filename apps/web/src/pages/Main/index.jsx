@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import ServicesCard from '../../Components/ServicesCard';
 import Select from '../../Components/Select';
 import YandexMap from '../../Components/YandexMap';
+import { getCitiesThunk, getCitiesByIdThunk } from "../../actions/citiesActions";
+import { getFilteringSalonsThunk } from '../../actions/salonsAction';
 import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
 import {
   changeNavigationColorAction,
@@ -11,24 +13,54 @@ import {
   changeHeaderBackgroundAction
 } from '../../actions/stylesActions';
 import './main-page.scss';
+import { useCallback } from 'react';
 
 function MainPage() {
 
   const dispatch = useDispatch();
 
-  // const location = useLocation();
-  // console.log('location', location)
-
   const select = useSelector(store => ({
     serviceGroups: store.deliverablesReducer.serviceGroups,
+    cities: store.citiesReducer.cities,
+    city: store.citiesReducer.city,
   }));
+
+  const [salonsLabel, setSalonsLabel] = useState(null);
 
   useEffect(() => {
     dispatch(changingLabelInHeaderAction(true));
     dispatch(changeHeaderBackgroundAction('rgba(65, 9, 53, 0.7)'));
     dispatch(changeNavigationColorAction('#FFFFFF'));
+
+    dispatch(getCitiesThunk());
+    // dispatch(getFilteringSalonsThunk());
     dispatch(getAllServiceGroupsThunk());
+
+    fetch('/api/v1/shops')
+      .then(req => req.json())
+      .then(res => {
+        console.log('MainPage fetch("/api/v1/shops") res:', res.data);
+        let labels = res.data.map(el => {
+
+          return [el.label_latitude, el.label_longtitude]
+        });
+        console.log('MainPage labels:', labels);
+        setSalonsLabel(labels);
+      })
+    // .catch(err => console.log('getAllSalonsThunk: ', err));
+
   }, []);
+
+  useEffect(() => {
+    console.log("select.city", select.city)
+  }, [select.city])
+
+  const callbacks = {
+    onGetCityById: useCallback((id) => {
+      console.log("id", id)
+      dispatch(getCitiesByIdThunk(+id));
+    })
+  }
 
   return (
     <div className='main-page'>
@@ -49,13 +81,13 @@ function MainPage() {
                 Et elementum at nulla venenatis, faucibus integer. Auctor neque eros, viverra rutrum. Fames ultrices condimentum tortor nec penatibus. Velit imperdiet sapien fringilla vestibulum sit fames.
               </p>
             </div>
-            <h3 className="main-page__services-h3">Найди своего мастера</h3>
+            {/* <h3 className="main-page__services-h3">Найди своего мастера</h3>
             <div className="main-page__wrapp-select">
               <Select
-                titleSelect={"Выберите город"}
-              // cities={cities.cities}
+                dropdownTitle={"Выберите город"}
+                items={select.cities}
               />
-            </div>
+            </div> */}
             <h2 className="main-page__services-h2">Услуги</h2>
             <div className="main-page__services-list">
               {select.serviceGroups?.map(item => {
@@ -79,19 +111,32 @@ function MainPage() {
           Найди ближайший салон
         </h3>
       </div>
+      {/* <h3 className="main-page__services-h3">Найди своего мастера</h3> */}
+      <div className="container">
+        <div className="main-page__wrapp-select">
+
+          <Select
+            dropdownTitle={"Выберите город"}
+            items={select.cities}
+            onChange={callbacks.onGetCityById}
+          />
+        </div>
+      </div>
       <section className='main-page__yandex-map'>
         <h4>Яндекс карта</h4>
         <YandexMap
-          center={[59.91796593897841, 30.304908500000003]} // Санкт-Петербург
+          // center={[59.91796593897841, 30.304908500000003]} // Санкт-Петербург
           // center={[55.00202076433394, 82.95604349999992]} // Новосибирск
           // center={[56.30464518047854, 43.833528]} // Нижний Новгород
-          // center={[55.75167053479295, 37.618488111084005]} // Москва
+          // center={[55.75244503863624, 37.62277964550782]} // Москва
+          center={select.city ? [select.city?.center_latitude, select.city?.center_longtitude] : [55.75244503863624, 37.62277964550782]} // Москва
           zoom={10}
-          items={[
-            [59.93069550217494, 30.295617482627414],
-            [59.93086781366939, 30.358445546592268],
-            [60.018834992909085, 30.32203107969507]
-          ]}
+          items={salonsLabel}
+        // items={[
+        //   [59.93069550217494, 30.295617482627414],
+        //   [59.93086781366939, 30.358445546592268],
+        //   [60.018834992909085, 30.32203107969507]
+        // ]}
         />
       </section>
     </div>

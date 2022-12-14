@@ -24,6 +24,7 @@ function SalonPage() {
   }));
   const location = useLocation();
   const dispatch = useDispatch();
+  console.log("location", location)
 
 
   useEffect(() => {
@@ -46,9 +47,14 @@ function SalonPage() {
   }
 
   const renders = {
-    yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
-      zoom={12} items={[[53.21624037527426, 50.13260255066459]]} />
+    yandexMap: <YandexMap center={[select.activeSalon?.center_latitude, select.activeSalon?.center_longtitude]}
+      zoom={select.activeSalon?.zoom} items={[[select.activeSalon?.label_latitude, select.activeSalon?.label_longtitude]]} />
   }
+
+  // const renders = {
+  //   yandexMap: <YandexMap center={[55.756359058948334, 37.61434035380616]}
+  //     zoom={17} items={[[55.756939868162426, 37.614393997986454]]} />
+  // }
 
   return (
     <div className="salon-page">
