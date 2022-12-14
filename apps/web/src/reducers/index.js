@@ -11,6 +11,7 @@ import deliverablesReducer from "./deliverablesReducer";
 import userInfoReducer from "./userInfoReducer";
 import userRecordReducer from "./userRecordReducer";
 import authorizationReducer from "./authorizationReducer";
+import masterIdFromUserIdReducer from "./masterIdFromUserIdReducer"
 
 export default combineReducers({
   citiesReducer,
@@ -24,5 +25,6 @@ export default combineReducers({
   deliverablesReducer,
   userInfoReducer,
   userRecordReducer,
-  authorizationReducer
+  authorizationReducer,
+  masterIdFromUserIdReducer
 });
