@@ -18,15 +18,6 @@ function Master() {
   const location = useLocation()
   console.log(location)
 
-  // let tokenIsPresent = str.search("access_token")
-  // if (tokenIsPresent != -1) {
-  //   let token = str.slice(tokenIsPresent + 13)
-  //   console.log(token)
-  // }
-  // else { console.log("token is not present") }
-
-  let token = localStorage.getItem("access_token")
-  console.log(token)
 
   const dispatch = useDispatch();
   useEffect(() => {

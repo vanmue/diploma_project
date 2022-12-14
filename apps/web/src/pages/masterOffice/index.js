@@ -2,23 +2,36 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { getMasterIdActionThunk } from '../../actions/masterIdAction';
 import { getMasterRecordMonthThunk } from '../../actions/masterRecordAction';
+import { getMasterIdFromUserIdThunk } from '../../actions/masterIdFromUserIdActions'
 
 import Rating from '../../Components/Rating';
 import Calendar from '../../Components/Masters/Calendar';
 import Price from '../../Components/Masters/Price'
 
 function MasterOffice() {
-    const masterId = 2
+    const token = localStorage.getItem("access_token");
     const masterRecordMonth = useSelector(store => store.masterRecordReducer.recordMonth);
+    const entity_id = useSelector(store => store.masterIdFromUserIdReducer)
     const data = useSelector(store => store.masterIdReducer.dataMaster)
+
+    let masterId
+
+    console.log(entity_id)
+
+    if (entity_id.masterId) {
+        masterId = entity_id.masterId[0].entity_id
+    }
+    //const masterId = 2
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getMasterIdActionThunk(`${masterId}`));
         dispatch(getMasterRecordMonthThunk(masterId))
+        dispatch(getMasterIdFromUserIdThunk(token))
 
-    }, [])
+    }, [masterId])
+
 
     return (
         <div className='main-page'>

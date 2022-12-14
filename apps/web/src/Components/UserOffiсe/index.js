@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserThunk, setUserThunk } from '../../actions/userInfoActions'
-import { getUserRecordThunk } from '../../actions/userRecordActions'
+import { getUserThunk, setUserThunk } from '../../actions/userInfoActions';
+import { getUserRecordThunk } from '../../actions/userRecordActions';
+import { deleteUserRecordThunk } from '../../actions/userRecordActions';
 import moment from 'moment';
-import Rating from '../Rating'
+import Rating from '../Rating';
 import ModalUserOffice from "./modalUserOffice/modalUserOffice";
 import ModalChangeUserInfo from "./modalChangeUserInfo/index";
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 
-import './user-office.scss'
+import './user-office.scss';
 
 
 function UserOffice() {
-    const userId = 7
+    const userId = JSON.parse(localStorage.getItem("userStructure")).id
+
+
     const gridColumns = ['Дата', 'Время', 'Салон', 'Мастер', 'Услуга', 'Стоимость']
     const dispatch = useDispatch();
     const userInfo = useSelector(store => store.userInfoReducer.dataUser)
@@ -21,6 +24,8 @@ function UserOffice() {
     const location = useLocation()
     console.log(location)
 
+
+    //const [userRecord, setUserRecord] = useState(rec)
 
     const [activeChange, setActiveChange] = useState(false)
     const [active, setActive] = useState(false)
@@ -50,6 +55,17 @@ function UserOffice() {
 
     function changeModal() {
         setActive(false)
+    }
+
+    function deleteRecord(appointmentId) {
+
+        console.log(appointmentId)
+        dispatch(getUserRecordThunk(userId))
+        fetch(`/api/v1/appointments/${appointmentId}`, { method: 'DELETE' })
+            .then(req => req.json())
+            .then(res => {
+                console.log('del');
+            })
     }
 
     let gridInfoActual
@@ -85,13 +101,15 @@ function UserOffice() {
                 <div>{item.master}</div>
                 <div>{item.service}</div>
                 <div>{item.price} рублей</div>
-                {active ?
+                {active
+                    ?
                     <div>
                         <Rating isAcive={true} />
                         <div id={item.appointmentId} style={{ textDecorationLine: 'underline' }} onClick={(e) => clickReview(e)} >написать отзыв</div>
 
                     </div>
-                    : null}
+                    : <span onClick={(e) => deleteRecord(item.appointmentId)}>отменить запись</span>}
+
             </div>
         )
     }
