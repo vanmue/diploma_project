@@ -10,10 +10,10 @@ function SignInModal({
   onClick
 }) {
 
-  const select = useSelector(store => ({
-    // isLogin: store.authorizationReducer.isLogin,
-    // userStructure: store.authorizationReducer.userStructure,
-  }));
+  // const select = useSelector(store => ({
+  //   // isLogin: store.authorizationReducer.isLogin,
+  //   // userStructure: store.authorizationReducer.userStructure,
+  // }));
 
   const [formRegistrationIsActive, setFormRegistrationIsActive] = useState(false);
   const [formSignIn, setFormSignIn] = useState({
@@ -42,18 +42,6 @@ function SignInModal({
   }
 
   const handleClickToggleForm = () => {
-    // setFormSignIn({
-    //   ...formSignIn,
-    //   email: "",
-    //   password: ""
-    // });
-    // setFormRegistration({
-    //   ...formRegistration,
-    //   name: "",
-    //   surname: "",
-    //   email: "",
-    //   password: "",
-    // });
     setFormRegistrationIsActive(prevFormRegistrationIsActive => !prevFormRegistrationIsActive);
   }
 

@@ -14,6 +14,7 @@ import {
   changingLabelInHeaderAction,
   changeHeaderBackgroundAction,
 } from '../../actions/stylesActions';
+import { deleteMasterThunk } from '../../actions/mastersActions';
 import FormForSalon from '../../Components/FormForSalon';
 import SalonCard from '../../Components/SalonCard';
 import YandexMap from '../../Components/YandexMap';
@@ -84,22 +85,15 @@ function SalonAdminOffice() {
     dispatch(changeHeaderBackgroundAction('#F5BFAB'));
     dispatch(changeNavigationColorAction('#410935'));
 
-    // dispatch(getMeProfilesThunk());
-
-    // dispatch(getMeProfilesSSSThunk());
-
     dispatch(getCitiesThunk());
     dispatch(getAllAdvantagesThunk());
     dispatch(getAciveSalonByIdThunk(activeSalonId));
     dispatch(getAllMasterForActiveSalonThunk(activeSalonId, 1));
   }, []);
+
   useEffect(() => {
     setImageForSalon({ ...imageForSalon, fileId: select.imgForCarouselId });
   }, [select.imgForCarouselId]);
-
-  // useEffect(() => {
-  //   dispatch(getAllMasterForActiveSalonThunk());
-  // }, [select.activePageMastersActiveSalon]);
 
   const callbacks = {
     onSetIsActiveFormForSalon: useCallback(() => {
@@ -114,6 +108,9 @@ function SalonAdminOffice() {
     }),
     onGetActivePagePagination: useCallback((page) => {
       dispatch(getAllMasterForActiveSalonThunk(activeSalonId, +page));
+    }),
+    onDeleteMaster: useCallback((id) => {
+      dispatch(deleteMasterThunk(id));
     }),
   }
 
@@ -159,7 +156,7 @@ function SalonAdminOffice() {
           <div className="salon-admine-office__masters">
             <p className="salon-admine-office__masters-title">Мастера салона:</p>
             {select.mastersActiveSalon?.map((el, index) => {
-              return <div className="salon-admine-office__wrapp-master-card" key={el.id}>
+              return <div className="salon-admine-office__wrapp-master-card wrapp-master-card" data-master-id={el.id} key={el.id}>
                 <MasterCard
                   name={el.profile.user.name}
                   surname={el.profile.user.surname}
@@ -171,6 +168,7 @@ function SalonAdminOffice() {
                   textBtn={'Удалить мастера'}
                   colorTextBtnRecord={'#FFFFFF'}
                   colorBkgBtnRecord={'#410935'}
+                  onClick={callbacks.onDeleteMaster}
                 />
               </div>
             })}

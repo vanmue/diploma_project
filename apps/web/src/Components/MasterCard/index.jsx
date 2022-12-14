@@ -17,9 +17,15 @@ function MasterCard({
   textBtn,
   colorTextBtnRecord,
   colorBkgBtnRecord,
-  linkTo
+  linkTo,
+  onClick
 }) {
   const dispatch = useDispatch();
+
+  const handleClickDeleteMaster = (e) => {
+    let masterId = e.currentTarget.closest(".wrapp-master-card")?.dataset.masterId;
+    onClick(masterId);
+  }
 
   const callbacks = {
     onSetIdActiveMaster: useCallback((e) => {
@@ -68,7 +74,8 @@ function MasterCard({
               colorText={colorTextBtnRecord}
               background={colorBkgBtnRecord}
               linkTo={linkTo}
-              onClick={callbacks.onSetIdActiveMaster}
+              onClick={onClick ? handleClickDeleteMaster : callbacks.onSetIdActiveMaster}
+            // onClick={callbacks.onSetIdActiveMaster}
             >
               {textBtn}
             </Button>
@@ -92,6 +99,7 @@ MasterCard.propTypes = {
   colorText: propTypes.string,
   background: propTypes.string,
   linkTo: propTypes.string,
+  onClick: propTypes.func,
 }
 
 MasterCard.defaultProps = {
@@ -100,6 +108,7 @@ MasterCard.defaultProps = {
   salon: '-',
   specialization: '-',
   description: '-',
+  // onClick: () => { },
 }
 
 export default React.memo(MasterCard);

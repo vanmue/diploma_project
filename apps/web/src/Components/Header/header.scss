@@ -34,8 +34,14 @@
   }
 
   &__wrapp-sign-in-modal {
-    position: absolute;
-    left: calc(50% - 287px);
-    top: 25%;
+    position: fixed;
+    // position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    // left: calc(50% - 287px);
+    // top: 25%;
+
   }
 }

@@ -4,9 +4,64 @@ export const GET_ALL_MASTERS_FOR_ACTIVE_SALON = '@@masters/GET_ALL_MASTERS_FOR_A
 export const POST_IMAGE_FOR_MASTER = '@@masters/POST_IMAGE_FOR_MASTER';
 export const POST_NEW_MASTER = '@@masters/POST_NEW_MASTER';
 export const POST_SET_ROLE_MASTER = '@@masters/POST_SET_ROLE_MASTER';
+
+export const DELETE_MASTER_START = '@@masters/DELETE_MASTER_START';
+export const DELETE_MASTER_SUCCESS = '@@masters/DELETE_MASTER_SUCCESS';
+export const DELETE_MASTER_FAILURE = '@@masters/DELETE_MASTER_FAILURE';
 // export const DECREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/DECREMENT_ACTIVE_PAGE_PAGINATION';
 
+/**
+ * Удаление мастера 
+*/
+/******************************************************************/
+/**
+ * Начало запроса
+*/
+export const deleteMasterStartAction = () => ({
+  type: DELETE_MASTER_START
+});
+/**
+ * Успешное завершение запроса
+*/
+export const deleteMasterSuccessAction = (date) => ({
+  type: DELETE_MASTER_SUCCESS,
+  payload: date
+});
+/**
+ * Завершение запроса с ошибкой
+*/
+export const deleteMasterFailureAction = (date) => ({
+  type: DELETE_MASTER_FAILURE,
+  payload: date
+});
+/** 
+ * DELETE запрос. Удаляем мастера из салона
+ * @param {number} id -  id мастера
+*/
+export const deleteMasterThunk = (id) => async (dispatch, getState) => {
 
+  dispatch(deleteMasterStartAction());
+
+  fetch(`/api/v1/masters/${id}`, {
+    method: "DELETE",
+    // headers: {
+    //   'Content-Type': 'application/json;charset=utf-8'
+    // },
+    // body: JSON.stringify(data)
+  })
+    .then(req => req.json())
+    .then(res => {
+      console.log('deleteMasterThunk res:', res);
+      dispatch(deleteMasterSuccessAction(res.data));
+
+    })
+    .catch(err => {
+      console.log('postSetRoleThunk: ', err)
+      dispatch(deleteMasterFailureAction(err));
+    });
+}
+
+/******************************************************************/
 /**
  * 
 */
