@@ -13,7 +13,7 @@ import './user-office.scss';
 
 
 function UserOffice() {
-    const userId = JSON.parse(localStorage.getItem("userStructure")).id
+    let userId = null
 
 
     const gridColumns = ['Дата', 'Время', 'Салон', 'Мастер', 'Услуга', 'Стоимость']
@@ -21,11 +21,21 @@ function UserOffice() {
     const userInfo = useSelector(store => store.userInfoReducer.dataUser)
     const userRecord = useSelector(store => store.userRecordReducer)
 
-    const location = useLocation()
-    console.log(location)
+    let userIdOfRoot = null
 
+    if (localStorage.getItem("profilId")) {
+        userIdOfRoot = JSON.parse(localStorage.getItem("profilId"))?.userId
+        console.log(userIdOfRoot)
+    }
 
-    //const [userRecord, setUserRecord] = useState(rec)
+    if (userIdOfRoot) {
+        console.log('rrrrr')
+        userId = userIdOfRoot
+    } else {
+        console.log('eeee')
+        userId = JSON.parse(localStorage.getItem("userStructure")).id
+    }
+
 
     const [activeChange, setActiveChange] = useState(false)
     const [active, setActive] = useState(false)
@@ -122,8 +132,8 @@ function UserOffice() {
                     <div className="user-info">
                         <img src={userInfo?.avatar.path} alt="foto" />
                         <div className="user-info__block">
-                            <h2>{userInfo?.name} {userInfo?.surname}</h2>
-                            <p> <span style={{ marginRight: '36px' }}>Телефон: {userInfo?.phone}</span><span style={{ marginRight: '36px' }}>Mail: {userInfo?.email}</span></p>
+                            <h2>{userInfo?.name} {userInfo?.surname} </h2>
+                            <p> <span style={{ marginRight: '36px' }}>Телефон: {userInfo?.phone}</span><span style={{ marginRight: '36px' }}>Mail: {userInfo?.email} <span style={{ marginLeft: '36px' }}>ваш id-{userId}</span> </span></p>
                             <p style={{ textDecorationLine: 'underline' }} onClick={toChangeUser}>Изменить данные</p>
                         </div>
                     </div>
