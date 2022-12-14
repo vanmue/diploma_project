@@ -121,7 +121,6 @@ export default function authorizationReducer(store = initialStore, action) {
     }
     case GET_AUTH_SUCCESS: {
       localStorage.setItem("userStructure", JSON.stringify(action.payload));
-      // console.log("localStorage.getItem('111'):", localStorage.getItem('111'))
       return {
         ...store,
         authData: {

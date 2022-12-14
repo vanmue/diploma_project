@@ -81,13 +81,6 @@ function MainPage() {
                 Et elementum at nulla venenatis, faucibus integer. Auctor neque eros, viverra rutrum. Fames ultrices condimentum tortor nec penatibus. Velit imperdiet sapien fringilla vestibulum sit fames.
               </p>
             </div>
-            {/* <h3 className="main-page__services-h3">Найди своего мастера</h3>
-            <div className="main-page__wrapp-select">
-              <Select
-                dropdownTitle={"Выберите город"}
-                items={select.cities}
-              />
-            </div> */}
             <h2 className="main-page__services-h2">Услуги</h2>
             <div className="main-page__services-list">
               {select.serviceGroups?.map(item => {
@@ -111,7 +104,6 @@ function MainPage() {
           Найди ближайший салон
         </h3>
       </div>
-      {/* <h3 className="main-page__services-h3">Найди своего мастера</h3> */}
       <div className="container">
         <div className="main-page__wrapp-select">
 
@@ -125,18 +117,9 @@ function MainPage() {
       <section className='main-page__yandex-map'>
         <h4>Яндекс карта</h4>
         <YandexMap
-          // center={[59.91796593897841, 30.304908500000003]} // Санкт-Петербург
-          // center={[55.00202076433394, 82.95604349999992]} // Новосибирск
-          // center={[56.30464518047854, 43.833528]} // Нижний Новгород
-          // center={[55.75244503863624, 37.62277964550782]} // Москва
-          center={select.city ? [select.city?.center_latitude, select.city?.center_longtitude] : [55.75244503863624, 37.62277964550782]} // Москва
+          center={select.city ? [select.city?.center_latitude, select.city?.center_longtitude] : [55.75244503863624, 37.62277964550782]}
           zoom={10}
           items={salonsLabel}
-        // items={[
-        //   [59.93069550217494, 30.295617482627414],
-        //   [59.93086781366939, 30.358445546592268],
-        //   [60.018834992909085, 30.32203107969507]
-        // ]}
         />
       </section>
     </div>
