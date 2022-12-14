@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isActiveSignInModalAction } from "../../actions/authorizationActions";
 import Navigation from "../Navigation";
@@ -7,19 +7,21 @@ import SignInModal from "../SignInModal";
 import ListProfiles from "../ListProfiles";
 import './header.scss';
 
-// const userStructure = JSON.parse(localStorage.getItem("userStructure"));
-
 function Header() {
   const select = useSelector(store => ({
     isMain: store.stylesReducer.header.isMain,
     headerBackground: store.stylesReducer.header.background,
     isActiveSignInModal: store.authorizationReducer.isActiveSignInModal,
-    // userStructure: store.authorizationReducer.authData.userStructure,
+    userStructure: store.authorizationReducer.authData.userStructure,
   }));
 
-  const [modalIsActive, setModalIsActive] = useState(false);
   const [profileListIsActive, setProfileListIsActive] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(isActiveSignInModalAction(false));
+  }, [select.userStructure]);
+
   // const handleMouseEnterWrappSignIn = () => {
   //   setProfileListIsActive(prevProfileListIsActive => !prevProfileListIsActive);
   // }
@@ -27,11 +29,10 @@ function Header() {
   const callbacks = {
     onSetIsActiveModal: useCallback(() => {
       dispatch(isActiveSignInModalAction(!select.isActiveSignInModal));
-      // setModalIsActive(prevModalIsActive => !prevModalIsActive)
     }),
-    onHoverBtnProfile: useCallback(() => {
+    onClickBtnProfile: useCallback(() => {
       setProfileListIsActive(prevProfileListIsActive => !prevProfileListIsActive);
-    })
+    }),
   }
 
   return (
@@ -59,7 +60,7 @@ function Header() {
               // onMouseEnter={handleMouseEnterWrappSignIn}
               >
                 <SignIn
-                  onClick={JSON.parse(localStorage.getItem("userStructure")) ? callbacks.onHoverBtnProfile : callbacks.onSetIsActiveModal}
+                  onClick={JSON.parse(localStorage.getItem("userStructure")) ? callbacks.onClickBtnProfile : callbacks.onSetIsActiveModal}
                 // linkTo="/salon-admine-office"
                 >
                   {localStorage.getItem("access_token") ? "Профиль" : "Войти"}
@@ -85,19 +86,6 @@ function Header() {
               />
             </div>
           }
-          {/* {modalIsActive &&
-            <div className="header__wrapp-sign-in-modal">
-              <SignInModal
-                // isActive={modalIsActive}
-                onClick={callbacks.onSetIsActiveModal}
-              />
-            </div>
-          } */}
-
-          {/* <SignInModal
-            isActive={modalIsActive}
-            onClick={callbacks.onSetIsActiveModal}
-          /> */}
         </div>
       </div>
     </header>

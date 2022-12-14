@@ -4,6 +4,9 @@ import {
   GET_ALL_MASTERS_FOR_ACTIVE_SALON,
   POST_IMAGE_FOR_MASTER,
   POST_SET_ROLE_MASTER,
+  DELETE_MASTER_START,
+  DELETE_MASTER_SUCCESS,
+  DELETE_MASTER_FAILURE,
 } from "../actions/mastersActions";
 
 const initialStore = {
@@ -14,10 +17,44 @@ const initialStore = {
   imgForFaceMasterId: null,         // {number} - id картинки для лица мастера
   responsePostSetRoleMaster: null,  // {object} - ответ на POST запрос установки роли master для user
   pagination: null,
+  deleteMaster: {
+    response: null,              // {string || null} -  access_token
+    isLoading: false,           // {boolean} -  состояние запроса
+    error: null                 // {string || null} -  ошибка
+  },
 }
 
 export default function mastersReducer(store = initialStore, action) {
   switch (action.type) {
+    case DELETE_MASTER_START: {
+      return {
+        ...store,
+        deleteMaster: {
+          ...store.deleteMaster,
+          isLoading: true
+        }
+      }
+    }
+    case DELETE_MASTER_SUCCESS: {
+      return {
+        ...store,
+        deleteMaster: {
+          ...store.deleteMaster,
+          response: action.payload,
+          isLoading: false
+        }
+      }
+    }
+    case DELETE_MASTER_FAILURE: {
+      return {
+        ...store,
+        deleteMaster: {
+          ...store.deleteMaster,
+          isLoading: false,
+          error: action.payload
+        }
+      }
+    }
     case POST_SET_ROLE_MASTER: {
       return {
         ...store,

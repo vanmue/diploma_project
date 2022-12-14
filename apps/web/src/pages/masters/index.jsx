@@ -43,8 +43,6 @@ function MastersPage() {
   }, []);
 
   useEffect(() => {
-    // console.log('masters', select.masters)
-    // console.log('pagination', select.pagination)
   }, [select.masters, select.pagination]);
 
   const callbacks = {
