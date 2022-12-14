@@ -261,7 +261,6 @@ export const getMeProfilesThunk = (data) => async (dispatch, getState) => {
     method: "GET",
     headers: {
       'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-      // 'Authorization': `Bearer ${token}`
     },
   })
     .then(req => req.json())

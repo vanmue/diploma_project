@@ -222,11 +222,12 @@ export const postNewSalonAction = (date) => ({
  * @param {{}} date - данные нового салона
 */
 export const postNewSalonThunk = (data) => async (dispatch, getState) => {
-
+  // localStorage.getItem("access_token");
   fetch('/api/v1/shops', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=utf-8'
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': `Bearer ${localStorage.getItem("access_token")}`
     },
     body: JSON.stringify(data)
   })
