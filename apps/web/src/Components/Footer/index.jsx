@@ -17,7 +17,7 @@ function Footer() {
               info@youbeauty.ru
             </p>
           </div>
-          <div className="footer__support">
+          {/* <div className="footer__support">
             <p className="footer__support-title">
               Техническая поддержка:
             </p>
@@ -32,7 +32,7 @@ function Footer() {
               />
               <button className="footer__input-button">Отправить</button>
             </div>
-          </div>
+          </div> */}
           <div className="footer__copyright">
             Copyright © 2022
           </div>

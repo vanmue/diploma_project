@@ -98,9 +98,20 @@
     justify-content: space-between;
   }
 
+  &__edited {
+    position: relative;
+
+    & img {
+      position: absolute;
+      top: -8px;
+      left: -5px;
+    }
+  }
+
   &__edited-btn {
     color: $white;
     background: $darkViolet;
+    margin-left: 25px;
   }
 
   &__services {

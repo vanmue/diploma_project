@@ -89,6 +89,11 @@
         background: $beige;
         border: 1px solid $darkViolet;
         border-radius: 5px;
+
+        &::placeholder {
+          color: $black;
+          @include inter(400, normal);
+        }
       }
     }
 
@@ -113,6 +118,11 @@
         background: $beige;
         border: 1px solid $darkViolet;
         border-radius: 5px;
+
+        // &::placeholder {
+        //   color: $black;
+        //   @include inter(400, normal);
+        // }
       }
     }
 
@@ -201,11 +211,21 @@
         font-size: 14px;
         line-height: 17px;
         color: $darkViolet;
+
+
       }
 
       &-list {
+        @include inter(400, normal);
+        font-size: 14px;
+        line-height: 18px;
+        color: $darkViolet;
         display: flex;
         flex-direction: column;
+
+        & input {
+          margin-right: 12px;
+        }
       }
     }
   }
