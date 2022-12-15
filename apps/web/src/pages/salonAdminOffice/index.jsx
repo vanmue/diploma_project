@@ -107,7 +107,7 @@ function SalonAdminOffice() {
               img={select.activeSalon?.images?.length > 0 ? select.activeSalon.images.find(el => el.is_preview == true)?.file.path : ''}
               map={renders.yandexMap}
               onClickEditing={callbacks.onSetIsActiveFormForSalon}
-            /> : ''}
+            /> : ""}
           </div>
           <div className="salon-admine-office__wrapp-carousel">
             <Carousel
