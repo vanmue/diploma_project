@@ -26,15 +26,12 @@ function Calendar({ dataMaster, salonId, masterRecordMonth, masterId }) {
         ]
     })
 
-
     const today = moment()
     const [itemday, setItemDay] = useState(today.clone())
     const [modalActive, setModalActive] = useState(false);
     const [modalActiveMasterRecord, setModalActiveMasterRecord] = useState(false);
     const [choiceDay, setChoiceDay] = useState('')
     const [day, setDay] = useState('');
-
-
 
     const masterRecord = useSelector(store => store.masterIdReducer)
     const dispatch = useDispatch();
@@ -52,8 +49,6 @@ function Calendar({ dataMaster, salonId, masterRecordMonth, masterId }) {
         }))
     }
 
-
-
     function getDay(day1) {
         setDay(day1)
     }
@@ -70,19 +65,15 @@ function Calendar({ dataMaster, salonId, masterRecordMonth, masterId }) {
 
     function changeModalActive() {
         setModalActive(false)
-
     }
 
     function cellClick(e) {
         if (e.target.children[0].className === 'color-red date') {
             return
-        }
-
-        if (!(localStorage.getItem("userStructure")).id) {
-            console.log('actyv')
+        };
+        if (JSON.parse(localStorage.getItem("userStructure")) === null) {
             dispatch(isActiveSignInModalAction(true))
             return
-
         }
 
         e.stopPropagation()
@@ -105,8 +96,6 @@ function Calendar({ dataMaster, salonId, masterRecordMonth, masterId }) {
         setModalActiveMasterRecord(false)
     }
 
-
-
     return (
         <div onClick={modalClose}>
             <h2 className='calendar__text'>Выбрать дату и время для записи:</h2>
@@ -124,7 +113,6 @@ function Calendar({ dataMaster, salonId, masterRecordMonth, masterId }) {
             {modalActiveMasterRecord
                 ? <ModalWindowMasterRecord choiceDay={choiceDay} masterId={masterId} />
                 : null}
-
         </div>
     );
 }

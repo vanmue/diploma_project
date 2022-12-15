@@ -14,8 +14,7 @@ function MasterOffice() {
     const data = useSelector(store => store.masterIdReducer.dataMaster)
 
     let masterIdOfRoot = null
-
-    if (localStorage.getItem("profilId")) {
+    if (JSON.parse(localStorage.getItem("profilId")) != null) {
         masterIdOfRoot = JSON.parse(localStorage.getItem("profilId"))?.masterId
     }
     let masterId
@@ -25,17 +24,14 @@ function MasterOffice() {
     } else if (entity_id.masterId) {
         masterId = entity_id.masterId[0].entity_id
     }
-
+    console.log(masterId)
     const dispatch = useDispatch();
 
     useEffect(() => {
-
         dispatch(getMasterIdFromUserIdThunk(token))
         dispatch(getMasterIdActionThunk(`${masterId}`));
         dispatch(getMasterRecordMonthThunk(masterId))
-
     }, [masterId])
-
 
     return (
         <div className='main-page'>
@@ -49,7 +45,6 @@ function MasterOffice() {
                         <div className="master-card__wrapp-rating">
                             <Rating rating={data?.reviews_scores_avg} />
                         </div>
-
                         <p className="master__work">Работает в салоне: {data?.shops[0].name}<span style={{ marginLeft: '36px' }}>ваш id-{masterId}</span> </p>
                         <div className="master__info">
                             <p> {data?.description} </p>

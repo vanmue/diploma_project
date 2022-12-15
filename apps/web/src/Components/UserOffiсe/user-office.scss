@@ -31,7 +31,10 @@
 
 .user-record__grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns:
+        10% 10% 15% 10% 20% 10% 10%
+        /* repeat(7, 1fr) */
+    ;
     margin-top: 20px;
     padding-bottom: 20px;
     border-bottom: 5px solid #FFFFFF;

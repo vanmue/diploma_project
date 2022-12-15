@@ -18,7 +18,6 @@ function PriceServices({ masterId }) {
             <li key={item.name} className='price__link'><span>{item.name}</span><span>{item.price}</span></li>
         )
     }
-
     </div>
 }
 export default PriceServices;
