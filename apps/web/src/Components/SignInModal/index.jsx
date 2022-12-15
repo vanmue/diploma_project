@@ -10,11 +10,6 @@ function SignInModal({
   onClick
 }) {
 
-  // const select = useSelector(store => ({
-  //   // isLogin: store.authorizationReducer.isLogin,
-  //   // userStructure: store.authorizationReducer.userStructure,
-  // }));
-
   const [formRegistrationIsActive, setFormRegistrationIsActive] = useState(false);
   const [formSignIn, setFormSignIn] = useState({
     email: "",
@@ -28,14 +23,6 @@ function SignInModal({
     avatarId: 1
   });
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   console.log('select.userStructure', select.userStructure);
-  // }, [select.userStructure]);
-
-  // const isLoginCallback = useMemo(() => {
-  //   console.log('isLoginCallback localStorage', localStorage.getItem('access_token'));
-  // }, [select.isLogin]);
 
   const handleClickBtnClose = () => {
     onClick();
@@ -51,11 +38,6 @@ function SignInModal({
     const value = e.currentTarget.value;
     switch (name) {
       case 'email':
-        // if (formRegistrationIsActive) {
-        //   setFormRegistration({ ...formRegistration, email: value })
-        // } else {
-        //   setFormSignIn({ ...formSignIn, email: value });
-        // }
         setFormSignIn({ ...formSignIn, email: value });
         setFormRegistration({ ...formRegistration, email: value });
         break;
@@ -91,23 +73,16 @@ function SignInModal({
      * @param {['email', 'password','name','surname']} arr - имена inputs 
     */
     inputs: (arr) => arr.map((el, index) => {
+      let passeInput = el;
+
       let classN = `sign-in-modal__${el} sign-in-modal__user-data-item`;
       let name = el;
       let placeholder = el;
       return <input
         className={classN}
-        type="text"
+        type={passeInput == "password" ? "password" : "text"}
         name={name}
         placeholder={placeholder}
-        // value={formRegistrationIsActive && el == "eamil" ? formRegistration.email :
-        //   formRegistrationIsActive && el == "password" ? formRegistration.password :
-        //     formRegistrationIsActive && el == "name" ? formRegistration.name :
-        //       formRegistrationIsActive && el == "surname" ? formRegistration.surname :
-
-        //         el == "eamil" ? formSignIn.eamil :
-        //           el == "password" ? formSignIn.password : ""
-
-        // }
         required
         key={index}
         onChange={handleChangeInput}
@@ -118,7 +93,6 @@ function SignInModal({
   return (
     <div
       className="sign-in-modal"
-    // style={{ display: isActive ? 'block' : 'none' }}
     >
       <div className="sign-in-modal__user-data">
         {formRegistrationIsActive ?
@@ -137,7 +111,6 @@ function SignInModal({
         <Button
           colorText='#FFFFFF'
           background='#A40123'
-          // onClick={callbacks.onSubmitFormSignIn}
           onClick={formRegistrationIsActive ? callbacks.onSubmitFormRegistration : callbacks.onSubmitFormSignIn}
         >
           {formRegistrationIsActive ? 'Зарегестрироваться' : 'Войти'}

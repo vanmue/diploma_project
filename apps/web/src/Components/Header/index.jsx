@@ -22,10 +22,6 @@ function Header() {
     dispatch(isActiveSignInModalAction(false));
   }, [select.userStructure]);
 
-  // const handleMouseEnterWrappSignIn = () => {
-  //   setProfileListIsActive(prevProfileListIsActive => !prevProfileListIsActive);
-  // }
-
   const callbacks = {
     onSetIsActiveModal: useCallback(() => {
       dispatch(isActiveSignInModalAction(!select.isActiveSignInModal));
@@ -56,12 +52,9 @@ function Header() {
 
             <div className="header__profile">
               <div className="header__wrapp-sign-in"
-              // style={{ background: "transparent" }}
-              // onMouseEnter={handleMouseEnterWrappSignIn}
               >
                 <SignIn
                   onClick={JSON.parse(localStorage.getItem("userStructure")) ? callbacks.onClickBtnProfile : callbacks.onSetIsActiveModal}
-                // linkTo="/salon-admine-office"
                 >
                   {localStorage.getItem("access_token") ? "Профиль" : "Войти"}
                 </SignIn>
@@ -70,18 +63,13 @@ function Header() {
                 <div className="header__wrapp-profile-list"
                   style={{ display: profileListIsActive ? "block" : "none" }}
                 >
-                  <ListProfiles
-                  // userStructure={userStructure}
-                  />
+                  <ListProfiles />
                 </div>}
-
             </div>
-
           </div>
           {select.isActiveSignInModal &&
             <div className="header__wrapp-sign-in-modal">
               <SignInModal
-                // isActive={modalIsActive}
                 onClick={callbacks.onSetIsActiveModal}
               />
             </div>

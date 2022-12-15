@@ -21,13 +21,11 @@
     margin: 0 auto;
     animation-name: sliderLine;
     animation-duration: 10s;
-    // width: 1280px;
   }
 
   &__img {
     border-radius: 10px;
     width: 400px;
-    // max-width: 400px;
     height: 300px;
     margin-right: 40px;
 
@@ -71,7 +69,6 @@
     &-input {
       width: 100%;
       height: 100%;
-      // opacity: 0;
     }
   }
 

@@ -66,9 +66,7 @@ export const postNewUserThunk = (data) => async (dispatch, getState) => {
     .then(req => req.json())
     .then(res => {
       console.log('postNewUserThunk res: ', res);
-
       dispatch(postSetRoleCustomerThunk(res.data.id));
-      // dispatch(postNewUserAction(res.data));
     })
     .catch(err => console.log('postNewUserThunk ERROR: ', err));
 }
@@ -203,7 +201,6 @@ export const getAuthThunk = (data) => async (dispatch, getState) => {
 
   dispatch(getAuthStartAction());
 
-  // fetch('/api/v1/auth/me/', {
   fetch('/api/v1/me', {
     method: "GET",
     headers: {
@@ -252,9 +249,6 @@ export const getMeProfilesFailureAction = (date) => ({
 */
 export const getMeProfilesThunk = (data) => async (dispatch, getState) => {
 
-  // const headers = {
-
-  // }
   dispatch(getMeProfilesStartAction());
 
   fetch("/api/v1/me/profiles", {
@@ -265,7 +259,6 @@ export const getMeProfilesThunk = (data) => async (dispatch, getState) => {
   })
     .then(req => req.json())
     .then(res => {
-      console.log('getMeProfilesThunk res:', res);
       dispatch(getMeProfilesSuccessAction(res.data));
 
     })

@@ -10,10 +10,10 @@ function Carousel({
   onClick,
   onChange
 }) {
-  const [offset, setOffset] = useState(0);
-  const [numberOfScrolls, setNumberOfScrolls] = useState(0);
-  const [file, setFile] = useState(null);
-  const carouselLineRef = useRef(null);
+  const [offset, setOffset] = useState(0);                    // Смещение
+  const [numberOfScrolls, setNumberOfScrolls] = useState(0);  // Смещение
+  const [file, setFile] = useState(null);                     // img for upload
+  const carouselLineRef = useRef(null);                       // ref row carousel
 
   useEffect(() => {
     setNumberOfScrolls(Math.ceil((isEdited ? images?.length + 1 : images?.length) / 3) - 1);
@@ -27,21 +27,21 @@ function Carousel({
     Math.abs(offset) == 1320 * numberOfScrolls ? setOffset(0) : setOffset(prevOffset => prevOffset - 1320);
   }
 
+  // Предпоказ img перез POST
   const onChangeInputUploadImageForSalon = (e) => {
     let inputFile = e.currentTarget.files[0];
 
     let reader = new FileReader();
     reader.readAsDataURL(inputFile);
     reader.onload = function () {
-      console.log("reader.onload", reader.result)
       setFile(reader.result);
     }
     onChange(e);
   }
 
   const callbacks = {
+    // Callback img POST
     postImageForSalonThunk: useCallback(() => {
-      console.log('Carousel postImageForSalonThunk');
       onClick();
     }),
   }
@@ -71,7 +71,6 @@ function Carousel({
               alt="Фото салона"
             />
           })}
-          {/* <img src={file} alt="" /> */}
           {isEdited ? <div className="carousel__add-img">
             <div className="carousel__add-img-pic">
               <img src={imgAddFoto} alt="Фотоаппарат" />
@@ -97,8 +96,6 @@ function Carousel({
           </div> : ""}
         </div>
       </div>
-
-
       <button
         className="carousel__btn-next"
         onClick={handleClickNext}
@@ -112,8 +109,8 @@ function Carousel({
 }
 
 Carousel.propTypes = {
-  images: propTypes.arrayOf(propTypes.object),
-  isEdited: propTypes.bool,
+  images: propTypes.arrayOf(propTypes.object),    // [{}] - images for carousel
+  isEdited: propTypes.bool,                       // флаг редактирования
   onClick: propTypes.func,
   onChange: propTypes.func
 }

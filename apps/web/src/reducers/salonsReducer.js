@@ -11,20 +11,9 @@ import {
   PATCH_DATA_SALON_START,
   PATCH_DATA_SALON_SUCCESS,
   PATCH_DATA_SALON_FAILURE,
-  // GET_ME_PROFILES_START,
-  // GET_ME_PROFILES_SUCCESS,
-  // GET_ME_PROFILES_FAILURE,
-  // CHANGE_ACTIVE_PAGE_FOR_PAGINATION,
-  // INCREMENT_ACTIVE_PAGE_PAGINATION,
-  // DECREMENT_ACTIVE_PAGE_PAGINATION,
 } from "../actions/salonsAction";
 
 const initialStore = {
-  // getMeProfilesData: {
-  //   response: null,             // {string || null} -  
-  //   isLoading: false,           // {boolean} -  состояние запроса
-  //   error: null                 // {string || null} -  ошибка
-  // },
   setRoleShopManagerData: {
     response: null,             // {string || null} -  
     isLoading: false,           // {boolean} -  состояние запроса
@@ -35,48 +24,16 @@ const initialStore = {
     isLoading: false,           // {boolean} -  состояние запроса
     error: null                 // {string || null} -  ошибка
   },
-  salons: [],
-  pagination: null,
-  activeSalonId: null,
-  activeSalon: null,
-  activePage: 1,
-  imgForCarouselId: null,
+  salons: [],                   // {[] || [{}]} -  салоны
+  pagination: null,             // {} || null} -  pagination
+  activeSalonId: null,          // {number || null} - id салоны
+  activeSalon: null,            // {{} || null} -  активный салон
+  activePage: 1,                // {number} - page pagination
+  imgForCarouselId: null,       // {{} || null} - картинка салоны
 }
 
 export default function salonsReducer(store = initialStore, action) {
   switch (action.type) {
-    // case GET_ME_PROFILES_START: {
-    //   return {
-    //     ...store,
-    //     getMeProfilesData: {
-    //       ...store.getMeProfilesData,
-    //       isLoading: true
-    //     }
-    //   }
-    // }
-    // case GET_ME_PROFILES_SUCCESS: {
-    //   let salonId = action.payload.find(el => el.profile_type == "shop_manager").entity_id;
-    //   localStorage.setItem("activeSalonId", JSON.stringify(salonId))
-    //   return {
-    //     ...store,
-    //     // activeSalonId: salonId,
-    //     getMeProfilesData: {
-    //       ...store.getMeProfilesData,
-    //       response: action.payload,
-    //       isLoading: false
-    //     }
-    //   }
-    // }
-    // case GET_ME_PROFILES_FAILURE: {
-    //   return {
-    //     ...store,
-    //     getMeProfilesData: {
-    //       ...store.getMeProfilesData,
-    //       isLoading: false,
-    //       error: action.payload
-    //     }
-    //   }
-    // }
     case POST_NEW_SALON: {
       return {
         ...store,
@@ -155,8 +112,6 @@ export default function salonsReducer(store = initialStore, action) {
       }
     }
     case GET_FILTERING_SALONS: {
-      // console.log("GET_FILTERING_SALONS action.payload.date", action.payload.date)
-      // console.log("GET_FILTERING_SALONS action.payload.pagination", action.payload.pagination)
       return {
         ...store,
         salons: action.payload.date,
@@ -175,24 +130,6 @@ export default function salonsReducer(store = initialStore, action) {
         activeSalon: action.payload
       }
     }
-    // case CHANGE_ACTIVE_PAGE_FOR_PAGINATION: {
-    //   return {
-    //     ...store,
-    //     activePage: action.payload
-    //   }
-    // }
-    // case INCREMENT_ACTIVE_PAGE_PAGINATION: {
-    //   return {
-    //     ...store,
-    //     activePage: ++action.payload
-    //   }
-    // }
-    // case DECREMENT_ACTIVE_PAGE_PAGINATION: {
-    //   return {
-    //     ...store,
-    //     activePage: --action.payload
-    //   }
-    // }
     default:
       return store;
   }

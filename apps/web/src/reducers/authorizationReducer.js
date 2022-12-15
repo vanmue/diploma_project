@@ -25,7 +25,7 @@ const initialStore = {
     error: null                 // {string || null} -  ошибка
   },
   getMeProfilesData: {
-    response: null,             // {string || null} -  
+    response: null,             // {object || null}
     isLoading: false,           // {boolean} -  состояние запроса
     error: null                 // {string || null} -  ошибка
   },

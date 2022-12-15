@@ -2,6 +2,10 @@ export const GET_ALL_SERVICE_GROUPS = '@@salons/GET_ALL_SERVICE_GROUPS';
 export const GET_ALL_DELIVERABLES = '@@salons/GET_ALL_DELIVERABLES';
 
 /**
+ *Получение всех услуг
+*/
+/******************************************************************/
+/**
  *  @params {array} date - массив объектов  со всеми услугами
 */
 export const getAllDeliverablesAction = (date) => ({
@@ -9,7 +13,7 @@ export const getAllDeliverablesAction = (date) => ({
   payload: date
 });
 /**
- * Получение всех услуг
+ * GET запрос на получение всех услуг
 */
 export const getAllDeliverablesThunk = () => async (dispatch, getState) => {
 
@@ -21,6 +25,11 @@ export const getAllDeliverablesThunk = () => async (dispatch, getState) => {
     .catch(err => console.log('getAllDeliverablesThunk:', err));
 }
 
+
+/**
+ * Получение всех групп услуг
+*/
+/******************************************************************/
 /**
  *  Группы услуг
  * @params {array} date - массив объектов  со всеми группами услуг
