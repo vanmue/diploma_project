@@ -25,7 +25,6 @@ function SignIn({
         className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
         style={{ color: '#FFFFFF' }}
         to={linkTo ? linkTo : location.pathname}
-      // to="/salon-admine-office"
       >
         <span>{children}</span>
       </NavLink>

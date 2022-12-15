@@ -9,7 +9,6 @@
   &__h2 {
     @include inter(400, normal);
     font-size: 20px;
-    // font-size: 14px;
     line-height: 18px;
     color: $black;
     margin-bottom: 15px;
@@ -34,10 +33,6 @@
     &-input {
       margin-right: 10px;
     }
-
-    &-apply {
-      // border: 1px solid $black;
-    }
   }
 
   &__form-salon {
@@ -50,8 +45,6 @@
 
     margin-bottom: 30px;
   }
-
-  &__wrapp-form-for-salon {}
 
   &__all-office-nav {
     @include inter(400, normal);
@@ -71,7 +64,4 @@
       margin-right: 10px;
     }
   }
-
-
-
 }

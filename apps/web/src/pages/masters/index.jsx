@@ -8,7 +8,6 @@ import { getFilteringMastersThunk } from '../../actions/mastersActions';
 import { getCitiesThunk } from '../../actions/citiesActions';
 import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
 import { getAllSalonsThunk } from '../../actions/salonsAction';
-import { setIdActiveMasterAction } from '../../actions/masterIdAction';
 import {
   changeNavigationColorAction,
   changingLabelInHeaderAction,
@@ -19,16 +18,16 @@ import './masters.scss';
 function MastersPage() {
 
   const select = useSelector(store => ({
-    cities: store.citiesReducer.cities,
-    groupsServices: store.deliverablesReducer.serviceGroups,
-    allSalons: store.salonsReducer.salons,
-    masters: store.mastersReducer.masters,
-    pagination: store.mastersReducer.pagination,
+    cities: store.citiesReducer.cities,                       // [{}] - все города
+    groupsServices: store.deliverablesReducer.serviceGroups,  // Группы услуг
+    allSalons: store.salonsReducer.salons,                    // [{}] - все салоны
+    masters: store.mastersReducer.masters,                    // [{}] - все мастера
+    pagination: store.mastersReducer.pagination,              // {} - пагинация
   }));
 
-  const [cityId, setCitiesId] = useState(null);
-  const [serviceId, setServiceId] = useState(null);
-  const [salonId, setSalonId] = useState(null);
+  const [cityId, setCitiesId] = useState(null);               // id города
+  const [serviceId, setServiceId] = useState(null);           // id услуги
+  const [salonId, setSalonId] = useState(null);               // id салона
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -56,6 +55,7 @@ function MastersPage() {
       setSalonId(id);
     }),
     onGetFilteringMasters: useCallback(() => {
+      // GET запрос за отфильтрованными мастерами
       dispatch(getFilteringMastersThunk(cityId, serviceId, salonId));
     }),
     onGetMastersOnActivePage: useCallback((page) => {

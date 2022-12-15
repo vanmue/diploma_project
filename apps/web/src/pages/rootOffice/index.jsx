@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import propTypes from 'prop-types';
 import { postSetRoleShopManagerThunk } from "../../actions/salonsAction";
 import FormForSalon from "../../Components/FormForSalon";
 import './root-office.scss'
@@ -9,14 +8,12 @@ import './root-office.scss'
 function RootOffice({
 }) {
 
-  const select = useSelector(store => ({
-  }));
-  const [isHidden, setIsHidden] = useState(false);
-  const [formSetRoleShopManager, setFormSetRoleShopManager] = useState({
+  const [isHidden, setIsHidden] = useState(false);                        // Флаг
+  const [formSetRoleShopManager, setFormSetRoleShopManager] = useState({  // Форма set role "shop_manager"
     userId: null,
     profile_type: "shop_manager"
   });
-  const [redirId, setRedirId] = useState({
+  const [redirId, setRedirId] = useState({                                 // id ЛК
     userId: null,
     masterId: null,
     salonId: null,
@@ -25,19 +22,23 @@ function RootOffice({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Присвоить роль "shop_manager"
   const handleClickBtnApplyRole = () => {
     console.log("formSetRoleShopManager:", formSetRoleShopManager);
     dispatch(postSetRoleShopManagerThunk(formSetRoleShopManager));
   }
 
+  // Показать/скрыть форму регистрации салона
   const handleClickShowFormSalon = () => {
     setIsHidden(prevIsHidden => !prevIsHidden);
   }
 
+  // Обработчик ввода id usera для присвоения роли "shop_manager"
   const handleChangeUserIdInput = (e) => {
     setFormSetRoleShopManager({ ...formSetRoleShopManager, userId: +e.currentTarget.value });
   }
 
+  // Обработчик ввода id 
   const handleChangeRedirInputId = (e) => {
 
     let name = e.currentTarget.getAttribute("name");
@@ -61,6 +62,7 @@ function RootOffice({
     }
   }
 
+  // Обработчик перехода в любой ЛК 
   const handleClickBtnRedirProfile = (e) => {
 
     let dataset = e.currentTarget.dataset.btnRedir;
@@ -87,10 +89,12 @@ function RootOffice({
   }
 
   const callbacks = {
+    // Показать/скрыть форму регистрации салона
     onSetIsHiddenFormSalon: useCallback(() => setIsHidden(prevIsHidden => !prevIsHidden)),
   }
 
   const renders = {
+    // render полей для перехода в ЛК
     linksToProfiles: [
       { profile: "user", textBtn: "в ЛК customer", textLabel: "id user" },
       { profile: "master", textBtn: "в ЛК master", textLabel: "id master" },
@@ -117,8 +121,6 @@ function RootOffice({
           type="text"
           onChange={handleChangeRedirInputId}
         />
-
-        {/* <Link to={"/user-office"}> */}
         <button
           className={btnClass}
           data-btn-redir={el.profile}
@@ -126,7 +128,6 @@ function RootOffice({
         >
           {el.textBtn}
         </button>
-        {/* </Link> */}
       </div>
 
     })
@@ -176,18 +177,11 @@ function RootOffice({
         </div>
         <div className="root-office__all-office-nav">
           <h2 className="root-office__h2">Переходы в ЛК</h2>
-
           {renders.linksToProfiles}
         </div>
       </div>
     </div>
   )
 }
-
-// RootOffice.propTypes = {
-// }
-
-// RootOffice.defaultProps = {
-// }
 
 export default React.memo(RootOffice);

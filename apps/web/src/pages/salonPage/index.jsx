@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import SalonCard from '../../Components/SalonCard';
@@ -17,10 +17,10 @@ import './salon-page.scss';
 
 function SalonPage() {
   const select = useSelector(store => ({
-    activeSalonId: store.salonsReducer.activeSalonId,
-    activeSalon: store.salonsReducer.activeSalon,
-    mastersActiveSalon: store.mastersReducer.mastersActiveSalon,
-    pagination: store.mastersReducer.pagination,
+    activeSalonId: store.salonsReducer.activeSalonId,             // id салона
+    activeSalon: store.salonsReducer.activeSalon,                 // info активного салона
+    mastersActiveSalon: store.mastersReducer.mastersActiveSalon,  // masters активного салона
+    pagination: store.mastersReducer.pagination,                  // info pagination
   }));
   const location = useLocation();
   const dispatch = useDispatch();
@@ -31,16 +31,12 @@ function SalonPage() {
     dispatch(changingLabelInHeaderAction(false));
     dispatch(changeHeaderBackgroundAction('#F5BFAB'));
     dispatch(changeNavigationColorAction('#410935'));
-
-    console.log("salonPage location :", location)
-
     dispatch(getAciveSalonByIdThunk(+location.state.activeSalonId));
     dispatch(getAllMasterForActiveSalonThunk(+location.state.activeSalonId));
-    // dispatch(getAciveSalonByIdThunk(select.activeSalonId));
-    // dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId));
   }, []);
 
   const callbacks = {
+    // GET all masters активного салона
     onGetAllMastersForAciveSalon: useCallback((page) => {
       dispatch(getAllMasterForActiveSalonThunk(select.activeSalonId, page));
     })
@@ -50,11 +46,6 @@ function SalonPage() {
     yandexMap: <YandexMap center={[select.activeSalon?.center_latitude, select.activeSalon?.center_longtitude]}
       zoom={select.activeSalon?.zoom} items={[[select.activeSalon?.label_latitude, select.activeSalon?.label_longtitude]]} />
   }
-
-  // const renders = {
-  //   yandexMap: <YandexMap center={[55.756359058948334, 37.61434035380616]}
-  //     zoom={17} items={[[55.756939868162426, 37.614393997986454]]} />
-  // }
 
   return (
     <div className="salon-page">
@@ -72,74 +63,14 @@ function SalonPage() {
               telephone={select.activeSalon?.phone}
               parking={select.activeSalon?.advantages[0]?.name}
               deliverableGgroups={select.activeSalon?.deliverable_groups}
-
               bckCallBtn={'#F5BFAB'}
               colorTextCallBtn={'#410935'}
               bkgRecordBtn={'#A40123'}
               colorTextRecordBtn={'#F5BFAB'}
-
               map={renders.yandexMap}
             />
           </div>
           <div className="salon-page__wrapp-carousel">
-            {/* <Carousel
-              images={[
-                {
-                  "id": 5,
-                  "is_preview": true,
-                  "file": {
-                    "id": 4,
-                    "originalname": "shop_image_1.png",
-                    "path": "/uploads/shops/7a405c54-64c1-4525-a2bf-31a82442e167.png"
-                  }
-                },
-                {
-                  "id": 6,
-                  "is_preview": false,
-                  "file": {
-                    "id": 5,
-                    "originalname": "shop_image_2.png",
-                    "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
-                  }
-                },
-                {
-                  "id": 7,
-                  "is_preview": false,
-                  "file": {
-                    "id": 6,
-                    "originalname": "shop_image_3.png",
-                    "path": "/uploads/shops/bd02f81a-6a98-415f-bf75-fc98b0ebcbad.png"
-                  }
-                },
-                {
-                  "id": 8,
-                  "is_preview": false,
-                  "file": {
-                    "id": 5,
-                    "originalname": "shop_image_2.png",
-                    "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
-                  }
-                },
-                {
-                  "id": 9,
-                  "is_preview": false,
-                  "file": {
-                    "id": 5,
-                    "originalname": "shop_image_2.png",
-                    "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
-                  }
-                },
-                {
-                  "id": 10,
-                  "is_preview": false,
-                  "file": {
-                    "id": 5,
-                    "originalname": "shop_image_2.png",
-                    "path": "/uploads/shops/913631b9-d181-4ff7-ae57-4d33694f422d.png"
-                  }
-                },
-              ]}
-            /> */}
             <Carousel
               images={select.activeSalon?.images}
             />

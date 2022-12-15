@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import propTypes from 'prop-types';
 import ServicesList from '../ServicesList';
@@ -29,8 +29,12 @@ function SalonCard({
   onClick,
   onClickEditing
 }) {
+
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  console.log('location', location)
 
   const handleClickLink = (e) => {
     if (typeof onClick == 'function') {
@@ -55,7 +59,6 @@ function SalonCard({
     <div className="salon-card">
       <div className="salon-card__img">
         {img ? <img src={img} alt="Фото салона" /> : map ? map : ""}
-        {/* {img ? <img src={img} alt="Фото салона" /> : map } */}
       </div>
       <div
         className="salon-card__info"
@@ -95,15 +98,15 @@ function SalonCard({
               <button onClick={handleClickBtnEditing} className="salon-card__edited-btn">Изменить данные</button>
             </div> :
               <div className="salon-card__buttons">
-                <div className="salon-card__wrapp-button">
+                {/* <div className="salon-card__wrapp-button">
                   <Button
                     colorText={colorTextCallBtn}
                     background={bckCallBtn}
                   >
                     Позвонить
                   </Button>
-                </div>
-                {/* <div className="salon-card__wrapp-button">
+                </div> */}
+                {location.pathname == "/salon" ? "" : <div className="salon-card__wrapp-button">
                   <Button
                     colorText={colorTextRecordBtn}
                     background={bkgRecordBtn}
@@ -112,7 +115,9 @@ function SalonCard({
                   >
                     Записаться
                   </Button>
-                </div> */}
+                </div>}
+
+
               </div>}
           </div>
           <div className="salon-card__services">

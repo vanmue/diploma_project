@@ -12,8 +12,6 @@ function Button({
 }) {
 
   const handleClick = (e) => {
-    // e.preventDefault();
-    // e.stopPropagation();
     onClick(e);
   }
 
@@ -36,9 +34,7 @@ function Button({
 
 Button.propTypes = {
   background: propTypes.string,
-  // background: propTypes.string.isRequired,
   colorText: propTypes.string,
-  // colorText: propTypes.string.isRequired,
   children: propTypes.string.isRequired,
   linkTo: propTypes.string,
   onClick: propTypes.func

@@ -23,14 +23,14 @@ import './salons-page.scss';
 function SalonsPage() {
 
   const select = useSelector(store => ({
-    cities: store.citiesReducer.cities,
-    groupsServices: store.deliverablesReducer.serviceGroups,
-    salons: store.salonsReducer.salons,
-    pagination: store.salonsReducer.pagination,
+    cities: store.citiesReducer.cities,                       // [{}] - все города
+    groupsServices: store.deliverablesReducer.serviceGroups,  // [{}] - группы услуг
+    salons: store.salonsReducer.salons,                       // [{}] - салоны
+    pagination: store.salonsReducer.pagination,               // info pagination
   }));
 
-  const [cityId, setCitiesId] = useState(null);
-  const [serviceId, setServiceId] = useState(null);
+  const [cityId, setCitiesId] = useState(null);               // id города
+  const [serviceId, setServiceId] = useState(null);           // id услуги
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,7 +38,6 @@ function SalonsPage() {
     dispatch(changingLabelInHeaderAction(false));
     dispatch(changeHeaderBackgroundAction('#F5BFAB'));
     dispatch(changeNavigationColorAction('#410935'));
-
     dispatch(getCitiesThunk());
     dispatch(getAllServiceGroupsThunk());
     dispatch(getFilteringSalonsThunk(cityId, serviceId));
@@ -62,9 +61,11 @@ function SalonsPage() {
       navigate("/salon", { state: { activeSalonId: id } });
       dispatch(setActiveSalonIdAction(id));
     }),
+    // GET filtering salons
     onGetFilteringSalons: useCallback(() => {
       dispatch(getFilteringSalonsThunk(cityId, serviceId));
     }),
+    // actine page of pagination
     onGetActivePageForSalons: useCallback((numberPage) => {
       dispatch(getFilteringSalonsThunk(cityId, serviceId, numberPage));
     }),
@@ -106,8 +107,6 @@ function SalonsPage() {
           <ul className="salons-page__salons-list">
             {select.salons?.map((item) => {
               let imgPreview = item.images.length > 0 ? item.images.find(el => el.is_preview == true) : '';
-              // console.log("salonsPage imgPreview.file.path : ", imgPreview?.file?.path)
-              // console.log("salonsPage item.file.path : ", item.file.path)
               return <li className="salons-page__wrapp-salon-card" data-salon-id={item.id} key={item.id}>
                 <SalonCard
                   salonTitle={item.name}
@@ -120,7 +119,7 @@ function SalonsPage() {
                   parking={item.advantages[0]?.name}
                   textLink={'Подробная информация о салоне'}
                   deliverableGgroups={item.deliverable_groups}
-                  img={imgPreview != undefined ? imgPreview?.file?.path : ''}
+                  img={item.images[0]?.file?.path}
                   bckCallBtn={'#410935'}
                   colorTextCallBtn={'#F5BFAB'}
                   bkgRecordBtn={'#A40123'}
