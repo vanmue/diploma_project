@@ -1,5 +1,4 @@
 import {
-  GET_ALL_MASTERS,
   GET_FILTERING_MASTERS,
   GET_ALL_MASTERS_FOR_ACTIVE_SALON,
   POST_IMAGE_FOR_MASTER,
@@ -18,9 +17,9 @@ const initialStore = {
   responsePostSetRoleMaster: null,  // {object} - ответ на POST запрос установки роли master для user
   pagination: null,
   deleteMaster: {
-    response: null,              // {string || null} -  access_token
-    isLoading: false,           // {boolean} -  состояние запроса
-    error: null                 // {string || null} -  ошибка
+    response: null,                 // {string || null} -  access_token
+    isLoading: false,               // {boolean} -  состояние запроса
+    error: null                     // {string || null} -  ошибка
   },
 }
 
@@ -68,8 +67,6 @@ export default function mastersReducer(store = initialStore, action) {
       }
     }
     case GET_FILTERING_MASTERS: {
-      // console.log("GET_FILTERING_MASTERS action.payload.date", action.payload.date)
-      // console.log("GET_FILTERING_MASTERS action.payload.pagination", action.payload.pagination)
       return {
         ...store,
         masters: action.payload.date,

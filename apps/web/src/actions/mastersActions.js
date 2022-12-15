@@ -4,11 +4,9 @@ export const GET_ALL_MASTERS_FOR_ACTIVE_SALON = '@@masters/GET_ALL_MASTERS_FOR_A
 export const POST_IMAGE_FOR_MASTER = '@@masters/POST_IMAGE_FOR_MASTER';
 export const POST_NEW_MASTER = '@@masters/POST_NEW_MASTER';
 export const POST_SET_ROLE_MASTER = '@@masters/POST_SET_ROLE_MASTER';
-
 export const DELETE_MASTER_START = '@@masters/DELETE_MASTER_START';
 export const DELETE_MASTER_SUCCESS = '@@masters/DELETE_MASTER_SUCCESS';
 export const DELETE_MASTER_FAILURE = '@@masters/DELETE_MASTER_FAILURE';
-// export const DECREMENT_ACTIVE_PAGE_PAGINATION = '@@salons/DECREMENT_ACTIVE_PAGE_PAGINATION';
 
 /**
  * Удаление мастера 
@@ -44,10 +42,6 @@ export const deleteMasterThunk = (id) => async (dispatch, getState) => {
 
   fetch(`/api/v1/masters/${id}`, {
     method: "DELETE",
-    // headers: {
-    //   'Content-Type': 'application/json;charset=utf-8'
-    // },
-    // body: JSON.stringify(data)
   })
     .then(req => req.json())
     .then(res => {
@@ -61,9 +55,12 @@ export const deleteMasterThunk = (id) => async (dispatch, getState) => {
     });
 }
 
+/**
+ * Устанавливаем роль "shop_manager"
+*/
 /******************************************************************/
 /**
- * 
+ * response
 */
 export const postSetRoleMasterAction = (date) => ({
   type: POST_SET_ROLE_MASTER,
@@ -84,7 +81,6 @@ export const postSetRoleThunk = (data) => async (dispatch, getState) => {
   })
     .then(req => req.json())
     .then(res => {
-      console.log('postSetRoleThunk res:', res);
       if (data.profile_type == 'master') dispatch(postSetRoleMasterAction(res.data));
 
     })
@@ -92,6 +88,10 @@ export const postSetRoleThunk = (data) => async (dispatch, getState) => {
 }
 
 
+/**
+ * Регистрация нового мастера в салоне
+*/
+/******************************************************************/
 /**
  * 
 */
@@ -104,9 +104,6 @@ export const postNewMasterAction = (date) => ({
  * @param {{}} date - данные мастера
 */
 export const postNewMasterThunk = (data) => async (dispatch, getState) => {
-
-  // let formData = new FormData();
-  // formData.append("file", data);
 
   fetch("/api/v1/masters", {
     method: "POST",

@@ -1,31 +1,21 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { logoutAction } from "../../actions/authorizationActions";
 import Button from "../Button";
 import './list-profiles.scss'
 
-// const userStructure = JSON.parse(localStorage.getItem("userStructure"));
-
 function ListProfiles({
-  // userStructure
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   console.log('ListProfiles JSON.parse(localStorage.getItem("userStructure")):', JSON.parse(localStorage.getItem("userStructure")));
-  // });
 
   const callbacks = {
     onLogout: useCallback(() => {
       dispatch(logoutAction());
       navigate("/")
     })
-    // onRedirect: useCallback(() => {
-    //   navigate("/", { state: { userStruct: struct } })
-    // })
   }
 
   return (
@@ -38,7 +28,6 @@ function ListProfiles({
                 el.profile_type == "master" ? "/master-office" :
                   el.profile_type == "root" ? "/root-office" :
                     ""}
-          // onClick={callbacks.onRedirect}
           >
             {el.profile_type == "customer" ? "Пользователь" :
               el.profile_type == "master" ? "Мастер" :

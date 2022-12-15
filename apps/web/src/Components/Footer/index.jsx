@@ -17,22 +17,6 @@ function Footer() {
               info@youbeauty.ru
             </p>
           </div>
-          {/* <div className="footer__support">
-            <p className="footer__support-title">
-              Техническая поддержка:
-            </p>
-            <p className="footer__support-text">
-              Напишите ваш вопрос и мы с вами свяжемся.
-            </p>
-            <div className="footer__input">
-              <input
-                className="footer__input-email"
-                type="email"
-                placeholder='e-mail'
-              />
-              <button className="footer__input-button">Отправить</button>
-            </div>
-          </div> */}
           <div className="footer__copyright">
             Copyright © 2022
           </div>

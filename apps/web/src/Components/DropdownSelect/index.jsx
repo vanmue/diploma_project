@@ -112,9 +112,9 @@ function DropdownSelect({
 }
 
 DropdownSelect.propTypes = {
-  dropdownTitle: propTypes.string,
-  items: propTypes.arrayOf(propTypes.object),
-  onChange: propTypes.func
+  dropdownTitle: propTypes.string,              // Заголовок drpdn
+  items: propTypes.arrayOf(propTypes.object),   // Options drpdn
+  onChange: propTypes.func                      // Callback
 }
 
 DropdownSelect.defaultProps = {

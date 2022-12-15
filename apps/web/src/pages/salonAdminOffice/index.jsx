@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from "react-router-dom";
 import { getCitiesThunk } from '../../actions/citiesActions';
 import { getAllAdvantagesThunk } from '../../actions/advantagesActions';
 import { getAllMasterForActiveSalonThunk } from '../../actions/mastersActions';
@@ -27,56 +26,24 @@ import './salon-admin-office.scss';
 function SalonAdminOffice() {
 
   const select = useSelector(store => ({
-    cities: store.citiesReducer.cities,
-    advantages: store.advantagesReducer.advantages,
-    activeSalonId: store.salonsReducer.activeSalonId,
-    activeSalon: store.salonsReducer.activeSalon,
-    imgForCarouselId: store.salonsReducer.imgForCarouselId,
-    mastersActiveSalon: store.mastersReducer.mastersActiveSalon,
-    activePageMastersActiveSalon: store.mastersReducer.activePageMastersActiveSalon,
-    pagination: store.mastersReducer.pagination,
+    cities: store.citiesReducer.cities,                                    // [{}] - города
+    advantages: store.advantagesReducer.advantages,                        // [{}] - услуги
+    activeSalonId: store.salonsReducer.activeSalonId,                      // id активного салона
+    activeSalon: store.salonsReducer.activeSalon,                          // {} - info активного салона
+    imgForCarouselId: store.salonsReducer.imgForCarouselId,                // id img для POST 
+    mastersActiveSalon: store.mastersReducer.mastersActiveSalon,           // [{}] - мастера активного салона 
+    activePageMastersActiveSalon: store.mastersReducer.activePageMastersActiveSalon, // page пагинации
+    pagination: store.mastersReducer.pagination,                           // all info пагинации
   }))
 
   const [activeSalonId, setActiveSalonId] = useState(JSON.parse(localStorage.getItem("activeSalonId")) ? +JSON.parse(localStorage.getItem("activeSalonId")) :
-    JSON.parse(localStorage.getItem("profilId")).salonId);
-  const [isActiveFormForSalon, setIsActiveFormForSalon] = useState(false);
-  // const [imgFile, setImgFile] = useState(null);
-  const [imageForSalon, setImageForSalon] = useState({
-    shopId: activeSalonId,    // {number} - id салона
-    fileId: null,             // {number} - id изображения
-    is_preview: "false",      // {string} - флаг картинки
+    JSON.parse(localStorage.getItem("profilId")).salonId);                 // id активного салона
+  const [isActiveFormForSalon, setIsActiveFormForSalon] = useState(false); // флаг формы салона
+  const [imageForSalon, setImageForSalon] = useState({                     // form POST img for salon
+    shopId: activeSalonId,             // {number} - id салона
+    fileId: null,                      // {number} - id изображения
+    is_preview: "false",               // {string} - флаг картинки
   });
-  const [formNewSalon, setFormNewSalon] = useState({
-    name: null,
-    cityId: 0,
-    address: null,
-    working_time: null,
-    working_start: 0,
-    working_end: 0,
-    advantages: [],
-    phone: null,
-    center_latitude: 0,
-    center_longtitude: 0,
-    label_latitude: 0,
-    label_longtitude: 0,
-    zoom: 0,
-  });
-  const formNewSalonTest = {
-    name: "NewSalon-r",
-    address: "Семфтропольская улица",
-    working_time: "начало в 10 до 20",
-    working_start: "10:00",
-    working_end: "20:00",
-    phone: "1234567890",
-    center_latitude: 30.304908500000003,
-    center_longtitude: 59.91796593897841,
-    label_latitude: 30.295617482627414,
-    label_longtitude: 59.93069550217494,
-    zoom: 10,
-    cityId: 3,
-    advantages: [1]
-  }
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -96,24 +63,25 @@ function SalonAdminOffice() {
   }, [select.imgForCarouselId]);
 
   const callbacks = {
-    onSetIsActiveFormForSalon: useCallback(() => {
+    onSetIsActiveFormForSalon: useCallback(() => {                    // Показать/скрыть form salon
       setIsActiveFormForSalon(prevIsActive => !prevIsActive);
     }),
-    onPostImageForSalon: useCallback(() => {
+    onPostImageForSalon: useCallback(() => {                          // POST img for salon
       dispatch(postImageForSalonThunk(imageForSalon));
     }),
-    onChangeUploadImageForSalon: useCallback((e) => {
+    onChangeUploadImageForSalon: useCallback((e) => {                 // Upliad img form salon
       let inputFile = e.currentTarget.files[0];
       dispatch(uploadImageForSalonThunk({ file: inputFile }));
     }),
-    onGetActivePagePagination: useCallback((page) => {
+    onGetActivePagePagination: useCallback((page) => {                // Active page pagination
       dispatch(getAllMasterForActiveSalonThunk(activeSalonId, +page));
     }),
-    onDeleteMaster: useCallback((id) => {
+    onDeleteMaster: useCallback((id) => {                             // Delete master
       dispatch(deleteMasterThunk(id));
     }),
   }
 
+  // Компонент YandexMap
   const renders = {
     yandexMap: <YandexMap center={[select.activeSalon?.center_latitude, select.activeSalon?.center_longtitude]}
       zoom={select.activeSalon?.zoom} items={[[select.activeSalon?.label_latitude, select.activeSalon?.label_longtitude]]} />

@@ -38,7 +38,6 @@ function DrpdnForAddSalons({
     setValue(e.target.value);
     sortByValue(e.target.value);
     if (e.target.value.length == 0) onChange(null);
-    // console.log('DropdownSelect handleChangeInput e.target.value.length:', e.target.value.length);
   }
 
   // Обработчик выбора одного из вариантов

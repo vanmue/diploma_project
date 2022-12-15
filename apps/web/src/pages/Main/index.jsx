@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import ServicesCard from '../../Components/ServicesCard';
 import Select from '../../Components/Select';
 import YandexMap from '../../Components/YandexMap';
 import { getCitiesThunk, getCitiesByIdThunk } from "../../actions/citiesActions";
-import { getFilteringSalonsThunk } from '../../actions/salonsAction';
 import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
 import {
   changeNavigationColorAction,
@@ -25,6 +23,7 @@ function MainPage() {
     city: store.citiesReducer.city,
   }));
 
+  //[[]] - маркеры салонов(с широтой и долготой)
   const [salonsLabel, setSalonsLabel] = useState(null);
 
   useEffect(() => {
@@ -33,9 +32,9 @@ function MainPage() {
     dispatch(changeNavigationColorAction('#FFFFFF'));
 
     dispatch(getCitiesThunk());
-    // dispatch(getFilteringSalonsThunk());
     dispatch(getAllServiceGroupsThunk());
 
+    //Получение всех салонов
     fetch('/api/v1/shops')
       .then(req => req.json())
       .then(res => {
@@ -47,7 +46,7 @@ function MainPage() {
         console.log('MainPage labels:', labels);
         setSalonsLabel(labels);
       })
-    // .catch(err => console.log('getAllSalonsThunk: ', err));
+      .catch(err => console.log('getAllSalonsThunk: ', err));
 
   }, []);
 
@@ -56,8 +55,8 @@ function MainPage() {
   }, [select.city])
 
   const callbacks = {
+    //Получение информации о городе по его id
     onGetCityById: useCallback((id) => {
-      console.log("id", id)
       dispatch(getCitiesByIdThunk(+id));
     })
   }
@@ -127,290 +126,3 @@ function MainPage() {
 }
 
 export default React.memo(MainPage);
-
-//  - запись к мастеру:
-// - создание записи
-// POST / api / v1 / appointments /
-// {
-//   "shopId": 1,
-//   "masterId": 6,
-//   "deliverableId": 2,
-//   "customerId": 1,
-//   "comments": "могу опоздать",
-//   "from": "2022-12-01T17:00:00+00:00",
-//   "to": "2022-12-01T18:00:00+00:00"
-// }
-
-//   - изменение записи
-// PATCH / api / v1 / appointments /: id /
-// {
-//   "comments": "могу опоздать1"
-// }
-
-//   - удаление записи:
-// DELETE / api / v1 / appointments /: id /
-
-//   - список имеющихся записей к мастеру:
-// GET / api / v1 / masters / 6 / shops / 1 / appointments /
-
-
-//     - создание изображения салона:
-
-// - загрузить файл(multipart / form - data)
-// POST / api / v1 / files /
-
-//   - привязать файл к салону
-// POST / api / v1 / shop - images /
-// {
-//   "shopId": 1,
-//   "fileId": {{ file_id }},
-// "is_preview": "false"
-// }
-
-// - изменить данные изображения салона:
-// PATCH / api / v1 / shop - images /: shop_image_id /
-
-//   - удалить привязку файла к салону и сам файл:
-// /api/v1 / shop - images /: shop_image_id /
-
-
-//     - создание салона:
-// POST / api / v1 / shops /
-// {
-//   "cityId": 1,
-//   "advantages": [1],
-//   "name": "Barbershop Mens' House",
-//   "address": "ул. Гагарина, 228",
-//   "working_time": "с 10:00 до 21:00 без выходных",
-//   "working_start": 10,
-//   "working_end": 21,
-//   "phone": "1234567890",
-//   "center_longtitude": 59.91796593897841,
-//   "center_latitude": 30.304908500000003,
-//   "label_longtitude": 59.93069550217494,
-//   "label_latitude": 30.295617482627414,
-//   "zoom": 10
-// }
-
-// - запись к мастеру:
-
-//   - создание записи
-// POST /api/v1/appointments/
-// {
-//     "shopId": 1,
-//     "masterId": 6,
-//     "deliverableId": 2,
-//     "customerId": 1,
-//     "comments": "могу опоздать",
-//     "from": "2022-12-01T17:00:00+00:00",
-//     "to": "2022-12-01T18:00:00+00:00"
-// }
-
-//   - изменение записи
-// PATCH /api/v1/appointments/:id/
-// {
-//     "comments": "могу опоздать1"
-// }
-
-//   - удаление записи:
-// DELETE /api/v1/appointments/:id/
-
-// - список имеющихся записей к мастеру:
-// GET /api/v1/masters/6/shops/1/appointments/
-
-// - создание изображения салона:
-
-//   - загрузить файл (multipart/form-data)
-// POST /api/v1/files/
-
-//   - привязать файл к салону
-// POST /api/v1/shop-images/
-// {
-//     "shopId": 1,
-//     "fileId": {{file_id}},
-//     "is_preview": "false"
-// }
-//   - изменить данные изображения салона:
-
-// PATCH /api/v1/shop-images/:shop_image_id/
-
-//   - удалить привязку файла к салону и сам файл:
-// /api/v1/shop-images/:shop_image_id/
-
-// - создание салона:
-// POST /api/v1/shops/
-// {
-//     "cityId": 1 ,
-//     "advantages": [ 1 ],
-//     "name": "Barbershop Mens' House",
-//     "address": "ул. Гагарина, 228",
-//     "working_time": "с 10:00 до 21:00 без выходных",
-//     "working_start": 10,
-//     "working_end": 21,
-//     "phone": "1234567890",
-//     "center_longtitude": 59.91796593897841,
-//     "center_latitude": 30.304908500000003,
-//     "label_longtitude": 59.93069550217494,
-//     "label_latitude": 30.295617482627414,
-//     "zoom": 10
-// }
-// для записи к мастеру удалены поля имени и номера телефона
-// customerId - это значение id пользователя из таблицы users
-
-// - изменения users:
-
-//   - загрузить файл аватара (multipart/form-data)
-// POST /api/v1/files/
-
-//   - создать пользователя
-// POST /api/v1/users/
-// {
-//     "email": "test{{$timestamp}}@test.com",
-//     "password": "12345",
-//     "name": "Марина",
-//     "surname": "Светлова",
-//     "avatarId": {{file_id}}
-// }
-//   - получить данные пользователя:
-
-// GET /api/v1/users/{{ user_id}}/
-
-//   - изменить данные пользователя
-// PATCH /api/v1/users/{{user_id}}/
-// {
-//     "name": "fake name 1",
-//     "avatarId": 2
-// }
-//   - удалить пользователя (если пользователя привязан к мастеру/отзыву/записи к мастеру, то будет ошибка)
-// DELETE /api/v1/users/{{ user_id}}/
-
-//   - получить всех пользователей:
-// GET /api/v1/users/
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// Всем привет.
-
-// Полностью обновлена база на сервера из моего локального дампа.
-// Причина - для создания профилей пользователей для авторизации было
-// применено много изменений, которые не применились в среде production.
-
-// Создание записей в таблица masters, reviews и appointments:
-
-// 1. Создать пользователя
-// POST /users
-// {
-//     "email": "test{{$timestamp}}@test.com",
-//     "password": "12345",
-//     "name": "Марина",
-//     "surname": "Светлова",
-//     "avatarId": 1
-// }
-// 2. Для пользователя прописать, какие права у него есть:
-
-//   - получить список профилей:
-
-// GET /profiles/types/
-//   - в ответ приходит массив с доступными профилями:
-//     "data": [
-//         "master",
-//         "customer",
-//         "admin"
-//     ]
-//   - создать для пользователя запись профиля:
-
-// POST /profiles/
-// {
-//     "profile_type": "master",
-//     "userId": {{new_user_id}}
-// }
-//   - если запись профиля не создать, то пользователь не будет идентифицироваться,
-//    создание записей в таблицах masters, reviews и appointments будет невозможно
-
-// 3. Создать записи в таблицах
-
-//   - создать запись в таблице masters:
-// POST /masters/
-// {
-//     "profileId": {{new_profile_id}},
-//     "fileId": 3,
-//     "profession": "мастер маникюра",
-//     "description": "….",
-//     "deliverables": [ 5, 1, 7 ],
-//     "shops": [ 1 ]
-// }
-//   - создать запись в таблице reviews:
-// POST /reviews/
-// {
-//     "profileId": 202 ,
-//     "appointmentId": 5 ,
-//     "review": "vel turpis nunc eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida",
-//     "score": 5
-// }
-//   - создать запись в таблице appointments:
-// POST /appointments/
-// {
-//     "shopId": 1,
-//     "masterId": 6,
-//     "deliverableId": 2,
-//     "profileId": 202,
-//     "comments": "могу опоздать",
-//     "from": "2022-12-01T17:00:00+00:00",
-//     "to": "2022-12-01T18:00:00+00:00"
-// }
-// 4. Получение пользователей
-
-// - теперь данные пользователей вложены внутрь структур «profile»
-
-// 5. Получение имеющихся профилей пользователей
-// GET /usesrs/
-// GET /users/:id/
-// - ответ содержит массивы profiles
-// - если у какого-либо пользователя массив пустой,
-// то для него невозможно будет создавать записи в таблицах masters, reviews и appointments
-
-
-
-// Для информации. Сейчас не имеет значения, какой тип
-// профиля (admin, customer или master) указан в таблице profiles для пользователя.
-// С любым типом можно создавать записи.
-
-// Всем привет. Переделаю создание записей - будет по userId вместо profileId...
-
-// Убрал profileId, поставил userId
-
-// - создать запись в таблице masters:
-// POST /masters/
-// {
-//     "userId": {{user_id}},
-//     "fileId": 3,
-//     "profession": "мастер маникюра",
-//     "description": "….",
-//     "deliverables": [ 5, 1, 7 ],
-//     "shops": [ 1 ]
-// }
-// - создать запись в таблице reviews:
-// POST /reviews/
-// {
-//     "userId": {{user_id}},
-//     "appointmentId": 5 ,
-//     "review": "vel turpis nunc eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida",
-//     "score": 5
-// }
-// - создать запись в таблице appointments:
-// POST /appointments/
-// {
-//     "shopId": 1,
-//     "masterId": 6,
-//     "deliverableId": 2,
-//     "userId": {{user_id}},
-//     "comments": "могу опоздать",
-//     "from": "2022-12-01T17:00:00+00:00",
-//     "to": "2022-12-01T18:00:00+00:00"
-// }
-
-// и, как следствие, теперь записи в masters, reviews и appointments можно создавать
-// только при наличии целевого профиля (profile_type = master или customer),
-// либо при наличии profile_type = root (был admin, стал root)

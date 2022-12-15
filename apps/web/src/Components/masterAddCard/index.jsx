@@ -41,7 +41,6 @@ function MasterAddCard({
     setFormForAddMasterInSalon({ ...formForAddMasterInSalon, shops: [select.activeSalonId] });
   }, [select.activeSalonId]);
   useEffect(() => {
-    console.log("formForAddMasterInSalon:", formForAddMasterInSalon)
     if (select.responsePostSetRoleMaster != null) {
       dispatch(postNewMasterThunk(formForAddMasterInSalon));
     }
@@ -204,10 +203,7 @@ function MasterAddCard({
           </div>
 
           <div className="master-add-card__info-working-time master-add-card__info-item">
-            <label
-              className="master-add-card__info-working-time-label"
-            // htmlFor="master-profession"
-            >
+            <label className="master-add-card__info-working-time-label">
               Время работы:
             </label>
             <div className="master-add-card__info-working-time-inputs">
@@ -228,9 +224,7 @@ function MasterAddCard({
                 onChange={handleChangeInputText}
               />
             </div>
-
           </div>
-
           <div className="master-add-card__info-desk master-add-card__info-item">
             <label
               className="master-add-card__info-desk-label"
@@ -246,7 +240,6 @@ function MasterAddCard({
               onChange={handleChangeInputText}
             />
           </div>
-
           <div className="master-add-card__info-services master-add-card__info-item">
             <div
               className="master-add-card__info-services-label"
@@ -270,10 +263,8 @@ function MasterAddCard({
               })}
             </div>
           </div>
-
         </div>
       </div>
-
       <div className="master-add-card__wrapp-button">
         <Button
           background={"#410935"}
@@ -281,7 +272,6 @@ function MasterAddCard({
           onClick={callbacks.onSetRoleMaster}
         >Сохранить</Button>
       </div>
-
     </div>
   )
 }

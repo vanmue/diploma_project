@@ -16,8 +16,8 @@ function FormForSalon({
 }) {
 
   const select = useSelector(store => ({
-    cities: store.citiesReducer.cities,
-    advantages: store.advantagesReducer.advantages,
+    cities: store.citiesReducer.cities,                       // [{}] - все города
+    advantages: store.advantagesReducer.advantages,           // [{}] - все преимущества
   }));
 
   const [formNewSalon, setFormNewSalon] = useState(req == "POST" ?
@@ -68,6 +68,7 @@ function FormForSalon({
     onClickClose();
   }
 
+  // Обработчик изменения текстовых полей для формы салона
   const handleChangeInput = (e) => {
     console.log("onPostNewSalon formNewSalon: ", formNewSalon);
     switch (e.currentTarget.getAttribute("id")) {
@@ -76,13 +77,6 @@ function FormForSalon({
           ...formNewSalon,
           managers: [+e.currentTarget.value]
         });
-        // setFormNewSalon({
-        //   ...formNewSalon,
-        //   managers: [
-        //     ...formNewSalon.managers,
-        //     +e.currentTarget.value
-        //   ]
-        // });
         break;
       case 'salon-name':
         setFormNewSalon({ ...formNewSalon, name: e.currentTarget.value });
