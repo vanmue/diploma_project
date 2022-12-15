@@ -3,11 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getMasterIdActionThunk } from '../../actions/masterIdAction';
 import { getMasterRecordMonthThunk } from '../../actions/masterRecordAction';
 import { getMasterIdFromUserIdThunk } from '../../actions/masterIdFromUserIdActions'
-
 import Rating from '../../Components/Rating';
 import Calendar from '../../Components/Masters/Calendar';
 import Price from '../../Components/Masters/Price'
-import { useLocation } from 'react-router-dom'
 
 function MasterOffice() {
     const token = localStorage.getItem("access_token");
@@ -19,25 +17,22 @@ function MasterOffice() {
 
     if (localStorage.getItem("profilId")) {
         masterIdOfRoot = JSON.parse(localStorage.getItem("profilId"))?.masterId
-        console.log(masterIdOfRoot)
     }
     let masterId
-    console.log(entity_id)
 
     if (masterIdOfRoot) {
-        console.log('rrrrr')
         masterId = masterIdOfRoot
     } else if (entity_id.masterId) {
-        console.log('eeee')
         masterId = entity_id.masterId[0].entity_id
     }
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+
+        dispatch(getMasterIdFromUserIdThunk(token))
         dispatch(getMasterIdActionThunk(`${masterId}`));
         dispatch(getMasterRecordMonthThunk(masterId))
-        dispatch(getMasterIdFromUserIdThunk(token))
 
     }, [masterId])
 
