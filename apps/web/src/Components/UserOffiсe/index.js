@@ -111,7 +111,7 @@ function UserOffice() {
                 {active
                     ?
                     <div>
-                        <Rating isAcive={true} />
+                        <Rating isAcive={false} />
                         <div id={item.appointmentId} style={{ textDecorationLine: 'underline' }} onClick={(e) => clickReview(e)} >написать отзыв</div>
 
                     </div>

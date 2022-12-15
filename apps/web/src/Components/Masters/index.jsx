@@ -7,7 +7,6 @@ import "./master.scss"
 import Rating from '../Rating'
 import { getMasterIdActionThunk } from '../../actions/masterIdAction'
 import { getAciveSalonByIdThunk } from '../../actions/salonsAction'
-import { useLocation } from 'react-router-dom'
 
 function Master() {
   let masterId = useSelector(store => store.masterIdReducer.id);
@@ -15,16 +14,11 @@ function Master() {
   const data = useSelector(store => store.masterIdReducer.dataMasterCard);
   const salon = useSelector(store => store.salonsReducer.activeSalon);
 
-  // const location = useLocation()
-  // console.log(location)
-
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMasterIdActionThunk(`${masterId}`));
     dispatch(getAciveSalonByIdThunk(salonId));
   }, [])
-
 
   if (masterId && salonId) {
     localStorage.setItem("masterId&salonId", JSON.stringify({ masterId: masterId, salonId: salonId }))
@@ -44,7 +38,6 @@ function Master() {
             <div className="master-card__wrapp-rating">
               <Rating rating={data?.reviews_scores_avg} />
             </div>
-
             <p className="master__work">Работает в салоне: {salon?.name}</p>
             <div className="master__info">
               <p> {data?.description} </p>
@@ -56,7 +49,6 @@ function Master() {
         <Reviews reviews={data?.reviews} />
       </div>
     </div>
-
   </>
 }
 

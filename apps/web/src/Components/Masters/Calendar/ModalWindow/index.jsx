@@ -8,26 +8,10 @@ import { getMasterRecordThunk } from '../../../../actions/masterRecordAction'
 
 function ModalWindow({ modalActive, choiceDay, data, dataMaster, changeModalActive, salonId }) {
 
-    // const token = localStorage.getItem("access_token");
-    // function parseJwt(token) {
-    //     const base64Url = token.split('.')[1];
-    //     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    //     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-    //         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    //     }).join(''));
-    //     return JSON.parse(jsonPayload);
-    // };
-
-    // console.log(parseJwt(token).sub)
-
-    const userId = JSON.parse(localStorage.getItem("userStructure")).id
-
-
-
-    const masterRecord = useSelector(store => store.masterRecordReducer);
-
+    const userId = JSON.parse(localStorage.getItem("userStructure"))?.id
     let cell = ['10-00', '11-00', '12-00', '13-00', '14-00', '15-00', '16-00', '17-00', '18-00']
 
+    const masterRecord = useSelector(store => store.masterRecordReducer);
 
     const [text, setText] = useState('');
     const [time, setTime] = useState(null);
@@ -41,7 +25,6 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, changeModalActi
     }, [choiceDay, dataMaster?.id])
 
     function chooseTime(e) {
-
         if (choose) {
             e.target.attributes[1].nodeValue = "background: rgb(65, 9, 53); color: rgb(255, 255, 255);"
             setTime(e.target.outerText)
@@ -50,7 +33,6 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, changeModalActi
         }
         setChoose(false)
     }
-
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -117,7 +99,6 @@ function ModalWindow({ modalActive, choiceDay, data, dataMaster, changeModalActi
                                         onClick={(e) => chooseTime(e)}>{ime}
                                     </span>
                                 )}
-
                             </div>
                         </div>
                     </div>

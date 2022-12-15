@@ -6,8 +6,6 @@ const CalendarGrid = ({ startDay, today, cellClick, masterRecordMonth, weekend }
 
     let colorDay = () => { return null }
 
-
-
     const recordDay = (dayItem) => {
         let recordScore = 0
         masterRecordMonth?.map((item) => {
@@ -15,7 +13,6 @@ const CalendarGrid = ({ startDay, today, cellClick, masterRecordMonth, weekend }
                 moment(moment(item.from).format('YYYYMMDD')).isSameOrAfter(today.format('YYYYMMDD'))) {
                 recordScore++
             }
-
             return recordScore
         })
         return (<>
