@@ -123,6 +123,7 @@ function SalonAdminOffice() {
     <div className='salon-admine-office'>
       <div className="container">
         <div className="salon-admine-office__flex">
+          <div className="salon-admine-office__flex-salon-id">id Салона: {select.activeSalon?.id}</div>
           <div className="salon-admine-office__wrapp-salon-card">
             {select.activeSalon ? <SalonCard
               salonTitle={select.activeSalon.name}

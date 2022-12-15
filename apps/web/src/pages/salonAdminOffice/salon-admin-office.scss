@@ -11,6 +11,13 @@
     display: flex;
     flex-direction: column;
 
+    &-salon-id {
+      @include inter(400, normal);
+      font-size: 14px;
+      line-height: 17px;
+      color: $beige;
+    }
+
   }
 
   &__wrapp-salon-card {

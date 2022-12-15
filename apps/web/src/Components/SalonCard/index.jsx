@@ -5,6 +5,7 @@ import propTypes from 'prop-types';
 import ServicesList from '../ServicesList';
 import Button from '../Button';
 import { setActiveSalonIdAction } from '../../actions/salonsAction';
+import pencil from "./img/pencil.png";
 import './salon-card.scss';
 
 function SalonCard({
@@ -90,6 +91,7 @@ function SalonCard({
               <Link to="/salon">{textLink}</Link>
             </div>) : ''}
             {isEdited ? <div className="salon-card__edited">
+              <img src={pencil} alt="" />
               <button onClick={handleClickBtnEditing} className="salon-card__edited-btn">Изменить данные</button>
             </div> :
               <div className="salon-card__buttons">
@@ -101,7 +103,7 @@ function SalonCard({
                     Позвонить
                   </Button>
                 </div>
-                <div className="salon-card__wrapp-button">
+                {/* <div className="salon-card__wrapp-button">
                   <Button
                     colorText={colorTextRecordBtn}
                     background={bkgRecordBtn}
@@ -110,7 +112,7 @@ function SalonCard({
                   >
                     Записаться
                   </Button>
-                </div>
+                </div> */}
               </div>}
           </div>
           <div className="salon-card__services">
