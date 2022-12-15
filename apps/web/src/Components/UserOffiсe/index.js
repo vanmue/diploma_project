@@ -25,14 +25,11 @@ function UserOffice() {
 
     if (localStorage.getItem("profilId")) {
         userIdOfRoot = JSON.parse(localStorage.getItem("profilId"))?.userId
-        console.log(userIdOfRoot)
     }
 
     if (userIdOfRoot) {
-        console.log('rrrrr')
         userId = userIdOfRoot
     } else {
-        console.log('eeee')
         userId = JSON.parse(localStorage.getItem("userStructure")).id
     }
 
@@ -133,7 +130,9 @@ function UserOffice() {
                         <img src={userInfo?.avatar.path} alt="foto" />
                         <div className="user-info__block">
                             <h2>{userInfo?.name} {userInfo?.surname} </h2>
-                            <p> <span style={{ marginRight: '36px' }}>Телефон: {userInfo?.phone}</span><span style={{ marginRight: '36px' }}>Mail: {userInfo?.email} <span style={{ marginLeft: '36px' }}>ваш id-{userId}</span> </span></p>
+                            <p> <span style={{ marginRight: '36px' }}>Телефон: {userInfo?.phone}</span>
+                                <span style={{ marginRight: '36px' }}>Mail: {userInfo?.email}</span>
+                                <span style={{ marginLeft: '36px' }}>ваш id-{userId}</span> </p>
                             <p style={{ textDecorationLine: 'underline' }} onClick={toChangeUser}>Изменить данные</p>
                         </div>
                     </div>

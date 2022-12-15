@@ -15,8 +15,8 @@ function Master() {
   const data = useSelector(store => store.masterIdReducer.dataMasterCard);
   const salon = useSelector(store => store.salonsReducer.activeSalon);
 
-  const location = useLocation()
-  console.log(location)
+  // const location = useLocation()
+  // console.log(location)
 
 
   const dispatch = useDispatch();
