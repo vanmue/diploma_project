@@ -105,7 +105,7 @@ function SalonAdminOffice() {
               deliverableGgroups={select.activeSalon.deliverable_groups}
               isEdited={true}
               img={select.activeSalon?.images?.length > 0 ? select.activeSalon.images.find(el => el.is_preview == true)?.file.path : ''}
-              // map={renders.yandexMap}
+              map={renders.yandexMap}
               onClickEditing={callbacks.onSetIsActiveFormForSalon}
             /> : ''}
           </div>
