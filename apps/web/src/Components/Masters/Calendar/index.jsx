@@ -7,12 +7,15 @@ import { useState } from 'react'
 import ModalWindow from "./ModalWindow/index.jsx";
 import ModalWindowMasterRecord from "./ModalWindowMasterRecord/index"
 import { getMasterIdActionThunk } from '../../../actions/masterIdAction'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { isActiveSignInModalAction } from '../../../actions/authorizationActions'
 
 
 
 
 function Calendar({ dataMaster, salonId, masterRecordMonth, masterId }) {
+
+    const activeSignInModal = useSelector(state => state.authorizationReducer.isActiveSignInModal)
 
     const data = [dataMaster?.deliverables]
     moment.updateLocale('es', { week: { dow: 1 } })
@@ -74,6 +77,14 @@ function Calendar({ dataMaster, salonId, masterRecordMonth, masterId }) {
         if (e.target.children[0].className === 'color-red date') {
             return
         }
+
+        if (!(localStorage.getItem("userStructure")).id) {
+            console.log('actyv')
+            dispatch(isActiveSignInModalAction(true))
+            return
+
+        }
+
         e.stopPropagation()
         getDay(e.target.attributes.value.nodeValue)
         setChoiceDay(moment(e.target.attributes.value.nodeValue).toISOString())
