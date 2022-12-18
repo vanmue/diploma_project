@@ -1,20 +1,26 @@
 import React, { useEffect } from "react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import './navigation.scss'
 
 function Navigation() {
-  const color = useSelector((store) => store.stylesReducer.navigation.color);
+
+  const location = useLocation();
+
+  const select = useSelector((store) => ({
+    navColor: location.pathname == '/' ? store.stylesReducer.navigation.colorWhite : store.stylesReducer.navigation.darkViolet,
+  }));
+
   useEffect(() => {
-  }, [color]);
+  }, [select.color]);
 
   return (
     <ul className="navigation">
       <li className="navigation__item">
         <NavLink
-          // end
+          end
           className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
-          style={{ color: `${color}` }}
+          style={{ color: `${select.navColor}` }}
           to="/"
         >
           Главная
@@ -23,7 +29,7 @@ function Navigation() {
       <li className="navigation__item">
         <NavLink
           className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
-          style={{ color: `${color}` }}
+          style={{ color: `${select.navColor}` }}
           to="/salons"
         >
           Салоны
@@ -32,8 +38,7 @@ function Navigation() {
       <li className="navigation__item">
         <NavLink
           className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
-          style={{ color: `${color}` }}
-          // end
+          style={{ color: `${select.navColor}` }}
           to="/masters"
         >
           Мастера
@@ -42,7 +47,7 @@ function Navigation() {
       <li className="navigation__item">
         <NavLink
           className={({ isActive }) => isActive ? "navigation__item-link navigation__item-link--active" : "navigation__item-link"}
-          style={{ color: `${color}` }}
+          style={{ color: `${select.navColor}` }}
           to="/master"
         >
           Стать партнёром

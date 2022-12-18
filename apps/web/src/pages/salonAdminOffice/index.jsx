@@ -8,11 +8,6 @@ import {
   getAciveSalonByIdThunk,
   uploadImageForSalonThunk,
 } from '../../actions/salonsAction';
-import {
-  changeNavigationColorAction,
-  changingLabelInHeaderAction,
-  changeHeaderBackgroundAction,
-} from '../../actions/stylesActions';
 import { deleteMasterThunk } from '../../actions/mastersActions';
 import FormForSalon from '../../Components/FormForSalon';
 import SalonCard from '../../Components/SalonCard';
@@ -47,11 +42,6 @@ function SalonAdminOffice() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
-    dispatch(changingLabelInHeaderAction(false));
-    dispatch(changeHeaderBackgroundAction('#F5BFAB'));
-    dispatch(changeNavigationColorAction('#410935'));
-
     dispatch(getCitiesThunk());
     dispatch(getAllAdvantagesThunk());
     dispatch(getAciveSalonByIdThunk(activeSalonId));

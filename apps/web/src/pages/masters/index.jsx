@@ -8,11 +8,6 @@ import { getFilteringMastersThunk } from '../../actions/mastersActions';
 import { getCitiesThunk } from '../../actions/citiesActions';
 import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
 import { getAllSalonsThunk } from '../../actions/salonsAction';
-import {
-  changeNavigationColorAction,
-  changingLabelInHeaderAction,
-  changeHeaderBackgroundAction
-} from '../../actions/stylesActions';
 import './masters.scss';
 
 function MastersPage() {
@@ -31,10 +26,6 @@ function MastersPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(changingLabelInHeaderAction(false));
-    dispatch(changeHeaderBackgroundAction('#F5BFAB'));
-    dispatch(changeNavigationColorAction('#410935'));
-
     dispatch(getCitiesThunk());
     dispatch(getAllServiceGroupsThunk());
     dispatch(getAllSalonsThunk());

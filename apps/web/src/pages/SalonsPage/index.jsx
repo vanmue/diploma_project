@@ -8,11 +8,6 @@ import YandexMap from '../../Components/YandexMap';
 import Pagination from '../../Components/Pagination';
 import Button from '../../Components/Button';
 import {
-  changeNavigationColorAction,
-  changingLabelInHeaderAction,
-  changeHeaderBackgroundAction
-} from '../../actions/stylesActions';
-import {
   setActiveSalonIdAction,
   getFilteringSalonsThunk,
 } from '../../actions/salonsAction';
@@ -35,15 +30,10 @@ function SalonsPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(changingLabelInHeaderAction(false));
-    dispatch(changeHeaderBackgroundAction('#F5BFAB'));
-    dispatch(changeNavigationColorAction('#410935'));
     dispatch(getCitiesThunk());
     dispatch(getAllServiceGroupsThunk());
     dispatch(getFilteringSalonsThunk(cityId, serviceId));
   }, []);
-
-
 
   const renders = {
     yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}
