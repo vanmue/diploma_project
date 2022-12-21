@@ -12,13 +12,13 @@ import {
   getFilteringSalonsThunk,
 } from '../../actions/salonsAction';
 import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
-import { getCitiesThunk } from '../../actions/citiesActions';
+import { getCitiesThunk } from '../../middlewares/citiesMiddlewares';
 import './salons-page.scss';
 
 function SalonsPage() {
 
   const select = useSelector(store => ({
-    cities: store.citiesReducer.cities,                       // [{}] - все города
+    cities: store.citiesReducer.getCities.data,                       // [{}] - все города
     groupsServices: store.deliverablesReducer.serviceGroups,  // [{}] - группы услуг
     salons: store.salonsReducer.salons,                       // [{}] - салоны
     pagination: store.salonsReducer.pagination,               // info pagination

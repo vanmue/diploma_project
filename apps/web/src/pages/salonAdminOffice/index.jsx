@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCitiesThunk } from '../../actions/citiesActions';
-import { getAllAdvantagesThunk } from '../../actions/advantagesActions';
+import { getCitiesThunk } from '../../middlewares/citiesMiddlewares';
+import { getShopAdvantagesThunk } from '../../middlewares/shopAdvantagesMiddlewares';
 import { getAllMasterForActiveSalonThunk } from '../../actions/mastersActions';
 import {
   postImageForSalonThunk,
@@ -21,8 +21,8 @@ import './salon-admin-office.scss';
 function SalonAdminOffice() {
 
   const select = useSelector(store => ({
-    cities: store.citiesReducer.cities,                                    // [{}] - города
-    advantages: store.advantagesReducer.advantages,                        // [{}] - услуги
+    cities: store.citiesReducer.getCities.data,                            // [{}] - города
+    advantages: store.advantagesReducer.getShopAdvantages.data,            // [{}] - услуги
     activeSalonId: store.salonsReducer.activeSalonId,                      // id активного салона
     activeSalon: store.salonsReducer.activeSalon,                          // {} - info активного салона
     imgForCarouselId: store.salonsReducer.imgForCarouselId,                // id img для POST 
@@ -43,7 +43,7 @@ function SalonAdminOffice() {
 
   useEffect(() => {
     dispatch(getCitiesThunk());
-    dispatch(getAllAdvantagesThunk());
+    dispatch(getShopAdvantagesThunk());
     dispatch(getAciveSalonByIdThunk(activeSalonId));
     dispatch(getAllMasterForActiveSalonThunk(activeSalonId, 1));
   }, []);

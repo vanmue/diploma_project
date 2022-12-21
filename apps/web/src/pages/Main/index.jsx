@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCitiesThunk, getCitiesByIdThunk } from "../../actions/citiesActions";
+
+import { getCitiesByIdThunk } from '../../middlewares/citiesMiddlewares';
+import { getCitiesThunk } from "../../middlewares/citiesMiddlewares";
+
 import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
 import ServicesCard from '../../Components/ServicesCard';
 import Select from '../../Components/Select';
@@ -15,8 +18,8 @@ function MainPage() {
 
   const select = useSelector(store => ({
     serviceGroups: store.deliverablesReducer.serviceGroups,
-    cities: store.citiesReducer.cities,
-    city: store.citiesReducer.city,
+    cities: store.citiesReducer.getCities.data,
+    city: store.citiesReducer.getCity.data,
   }));
 
   //[[]] - маркеры салонов(с широтой и долготой)
@@ -43,7 +46,6 @@ function MainPage() {
   }, []);
 
   useEffect(() => {
-    // console.log("select.city", select.city)
   }, [select.city])
 
   const callbacks = {
