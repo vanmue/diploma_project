@@ -5,7 +5,7 @@ import MasterCard from '../../Components/MasterCard';
 import Pagination from '../../Components/Pagination';
 import Button from '../../Components/Button';
 import { getFilteringMastersThunk } from '../../actions/mastersActions';
-import { getCitiesThunk } from '../../actions/citiesActions';
+import { getCitiesThunk } from '../../middlewares/citiesMiddlewares';
 import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
 import { getAllSalonsThunk } from '../../actions/salonsAction';
 import './masters.scss';
@@ -13,7 +13,7 @@ import './masters.scss';
 function MastersPage() {
 
   const select = useSelector(store => ({
-    cities: store.citiesReducer.cities,                       // [{}] - все города
+    cities: store.citiesReducer.getCities.data,                       // [{}] - все города
     groupsServices: store.deliverablesReducer.serviceGroups,  // Группы услуг
     allSalons: store.salonsReducer.salons,                    // [{}] - все салоны
     masters: store.mastersReducer.masters,                    // [{}] - все мастера

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import propTypes from 'prop-types';
 import { postNewSalonThunk, patchDataSalonThunk } from "../../actions/salonsAction";
-import { getCitiesThunk } from "../../actions/citiesActions";
-import { getAllAdvantagesThunk } from "../../actions/advantagesActions";
+import { getCitiesThunk } from "../../middlewares/citiesMiddlewares";
+import { getShopAdvantagesThunk } from "../../middlewares/shopAdvantagesMiddlewares";
 import DrpdnForAddSalons from "../../Components/DrpdnForAddSalons";
 import Button from "../../Components/Button";
 import './form-for-salon.scss'
@@ -16,8 +16,8 @@ function FormForSalon({
 }) {
 
   const select = useSelector(store => ({
-    cities: store.citiesReducer.cities,                       // [{}] - все города
-    advantages: store.advantagesReducer.advantages,           // [{}] - все преимущества
+    cities: store.citiesReducer.getCities.data,                       // [{}] - все города
+    advantages: store.advantagesReducer.getShopAdvantages.data,        // [{}] - все преимущества
   }));
 
   const [formNewSalon, setFormNewSalon] = useState(req == "POST" ?
@@ -57,7 +57,7 @@ function FormForSalon({
 
   useEffect(() => {
     dispatch(getCitiesThunk());
-    dispatch(getAllAdvantagesThunk());
+    dispatch(getShopAdvantagesThunk());
   }, []);
 
   useEffect(() => {

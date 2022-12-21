@@ -1,0 +1,21 @@
+// ACTIONS CONSTANTS
+
+// CITIES
+export const GET_CITIES = {
+  START: '@@cities/GET_CITIES_START',
+  SUCCESS: '@@cities/GET_CITIES_SUCCESS',
+  FAILURE: '@@cities/GET_CITIES_FAILURE'
+}
+
+export const GET_CITY_BY_ID = {
+  START: '@@cities/GET_CITY_BY_ID_START',
+  SUCCESS: '@@cities/GET_CITY_BY_ID_SUCCESS',
+  FAILURE: '@@cities/GET_CITY_BY_ID_FAILURE'
+}
+
+// ADVANTAGES
+export const GET_ADVANTAGES = {
+  START: '@@advantages/GET_ADVANTAGES_START',
+  SUCCESS: '@@cities/GET_ADVANTAGES_SUCCESS',
+  FAILURE: '@@cities/GET_ADVANTAGES_FAILURE'
+}
