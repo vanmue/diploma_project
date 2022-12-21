@@ -1,57 +1,35 @@
-export const GET_ALL_CITIES = '@@cities/GET_ALL_CITIES';
-export const GET_ALL_CITIES_SUCCESS = '@@cities/GET_ALL_CITIES_SUCCESS';
-
-export const GE_CITIES_BY_ID = '@@cities/GE_CITIES_BY_ID';
+import { GET_CITIES, GET_CITY_BY_ID } from "./constants";
 
 /**
- * Получение массива всех городов
- *
+ * [{}] -  всех городов
 */
-/******************************************************************/
-/**
- * Массив всех городов
- * @params {array} date - массив объектов с городами
-*/
-export const getCitiesAction = (date) => ({
-  type: GET_ALL_CITIES,
-  payload: date
-});
-
-/**
- * Get запрос на получение  всех городов
-*/
-export const getCitiesThunk = () => async (dispatch, getState) => {
-
-  fetch('/api/v1/cities')
-    .then(req => req.json())
-    .then(res => {
-      dispatch(getCitiesAction(res.data));
-    })
-    .catch(err => console.log('getCitiesThunk ERROR: ', err));
+export const getCitiesActions = {
+  start: () => ({
+    type: GET_CITIES.START
+  }),
+  success: (data) => ({
+    type: GET_CITIES.SUCCESS,
+    payload: data
+  }),
+  failure: (error) => ({
+    type: GET_CITIES.FAILURE,
+    payload: error
+  }),
 }
 
 /**
- * Получение города по id
+ * GET {} - города
 */
-/******************************************************************/
-/**
- * Получение города по id
- * @params {array} date -
-*/
-export const getCitiesByIdAction = (date) => ({
-  type: GE_CITIES_BY_ID,
-  payload: date
-});
-
-/**
- * Get запрос на получение  всех городов
-*/
-export const getCitiesByIdThunk = (id) => async (dispatch, getState) => {
-
-  fetch(`/api/v1/cities/${id}`)
-    .then(req => req.json())
-    .then(res => {
-      dispatch(getCitiesByIdAction(res.data));
-    })
-    .catch(err => console.log('getCitiesThunk ERROR: ', err));
+export const getCitiesByIdActions = {
+  start: () => ({
+    type: GET_CITY_BY_ID.START
+  }),
+  success: (date) => ({
+    type: GET_CITY_BY_ID.SUCCESS,
+    payload: date
+  }),
+  failure: (error) => ({
+    type: GET_CITY_BY_ID.FAILURE,
+    payload: error
+  }),
 }

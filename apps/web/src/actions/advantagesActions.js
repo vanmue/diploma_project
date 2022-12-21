@@ -1,22 +1,18 @@
-export const GET_ALL_ADVANTAGES = '@@advantages/GET_ALL_ADVANTAGES';
-
-/******************************************************************/
-/**
- * @params {array} date - массив объектов  с преимуществами салонов
-*/
-export const getAllAdvantagesAction = (date) => ({
-  type: GET_ALL_ADVANTAGES,
-  payload: date
-});
+import { GET_ADVANTAGES } from "./constants";
 
 /**
- * Get запрос на получение  всех преимуществ
+ * [{}] -  пркимущества
 */
-export const getAllAdvantagesThunk = () => async (dispatch, getState) => {
-  fetch('/api/v1/shop-advantages')
-    .then(req => req.json())
-    .then(res => {
-      dispatch(getAllAdvantagesAction(res.data));
-    })
-    .catch(err => console.log('getAllAdvantagesThunk: ', err));
+export const getShopAdvantagesActions = {
+  start: () => ({
+    type: GET_ADVANTAGES.START
+  }),
+  success: (data) => ({
+    type: GET_ADVANTAGES.SUCCESS,
+    payload: data
+  }),
+  failure: (error) => ({
+    type: GET_ADVANTAGES.FAILURE,
+    payload: error
+  }),
 }

@@ -8,11 +8,6 @@ import MasterCard from '../../Components/MasterCard';
 import Pagination from '../../Components/Pagination';
 import { getAciveSalonByIdThunk } from '../../actions/salonsAction';
 import { getAllMasterForActiveSalonThunk } from '../../actions/mastersActions';
-import {
-  changeNavigationColorAction,
-  changingLabelInHeaderAction,
-  changeHeaderBackgroundAction
-} from '../../actions/stylesActions';
 import './salon-page.scss';
 
 function SalonPage() {
@@ -28,9 +23,6 @@ function SalonPage() {
 
 
   useEffect(() => {
-    dispatch(changingLabelInHeaderAction(false));
-    dispatch(changeHeaderBackgroundAction('#F5BFAB'));
-    dispatch(changeNavigationColorAction('#410935'));
     dispatch(getAciveSalonByIdThunk(+location.state.activeSalonId));
     dispatch(getAllMasterForActiveSalonThunk(+location.state.activeSalonId));
   }, []);

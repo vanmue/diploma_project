@@ -8,22 +8,17 @@ import YandexMap from '../../Components/YandexMap';
 import Pagination from '../../Components/Pagination';
 import Button from '../../Components/Button';
 import {
-  changeNavigationColorAction,
-  changingLabelInHeaderAction,
-  changeHeaderBackgroundAction
-} from '../../actions/stylesActions';
-import {
   setActiveSalonIdAction,
   getFilteringSalonsThunk,
 } from '../../actions/salonsAction';
 import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
-import { getCitiesThunk } from '../../actions/citiesActions';
+import { getCitiesThunk } from '../../middlewares/citiesMiddlewares';
 import './salons-page.scss';
 
 function SalonsPage() {
 
   const select = useSelector(store => ({
-    cities: store.citiesReducer.cities,                       // [{}] - все города
+    cities: store.citiesReducer.getCities.data,                       // [{}] - все города
     groupsServices: store.deliverablesReducer.serviceGroups,  // [{}] - группы услуг
     salons: store.salonsReducer.salons,                       // [{}] - салоны
     pagination: store.salonsReducer.pagination,               // info pagination
@@ -35,15 +30,10 @@ function SalonsPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(changingLabelInHeaderAction(false));
-    dispatch(changeHeaderBackgroundAction('#F5BFAB'));
-    dispatch(changeNavigationColorAction('#410935'));
     dispatch(getCitiesThunk());
     dispatch(getAllServiceGroupsThunk());
     dispatch(getFilteringSalonsThunk(cityId, serviceId));
   }, []);
-
-
 
   const renders = {
     yandexMap: <YandexMap center={[53.21624037527426, 50.13260255066459]}

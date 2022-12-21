@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { getCitiesByIdThunk } from '../../middlewares/citiesMiddlewares';
+import { getCitiesThunk } from "../../middlewares/citiesMiddlewares";
+
+import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
 import ServicesCard from '../../Components/ServicesCard';
 import Select from '../../Components/Select';
 import YandexMap from '../../Components/YandexMap';
-import { getCitiesThunk, getCitiesByIdThunk } from "../../actions/citiesActions";
-import { getAllServiceGroupsThunk } from '../../actions/deliverablesActions';
-import {
-  changeNavigationColorAction,
-  changingLabelInHeaderAction,
-  changeHeaderBackgroundAction
-} from '../../actions/stylesActions';
+
 import './main-page.scss';
 import { useCallback } from 'react';
 
@@ -19,18 +18,14 @@ function MainPage() {
 
   const select = useSelector(store => ({
     serviceGroups: store.deliverablesReducer.serviceGroups,
-    cities: store.citiesReducer.cities,
-    city: store.citiesReducer.city,
+    cities: store.citiesReducer.getCities.data,
+    city: store.citiesReducer.getCity.data,
   }));
 
   //[[]] - маркеры салонов(с широтой и долготой)
   const [salonsLabel, setSalonsLabel] = useState(null);
 
   useEffect(() => {
-    dispatch(changingLabelInHeaderAction(true));
-    dispatch(changeHeaderBackgroundAction('rgba(65, 9, 53, 0.7)'));
-    dispatch(changeNavigationColorAction('#FFFFFF'));
-
     dispatch(getCitiesThunk());
     dispatch(getAllServiceGroupsThunk());
 
@@ -38,12 +33,12 @@ function MainPage() {
     fetch('/api/v1/shops')
       .then(req => req.json())
       .then(res => {
-        console.log('MainPage fetch("/api/v1/shops") res:', res.data);
+        // console.log('MainPage fetch("/api/v1/shops") res:', res.data);
         let labels = res.data.map(el => {
 
           return [el.label_latitude, el.label_longtitude]
         });
-        console.log('MainPage labels:', labels);
+        // console.log('MainPage labels:', labels);
         setSalonsLabel(labels);
       })
       .catch(err => console.log('getAllSalonsThunk: ', err));
@@ -51,7 +46,6 @@ function MainPage() {
   }, []);
 
   useEffect(() => {
-    console.log("select.city", select.city)
   }, [select.city])
 
   const callbacks = {
@@ -115,11 +109,11 @@ function MainPage() {
       </div>
       <section className='main-page__yandex-map'>
         <h4>Яндекс карта</h4>
-        <YandexMap
+        {/* <YandexMap
           center={select.city ? [select.city?.center_latitude, select.city?.center_longtitude] : [55.75244503863624, 37.62277964550782]}
           zoom={10}
           items={salonsLabel}
-        />
+        /> */}
       </section>
     </div>
   )
